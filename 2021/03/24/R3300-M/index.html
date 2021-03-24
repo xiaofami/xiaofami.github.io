@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://xiaofami.github.io/2021/03/24/R3300-M/106742788.jpg">
 <meta property="og:image" content="http://xiaofami.github.io/2021/03/24/R3300-M/160357931.jpg">
 <meta property="article:published_time" content="2021-03-24T03:03:17.000Z">
-<meta property="article:modified_time" content="2021-03-24T05:50:40.019Z">
+<meta property="article:modified_time" content="2021-03-24T05:52:52.046Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="GXBB">
 <meta property="article:tag" content="S905">
@@ -238,7 +238,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-03-24 11:03:17 / 修改时间：13:50:40" itemprop="dateCreated datePublished" datetime="2021-03-24T11:03:17+08:00">2021-03-24</time>
+      <time title="创建时间：2021-03-24 11:03:17 / 修改时间：13:52:52" itemprop="dateCreated datePublished" datetime="2021-03-24T11:03:17+08:00">2021-03-24</time>
     </span>
 
   
@@ -269,7 +269,7 @@ AV接口：1个（RET键在接口底部）
 蓝牙：无
 随机遥控器：优秀（具备学习功能）
 </code></pre>
-<h1 id="线刷方式"><a href="#线刷方式" class="headerlink" title="线刷方式"></a>线刷方式</h1><h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol>
+<h1 id="线刷方式"><a href="#线刷方式" class="headerlink" title="线刷方式"></a>线刷方式</h1><h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ul>
 <li>microUSB数据线</li>
 <li>运行Windows系统的电脑，推荐使用Win7和USB2.0。</li>
 <li>棉签</li>
@@ -279,12 +279,12 @@ AV接口：1个（RET键在接口底部）
 <li>潜龙固件 20171210_Q5_G2-40F_S905-S905M_android4.42_root_qlzy.rar ，自带root和bootloader，刷机方便，可用于救砖。</li>
 <li>乐天固件 Q5_晶晨S905M-安卓4.4.2-支持8189和7601无线-当贝华为logo和动画-多遥控支持线刷包-20201126版.rar，可惜不带root，没法方便自行替换遥控文件。</li>
 <li>ATV固件 MXQ_PRO_4K_p201_android_TV_by cOOLio_V2.5_MEE.7z。这个是真正的ATV固件，自带root开关，可惜R3300-M 4G的EMMC存储实在捉襟见肘所以不太实用。注意刷入这个固件后盒子会解锁4K@60fps（先前最大4K@30fps），CPU性能测试提升19%，美中不足没法遥控器开机了。<h2 id="备份EMMC分区"><a href="#备份EMMC分区" class="headerlink" title="备份EMMC分区"></a>备份EMMC分区</h2>刷机前，强烈建议使用Armbian对EMMC分区进行备份，以免后悔。利用testdisk等工具从原厂EMMC镜像中也可以提取出遥控文件。盒子在刷机前无法启动高版本Armbian，推荐使用<strong>Armbian_5.44_S9xxx_Ubuntu_bionic_3.14.29_server_20180729.img</strong>或<strong>Armbian_5.99_Aml-g12_Ubuntu_bionic_default_5.3.0_rtl8189ftv.tar.gz</strong>。开机前，用棉签（去掉一头棉布）按住RST键进入Armbian系统，执行ddbr命令备份mmcblk0。</li>
-</ol>
+</ul>
 <p>注：Armbian镜像写入TF卡后需要进行配置，早期，中期，后期配置方式不同。Armbian_5.44_S9xxx_Ubuntu_bionic_3.14.29_server_20180729.img将gxbb_p200_1G_100M_RealtekWiFi.dtb复制到TF卡根目录，重命名为dtb.img即可，Armbian_5.99_Aml-g12_Ubuntu_bionic_default_5.3.0_rtl8189ftv.tar.gz修改uEnv.txt文件引用meson-gxbb-p201.dtb，后期Armbian20.10修改/extlinux/extlinux.conf并将u-boot-s905重命名为u-boot.ext。详情参见 <a target="_blank" rel="noopener" href="https://forum.armbian.com/topic/12162-single-armbian-image-for-rk-aml-aw-aarch64-armv8/?ct=1613786525">https://forum.armbian.com/topic/12162-single-armbian-image-for-rk-aml-aw-aarch64-armv8/?ct=1613786525</a> ，其他用户自行编译（如恩山论坛）的可能存在差异。</p>
-<h2 id="首次刷机"><a href="#首次刷机" class="headerlink" title="首次刷机"></a>首次刷机</h2><ol>
+<h2 id="首次刷机"><a href="#首次刷机" class="headerlink" title="首次刷机"></a>首次刷机</h2><ul>
 <li>电脑上使用Burning_Tool导入镜像，默认配置不变，点击开始刷机；</li>
 <li>在棉签按住RST键的情况下，接通电源后迅速用microUSB数据线连接盒子与电脑，如无意外电脑会先自动安装驱动然后开始刷机进程，刷机进程显示100%后拔电源重启即可，视情况可能需要自行替换遥控文件：</li>
-</ol>
+</ul>
 <p><code>/etc/remote.conf,remote1.conf,remote2.conf</code></p>
 <p>我在原厂遥控文件基础上仅修改添加了menu键，余处未做改动。</p>
 <p>刷机后，盒子可以引导Armbian20.10了。</p>
