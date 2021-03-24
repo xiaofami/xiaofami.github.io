@@ -23,16 +23,16 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。">
+<meta name="description" content="某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。 ;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="必虎路由器折腾记录">
 <meta property="og:url" content="http://xiaofami.github.io/2021/03/23/bhu-dc/index.html">
 <meta property="og:site_name" content="水中月">
-<meta property="og:description" content="某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。">
+<meta property="og:description" content="某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。 ;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8Edc-%E4%B8%BB%E6%9D%BF.jpg">
 <meta property="article:published_time" content="2021-03-23T06:41:15.000Z">
-<meta property="article:modified_time" content="2021-03-24T01:09:45.785Z">
+<meta property="article:modified_time" content="2021-03-24T01:17:55.061Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="必虎">
 <meta property="article:tag" content="路由器">
@@ -242,7 +242,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-24 09:09:45" itemprop="dateModified" datetime="2021-03-24T09:09:45+08:00">2021-03-24</time>
+        <time title="修改时间：2021-03-24 09:17:55" itemprop="dateModified" datetime="2021-03-24T09:17:55+08:00">2021-03-24</time>
       </span>
 
   
@@ -269,8 +269,7 @@
 <li>特色：磁铁</li>
 </ul>
 <p>硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。</p>
-<span id="more"></span>
-
+<p>;<span id="more"></span></p>
 <h1 id="刷机工作"><a href="#刷机工作" class="headerlink" title="刷机工作"></a>刷机工作</h1><p>原厂固件自动开启收费共享WIFI无法修改，而且已经绑定了其他人手机号，必须刷机。原厂固件默认开启SSH，但是无法登录，用编程器备份固件后刷breed然后刷第三方固件。</p>
 <h2 id="编程器"><a href="#编程器" class="headerlink" title="编程器"></a>编程器</h2><p>diybcq.com 设计出品的CH341A v1.5 （论坛有网店），上手相当不错，配合SOP8烧录夹（带转接板）顺利读写闪存。注意：我操作的闪存是Winbond 25Q128JVSQ，按照软件说明应该使用3.3V电压操作，但实测此时路由器会启动，结果是无法识别读写闪存。经测试，电压设置为2.5V可正常读写闪存。</p>
 <h2 id="转接板，夹子"><a href="#转接板，夹子" class="headerlink" title="转接板，夹子"></a>转接板，夹子</h2><p>没有热风枪 + 怕麻烦，遂尝试了免拆机方案，CH341A配合最普通的SOP8烧录夹和转接板就行了。在免拆机条件下由于外围电路会有干扰，所以不一定能够成功读写闪存。</p>
