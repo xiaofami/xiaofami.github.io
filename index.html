@@ -167,12 +167,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -201,6 +201,73 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/04/09/bash2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/09/bash2/" class="post-title-link" itemprop="url">bash - bc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-04-09 09:46:49 / 修改时间：09:49:43" itemprop="dateCreated datePublished" datetime="2021-04-09T09:46:49+08:00">2021-04-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bash中简单的bc计算"><a href="#bash中简单的bc计算" class="headerlink" title="bash中简单的bc计算"></a>bash中简单的bc计算</h1><figure class="highlight bash"><figcaption><span>bc_test.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#bc_test.sh</span></span><br><span class="line"></span><br><span class="line">var1=3.14</span><br><span class="line">var2=5.2</span><br><span class="line">temp=</span><br><span class="line">var3=$(bc &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">scale = 4</span></span><br><span class="line"><span class="string">a1 = $var1 + $var2</span></span><br><span class="line"><span class="string">a2 = $var1 * $var2</span></span><br><span class="line"><span class="string">a1 + a2</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> The final result is <span class="variable">$var3</span></span><br></pre></td></tr></table></figure>
+
+<p>结果毫无悬念，24.668。注意这里用到了here document语法，行内重定向的一大用途便是方便在行间传递参数调用程序，通常搭配命令替换使用。另外注意，bc中引用外部变量（bash变量）时需要加$，bc中声明的变量是不需要的。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
