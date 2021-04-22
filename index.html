@@ -167,12 +167,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -201,6 +201,71 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/04/22/bash3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/22/bash3/" class="post-title-link" itemprop="url">bash - 数组</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-04-22 11:20:54 / 修改时间：11:21:42" itemprop="dateCreated datePublished" datetime="2021-04-22T11:20:54+08:00">2021-04-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bash中简单函数数组传递"><a href="#bash中简单函数数组传递" class="headerlink" title="bash中简单函数数组传递"></a>bash中简单函数数组传递</h1><figure class="highlight bash"><figcaption><span>array_test.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># array variable to function test</span></span><br><span class="line"><span class="keyword">function</span> testit &#123;</span><br><span class="line"><span class="built_in">local</span> newarray</span><br><span class="line">newarray=<span class="variable">$@</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The new array value is: <span class="variable">$&#123;newarray[*]&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">myarray=(1 2 3 4 5)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The original array is <span class="variable">$&#123;myarray[*]&#125;</span>&quot;</span></span><br><span class="line">testit <span class="variable">$&#123;myarray[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

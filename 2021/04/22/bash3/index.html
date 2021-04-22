@@ -23,18 +23,22 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="WXRC">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小荷">
-<meta property="og:url" content="http://xiaofami.github.io/tags/ATV/index.html">
+<meta name="description" content="bash中简单函数数组传递array_test.sh12345678910#!&#x2F;bin&#x2F;bash# array variable to function testfunction testit &amp;#123;local newarraynewarray&#x3D;$@echo &quot;The new array value is: $&amp;#123;newarray[*]&amp;#125;&quot;&amp;#125;m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bash - 数组">
+<meta property="og:url" content="http://xiaofami.github.io/2021/04/22/bash3/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="WXRC">
+<meta property="og:description" content="bash中简单函数数组传递array_test.sh12345678910#!&#x2F;bin&#x2F;bash# array variable to function testfunction testit &amp;#123;local newarraynewarray&#x3D;$@echo &quot;The new array value is: $&amp;#123;newarray[*]&amp;#125;&quot;&amp;#125;m">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-22T03:20:54.000Z">
+<meta property="article:modified_time" content="2021-04-22T03:21:42.192Z">
 <meta property="article:author" content="tccmu">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="函数">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://xiaofami.github.io/tags/ATV/">
+<link rel="canonical" href="http://xiaofami.github.io/2021/04/22/bash3/">
 
 
 <script class="page-configurations">
@@ -42,11 +46,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>标签: ATV | 小荷</title>
+<title>bash - 数组 | 小荷</title>
   
 
 
@@ -142,7 +146,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -155,6 +159,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bash%E4%B8%AD%E7%AE%80%E5%8D%95%E5%87%BD%E6%95%B0%E6%95%B0%E7%BB%84%E4%BC%A0%E9%80%92"><span class="nav-number">1.</span> <span class="nav-text">bash中简单函数数组传递</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -200,50 +205,88 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">ATV
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/04/22/bash3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bash - 数组
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-04-22 11:20:54 / 修改时间：11:21:42" itemprop="dateCreated datePublished" datetime="2021-04-22T11:20:54+08:00">2021-04-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="bash中简单函数数组传递"><a href="#bash中简单函数数组传递" class="headerlink" title="bash中简单函数数组传递"></a>bash中简单函数数组传递</h1><figure class="highlight bash"><figcaption><span>array_test.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># array variable to function test</span></span><br><span class="line"><span class="keyword">function</span> testit &#123;</span><br><span class="line"><span class="built_in">local</span> newarray</span><br><span class="line">newarray=<span class="variable">$@</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The new array value is: <span class="variable">$&#123;newarray[*]&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">myarray=(1 2 3 4 5)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The original array is <span class="variable">$&#123;myarray[*]&#125;</span>&quot;</span></span><br><span class="line">testit <span class="variable">$&#123;myarray[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-24T11:03:17+08:00"
-              content="2021-03-24">
-          03-24
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/24/R3300-M/" itemprop="url">
-            <span itemprop="name">R3300-M玩机记录</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/bash/" rel="tag"># bash</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"># 函数</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/09/bash2/" rel="prev" title="bash - bc">
+                  <i class="fa fa-chevron-left"></i> bash - bc
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 
 <script>
