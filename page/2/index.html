@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -201,6 +201,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/03/23/bhu_tour/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/23/bhu_tour/" class="post-title-link" itemprop="url">必虎路由器原厂固件探索</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-23 14:41:15" itemprop="dateCreated datePublished" datetime="2021-03-23T14:41:15+08:00">2021-03-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-08 11:09:36" itemprop="dateModified" datetime="2021-04-08T11:09:36+08:00">2021-04-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在<code>/usr/share/www</code>中发现<em>debug.html</em>页面，访问<a target="_blank" rel="noopener" href="http://192.168.62.1/debug.html">http://192.168.62.1/debug.html</a> :</p>
+<p>可用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">webportal_user_status</span><br><span class="line">pppstatus</span><br><span class="line">dhcpcstatus</span><br><span class="line">dhcpstalist</span><br><span class="line">dhcpdetect</span><br><span class="line">wlanstatus</span><br><span class="line">wlanscan</span><br><span class="line">wlankickoff</span><br><span class="line">sysinfo</span><br><span class="line">diskinfo</span><br><span class="line">sysdebug</span><br><span class="line">syscap</span><br><span class="line">hwinfo</span><br><span class="line">delayreboot</span><br><span class="line">sta_stats</span><br><span class="line">syslice</span><br><span class="line">upnp_nat</span><br><span class="line">if_stat</span><br><span class="line">arp</span><br><span class="line">route</span><br><span class="line">reboot</span><br><span class="line">save</span><br><span class="line">mode</span><br><span class="line">restore_factory</span><br><span class="line">net_speed_test</span><br><span class="line">wandetect</span><br><span class="line">dpi</span><br><span class="line">user_stat</span><br><span class="line">if_rate_info</span><br><span class="line">firmware_upgrade</span><br><span class="line">wifi_schedule</span><br><span class="line">data_stats</span><br><span class="line">pppoe_pass_hack</span><br><span class="line">clear_reset_flag</span><br></pre></td></tr></table></figure>
+
+
+<p><code>sysinfo</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index&#x3D;&quot;1&quot; cmd&#x3D;&quot;sysinfo&quot; uptime&#x3D;&quot;5:17:13&quot; memory&#x3D;&quot;22835200&#x2F;62578688&quot; cpu_usage&#x3D;&quot;2&quot; average_load&#x3D;&quot;0.12&#x2F;0.13&#x2F;0.14&quot; firmware_version&#x3D;&quot;AP902P07V1.6.0Build798_TU&quot; sn&#x3D;&quot;BN212GH600045AA&quot; sys_name&#x3D;&quot;&quot; sys_description&#x3D;&quot;uRouter series wireless AP. Support 802.11b&#x2F;g&#x2F;n. 300Mbps, 2T2R.&quot; sys_model&#x3D;&quot;uRouter mini SJBY&quot; ap_vendor&#x3D;&quot;BHU&quot; uplink_interface_mac&#x3D;&quot;84:82:f4:38:bd:3b&quot; hardware_version&#x3D;&quot;Z05&quot; ip&#x3D;&quot;0.0.0.0&quot; netmask&#x3D;&quot;0.0.0.0&quot; gateway&#x3D;&quot;0.0.0.0&quot; firmware_name&#x3D;&quot;kochab&quot; longitude&#x3D;&quot;&quot; latitude&#x3D;&quot;&quot; cpu_type&#x3D;&quot;MIPS 24KEc V5.5&quot; mem_type&#x3D;&quot;DDR2&quot; mem_size&#x3D;&quot;61112&quot; flash_size&#x3D;&quot;16384&quot; sys_net_id&#x3D;&quot;&quot; primary_dns&#x3D;&quot;114.114.114.114&quot; second_dns&#x3D;&quot;0.0.0.0&quot; location&#x3D;&quot;&quot; systime&#x3D;&quot;13:17:13&quot; saved_config&#x3D;&quot;&quot; build_info&#x3D;&quot;2017-11-03-09:13 Revision: 798&quot; config_model_ver&#x3D;&quot;V3&quot; config_mode&#x3D;&quot;basic&quot; work_mode&#x3D;&quot;router-ap&quot; dev_mac&#x3D;&quot;84:82:f4:38:bd:38&quot; bmc_status&#x3D;&quot;&quot; status&#x3D;&quot;done&quot;&#x2F;&gt;&lt;&#x2F;return&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>ifrate</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index&#x3D;&quot;1&quot; cmd&#x3D;&quot;ifrate&quot; status&#x3D;&quot;done&quot;&gt;		&lt;ifrate_sub&gt;			&lt;SUB interface&#x3D;&quot;wlan3&quot; tx_pkts&#x3D;&quot;490&quot; rx_pkts&#x3D;&quot;367&quot; tx_bytes&#x3D;&quot;38872&quot; rx_bytes&#x3D;&quot;56368&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan2&quot; tx_pkts&#x3D;&quot;0&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;0&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan1&quot; tx_pkts&#x3D;&quot;0&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;0&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan0&quot; tx_pkts&#x3D;&quot;485&quot; rx_pkts&#x3D;&quot;161&quot; tx_bytes&#x3D;&quot;75992&quot; rx_bytes&#x3D;&quot;50581&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;eth1&quot; tx_pkts&#x3D;&quot;2023&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;686136&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;eth0&quot; tx_pkts&#x3D;&quot;44410&quot; rx_pkts&#x3D;&quot;49873&quot; tx_bytes&#x3D;&quot;34125041&quot; rx_bytes&#x3D;&quot;18727781&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;		&lt;&#x2F;ifrate_sub&gt;	&lt;&#x2F;ITEM&gt;&lt;&#x2F;return&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

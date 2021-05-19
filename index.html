@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -201,6 +201,71 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/05/19/bash5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/19/bash5/" class="post-title-link" itemprop="url">bash - pdftk删除页码脚本</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-19 14:47:04 / 修改时间：14:52:29" itemprop="dateCreated datePublished" datetime="2021-05-19T14:47:04+08:00">2021-05-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="pdftk删除页码脚本"><a href="#pdftk删除页码脚本" class="headerlink" title="pdftk删除页码脚本"></a>pdftk删除页码脚本</h1><p>最近把《Linux命令行与shell脚本编程大全》翻了一遍，于是想演练一下，于是写出了下面这个脚本，用于调用pdftk删除给定页码生成新文档。编写调试过程中，对bash函数传参、位置参数调用等概念有了更深入的理解，特别是shift，用于处理数量未知的位置参数格外好用。</p>
+<figure class="highlight bash"><figcaption><span>pdftool.sh</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 对pdftk的简单封装，用于删除指定的页码，以空格分隔，支持形如&quot;5-7&quot;的页码范围。页码输入不必按顺序，类似&quot;12 6-8 1 3&quot;输入是可以正常工作的。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#isPdftkinstalled作用为检查pdftk是否可用，若可用则执行pdftk --version</span></span><br><span class="line"><span class="keyword">function</span> isPdftkinstalled &#123;</span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="keyword">if</span> [ -z $(whereis pdftk | gawk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>) ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;pdftk未安装或未加入PATH，请检查。&quot;</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;提示：pdftk已加入Deepin官方源，您可以通过 sudo apt install pdftk 简单安装。&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> $(pdftk --version)</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#getCouples作用为对输入的页码进行处理，支持输入单页或页码范围，将其转换为数对（获取范围前后页码，以冒号分隔）</span></span><br><span class="line"><span class="keyword">function</span> getCouples &#123;</span><br><span class="line">    <span class="built_in">local</span> couples=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> left_end=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> right_end=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">do</span>      </span><br><span class="line">        arg1=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> | gawk -F<span class="string">&quot;[- ]&quot;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">        arg2=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> | gawk -F<span class="string">&quot;[- ]&quot;</span> <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">        left_end=$[ <span class="variable">$arg1</span> - 1 ]</span><br><span class="line">        <span class="comment">#对应页码范围情况</span></span><br><span class="line">        <span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$arg2</span>&quot;</span> ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">            right_end=$[ <span class="variable">$arg2</span> + 1 ]</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        <span class="comment">#对应单页情况</span></span><br><span class="line">            right_end=$[ <span class="variable">$arg1</span> + 1 ]</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        couples=$(<span class="built_in">echo</span> <span class="variable">$couples</span> <span class="variable">$left_end</span>:<span class="variable">$right_end</span>)</span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="comment">#数对排序处理，注意sort是针对行的排序，故需要将空格转换成换行</span></span><br><span class="line">    couples=$(<span class="built_in">echo</span> -e <span class="variable">$couples</span> | tr <span class="string">&quot; &quot;</span> <span class="string">&quot;\n&quot;</span> | sort -t <span class="string">&#x27;:&#x27;</span> -k 1 -n)</span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;\n&quot;</span></span><br><span class="line">    couples=$(refineCouples <span class="variable">$couples</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$couples</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#refineCouples作用为合并相邻数对，供getCouples调用</span></span><br><span class="line"><span class="keyword">function</span> refineCouples &#123;</span><br><span class="line">    <span class="built_in">local</span> args=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> isNabour=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> Num1=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f1)</span><br><span class="line">    <span class="built_in">local</span> Num2=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f2)</span><br><span class="line">    <span class="built_in">local</span> Num3=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> Num4=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">shift</span></span><br><span class="line">    <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        Num3=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f1)</span><br><span class="line">        Num4=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f2)</span><br><span class="line">        isNabour=$[ <span class="variable">$Num2</span> - <span class="variable">$Num3</span> ]</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$isNabour</span> -eq 1 ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">            Num2=<span class="variable">$Num4</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            args=$(<span class="built_in">echo</span> <span class="variable">$args</span> <span class="variable">$Num1</span>:<span class="variable">$Num2</span>)</span><br><span class="line">            Num1=<span class="variable">$Num3</span></span><br><span class="line">            Num2=<span class="variable">$Num4</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    args=$(<span class="built_in">echo</span> <span class="variable">$args</span> <span class="variable">$Num1</span>:<span class="variable">$Num2</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$args</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#generateRanges作用为将数对转换为pdftk可用的页码范围</span></span><br><span class="line"><span class="keyword">function</span> generateRanges &#123;</span><br><span class="line">    <span class="built_in">local</span> first_Bit=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f1)</span><br><span class="line">    <span class="built_in">local</span> Num1=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> Num2=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> args=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        Num1=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;:&quot;</span> -f2)</span><br><span class="line">        <span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$2</span>&quot;</span> ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">            Num2=$(<span class="built_in">echo</span> <span class="variable">$2</span> | cut -d <span class="string">&quot;:&quot;</span> -f1)</span><br><span class="line">            <span class="keyword">if</span> [ <span class="variable">$Num1</span> -gt <span class="variable">$Num2</span> ]</span><br><span class="line">            <span class="keyword">then</span></span><br><span class="line">                Num2=<span class="variable">$Num1</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            Num2=<span class="string">&quot;end&quot;</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        args=$(<span class="built_in">echo</span> <span class="variable">$args</span> <span class="variable">$Num1</span>-<span class="variable">$Num2</span>)</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$first_Bit</span> -gt 0 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        args=$(<span class="built_in">echo</span> 1-<span class="variable">$first_Bit</span> <span class="variable">$args</span>)</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$args</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#此函数作用为合并相邻页码范围，在使用refineCouples后已无使用必要，可删除</span></span><br><span class="line"><span class="keyword">function</span> refineRanges &#123;</span><br><span class="line">    <span class="built_in">local</span> args=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> isNabour=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> Num1=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;-&quot;</span> -f1)</span><br><span class="line">    <span class="built_in">local</span> Num2=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;-&quot;</span> -f2)</span><br><span class="line">    <span class="built_in">local</span> Num3=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">local</span> Num4=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">shift</span></span><br><span class="line">    <span class="keyword">while</span> [ -n <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        Num3=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;-&quot;</span> -f1)</span><br><span class="line">        Num4=$(<span class="built_in">echo</span> <span class="variable">$1</span> | cut -d <span class="string">&quot;-&quot;</span> -f2)</span><br><span class="line">        isNabour=$[ <span class="variable">$Num3</span> - <span class="variable">$Num2</span> ]</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$isNabour</span> -eq 1 ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">            Num2=<span class="variable">$Num4</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            args=$(<span class="built_in">echo</span> <span class="variable">$args</span> <span class="variable">$Num1</span>-<span class="variable">$Num2</span>)</span><br><span class="line">            Num1=<span class="variable">$Num3</span></span><br><span class="line">            Num2=<span class="variable">$Num4</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="built_in">shift</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$Num1</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    args=$(<span class="built_in">echo</span> <span class="variable">$args</span> <span class="variable">$Num1</span>-<span class="variable">$Num2</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$args</span>   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pdfFile=<span class="variable">$1</span></span><br><span class="line"><span class="built_in">shift</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Usage:pdftool [filename] [discard pages]&quot;</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">pagesConserved=$(generateRanges $(getCouples $*))</span><br><span class="line">pdftk_command=$(<span class="built_in">echo</span> pdftk <span class="variable">$pdfFile</span> cat <span class="variable">$pagesConserved</span> output new_$(basename <span class="variable">$&#123;pdfFile&#125;</span>))</span><br><span class="line"><span class="comment">#echo $pdftk_command</span></span><br><span class="line"><span class="variable">$pdftk_command</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -913,87 +978,6 @@ AV接口：1个（RET键在接口底部）
 <li><a href="/2021/03/23/bhu-dc/breed-mt7688-reset38.bin" title="breed文件">breed文件</a></li>
 <li><a href="/2021/03/23/bhu-dc/25b5h4.bin" title="编程器固件（必虎原厂）">编程器固件（必虎原厂）</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/03/23/bhu_tour/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/23/bhu_tour/" class="post-title-link" itemprop="url">必虎路由器原厂固件探索</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-23 14:41:15" itemprop="dateCreated datePublished" datetime="2021-03-23T14:41:15+08:00">2021-03-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-08 11:09:36" itemprop="dateModified" datetime="2021-04-08T11:09:36+08:00">2021-04-08</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在<code>/usr/share/www</code>中发现<em>debug.html</em>页面，访问<a target="_blank" rel="noopener" href="http://192.168.62.1/debug.html">http://192.168.62.1/debug.html</a> :</p>
-<p>可用命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">webportal_user_status</span><br><span class="line">pppstatus</span><br><span class="line">dhcpcstatus</span><br><span class="line">dhcpstalist</span><br><span class="line">dhcpdetect</span><br><span class="line">wlanstatus</span><br><span class="line">wlanscan</span><br><span class="line">wlankickoff</span><br><span class="line">sysinfo</span><br><span class="line">diskinfo</span><br><span class="line">sysdebug</span><br><span class="line">syscap</span><br><span class="line">hwinfo</span><br><span class="line">delayreboot</span><br><span class="line">sta_stats</span><br><span class="line">syslice</span><br><span class="line">upnp_nat</span><br><span class="line">if_stat</span><br><span class="line">arp</span><br><span class="line">route</span><br><span class="line">reboot</span><br><span class="line">save</span><br><span class="line">mode</span><br><span class="line">restore_factory</span><br><span class="line">net_speed_test</span><br><span class="line">wandetect</span><br><span class="line">dpi</span><br><span class="line">user_stat</span><br><span class="line">if_rate_info</span><br><span class="line">firmware_upgrade</span><br><span class="line">wifi_schedule</span><br><span class="line">data_stats</span><br><span class="line">pppoe_pass_hack</span><br><span class="line">clear_reset_flag</span><br></pre></td></tr></table></figure>
-
-
-<p><code>sysinfo</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index&#x3D;&quot;1&quot; cmd&#x3D;&quot;sysinfo&quot; uptime&#x3D;&quot;5:17:13&quot; memory&#x3D;&quot;22835200&#x2F;62578688&quot; cpu_usage&#x3D;&quot;2&quot; average_load&#x3D;&quot;0.12&#x2F;0.13&#x2F;0.14&quot; firmware_version&#x3D;&quot;AP902P07V1.6.0Build798_TU&quot; sn&#x3D;&quot;BN212GH600045AA&quot; sys_name&#x3D;&quot;&quot; sys_description&#x3D;&quot;uRouter series wireless AP. Support 802.11b&#x2F;g&#x2F;n. 300Mbps, 2T2R.&quot; sys_model&#x3D;&quot;uRouter mini SJBY&quot; ap_vendor&#x3D;&quot;BHU&quot; uplink_interface_mac&#x3D;&quot;84:82:f4:38:bd:3b&quot; hardware_version&#x3D;&quot;Z05&quot; ip&#x3D;&quot;0.0.0.0&quot; netmask&#x3D;&quot;0.0.0.0&quot; gateway&#x3D;&quot;0.0.0.0&quot; firmware_name&#x3D;&quot;kochab&quot; longitude&#x3D;&quot;&quot; latitude&#x3D;&quot;&quot; cpu_type&#x3D;&quot;MIPS 24KEc V5.5&quot; mem_type&#x3D;&quot;DDR2&quot; mem_size&#x3D;&quot;61112&quot; flash_size&#x3D;&quot;16384&quot; sys_net_id&#x3D;&quot;&quot; primary_dns&#x3D;&quot;114.114.114.114&quot; second_dns&#x3D;&quot;0.0.0.0&quot; location&#x3D;&quot;&quot; systime&#x3D;&quot;13:17:13&quot; saved_config&#x3D;&quot;&quot; build_info&#x3D;&quot;2017-11-03-09:13 Revision: 798&quot; config_model_ver&#x3D;&quot;V3&quot; config_mode&#x3D;&quot;basic&quot; work_mode&#x3D;&quot;router-ap&quot; dev_mac&#x3D;&quot;84:82:f4:38:bd:38&quot; bmc_status&#x3D;&quot;&quot; status&#x3D;&quot;done&quot;&#x2F;&gt;&lt;&#x2F;return&gt;</span><br></pre></td></tr></table></figure>
-
-<p><code>ifrate</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index&#x3D;&quot;1&quot; cmd&#x3D;&quot;ifrate&quot; status&#x3D;&quot;done&quot;&gt;		&lt;ifrate_sub&gt;			&lt;SUB interface&#x3D;&quot;wlan3&quot; tx_pkts&#x3D;&quot;490&quot; rx_pkts&#x3D;&quot;367&quot; tx_bytes&#x3D;&quot;38872&quot; rx_bytes&#x3D;&quot;56368&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan2&quot; tx_pkts&#x3D;&quot;0&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;0&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan1&quot; tx_pkts&#x3D;&quot;0&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;0&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;wlan0&quot; tx_pkts&#x3D;&quot;485&quot; rx_pkts&#x3D;&quot;161&quot; tx_bytes&#x3D;&quot;75992&quot; rx_bytes&#x3D;&quot;50581&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;eth1&quot; tx_pkts&#x3D;&quot;2023&quot; rx_pkts&#x3D;&quot;0&quot; tx_bytes&#x3D;&quot;686136&quot; rx_bytes&#x3D;&quot;0&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;			&lt;SUB interface&#x3D;&quot;eth0&quot; tx_pkts&#x3D;&quot;44410&quot; rx_pkts&#x3D;&quot;49873&quot; tx_bytes&#x3D;&quot;34125041&quot; rx_bytes&#x3D;&quot;18727781&quot; tx_rate&#x3D;&quot;0&quot; rx_rate&#x3D;&quot;0&quot;&#x2F;&gt;		&lt;&#x2F;ifrate_sub&gt;	&lt;&#x2F;ITEM&gt;&lt;&#x2F;return&gt;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
