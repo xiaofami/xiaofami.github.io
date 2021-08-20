@@ -68,5 +68,10 @@ docker rm myredis
 docker info
 ```
 
+# 安装Portainer CE
+``` bash
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```
 # 下步计划
-之前在docker里运行过dokuwiki,tiddlywiki,minecraft server等等。跑minecraft server性能不太行，破坏方块有可感知延迟。
+之前在docker里运行过dokuwiki,tiddlywiki,minecraft server等等。跑minecraft server性能不太行，破坏方块有明显卡顿。
