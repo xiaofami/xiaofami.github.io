@@ -5,7 +5,7 @@ tags:
 - linux
 - openconnect
 ---
-部分linux发行版网络配置GUI强制openconnect使用密钥，用户名-密码登录可以通过命令号行实现：
+部分linux发行版网络配置GUI强制openconnect使用密钥，用户名-密码登录可以通过命令行实现：
 ``` bash
 sudo openconnect [域名或IP地址]:[端口号]
 ```
