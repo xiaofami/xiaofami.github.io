@@ -1,3 +1,5 @@
+---
+title: Manjaro ARM镜像制作
 date: 2021-08-23 16:03:53
 tags:
 - Manjaro
