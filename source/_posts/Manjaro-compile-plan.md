@@ -12,6 +12,10 @@ tags:
 ``` bash
 sudo pacman -S manjaro-arm-tools
 ```
+# 获取配置文件
+``` bash
+sudo getarmprofiles -f
+```
 # 修改配置文件
 manjaro-arm-tool会从服务器下载现成的rootfs压缩包（大概160MB），然后以此为基础根据配置文件进行额外的包安装及配置，最终生成压缩镜像。笔者以vim2为模板进行修改：
 
