@@ -89,3 +89,8 @@ xz -dc Manjaro-ARM-minimal-vim2m-2108.img.xz | dd of=/dev/sdX bs=1M status=progr
 
 # 备注
 目前镜像已生成完毕，但未经实机测试。
+
+# 更新
+测试生成的镜像无法启动，连u-boot都进不去，直接进入盒子安卓系统的recovery。怀疑是rootfs包下载错误问题。
+
+另外最新发布的21.08经测试可以正常启动运行，其搭载的主线内核 **5.13.12-1-MANJARO-ARM #1 SMP Wed Aug 18 07:36:58 UTC 2021 aarch64 GNU/Linux**可以正常启动运行，所以替换aml内核貌似就没必要了。
