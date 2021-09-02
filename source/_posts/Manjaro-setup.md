@@ -5,6 +5,13 @@ tags:
 - Manjaro
 ---
 参考：[manjaro 切换国内源及软件安装](https://www.jianshu.com/p/2d096cd9ad61)
+# 同步时间
+时间不准会造成SSL验证失败等一系列问题。同步方式如下：(https://wiki.manjaro.org/index.php/System_Maintenance#Time_and_Date)
+```bash
+user $ timedatectl set-ntp true
+user $ sudo systemctl enable --now systemd-timesyncd
+```
+当然也可以用date手动设置。
 
 # 换国内源
 
