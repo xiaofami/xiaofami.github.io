@@ -115,7 +115,7 @@ Output HDMI-A-1 'Unknown Q27D530VHP 0x00000000' (focused)
     640x480 @ 72.809 Hz
     640x480 @ 75.000 Hz
     720x480 @ 59.940 Hz
-    800x600 @ 60.317 Hz
+    800x600 @ 60.317 Hz	
     800x600 @ 72.188 Hz
     800x600 @ 75.000 Hz
     1024x768 @ 60.004 Hz
@@ -135,12 +135,26 @@ Output HDMI-A-1 'Unknown Q27D530VHP 0x00000000' (focused)
     1920x1200 @ 59.950 Hz
     2560x1440 @ 59.951 Hz
 ```
+执行`glxgears`可以调出一个齿轮画面测试FPS,R3300-M稳定在34～35之间。电脑上这个值一般都是三位数，不过对于盒子而言已经很不错了。
+
 2K分辨率下文字有点小，缩放到1.5：
 ```bash
 swaymsg output HDMI-A-1 scale 1.5
 ```
 这样看起来好了很多。
+## 输入法安装
+```bash
+sudo pacman -S fcitx5-im #安装所有
+sudo pacman -S fcitx5-chinese-addons	
+```
+然后打开`/etc/environment`添加参数：
+```bash
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+```
+最后在`Fcitx 5 Configuration`中，删除默认的Default Group,新建一个Chinese组，`Keyboard-Chinese`放上面，`Pinyin`放下面就万事大吉。默认输入法英文，使用`Ctrl Space`或`Ctrl Shift`或`Left Shift`在中英文之间来回切换。除了候选框小一点没别的问题。
 ## 杂项
-自带的firefox刷个论坛还是很舒服的，测试bilibili弹幕比较卡，而且会丢帧，看视频还是重启到安卓系统吧。libreoffice，gedit等用着很流畅，不过暂没搞定输入法，`fcitx-googlepinyin`安装后在`fcitx`中看不到，倘能解决就可以用小红盒来写博客了。
+自带的firefox刷个论坛还是很舒服的，测试bilibili弹幕比较卡，而且会丢帧，看视频还是重启到安卓系统吧。libreoffice，gedit等用着很流畅。目前小红盒用来写hexo博客或者看PDF很安逸。
 
-另外电源管理有点小问题，关机会直接重启。而且有时休眠后显示器半天点不亮（也可能我没按对快捷键，反正脸滚键盘 + 乱点鼠标过一会就好了），实在不行按下`Ctrl + Alt + F2`进入`tty2`执行`sudo systemctl restart greetd`就好了。
+另外电源管理有点小问题，关机会直接重启。而且有时休眠后显示器点不亮，需要重新拔插HDMI。
