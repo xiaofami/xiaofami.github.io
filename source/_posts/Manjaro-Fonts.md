@@ -147,6 +147,8 @@ sudo pacman -S noto-fonts-cjk adobe-source-han-sans-cn-fonts adobe-source-han-se
 </fontconfig>
 ```
 晚上试试看字体是否会正常一些。
+
+更新：经测试，配置字体后使用Calibre-Viewer看书字体渲染效果满意。
 ## 手动安装字体
 刷新字体命令：`fc-cache -fv`
 ```bash
