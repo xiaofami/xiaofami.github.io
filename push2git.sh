@@ -1,5 +1,7 @@
 #!/bin/bash
-# 推送更新
+# 半自动推送更新
+# -i：接受行内文本作为commit -m 参数
+# -f：接受一个文本文件作为commit -m 参数
 
 commitComment=""
 echo
@@ -11,8 +13,6 @@ do
 		*);;
 	esac
 done
-#echo $1
-#echo $commitComment
 git add .
 git commit -m "$commitComment"
 git push origin blogSource
