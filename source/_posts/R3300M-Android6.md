@@ -21,6 +21,6 @@ R3300-M使用meson-gxbb-p201.dtb，搜索外网固件基本上锁定MXQ P201关�
 
 1. ugos7 wifi.img ： 只有 WIFI 工作
 2. ugos9 wifi s pdu.img ： Wifi 工作和远程控制
-3. ugos10 wifi s pdu ckear.img ：Wifi 工作正常，一些 ugos预装应用和启动器（作者说这个最精简，最快）
+3. ugos10 wifi s pdu ckear.img ：Wifi 工作正常，删除了一些 ugos预装应用和启动器（作者说这个最精简，最快）
 
 ugos10应该最适合，如果这个固件内核版本高于3.14，那么从emmc启动openwrt（5.4内核）就很有希望。Manjaro主线内核已经滚到了5.14.2，不抱希望。（如果没记错，恩山Flippy在某帖子中提到5.10内核后Amlogic都无法从emmc启动linux）有空时候测试下。
