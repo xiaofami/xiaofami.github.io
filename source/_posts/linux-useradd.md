@@ -10,7 +10,6 @@ tags:
 以下为在Manjaro ARM下通过命令行创建用户“marly”全过程，各步骤已做分解。
 
 1. 查看useradd默认模板
-
 ```bash
 sudo useradd -D
 
@@ -23,7 +22,6 @@ SKEL=/etc/skel
 CREATE_MAIL_SPOOL=no
 ```
 2. 创建用户
-
 ```bash
 sudo useradd marly
 ```
@@ -56,7 +54,6 @@ groups
 ```bash
 groups $USER
 ```
-
 查看其他用户group：
 ```bash
 $ groups git
@@ -64,12 +61,10 @@ $ groups git
 git
 ```
 不需要特殊权限即可查看。
-
 7. 添加用户到group：
 ```bash
 sudo usermod -aG existgroup newuser
 ```
-
 -aG为追加用户到现有组。
 
 新创建的用户默认会自动创建并加入与用户名同名的组，为了实现各种功能，需要将其添加到更多的组。例如，需要赋予marly管理员权限，就需要将其加入wheel组：
