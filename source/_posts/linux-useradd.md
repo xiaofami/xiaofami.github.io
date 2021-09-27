@@ -10,6 +10,7 @@ tags:
 以下为在Manjaro ARM下通过命令行创建用户“marly”全过程，各步骤已做分解。
 
 1. 查看useradd默认模板
+
 ```bash
 sudo useradd -D
 
@@ -22,6 +23,7 @@ SKEL=/etc/skel
 CREATE_MAIL_SPOOL=no
 ```
 2. 创建用户
+
 ```bash
 sudo useradd marly
 ```
