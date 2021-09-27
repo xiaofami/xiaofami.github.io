@@ -74,3 +74,13 @@ sudo usermod -aG existgroup newuser
 sudo usermod -aG wheel marly
 ```
 这样marly就有权使用sudo命令了。在debian中sudo组替代了wheel。
+
+8. 一步创建：
+```bash
+useradd -c "this shows how to create user in single line" -G git,wheel -m  fredman
+```
+
+不推荐用-p直接分配密码。删除用户用userdel：
+```bash
+userdel -r fredman
+```
