@@ -1,6 +1,6 @@
 ---
 title: Linux命令行创建用户并加入组
-date: 2021-08-20 15:51:21
+date: 2021-09-27 15:30:25
 tags:
 - Manjaro
 - user
