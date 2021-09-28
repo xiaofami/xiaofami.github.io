@@ -17,6 +17,6 @@ silver是一个跨平台、方便配置的类powerline提示符，从bronze移�
 目前silver支持 Powershell, Bash, Zsh, fish, Ion 和Elvish。
 
 silver的图标由[nerd](https://github.com/ryanoasis/nerd-fonts)字体提供。这个字体囊括了常用图标库，比如Font Awesome就包含其中。
-[diagram](https://github.com/ryanoasis/nerd-fonts/raw/master/images/sankey-glyphs-combined-diagram.svg)
+![diagram](https://github.com/ryanoasis/nerd-fonts/raw/master/images/sankey-glyphs-combined-diagram.svg)
 
 Manjaro Sway中，silver.toml位于`~/.config/silver`，可根据自身喜好修改。
