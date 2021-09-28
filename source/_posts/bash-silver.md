@@ -20,3 +20,32 @@ silver的图标由[nerd](https://github.com/ryanoasis/nerd-fonts)字体提供。
 ![diagram](https://github.com/ryanoasis/nerd-fonts/raw/master/images/sankey-glyphs-combined-diagram.svg)
 
 Manjaro Sway中，silver.toml位于`~/.config/silver`，可根据自身喜好修改。
+
+```xml
+[[left]]
+name = "status"
+color.background = "black"
+color.foreground = "white"
+
+[[left]]
+name = "user"
+color.background = "yellow"
+color.foreground = "black"
+
+[[left]]
+name = "dir"
+color.background = "blue"
+color.foreground = "black"
+
+[[left]]
+name = "git"
+color.background = "green"
+color.foreground = "black"
+
+[[left]]
+name = "cmdtime"
+color.background = "magenta"
+color.foreground = "black"
+```
+
+需要指出，在bash中，`cmdtime`不可用，故不会显示。
