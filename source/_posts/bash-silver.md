@@ -21,7 +21,7 @@ silver的图标由[nerd](https://github.com/ryanoasis/nerd-fonts)字体提供。
 
 Manjaro Sway中，silver.toml位于`~/.config/silver`，可根据自身喜好修改。
 
-```xml
+```toml
 [[left]]
 name = "status"
 color.background = "black"
