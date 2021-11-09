@@ -75,7 +75,7 @@ sudo pacman -S php php-fpm php-gd
 sudo systemctl enable --now php-fpm
 ```
 ## 配置
-编辑*/etc/php/php.ini*，启用以下扩展（删掉行首的注释即可）：
+编辑**/etc/php/php.ini**，启用以下扩展（删掉行首的注释即可）：
 ```ini
 extension=bz2
 extension=curl
@@ -91,7 +91,7 @@ post_max_size=100M
 upload_max_file_size=100M
 ```
 
-编辑*/etc/php/php-fpm.d/www.conf*文件，使其以caddy身份运行：
+编辑**/etc/php/php-fpm.d/www.conf**文件，使其以caddy身份运行：
 ```conf
 user = http
 group = http
@@ -113,13 +113,13 @@ sudo systemctl restart php-fpm
 cd ~/
 curl -O https://wordpress.org/latest.tar.gz
 ```
-移动到**/srv/http**目录下并解压缩：
+移动到 **/srv/http** 目录下并解压缩：
 ```bash
 sudo mv ~/latest.tar.gz /srv/http
 cd /srv/http
 sudo tar -zxvf latest.tar.gz
 ```
-然后在**/srv/http**会出现**wordpress**文件夹。
+然后在 **/srv/http** 会出现 **wordpress** 文件夹。
 
 早年用过**centos**等Linux发行版的人可能对**/srv/http**不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在那里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。
 
