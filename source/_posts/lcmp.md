@@ -11,7 +11,7 @@ tags:
 - wordpress
 ---
 # 简介
-**LAMP**和**LNMP**许多人不会陌生。L代表Linux，P代表PHP，M以前指代MySQL，如今换成了MariaDB，用法大体相同。至于server本身也有很多选择。Apache和Nginx之外，Caddy现在也很流行，具备反代和自动获取证书等许多使用功能。本文介绍搭建**LCMP**以及安装**WordPress**过程，希望对潜在的读者有所帮助。
+**LAMP**和**LNMP**许多人不会陌生。L代表Linux，P代表PHP，M以前指代MySQL，如今换成了MariaDB，用法大体相同。至于server本身也有很多选择。Apache和Nginx之外，Caddy现在也很流行，具备反代和自动获取证书等许多实用功能。本文介绍搭建**LCMP**以及安装**WordPress**过程，希望对潜在的读者有所帮助。
 
 # 硬件平台
 还是**R3300-M**盒子哈哈，4核2GHz加上1G内存配置足够了，TF卡选择三星128G，IO性能不是瓶颈。
