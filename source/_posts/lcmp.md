@@ -121,7 +121,7 @@ sudo tar -zxvf latest.tar.gz
 ```
 然后在 **/srv/http** 会出现 **wordpress** 文件夹。
 
-早年用过 **centos** 等Linux发行版的人可能对 **/srv/http** 不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在那里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。
+早年用过 **centos** 等Linux发行版的人可能对 **/srv/http** 不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在哪里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。
 
 完成后，开始调配Caddy。
 # Caddy
