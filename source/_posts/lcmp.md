@@ -168,6 +168,22 @@ sudo systemctl restart caddy
 不出意外，此时访问自己的域名会看到wordpress初始化向导。
 # 性能表现
 全套搭建完毕网站上线运行的情况下，系统负载约0.03，约使用277MB内存，非常轻松。
+# 风险提示
+家庭宽带对外提供网络服务属于违规行为，就算可以通过iptables等手段屏蔽cloudflare以外的流量，[比如这个：](https://gist.github.com/Manouchehri/cdd4e56db6596e7c3c5a)
+```bash
+# Source:
+# https://www.cloudflare.com/ips
+# https://support.cloudflare.com/hc/en-us/articles/200169166-How-do-I-whitelist-CloudFlare-s-IP-addresses-in-iptables-
+
+for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I INPUT -p tcp -m multiport --dports http,https -s $i -j ACCEPT; done
+for i in `curl https://www.cloudflare.com/ips-v6`; do ip6tables -I INPUT -p tcp -m multiport --dports http,https -s $i -j ACCEPT; done
+
+# Avoid racking up billing/attacks
+# WARNING: If you get attacked and CloudFlare drops you, your site(s) will be unreachable. 
+iptables -A INPUT -p tcp -m multiport --dports http,https -j DROP
+ip6tables -A INPUT -p tcp -m multiport --dports http,https -j DROP
+```
+也只不过是略微提升了安全性，在ISP面前还是掩耳盗铃。另外目前[NewFuture DDNS](https://github.com/NewFuture/DDNS)更新IP后，cloudflare的代理会被关闭，需要手动重新开启，期间原始IP暴露无遗。所以如果长期使用，还是买个正经VPS吧。
 # 参考
 排名不分前后：
 
