@@ -18,7 +18,7 @@ do
                   commit2git "$commitComment";;
                 i)commitComment=$(echo "$OPTARG")
                   commit2git "$commitComment";;
-                g)/home/marly/hexo/node_modules/hexo/bin/hexo g -d;;
+                g)hexo g -d;;
                 *);;
         esac
 done
