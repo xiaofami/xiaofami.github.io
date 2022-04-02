@@ -17,7 +17,7 @@ fn add(self, s: &str) -> String {
 ```  
 所以对于一般 `let s3 = s1 + &s2` 的情形， **s1** 所有权会发生转移。
 
-如果要避免所有权转移的麻烦，使用
+如果要避免所有权转移的麻烦，使用`format!`即可。
 ```rust
 #[derive(Debug)]
 struct Rect1 {
