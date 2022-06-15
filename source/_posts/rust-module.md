@@ -16,7 +16,7 @@ $ cargo new my-project
 执行`cargo new`命令，便得到了一个`package`，大概对应其他语言中的 **project** ?
 
 **Package** 具备如下特点：
-
+d
 1. **Package** 至少包装了一个 **crate**;
 2. **Package** 是可发布的;
 3. **Package** 可包含一个或零个 **library crate**;
