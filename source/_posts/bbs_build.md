@@ -23,14 +23,19 @@ tags:
 make -j4
 sudo make install
 ````
-编译过程大体上比较顺利。不过有一个项目编译过程中会提示
+编译过程大体上比较顺利。不过 **ax25app** 编译过程中会提示
 
 ```bash
-fatal error: ncursesw/ncurses.h: No such file or directory
-#include <ncursesw/ncurses.h>
+
+call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory
+   45 | #include <ncursesw/ncurses.h>
+      | 
 ```
 
-开发者是基于Debian编译测试所以头文件名称与Manjaro有差异。按提示进入对应C文件将 `#include <ncursesw/ncurses.h>`修改为`#include <ncurses.h>`即可。
+开发者是基于Debian编译测试所以头文件名称与Manjaro有差异。按提示进入对应C文件将 `#include <ncursesw/ncurses.h>`修改为`#include <ncurses.h>`即可:
+```bash
+vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c #修改第45行
+````
 
 ## 使libax25可被动态加载
 ```bash
