@@ -37,6 +37,22 @@ call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory
 vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c #修改第45行
 ````
 
+另外对于 **ax25tools**，安装后编译文件夹📁下面etc目录中的配置文件没有被复制到预期位置。比如执行
+
+```bash
+$ man axports
+
+AXPORTS(5)                                       Linux Programmer's Manual                                       AXPORTS(5)
+
+NAME
+       /etc/ax25/axports - AX.25 port configuration file.
+
+DESCRIPTION
+……（以下省略）
+```
+
+在man文件描述的位置并没有这个配置文件，`/usr/local` 下面也没有。或许有必要手动创建`/etc/ax25`，然后把这些配置文件复制过去？
+
 ## 使libax25可被动态加载
 ```bash
 cd /etc/ld.so.conf.d/
@@ -69,10 +85,11 @@ fbb.sh start | stop | status | restart
 等一切配置妥当后写一个systemd service用起来会更方便一点。
 
 LinFBB提供了 **xfbbd** 和 **xfbbC** 。先不研究它们，当前的目的是配置端口以便能够通过telnet访问这个BBS。
-## 端口配置
+## telnet配置
 LinFBB虽然在持续的开发维护中，但BBS作为旧时代的遗珍，包括笔者在内的许多人对它很陌生。教人用wordpress之类东西搭建博客的教程浩如烟海，BBS的资料则只能散见于互联网的角落。 尽管搭建于上个世纪， https://www.f6fbb.org/ 仍然保留了大量价值无边的资料，可以作为配置LinFBB的指导。
 
-### telnet
+此外 `/home/manjaro/fbb-7.0.11/doc/html/` 目录中也提供了帮助文档，可以阅读。
+
 参考页面： https://www.f6fbb.org/fbbdoc/fmttelne.htm
 编辑PORT.SYS:
 
@@ -112,7 +129,34 @@ LinFBB虽然在持续的开发维护中，但BBS作为旧时代的遗珍，包�
 ```
 本例中，telnet端口号为6300,转换为16进制即为 **189C**。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**/dev/cua0** 也不存在，不过不影响Telnet端口的使用。
 
-折腾好了Telnet,回头看看应该如何将direwolf与LinFBB整合。
+（编者补充：在linux中，com设备一般被命名为cua）
+
+# AX.25探究
+`fbb-7.0.11/doc/html/tllinux.htm` 成文时间久远（1997），许多内容已经过时。不过其提及的[AX25-HOWTO](https://www.linuxdoc.org/HOWTO/AX25-HOWTO/)（成稿于2001年九月）值得阅读。如果上面链接不幸死掉了，可以访问 https://tldp.org/HOWTO/AX25-HOWTO/  。
+
+## 加载AX25内核模块
+这一部分不太乐观。简单检查了一下Manjaro系统（21.3.3）的内核模块，以下是默认具备的：
+
+* ax25
+* netrom
+* rose
+* slip
+* mkiss
+* lp
+* baycom_par baycom_ser_fdx baycom_ser_hdx
+
+关键的soundmodem（sm0）不在其中。https://github.com/VK3FNG/soundmodem 显示这个模块代码已经被开发者放弃。
+
+
+
+1. 编译安装`linuxax25-ax25tools-1.0.4`其中的三个模块。上文中已完成。
+2. 执行 `sudo modporbe ax25`
+
+编者按：ax25这个模块貌似是系统自带的，**/lib/modules/5.16.20-2-MANJARO/kernel/net/ax25/ax25.ko.xz** 的创建时间远远早于编译时间。
+
+如果需要系统启动时自动加载这个模块，可以利用 `/etc/modules-load.d` 实现，具体参见 `man modules-load.d`。
+
+
 ### 整合Direwolf
 参考[XRpi interfacing with LinFBB](https://packet-radio.net/xrpi-interfacing-with-linfbb/) 一文，作者使用 **socat** 创建了虚拟COM口供 **XRouter** 和 **LinFBB** 使用。Linux中万物皆文件，所以使用socat创造的虚拟COM口也是一个文件，将这个文件提供给**XRouter** 和 **LinFBB**的配置文件，让它们都使用这个虚拟COM口，就实现了利用虚拟COM口连接**XRouter** 和 **LinFBB** 的目的。
 
