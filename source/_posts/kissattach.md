@@ -25,7 +25,7 @@ kissattach从 **axports** 文件中读取port以及相关的参数（编者补�
 
 tty在传统上是与KISS或者6PACK TNC连接的串口，不过也可以和伪终端（编者按：这是我们需要的，和Direwolf生成的伪终端连接）或者例如SCC卡这种KISS端口模拟器连接。kissattach也支持BSD和Unix98风格的伪终端。如果tty参数是 **/dev/ptmx** ，那么Kissattach就会自动适应Unix98的行为。对于Unix98伪终端，从tty名称是不可预见的，所以kissattach会在标准输出上另起一行输出对应从伪终端的名字。
 
-port就是从ax25ports文件中读取的portname值。
+port就是从axports文件中读取的portname值。
 
 inetaddr参数是可选的，它是这个新接口的IP地址。有时这个选项不能省略，不过总体而言给这个接口分配IP地址的意义不大。（编者按：可以通过给接口分配IP地址来测试是否与Direwolf连接成功，该方法参考自Direwolf文档）
 
