@@ -1,5 +1,5 @@
 ---
-title: 在Manjaro ARM重新配置内核并打包
+title: Manjaro ARM重新配置内核并打包
 date: 2022-07-22 09:46:47
 tags:
 - Manjaro
