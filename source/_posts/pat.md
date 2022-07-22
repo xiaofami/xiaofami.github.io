@@ -55,7 +55,7 @@ Jeff, NC6J 于2021年1月分享的direwolf与Pat使用方式：
 sudo direwolf -p 
 # 观察pts符号链接，本例中假设为/dev/pts/1
 sudo kissattach /dev/pts/1 port
-# 这里的port是/etc/ax25/axports中定义的名称，对于Pat而言一般习惯用wl2k。我自编译的ax25apps,ax25tools,libax25不知为何没有将这些配置文件复制到指定位置
+# 这里的port是axports中定义的名称，对于Pat而言一般习惯用wl2k。我自编译的ax25apps,ax25tools,libax25不知为何没有将这些配置文件复制到指定位置。（axports复制到/usr/local/etc/ax25，自编译安装的kissattach在这里读取axports，而非 /etc/ax25）
 pat http # 启动pat的网页页面
 # direwolf -p 进程停止后，符号链接消失，kissattach结束
 ```
