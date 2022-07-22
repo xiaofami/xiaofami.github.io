@@ -60,8 +60,18 @@ wl2k              BH2VJW          1200    255     4     Direwolf
 
 sudo direwolf -p
 sudo kissattach `ls -l /tmp/kisstnc | awk '{ print $11 }'` wl2k 10.89.1.123
+AX.25 port wl2k bound to device ax0
+
+ip a show ax0
+31: ax0: <BROADCAST,UP,LOWER_UP> mtu 255 qdisc fq_codel state UNKNOWN group default qlen 10
+    link/ax25 BH2VJW-0 brd QST-0 permaddr LINUX-1
+    inet 10.89.1.123/8 brd 10.255.255.255 scope global ax0
+       valid_lft forever preferred_lft forever
+
 ping 10.89.1.123
 ```
+
+
 
 主机的IP地址为10.89.1.122，给wl2k这个接口分配地址为10.89.1.123，此时从10.89.1.122 ping 10.89.1.123，Direwolf中会出现大量信息。
 
