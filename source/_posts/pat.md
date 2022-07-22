@@ -48,6 +48,19 @@ https://groups.io/g/direwolf/topic/use_pat_with_direwolf/80185118?p=,,,20,0,0,0:
 
 Direwolf可以扮演成一个使用Kiss协议、通过伪终端（pseudo terminal,设备路径形如/dev/pts/1）通信的传统TNC。通过伪终端可实现虚拟COM功能（所以之前设想的socat就不需要了）：
 
+编者按：伪终端（pseudo terminal）的应用很广泛。举个例子，通过SSH远程连接到Linux主机，在主机上便建立了一个伪终端。编号从0开始，由于建立了2个SSH连接，所以0和1便对应两个连接。（此时运行sudo direwolf -p，不出意外/tmp/kisstnc会指向/dev/pts/2）
+
+```bash
+who
+marly    pts/0        2022-07-22 15:08 (10.89.1.253)
+marly    pts/1        2022-07-22 15:08 (10.89.1.253)
+
+ls /dev/pts
+Permissions  Size User  Group Date Modified Name
+crw--w----  136,0 marly tty   22 Jul 15:08   0
+crw--w----  136,1 marly tty   22 Jul 15:11   1
+c---------    5,2 root  root   1 Jan  1970   ptmx
+```
 
 
 Jeff, NC6J 于2021年1月分享的direwolf与Pat使用方式：
