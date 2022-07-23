@@ -36,4 +36,4 @@ kissparams是用来配置KISS TNC的工具。具体言之，用来配置通过ki
 Sets the FEC error correction level in a DSP card based modem (KISS parameter 8). Larger correction level means better noise resistance, but slower  throughput  on  a good connection. This is an experimental feature found in a QPSK modem for the Motorola DSP56001 based DSP4 and EVM cards only.
 ```
 
-FEC，顾名思义 Forward Error Correction，Direwolf文档中在FX.25中有所提及。通过FEC技术，可以显著提升抗干扰能力，缺点是干扰较小传输良好时，通信速率比不适用FEC的连接慢，这是传输冗余信息作为纠正码的代价。可惜这个特性目前仅支持基于摩托罗拉DSP56001的DSP4和EVM，而且局限于QPSK调制。看来目前只能借助Direwolf来实现FX.25。
+FEC，顾名思义 Forward Error Correction，Direwolf文档中在FX.25中有所提及。通过FEC技术，可以显著提升抗干扰能力，缺点是干扰较小传输良好时，通信速率比不使用FEC的连接慢，这是传输冗余信息作为纠正码的代价。可惜这个特性目前仅支持基于摩托罗拉DSP56001的DSP4和EVM，而且局限于QPSK调制。看来目前只能借助Direwolf来实现FX.25。
