@@ -42,10 +42,10 @@ uid=1000(marly) gid=1000(marly) groups=1000(marly),3(sys),90(network),98(power),
 
 # KISS TNC配置
 测试Direwolf时，发现Direwolf提示
-
-    Are you using AX.25 for Linux?  It might be trying to use a modified version of KISS which uses the channel field differently than the original KISS protocol specification.  The solution might be to use a command like "kissparms -c 1 -p radio" to set CRC none mode. Another way of doing this is pre-loading the "kiss" kernel module with CRC disabled: sudo /sbin/modprobe -q mkiss crc_force=1
-
-运行 `sudo /sbin/modprobe -q mkiss crc_force=1` 即可。
+```config
+Are you using AX.25 for Linux?  It might be trying to use a modified version of KISS which uses the channel field differently than the original KISS protocol specification.  The solution might be to use a command like "kissparms -c 1 -p radio" to set CRC none mode. Another way of doing this is pre-loading the "kiss" kernel module with CRC disabled: sudo /sbin/modprobe -q mkiss crc_force=1
+```
+运行 `sudo kissparms -c 1 -p wl2k` 即可。
 
 # 下步计划
 计划研究利用LinBPQ搭建Winlink网关，[Winlink Gateway on a Raspberry Pi LinBPQ](https://www.youtube.com/watch?v=F_s4zIUIfew) 这个视频应该会很有帮助。不知道本地的火腿能不能帮忙实测packet radio效果。
