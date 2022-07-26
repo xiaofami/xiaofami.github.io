@@ -20,7 +20,7 @@ Packet Radio起源于1980年。1983年11月，大名鼎鼎的AX.25协议发布�
 
 所谓的TNC（terminal node controller） 实现了 **ASCII字符 - AFSK语音** 之间的转换，和过去电话线拨号上网很类似。比较经典的硬件TNC包括TAPR出品的TNC-1和TNC-2，以及它们的仿制品。
 
-# 第二篇 实现Pakcet Radio发射接收
+# 第二篇 实现Packet Radio发射接收
 
 这篇详细介绍了TNC的使用方式。简言之，硬件连接妥当后，电脑上用terminal连接到TNC,然后进入TNC的命令模式进行交互式操作。
 
@@ -45,3 +45,5 @@ WB9LOZ > W6PW-3,W6PW-1*: The meeting will be held at 8:00 pm.
 假设这是作者在频率上收到的信息。WB9LOZ 发送给 W6PW-3 “The meeting will be held at 8:00 pm”，区别在于第一个为直频连接，第二个经过了 W6PW-1 的中转。这个W6PW-1就是所谓的 **digipeater**，扮演中继作用。
 
 这里引入两个概念： **别名** 和 **SSID**
+
+**别名** 是有别于呼号的一串由字母和数字组成的字符，常见命名规则为地名，后面可以跟SSID。对于用户而言，用
