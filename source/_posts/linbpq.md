@@ -19,7 +19,7 @@ all: CFLAGS = -DLINBPQ -MMD -g -fcommon
 ```
 如果不加入 **-fcommon** 选项，编译时gcc会提示 **multiple definition** 错误。
 
-2. makefile第31行，将 **libminiupnpc.a** 修改为 **libminiupnpc.so** 。谨慎起见先检查以下 **miniupnpc** 这个包有没有安装，它提供了 **/usr/lib/libminiupnpc.so** 。
+2. makefile第31行，将 **libminiupnpc.a** 修改为 **libminiupnpc.so** 。谨慎起见先检查一下 **miniupnpc** 这个包有没有安装，它提供了 **/usr/lib/libminiupnpc.so** 。
 
 3. BBSUtilities.c 第9797行，将
 ```c
