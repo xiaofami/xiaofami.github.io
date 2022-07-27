@@ -90,3 +90,39 @@ TNC如果没有收到他台回执，重新发包的最大次数。不要将其�
 编者按：这些功能在AX.25，Direwolf等中有类似实现。
 
 # 第四篇 中继（Digipeater）与节点（Node）
+
+## Digipeater与FM语音中继的区别
+FM语音中继一般为双工模式，接收与转发同时进行。Digipeater一般为单工模式，收到数据包后先暂存，然后在合适时机进行转发。 TNC可以通过 **DIGIPEAT** 命令将自己的站点变成一个 Digipeater。
+## Digipeater与Node的区别
+常见的节点有 **Net/Rom** ，**TheNet**， **G8BPQ packet switch**，以及 **KA-Node** 。使用digipeater时，只需要将digipeater作为路径进行指定。**使用节点时，需要首先和节点建立连接。**	 通过适当配置，一个站点可以同时扮演digipeater与node的角色。
+
+使用Node具有一些好处：
+
+1. 连接到Node后，可以通过 **N** 命令列出当前节点可通达的全部节点，在发起DX呼叫时，就可以二次连接到距离目的地最近的节点进行呼叫
+
+2. 使用Node进行DX QSO时，数据包回执在相邻节点之间进行，而不需要像digipeater那样跑完全程，这样可以大大减少retry次数，提升通信效率。
+
+编者按：Direwolf提供了Digipeater功能，Node可以用LinBPQ搭建。不过我附近这两个都没有。。。看看能不能蹭蹭APRS吧。
+# 第五篇 BBS介绍
+连接到BBS的方式与连接到其他普通站点的方式无异，如果目标后面有SSID，不要把它忘记。
+
+编者按：ax25apps提供的**call**即可用于连接。ax25apps同时提供了**ax25_call**。二者的显著区别之一在于，**call**会进行行尾换行符的转换，而**ax25_call**不会。在旧式系统上，换行符为<CR>，即熟悉的 **\r**。现代Linux系统的换行符为 **\n**。
+
+支持AX.25的内核，ax25app，ax25tools再加上Direwolf即构成了使用Packet Radio的最小软件环境。通过listen监听，call建立连接，beacon发送无连接状态信息。如果熟悉APRS格式还可以手动编制信息发送。
+
+回到文章本身。BBS系统一般不设置密码，因为业余无线电是明文传输，即便设置了密码，在连接过程中也会变得众所周知，所以毫无意义。等完成Packet Radio实操后可以拿LinFBB搭建一个玩玩，不过人们都在玩FT8，所以十有八九又会变成一个自嗨的项目 XD
+
+# 第六篇 Packet BBS的命令
+这篇介绍了BBS的常用命令。各个BBS的命令大同小异，有兴趣可以自行了解，或者自己搭建LinFBB通过telnet连接测试。
+
+# 第七批 分层寻址
+
+分层寻址（HIERARCHICAL ADDRESSING）这个翻译不知是否贴切。格式如下：
+
+```
+ addressee-call @ BBS-call.#local-area.state-province.country.continent
+```
+例子
+```
+WB9LOZ @ W6PW.#NCA.CA.USA.NOAM
+```
