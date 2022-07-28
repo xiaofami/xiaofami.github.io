@@ -58,10 +58,12 @@ WantedBy=multi-user.target
 Description=Bind PTY created by direwolf to axports
 Documentation=https://tccmu.com
 Requires=direwolf.service
+PartOf=direwolf.service
 
 [Service]
 User=root
 Type=oneshot
+ExecStartPre=sleep 3
 ExecStart=/bin/bash -c "/usr/local/sbin/kissattach `/usr/bin/ls -l /tmp/kisstnc | /usr/bin/awk '{ print $11 }'` wl2k && exit"
 ExecStartPost=/usr/local/sbin/kissparms -c 1 -p wl2k
 ExecStop=/usr/bin/killall kissattach
