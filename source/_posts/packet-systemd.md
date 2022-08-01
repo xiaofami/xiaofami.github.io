@@ -7,6 +7,7 @@ tags:
 ---
 # direwolf.service
 ```service
+# /usr/lib/systemd/system/direwolf.service
 # direwolf.service
 
 [Unit]
@@ -26,6 +27,7 @@ WantedBy=multi-user.target
 ```
 # linbpq.service
 ```service
+# /usr/lib/systemd/system/linbpq.service
 # linbpq.service
 
 [Unit]
@@ -42,7 +44,7 @@ ExecStart=/usr/bin/screen -dmS linbpq /home/marly/linbpq/linbpq
 ExecStop=/usr/bin/killall -s INT linbpq
 Restart=on-abnormal
 RemainAfterExit=yes
-# LinBPQ关闭较慢，给它留足15秒以免异常退出后端口不解绑
+# Use graceful shutdown with a reasonable timeout
 TimeoutStopSec=15s
 [Install]
 WantedBy=multi-user.target
@@ -52,6 +54,7 @@ WantedBy=multi-user.target
 
 # ax25bind.service
 ```service
+# /usr/lib/systemd/system/ax25bind.service
 # ax25bind.service
 
 [Unit]
@@ -67,7 +70,6 @@ ExecStartPre=sleep 3
 ExecStart=/bin/bash -c "/usr/local/sbin/kissattach `/usr/bin/ls -l /tmp/kisstnc | /usr/bin/awk '{ print $11 }'` wl2k && exit"
 ExecStartPost=/usr/local/sbin/kissparms -c 1 -p wl2k
 ExecStop=/usr/bin/killall kissattach
-Restart=no
 [Install]
 WantedBy=multi-user.target
 ```
