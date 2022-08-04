@@ -28,7 +28,7 @@ drwxr-xr-x 2 root root     8192 Jun  4 05:03 extlinux
 -rw-r--r-- 1 root root  1363968 Feb 12 00:11 u-boot.bin
 -rw-r--r-- 1 root root   609247 Aug  4 06:30 u-boot.ext
 ```
-注意补充的几个文件，u-boot.bin可以删掉。这几个文件我已经打包好： [bootfiles.tgz](bootfiles.tgz)，注意你需要选择合适的u-boot文件，然后重命名为u-boot.ext。
+注意补充的几个文件，u-boot.bin可以删掉。这几个文件我已经打包好： [bootfiles.tgz](/manjaro2206/bootfiles.tgz)，注意你需要选择合适的u-boot文件，然后重命名为u-boot.ext。
 
 Manjaro ARM Mininal 22.06非常简洁，总共占用空间1.5GB，提供了206个软件包：
 ```bash
