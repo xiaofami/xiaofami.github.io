@@ -163,6 +163,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/09/17/hexo-push2git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/17/hexo-push2git/" class="post-title-link" itemprop="url">hexo源码半自动化推送</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-17 14:51:24" itemprop="dateCreated datePublished" datetime="2021-09-17T14:51:24+08:00">2021-09-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <pre><code class="bash">#!/bin/bash
+# autohexo.sh
+# 半自动推送更新
+# -i：接受行内文本作为commit -m 参数
+# -f：接受一个文本文件作为commit -m 参数
+# -g：构建页面并推送，无参数
+commitComment=&quot;&quot;
+echo
+function commit2git &#123;
+    git add .
+    git commit -m &quot;$1&quot;
+    git push origin blogSource
+&#125;
+while getopts :i:f:g opt
+do
+        case &quot;$opt&quot; in
+                f)commitComment=$(cat &quot;$OPTARG&quot;)
+                  commit2git &quot;$commitComment&quot;;;
+                i)commitComment=$(echo &quot;$OPTARG&quot;)
+                  commit2git &quot;$commitComment&quot;;;
+                g)hexo g -d;;
+                *);;
+        esac
+done
+</code></pre>
+<p>很简单的脚本，通过终端输入或者提供一个文本文件传递<code>commit -m</code>的参数，能够略微简化提交博客源码的流程。</p>
+<p>用例：</p>
+<pre><code class="bash">./autohexo.sh -gi &quot;更新日志&quot;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/09/17/imagemagick/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1358,136 +1451,6 @@ vim2-post-install
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/08/20/Manjaro-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/20/Manjaro-docker/" class="post-title-link" itemprop="url">Manjaro安装配置docker</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-20 15:51:21" itemprop="dateCreated datePublished" datetime="2021-08-20T15:51:21+08:00">2021-08-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>主要来源：<a target="_blank" rel="noopener" href="https://blog.huangz.me/2020/docker-on-linux.html">在 Manjaro Linux 系统使用 Docker</a></p>
-<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 <strong>5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU/Linux</strong></p>
-<h1 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h1><pre><code class="bash">sudo pacman -Syu
-sudo pacman -S docker
-</code></pre>
-<h1 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h1><pre><code class="bash">sudo systemctl start docker.service
-</code></pre>
-<h1 id="添加到系统启动项"><a href="#添加到系统启动项" class="headerlink" title="添加到系统启动项"></a>添加到系统启动项</h1><pre><code class="bash">sudo systemctl enable docker.service
-</code></pre>
-<h1 id="添加当前用户到Docker组"><a href="#添加当前用户到Docker组" class="headerlink" title="添加当前用户到Docker组"></a>添加当前用户到Docker组</h1><p>这样当前用户就有足够权限操作docker而不必sudo权限。</p>
-<pre><code class="bash">sudo usermod -aG docker $USER
-</code></pre>
-<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>打开或创建 /etc/docker/daemon.json 文件：</p>
-<pre><code class="bash">&#123;
-    &quot;registry-mirrors&quot;: [
-        &quot;https://registry.docker-cn.com&quot;
-    ]
-&#125;
-</code></pre>
-<p>registry.docker-cn.com 是 Docker 的官方中国镜像， 除此之外还有其他一些第三方镜像可选：</p>
-<table>
-<thead>
-<tr>
-<th align="center">镜像</th>
-<th align="center">地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Azure中国</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://dockerhub.azk8s.cn/">https://dockerhub.azk8s.cn</a></td>
-</tr>
-<tr>
-<td align="center">中科大</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://docker.mirrors.ustc.edu.cn/">https://docker.mirrors.ustc.edu.cn</a></td>
-</tr>
-<tr>
-<td align="center">七牛云</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://reg-mirror.qiniu.com/">https://reg-mirror.qiniu.com</a></td>
-</tr>
-<tr>
-<td align="center">网易云</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://hub-mirror.c.163.com/">https://hub-mirror.c.163.com</a></td>
-</tr>
-<tr>
-<td align="center">腾讯云</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://mirror.ccs.tencentyun.com/">https://mirror.ccs.tencentyun.com</a></td>
-</tr>
-</tbody></table>
-<p>保存文件之后重启一下 Docker 服务：</p>
-<pre><code class="bash">sudo systemctl daemon-reload
-sudo systemctl restart docker
-</code></pre>
-<h1 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h1><pre><code class="bash">docker search redis
-docker pull redis
-docker pull redis:rc
-docker images
-docker run --name myredis -d redis
-docker ps
-docker stop myredis
-docker rm myredis
-docker info
-</code></pre>
-<h1 id="安装Portainer-CE"><a href="#安装Portainer-CE" class="headerlink" title="安装Portainer CE"></a>安装Portainer CE</h1><pre><code class="bash">docker volume create portainer_data
-docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
-</code></pre>
-<h1 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h1><p>之前在docker里运行过dokuwiki,tiddlywiki,minecraft server等等。跑minecraft server性能不太行，破坏方块有明显卡顿。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1557,7 +1520,7 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

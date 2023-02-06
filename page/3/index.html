@@ -163,6 +163,136 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/28/packet-systemd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/28/packet-systemd/" class="post-title-link" itemprop="url">Packet Radio Systemd服务</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-28 15:46:23" itemprop="dateCreated datePublished" datetime="2022-07-28T15:46:23+08:00">2022-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="direwolf-service"><a href="#direwolf-service" class="headerlink" title="direwolf.service"></a>direwolf.service</h1><pre><code class="service"># /usr/lib/systemd/system/direwolf.service
+# direwolf.service
+
+[Unit]
+Description=Direwolf management
+Documentation=https://tccmu.com
+Requires=network-online.target
+
+[Service]
+User=marly
+Type=oneshot
+ExecStart=/usr/bin/screen -dmS direwolf /usr/local/bin/direwolf -c /home/marly/direwolf.conf -p
+ExecStop=/usr/bin/killall -s INT direwolf
+Restart=on-abnormal
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<h1 id="linbpq-service"><a href="#linbpq-service" class="headerlink" title="linbpq.service"></a>linbpq.service</h1><pre><code class="service"># /usr/lib/systemd/system/linbpq.service
+# linbpq.service
+
+[Unit]
+Description=LinBPQ management
+Documentation=https://tccmu.com
+Requires=network-online.target
+Wants=direwolf.service
+
+[Service]
+User=marly
+Type=oneshot
+WorkingDirectory=/home/marly/linbpq/
+ExecStart=/usr/bin/screen -dmS linbpq /home/marly/linbpq/linbpq
+ExecStop=/usr/bin/killall -s INT linbpq
+Restart=on-abnormal
+RemainAfterExit=yes
+# Use graceful shutdown with a reasonable timeout
+TimeoutStopSec=15s
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>这两个服务是以普通用户 <strong>marly</strong> 身份，在screen中运行的。开机时，会优先启动direwolf，然后启动linbpq。注意service文件中的用户名、工作路径、配置文件路径要修改成自己的。</p>
+<h1 id="ax25bind-service"><a href="#ax25bind-service" class="headerlink" title="ax25bind.service"></a>ax25bind.service</h1><pre><code class="service"># /usr/lib/systemd/system/ax25bind.service
+# ax25bind.service
+
+[Unit]
+Description=Bind PTY created by direwolf to axports
+Documentation=https://tccmu.com
+Requires=direwolf.service
+PartOf=direwolf.service
+
+[Service]
+User=root
+Type=oneshot
+ExecStartPre=sleep 3
+ExecStart=/bin/bash -c &quot;/usr/local/sbin/kissattach `/usr/bin/ls -l /tmp/kisstnc | /usr/bin/awk &#39;&#123; print $11 &#125;&#39;` wl2k &amp;&amp; exit&quot;
+ExecStartPost=/usr/local/sbin/kissparms -c 1 -p wl2k
+ExecStop=/usr/bin/killall kissattach
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>将上述service文件放在 <code>/usr/lib/systemd/system/</code> 目录中，然后执行</p>
+<pre><code class="bash">sudo systemctl daemon-reload
+sudo systemctl enable --now direwolf.service
+sudo systemctl enable --now linbpq.service
+sudo systemctl enable --now ax25bind.service
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/28/linbpq-config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1326,265 +1456,6 @@ sudo ldconfig
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/05/ham_linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/05/ham_linux/" class="post-title-link" itemprop="url">业余无线电linux发行版</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-05 09:01:47" itemprop="dateCreated datePublished" datetime="2022-07-05T09:01:47+08:00">2022-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="KB1OIQ-Andy’s-Ham-Radio-Linux"><a href="#KB1OIQ-Andy’s-Ham-Radio-Linux" class="headerlink" title="KB1OIQ - Andy’s Ham Radio Linux"></a>KB1OIQ - Andy’s Ham Radio Linux</h1><p>项目地址： <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/kb1oiq-andysham/">https://sourceforge.net/projects/kb1oiq-andysham/</a> </p>
-<p>一个被KB10IQ积极维护的Linux发行版，基于Xubuntu 22.04.0，最近更新于2022年6月14日。主要包含以下特性：</p>
-<ul>
-<li>Live medium which can be installed to the hard drive or USB thumb drive</li>
-<li>Xfce4 desktop environment</li>
-<li>Contains a large number of amateur radio programs</li>
-<li>Amateur Radio menu customized for ease of use</li>
-<li>Nothing proprietary (as far as I know)</li>
-<li>Software came from the Ubuntu repositories, PPAs, and source tar files</li>
-<li>Software defined radio receiver with RTL2832 USB dongle</li>
-<li>Micro-Fox Config GPL and TinyTrak3 Config GPL</li>
-<li>GNU Radio Companion and gqrx</li>
-<li>FreeDV (free digital voice)</li>
-<li>Packet radio software linpac and AX25</li>
-<li>pskmail client and server</li>
-<li>digital radio mondiale</li>
-<li>Learn CW via the Wordsworth method</li>
-<li>FT8 via wsjt-x</li>
-<li>js8call</li>
-<li>Arduino IDE and libraries, plus Fritzing</li>
-<li>nanoVNA and tinySA software</li>
-<li>Don’t forget to install GridTracker! See HOWTO_GridTracker document.</li>
-<li>SDRangel</li>
-</ul>
-<p>Packet Radio是我所需要的，其他人可能对FT8更感兴趣。系统支持Live USB，方便使用体验。</p>
-<h1 id="DragonOS-Focal"><a href="#DragonOS-Focal" class="headerlink" title="DragonOS_Focal"></a>DragonOS_Focal</h1><p>emaxecuter专门为SDR打造的Linux发行版，基于Lubuntu 20.04，最近更新于2022年5月21日。主要包含以下特性：</p>
-<ul>
-<li>Acarsdec w/ rtlsdr support</li>
-<li>Aircrack-ng 1.6</li>
-<li>Airspy_ADSB</li>
-<li>Apache2</li>
-<li>Asterisk</li>
-<li>Auto137</li>
-<li>BladeRF ADSB w/ Dump1090 Mutability (/usr/src)</li>
-<li>BladeRF-Wiphy (usr/src/wiphy-build)</li>
-<li>Blue hydra</li>
-<li>Boatbod op25</li>
-<li>BTLE w/ hackrf (can be recompiled for bladeRF)</li>
-<li>CalypsoBTS w/ firmware + tools</li>
-<li>Cesium</li>
-<li>Chirp-daily (python2)</li>
-<li>Composable-SDR AppImage with SDRPlay support (/usr/src/Soapy_SDR-x86_64)</li>
-<li>Crocodile Hunter (LimeSDR Mini support)</li>
-<li>CubicSDR</li>
-<li>DF-Aggregator w/ Offline capability</li>
-<li>Direwolf</li>
-<li>Dumphfdl</li>
-<li>DumpVDL2</li>
-<li>Esptool</li>
-<li>FALCON</li>
-<li>Fldigi</li>
-<li>GNU Radio 3.8</li>
-<li>Gpredict</li>
-<li>GQRX</li>
-<li>GQRX Scanner</li>
-<li>GR-ADSB</li>
-<li>GR-AIR-Modes</li>
-<li>GR-AOA</li>
-<li>GR-Correctiq</li>
-<li>GR-DECT2</li>
-<li>GR-DSD</li>
-<li>GR-FHSS_Utils</li>
-<li>GR-Foo</li>
-<li>GR-Grnet</li>
-<li>GR-GSM</li>
-<li>GR-ieee802-11 w/ HackRF Sink TX Flowgraph</li>
-<li>GR-ieee802-15-4</li>
-<li>GR-IIO</li>
-<li>Gr-Inspector (/usr/src)</li>
-<li>GR-Iridium</li>
-<li>GR-limesdr</li>
-<li>GR-Lora</li>
-<li>GR-Lora_SDR</li>
-<li>GR-Mixalot</li>
-<li>GR-NFC</li>
-<li>GR-NRSC5</li>
-<li>GR-NTSC-RC</li>
-<li>GR-Paint38</li>
-<li>GR-PDU_Utils</li>
-<li>GR-RDS</li>
-<li>GR-Sandia_Utils</li>
-<li>GR-Satellites</li>
-<li>GR-Smart_Meters</li>
-<li>GR-Soapy</li>
-<li>GR-Tempest</li>
-<li>GR-Timing_Utils</li>
-<li>Grgsm_scanner-GUI</li>
-<li>GSMEvil2</li>
-<li>HackTV GUI v2021-11-09</li>
-<li>Ham2Mon by lordmorgul</li>
-<li>IceCast2 (needs configured before starting)</li>
-<li>IMSI-catcher</li>
-<li>Inotify-tools</li>
-<li>Inspectrum 0.2.3</li>
-<li>Iridium-Toolkit</li>
-<li>IridiumLive</li>
-<li>JAERO</li>
-<li>Js8call</li>
-<li>JTDX</li>
-<li>Kalibrate (HackRF)</li>
-<li>Kismet</li>
-<li>Kismet rest api</li>
-<li>Kisstatic2mobile w/ latest kismet support</li>
-<li>Kismon</li>
-<li>Larry Tetra Kit e9f93618</li>
-<li>LeanSDR/LeanDVB</li>
-<li>Libacars</li>
-<li>LibBladeRF 2.4.1 w/ xA5 support</li>
-<li>LibhackRF/hackRF tools 2021.03.1</li>
-<li>Libosmo-dsp</li>
-<li>LimeSuite</li>
-<li>Linrad</li>
-<li>LiquidSoap</li>
-<li>LTE-Cell-Scanner (v2 remains and supports RTLSDR, HackRF, BladeRF with CMake options)</li>
-<li>LuaRadio v0.10.0 w/ examples</li>
-<li>M17-Gnuradio</li>
-<li>Meshtastic Python API 1.2.58(standalone)</li>
-<li>Mirage (GitHub.com/RCayre/mirage</li>
-<li>)</li>
-<li>MMDVM</li>
-<li>Mmdvm-sdr by r4d10n</li>
-<li>MMDVMHost by g4klx</li>
-<li>Multimon-ng</li>
-<li>Nmap</li>
-<li>NOAA-Apt 1.3.1</li>
-<li>NRSC5 decoder for RTLSDR</li>
-<li>Nzyme</li>
-<li>OP25 “Boatbod” (GNU Radio 3.8/Python3 testing /usr/src/op25/)</li>
-<li>OpenWebRX 0.20.3</li>
-<li>Osmo-bsc</li>
-<li>Osmo-bts-trx</li>
-<li>Osmo-hlr</li>
-<li>Osmo-MGW</li>
-<li>Osmo-msc</li>
-<li>Osmo-NITB</li>
-<li>Osmo-nitb-scripts (@NotPike)</li>
-<li>Osmo-Sip-Connector</li>
-<li>Osmo-trx-lms (LimeSDR support)</li>
-<li>Osmo-trx-uhd</li>
-<li>Osmocom-BB tools in /usr/src</li>
-<li>Photonmap</li>
-<li>Probequest</li>
-<li>Pyadi-iio</li>
-<li>PyRtlSDR</li>
-<li>PySDR 2.0 (Guide to SDR and DSP using Python)</li>
-<li>Qalculate</li>
-<li>Qfits for use with sattools</li>
-<li>QradioLink w/ MMDVM ability</li>
-<li>QspectrumAnalyzer</li>
-<li>Qsstv</li>
-<li>Qt-DAB</li>
-<li>RDF-Sim</li>
-<li>Retrogram-RTLSDR</li>
-<li>Retrogram-soapysdr</li>
-<li>Reveng</li>
-<li>RFcat</li>
-<li>RFCrack</li>
-<li>RFsoapyfile</li>
-<li>RMSViewer</li>
-<li>RSP TCP Server (SDRPlay support)</li>
-<li>RTL_433</li>
-<li>RTLSDR-Airband v4.0.1 (conf in /usr/src/)</li>
-<li>RX_Tools</li>
-<li>SatDump</li>
-<li>SDR++ w/ server capability</li>
-<li>SDR4space.lite w/ examples</li>
-<li>SDRAngel</li>
-<li>SDRReceiver</li>
-<li>SDRTrunk</li>
-<li>ShinySDR</li>
-<li>SigDigger</li>
-<li>Signal Server GUI w/ python3 virtual environment</li>
-<li>Signal Server N90ZB w/ Web Interface by Dr. Bill Walker</li>
-<li>Soapysdr modules</li>
-<li>Sparrow-WiFi w/ FALCON tools + wpapcap2john</li>
-<li>Splat!</li>
-<li>SpyServer (usr/src/spyserver-linux-x64)</li>
-<li>srsLTE-Sniffer (loop-catcher.sh in /usr/src/srsLTE-release_18_12/build/lib/examples)</li>
-<li>srsRAN</li>
-<li>Strf</li>
-<li>Tetra-kit “screen2tetra.sh” script in /usr/src/tetra-kit/recorder/wav</li>
-<li>Tetra-Kit-Player in /usr/src (needs npm installed)</li>
-<li>Trunk-Recorder</li>
-<li>Ubertooth 2020-12-R1</li>
-<li>Umurmur</li>
-<li>Universal Radio Hacker</li>
-<li>WFView from source</li>
-<li>wireguard</li>
-<li>Wireshark</li>
-<li>WSJT-X</li>
-<li>Yate/YateBTS w/ BladeRF xA4 improvements</li>
-<li>yellowShoes nrsc5 HD FM audio player</li>
-<li>Zenmap</li>
-</ul>
-<p>包含了先前提到的Direwolf。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1654,7 +1525,7 @@ sudo ldconfig
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

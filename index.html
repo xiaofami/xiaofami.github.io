@@ -163,6 +163,178 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2023/02/06/r3300m-reflash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/06/r3300m-reflash/" class="post-title-link" itemprop="url">R3300-M再刷机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-06 10:41:46 / 修改时间：14:35:15" itemprop="dateCreated datePublished" datetime="2023-02-06T10:41:46+08:00">2023-02-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>家里先前运行Manjaro ARM的R3300-M最近出现了开机一段时间后SSH无法登陆的问题，于是备份必要文件后重刷系统。原本以为不需要再水一篇文章，不过刷机过程中遇到了一些问题，有必要记录下来。</p>
+<h1 id="镜像选择"><a href="#镜像选择" class="headerlink" title="镜像选择"></a>镜像选择</h1><p>之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 <strong>extlinux.ext</strong> 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参数也精简了许多，毫无意外启动失败了。我参照之前的格式修改，结果无法发现root分区，这肯定就行不通了。于是换用Vim2镜像，这个也有坑。测试了22.12和22.10版本，启动时提示 <strong>reserved mem:failed to allocate memory for node ‘linux,cma’</strong> 错误导致启动失败进入 <strong>emergency shell</strong>。几经测试后 <strong>vim2 22.08</strong> 是能够正常使用的最新版本，开机后直接更新系统换主线内核即可。这一部分我将两个镜像中的dtb文件反编译成dts进行了对比，结果如下：</p>
+<pre><code class="bash"># 22.08版本
+linux,cma &#123;
+        compatible = &quot;shared-dma-pool&quot;;
+        reusable;
+        size = &lt;0x00 0x10000000&gt;;
+        alignment = &lt;0x00 0x400000&gt;;
+        linux,cma-default;
+&#125;;
+</code></pre>
+<pre><code class="bash"># 22.12版本
+linux,cma &#123;
+      compatible = &quot;shared-dma-pool&quot;;
+      reusable;
+      size = &lt;0x00 0x38000000&gt;;
+      alignment = &lt;0x00 0x400000&gt;;
+      linux,cma-default;
+&#125;;
+</code></pre>
+<p>这个变化应该是内存失败的主因。另外diff可见其他大量phandle的值也发生了变化。如果将22.12版本中的 <strong>meson-gxbb-p201.dtb</strong> 替换成 <strong>22.10</strong> 中的，是不是就能规避这个错误了呢？有心人可以自行测试。</p>
+<h1 id="编译WIFI驱动"><a href="#编译WIFI驱动" class="headerlink" title="编译WIFI驱动"></a>编译WIFI驱动</h1><pre><code class="bash">sudo pacman -S git make gcc bc
+git clone https://github.com/jwrdegoede/rtl8189ES_linux.git
+cd ~/rtl8189ES_linux/
+make -j$(nproc) ARCH=arm64 KSRC=/usr/lib/modules/$(uname -r)/build
+sudo cp 8189es.ko /usr/lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/
+sudo depmod -a
+sudo modprobe 8189es
+</code></pre>
+<p>较之前的版本补充了依赖关系安装。nproc是一个用于获取CPU线程数的小程序，用来全速编译很便利。</p>
+<h1 id="连接WIFI"><a href="#连接WIFI" class="headerlink" title="连接WIFI"></a>连接WIFI</h1><p>过去我使用 <strong>networkmanager</strong> 提供的 <strong>nmtui</strong> 连接WIFI，优点比较直观。这次换用 <strong>wpa_supplicant</strong> 连接无线网络。<br>刚才编译加载好无线驱动后使用 <code>ip a</code> 查看，可以看到无线网卡名称为 <strong>wlan0</strong> ，使用 <code>sudo iw wlan0 scan</code> 可以扫描到附近的全部无线热点，说明无线网卡已经正常驱动，接下来用pacman安装<strong>wpa_supplicant</strong>。安装程序会自动创建 <strong>/etc/wpa_supplicant/</strong> 这个目录，该目录目前还是空的，需要自行创建WIFI配置文件。</p>
+<p>假设要连接SSID为 <strong>ASUS</strong> ，密码为 <strong>12345678</strong> 的这个WIFI，首先生成配置文件：</p>
+<pre><code class="bash">wpa_passphrase &quot;ASUS&quot; &quot;12345678&quot; 
+
+
+network=&#123;
+        ssid=&quot;ASUS&quot;
+        #psk=&quot;12345678&quot;
+        psk=a0efc361219475143ca336c62571c833d81e72b952db56e373a5c255ebff7e00
+&#125;
+</code></pre>
+<p>在 <strong>/etc/wpa_supplicant/</strong> 这个目录下创建 <strong>wpa_supplicant.conf</strong> ，然后把上门的输出内容复制进去保存。然后执行命令连接：</p>
+<pre><code class="bash">sudo wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf &amp;
+</code></pre>
+<p>这个命令是很直观的，使用wlan0这个无线网卡，根据 <strong>/etc/wpa_supplicant/wpa_supplicant.conf</strong> 配置连接WIFI，并作为后台进程执行。</p>
+<p>当然每次开机手动连接WIFI是不方便的，很自然的想法是利用systemd创建service。事实上 <strong>wpa_supplicant</strong> 也提供了服务：</p>
+<pre><code class="bash">
+systemctl cat wpa_supplicant
+# /usr/lib/systemd/system/wpa_supplicant.service
+[Unit]
+Description=WPA supplicant
+Before=network.target
+After=dbus.service
+Wants=network.target
+IgnoreOnIsolate=true
+
+[Service]
+Type=dbus
+BusName=fi.w1.wpa_supplicant1
+ExecStart=/usr/bin/wpa_supplicant -u -s -O /run/wpa_supplicant
+
+[Install]
+WantedBy=multi-user.target
+Alias=dbus-fi.w1.wpa_supplicant1.service
+</code></pre>
+<p>但是这个服务达不到期望目的。参考 <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/361558/difference-between-systemd-wpa-supplicant-service-and-wpa-supplicantwlan0-servi">Difference between systemd wpa_supplicant.service and wpa_supplicant@wlan0.service?</a> 一文，这个服务主要是用于服务 <strong>networkmanager</strong> 的。由于我不打算安装使用 <strong>networkmanager</strong> ，所以这个服务没有意义。真正有意义的是 <strong>wpa_supplicant@.service</strong> ，而且值得特别指出，这是个动态服务：</p>
+<pre><code class="bash">systemctl cat wpa_supplicant@.service
+# /usr/lib/systemd/system/wpa_supplicant@.service
+[Unit]
+Description=WPA supplicant daemon (interface-specific version)
+Requires=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+Before=network.target
+Wants=network.target
+
+# NetworkManager users will probably want the dbus version instead.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wpa_supplicant -c/etc/wpa_supplicant/wpa_supplicant-%I.conf -i%I
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>至此思路就清楚了。首先执行 <code>ps aux | grep wpa</code> 找到并杀死刚才连接WIFI执行的后台进程，然后将 <strong>/etc/wpa_supplicant/wpa_supplicant.conf</strong> 重命名为 <strong>/etc/wpa_supplicant/wpa_supplicant-wlan0.conf</strong> ，最后执行 <code>sudo systemctl enable --now wpa_supplicant@wlan0</code> 激活服务就大功告成。注意体味下此处动态服务的妙用。</p>
+<h1 id="重新安装hexo"><a href="#重新安装hexo" class="headerlink" title="重新安装hexo"></a>重新安装hexo</h1><pre><code class="bash">sudo pacman -S npm
+sudo npm install hexo-cli -g
+sudo npm install hexo-deployer-git --save
+</code></pre>
+<p>这里补充的主要是GitHub使用密钥同步问题：</p>
+<ol>
+<li>修复密钥权限</li>
+</ol>
+<p><strong>$HOME/.ssh</strong>目录下的私钥 <strong>id_rsa</strong> 导回后默认权限为644，程序会抱怨权限太宽，需要手动改成600。成功后测试输出如下：</p>
+<pre><code class="bash">ssh -T git@github.com
+Hi xiaofami! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+<ol start="2">
+<li>修改 <strong>.git/config</strong>文件</li>
+</ol>
+<p><strong>.git</strong> 位于你的hexo目录。我修改后的config文件内容如下：</p>
+<pre><code class="config">[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote &quot;origin&quot;]
+        url = git@github.com:xiaofami/xiaofami.github.io
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch &quot;blogSource&quot;]
+        remote = origin
+        merge = refs/heads/blogSource
+</code></pre>
+<p>修改之前 <strong>url</strong> 一行使用的是https格式，所以无法跳过手动输入验证步骤。按照上述形式修改为git即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/12/02/ImageMagick/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -798,71 +970,6 @@ convert 0.jpg -colorspace Gray 1.jpg #Linux下
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/09/06/fd-dipole/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/06/fd-dipole/" class="post-title-link" itemprop="url">晾衣绳天线研究（篇二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-06 15:35:10" itemprop="dateCreated datePublished" datetime="2022-09-06T15:35:10+08:00">2022-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前搭建的天线指标不是很理想。发射指标暂不提，接收增益感觉也不够。之前守听7050频率，能勉强听到沈阳的朋友呼叫外地友台，报告对方信号59，不过我这里什么都听不到。底噪其实还算理想，求精电源配合磁环29MHz底噪不起表，7、14MHz底噪大概S3左右。拿EZNEC大致仿真了最普通的半波长偶极子天线，俯仰角90°达到最大增益6.55dbi，beamwidth为35.9<del>144.1°范围。方向性不佳的原因是高度不够，书上推荐不小于0.2λ，实际越高越好。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=OoHoHocQdc4">Experimenting with a clothesline style folded dipole</a>是 <strong>VK3YE</strong> 将 <strong>VA2ERY</strong> 文章付诸实践的视频。他在自家院子里很随意地拉了一条约5米长的晾衣绳，高度没有一人高，两条线最大距离约0.5米。 <strong>VK3YE</strong> 在不同的馈电点位置用天分仪进行了测试，结果没有惊喜，毕竟这条使用1:4的巴伦的天线过于随意，而且偏长了。<br><strong>W4RNL</strong> 撰写的<a target="_blank" rel="noopener" href="http://on5au.be/content/amod/amod117.html">Modeling and the Logic of Question Resolution</a>通读了一遍，该文对Folded Dipole进行了建模，可作为参考。<strong>W4RNL</strong> 已经化作了 <strong>silent key</strong> ，愿他安息。<br>重新建模后再次仿真计算，结果表明配合300Ω馈线情况下，天线在14MHz完美谐振，驻波1.1左右。我之前制作的天线过长了，而且长出的天线没有减掉，劣化了天线指标，有空时应该将天线剪短。至于方向性，Beamwidth33.3</del>146.7°，照旧90°最大 Orz 或许我应该专注通联卫星 😂</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -932,7 +1039,7 @@ convert 0.jpg -colorspace Gray 1.jpg #Linux下
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
