@@ -217,14 +217,14 @@
 <h1 id="配置nano高亮"><a href="#配置nano高亮" class="headerlink" title="配置nano高亮"></a>配置nano高亮</h1><p>nano是Manjaro ARM Minimal的默认文本编辑器，稍作修改使其更好用：</p>
 <h2 id="安装拓展高亮"><a href="#安装拓展高亮" class="headerlink" title="安装拓展高亮"></a>安装拓展高亮</h2><pre><code class="bash">sudo pacman -Sy nano-syntax-highlighting
 </code></pre>
-<h2 id="应用高亮"><a href="#应用高亮" class="headerlink" title="应用高亮"></a>应用高亮</h2><p>编辑 <strong>&#x2F;etc&#x2F;nanorc</strong> ，加入以下两行：</p>
+<h2 id="应用高亮"><a href="#应用高亮" class="headerlink" title="应用高亮"></a>应用高亮</h2><p>编辑 <strong>/etc/nanorc</strong> ，加入以下两行：</p>
 <pre><code class="nanorc">include &quot;/usr/share/nano/*.nanorc&quot;
 include &quot;/usr/share/nano-syntax-highlighting/*.nanorc&quot;
 </code></pre>
 <p>重新登录后生效。</p>
 <h1 id="美化命令行界面"><a href="#美化命令行界面" class="headerlink" title="美化命令行界面"></a>美化命令行界面</h1><h2 id="silver安装"><a href="#silver安装" class="headerlink" title="silver安装"></a>silver安装</h2><pre><code class="bash">sudo pacman -Sy silver ttf-nerd-fonts-symbols
 </code></pre>
-<h2 id="silver配置"><a href="#silver配置" class="headerlink" title="silver配置"></a>silver配置</h2><p>创建 <strong>~&#x2F;.config&#x2F;silver&#x2F;silver.toml</strong> 文件，内容如下：</p>
+<h2 id="silver配置"><a href="#silver配置" class="headerlink" title="silver配置"></a>silver配置</h2><p>创建 <strong>~/.config/silver/silver.toml</strong> 文件，内容如下：</p>
 <pre><code class="toml">[[left]]
 name = &quot;status&quot;
 color.background = &quot;black&quot;
@@ -250,7 +250,7 @@ name = &quot;cmdtime&quot;
 color.background = &quot;magenta&quot;
 color.foreground = &quot;black&quot;
 </code></pre>
-<p>然后修改 <strong>~&#x2F;.bashrc</strong> 文件。默认文件大概这样：</p>
+<p>然后修改 <strong>~/.bashrc</strong> 文件。默认文件大概这样：</p>
 <pre><code class="bash">#
 # ~/.bashrc
 #
@@ -278,10 +278,10 @@ source &lt;(silver init)
 # source bash aliases
 source ~/.bash_aliases
 </code></pre>
-<p>现在还没有 <strong>~&#x2F;.bash_aliases</strong> ，手动创建一个，一会儿要用。</p>
+<p>现在还没有 <strong>~/.bash_aliases</strong> ，手动创建一个，一会儿要用。</p>
 <h1 id="老命令替代"><a href="#老命令替代" class="headerlink" title="老命令替代"></a>老命令替代</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="bash">sudo pacman -Sy exa bat chafa
 </code></pre>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>~&#x2F;.bash_aliases</strong> ，加入以下内容：</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>~/.bash_aliases</strong> ，加入以下内容：</p>
 <pre><code class="bash">alias ls=&quot;exa -aglh --icons&quot;
 alias tree=&quot;exa --tree --icons&quot;
 alias cat=&quot;bat&quot;

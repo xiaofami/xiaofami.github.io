@@ -275,15 +275,14 @@ vim2-post-install
 <p>复制镜像到本地家目录：<code>scp Manjaro-ARM-minimal-vim2m-2108img.xz tccmu@192.168.1.221:/home/tccmu</code></p>
 <p>tccmu是电脑上当前用户名，替换成自己的即可。192.168.1.221是自己电脑的IP（不是盒子），同样要替换。</p>
 <ol start="6">
-<li>写入镜像到TF卡：</li>
-</ol>
-<pre><code class="bash">xz -dc Manjaro-ARM-minimal-vim2m-2108.img.xz | dd of=/dev/sdX bs=1M status=progress conv=fsync
+<li>写入镜像到TF卡：<pre><code class="bash">xz -dc Manjaro-ARM-minimal-vim2m-2108.img.xz | dd of=/dev/sdX bs=1M status=progress conv=fsync
 </code></pre>
-<p>写入设备名自己替换。</p>
+写入设备名自己替换。</li>
+</ol>
 <p>之后的配置没有任何难度了，修改<strong>extlinux.conf</strong>使用合适dtb,修改u-boot-s905为u-boot.ext就完事大吉。</p>
 <h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><p>目前镜像已生成完毕，但未经实机测试。</p>
 <h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>测试生成的镜像无法启动，连u-boot都进不去，直接进入盒子安卓系统的recovery。怀疑是rootfs包下载错误问题。</p>
-<p>另外最新发布的21.08经测试可以正常启动运行，其搭载的主线内核 <strong>5.13.12-1-MANJARO-ARM #1 SMP Wed Aug 18 07:36:58 UTC 2021 aarch64 GNU&#x2F;Linux</strong>一切正常，所以替换aml内核貌似就没必要了。</p>
+<p>另外最新发布的21.08经测试可以正常启动运行，其搭载的主线内核 <strong>5.13.12-1-MANJARO-ARM #1 SMP Wed Aug 18 07:36:58 UTC 2021 aarch64 GNU/Linux</strong>一切正常，所以替换aml内核貌似就没必要了。</p>
 
     </div>
 

@@ -362,9 +362,9 @@ NA&#39;s   :2690
 </code></pre>
 <p>剔除零值后数据变得更有意义了。</p>
 <p>拓展阅读：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/48472404">如何理解R中因子(factor)的概念?</a>，猴子的回答同时阐明了 <strong>因子</strong> 的概念。</p>
-<p>library(hms)<br>rpm &lt;- data.frame(x &#x3D; data$time, y &#x3D; data$”高度 (GPS) (m)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>plot(as_hms(rpm$x), rpm$y, type &#x3D; “l”, main &#x3D; “高度随时间变化折线图”, xlab &#x3D; “时间”, ylab &#x3D; “高度”)</p>
-<p>library(hms)<br>rpm &lt;- data.frame(x &#x3D; data$time, y &#x3D; data$”燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>rpm &lt;- rpm[!is.na(quantile(rpm$y,probs&#x3D;c(.3, .75),na.rm&#x3D;TRUE)),]<br>plot(as_hms(rpm$x), rpm$y, type &#x3D; “l”, main &#x3D; “燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”, xlab &#x3D; “时间”, ylab &#x3D; “燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”)</p>
-<p>y&#x3D;log2(x)<br>x&#x3D;2^y</p>
+<p>library(hms)<br>rpm &lt;- data.frame(x = data$time, y = data$”高度 (GPS) (m)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>plot(as_hms(rpm$x), rpm$y, type = “l”, main = “高度随时间变化折线图”, xlab = “时间”, ylab = “高度”)</p>
+<p>library(hms)<br>rpm &lt;- data.frame(x = data$time, y = data$”燃油平均消耗（升/100公里） (L/100km)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>rpm &lt;- rpm[!is.na(quantile(rpm$y,probs=c(.3, .75),na.rm=TRUE)),]<br>plot(as_hms(rpm$x), rpm$y, type = “l”, main = “燃油平均消耗（升/100公里） (L/100km)”, xlab = “时间”, ylab = “燃油平均消耗（升/100公里） (L/100km)”)</p>
+<p>y=log2(x)<br>x=2^y</p>
 
     </div>
 

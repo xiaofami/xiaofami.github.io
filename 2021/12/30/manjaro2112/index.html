@@ -222,7 +222,7 @@
 <p>问题1对于无头服务器影响轻微，即便是第一次开机初始化配置也可以通过SSH远程完成，完成初始化配置前root用户无密码可远程登录。</p>
 <p>问题2只要不频繁重启主机影响也不大。除了更新内核外，必须重启的场景不多。关机基本不存在的，低功耗零噪音7X24开机运行无压力。</p>
 <p>值得一提的是，放弃主线内核后，有线网卡MAC地址不会每次重启后变化了，所以不再需要用nmtui提供的mac address clone功能固定地址。</p>
-<p>当然对于需要从低版本更新到21.12的盒子，还是建议在 <strong>&#x2F;etc&#x2F;pacman.conf</strong> 中，将 <strong>boot-vim2</strong> 添加到 <strong>IgnorePkg</strong> 中。直接更新 <strong>boot-vim2</strong> 会干掉 <strong>Image</strong>，而且不会更新启动配置文件，稳妥起见不要乱折腾为宜。</p>
+<p>当然对于需要从低版本更新到21.12的盒子，还是建议在 <strong>/etc/pacman.conf</strong> 中，将 <strong>boot-vim2</strong> 添加到 <strong>IgnorePkg</strong> 中。直接更新 <strong>boot-vim2</strong> 会干掉 <strong>Image</strong>，而且不会更新启动配置文件，稳妥起见不要乱折腾为宜。</p>
 
     </div>
 

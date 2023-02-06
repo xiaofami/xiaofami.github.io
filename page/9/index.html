@@ -361,7 +361,7 @@
 <li>天线：2个</li>
 <li>USB：无</li>
 <li>供电：5V1A，圆口</li>
-<li>指示灯：蓝&#x2F;紫色</li>
+<li>指示灯：蓝/紫色</li>
 <li>特色：磁铁</li>
 </ul>
 <p>硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。</p>
@@ -1020,8 +1020,8 @@ HOSTNAME login:
 
 <h2 id="breed"><a href="#breed" class="headerlink" title="breed"></a>breed</h2><p>使用恩山论坛的breed-mt7688-reset38.bin。不能正确识别内存大小，此外没什么问题。这个路由器内存为一片EM68B16CWQH-25H，64MB，breed中识别为128MB，可以在编译openwrt前修改dts设置内存为64MB。</p>
 <h2 id="刷回原厂固件"><a href="#刷回原厂固件" class="headerlink" title="刷回原厂固件"></a>刷回原厂固件</h2><p>breed中刷入一次刚才导出的编程器固件，此步骤作用是恢复mac地址与eeprom。</p>
-<h3 id="openwrt编译"><a href="#openwrt编译" class="headerlink" title="openwrt编译"></a>openwrt编译</h3><p>使用lean&#x2F;lede代码，选择MT76X8，GL.iNet VIXMINI配置。GL.iNet VIXMINI配置为MT7628NN 8+64，无USB，与必虎mini接近： <a target="_blank" rel="noopener" href="https://www.gl-inet.cn/products/vixmini/">https://www.gl-inet.cn/products/vixmini/</a></p>
-<h4 id="修改-lede-x2F-target-x2F-linux-x2F-ramips-x2F-mt76x8-x2F-base-files-x2F-etc-x2F-board-d-x2F-02-network"><a href="#修改-lede-x2F-target-x2F-linux-x2F-ramips-x2F-mt76x8-x2F-base-files-x2F-etc-x2F-board-d-x2F-02-network" class="headerlink" title="修改 lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;mt76x8&#x2F;base-files&#x2F;etc&#x2F;board.d&#x2F;02_network"></a>修改 lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;mt76x8&#x2F;base-files&#x2F;etc&#x2F;board.d&#x2F;02_network</h4><pre><code>glinet,microuter-n300|\
+<h3 id="openwrt编译"><a href="#openwrt编译" class="headerlink" title="openwrt编译"></a>openwrt编译</h3><p>使用lean/lede代码，选择MT76X8，GL.iNet VIXMINI配置。GL.iNet VIXMINI配置为MT7628NN 8+64，无USB，与必虎mini接近： <a target="_blank" rel="noopener" href="https://www.gl-inet.cn/products/vixmini/">https://www.gl-inet.cn/products/vixmini/</a></p>
+<h4 id="修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network"><a href="#修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network" class="headerlink" title="修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network"></a>修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network</h4><pre><code>glinet,microuter-n300|\
 glinet,vixmini)
     ucidef_add_switch &quot;switch0&quot; \
         &quot;0:lan&quot; &quot;6@eth0&quot;
@@ -1035,7 +1035,7 @@ glinet,vixmini)
     ;;
 </code></pre>
 <p>因为vixmini只有一个网口，我们需要自行添加2个网口，注意对应交换机的2和4。注意MT7628只有一个网卡（interface），内置5口交换机，通过VLAN划分WAN与LAN，WAN一般对应0号口，LAN需要自己测试，本例中为2和4。</p>
-<h4 id="修改lede-x2F-target-x2F-linux-x2F-ramips-x2F-image-x2F-mt76x8-mk"><a href="#修改lede-x2F-target-x2F-linux-x2F-ramips-x2F-image-x2F-mt76x8-mk" class="headerlink" title="修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;image&#x2F;mt76x8.mk"></a>修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;image&#x2F;mt76x8.mk</h4><pre><code>define Device/glinet_vixmini
+<h4 id="修改lede-target-linux-ramips-image-mt76x8-mk"><a href="#修改lede-target-linux-ramips-image-mt76x8-mk" class="headerlink" title="修改lede/target/linux/ramips/image/mt76x8.mk"></a>修改lede/target/linux/ramips/image/mt76x8.mk</h4><pre><code>define Device/glinet_vixmini
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := GL.iNet
   DEVICE_MODEL := VIXMINI
@@ -1053,7 +1053,7 @@ endef
 TARGET_DEVICES += glinet_vixmini
 </code></pre>
 <p>VIXMINI闪存8M，不如此修改无法生成8M~16M大小的固件。</p>
-<h4 id="修改lede-x2F-target-x2F-linux-x2F-ramips-x2F-dts-x2F-mt7628an-glinet-vixmini-dts"><a href="#修改lede-x2F-target-x2F-linux-x2F-ramips-x2F-dts-x2F-mt7628an-glinet-vixmini-dts" class="headerlink" title="修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;dts&#x2F;mt7628an_glinet_vixmini.dts"></a>修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;dts&#x2F;mt7628an_glinet_vixmini.dts</h4><pre><code>// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+<h4 id="修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts"><a href="#修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts" class="headerlink" title="修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts"></a>修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts</h4><pre><code>// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 /dts-v1/;
 
 #include &quot;mt7628an_glinet_vixmini_microuter.dtsi&quot;
@@ -1205,10 +1205,10 @@ pppoe_pass_hack
 clear_reset_flag
 </code></pre>
 <p><code>sysinfo</code></p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index=&quot;1&quot; cmd=&quot;sysinfo&quot; uptime=&quot;5:17:13&quot; memory=&quot;22835200/62578688&quot; cpu_usage=&quot;2&quot; average_load=&quot;0.12/0.13/0.14&quot; firmware_version=&quot;AP902P07V1.6.0Build798_TU&quot; sn=&quot;BN212GH600045AA&quot; sys_name=&quot;&quot; sys_description=&quot;uRouter series wireless AP. Support 802.11b/g/n. 300Mbps, 2T2R.&quot; sys_model=&quot;uRouter mini SJBY&quot; ap_vendor=&quot;BHU&quot; uplink_interface_mac=&quot;84:82:f4:38:bd:3b&quot; hardware_version=&quot;Z05&quot; ip=&quot;0.0.0.0&quot; netmask=&quot;0.0.0.0&quot; gateway=&quot;0.0.0.0&quot; firmware_name=&quot;kochab&quot; longitude=&quot;&quot; latitude=&quot;&quot; cpu_type=&quot;MIPS 24KEc V5.5&quot; mem_type=&quot;DDR2&quot; mem_size=&quot;61112&quot; flash_size=&quot;16384&quot; sys_net_id=&quot;&quot; primary_dns=&quot;114.114.114.114&quot; second_dns=&quot;0.0.0.0&quot; location=&quot;&quot; systime=&quot;13:17:13&quot; saved_config=&quot;&quot; build_info=&quot;2017-11-03-09:13 Revision: 798&quot; config_model_ver=&quot;V3&quot; config_mode=&quot;basic&quot; work_mode=&quot;router-ap&quot; dev_mac=&quot;84:82:f4:38:bd:38&quot; bmc_status=&quot;&quot; status=&quot;done&quot;/&gt;&lt;/return&gt;
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;return&gt;    &lt;ITEM index=&quot;1&quot; cmd=&quot;sysinfo&quot; uptime=&quot;5:17:13&quot; memory=&quot;22835200/62578688&quot; cpu_usage=&quot;2&quot; average_load=&quot;0.12/0.13/0.14&quot; firmware_version=&quot;AP902P07V1.6.0Build798_TU&quot; sn=&quot;BN212GH600045AA&quot; sys_name=&quot;&quot; sys_description=&quot;uRouter series wireless AP. Support 802.11b/g/n. 300Mbps, 2T2R.&quot; sys_model=&quot;uRouter mini SJBY&quot; ap_vendor=&quot;BHU&quot; uplink_interface_mac=&quot;84:82:f4:38:bd:3b&quot; hardware_version=&quot;Z05&quot; ip=&quot;0.0.0.0&quot; netmask=&quot;0.0.0.0&quot; gateway=&quot;0.0.0.0&quot; firmware_name=&quot;kochab&quot; longitude=&quot;&quot; latitude=&quot;&quot; cpu_type=&quot;MIPS 24KEc V5.5&quot; mem_type=&quot;DDR2&quot; mem_size=&quot;61112&quot; flash_size=&quot;16384&quot; sys_net_id=&quot;&quot; primary_dns=&quot;114.114.114.114&quot; second_dns=&quot;0.0.0.0&quot; location=&quot;&quot; systime=&quot;13:17:13&quot; saved_config=&quot;&quot; build_info=&quot;2017-11-03-09:13 Revision: 798&quot; config_model_ver=&quot;V3&quot; config_mode=&quot;basic&quot; work_mode=&quot;router-ap&quot; dev_mac=&quot;84:82:f4:38:bd:38&quot; bmc_status=&quot;&quot; status=&quot;done&quot;/&gt;&lt;/return&gt;
 </code></pre>
 <p><code>ifrate</code></p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;return&gt;	&lt;ITEM index=&quot;1&quot; cmd=&quot;ifrate&quot; status=&quot;done&quot;&gt;		&lt;ifrate_sub&gt;			&lt;SUB interface=&quot;wlan3&quot; tx_pkts=&quot;490&quot; rx_pkts=&quot;367&quot; tx_bytes=&quot;38872&quot; rx_bytes=&quot;56368&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;			&lt;SUB interface=&quot;wlan2&quot; tx_pkts=&quot;0&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;0&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;			&lt;SUB interface=&quot;wlan1&quot; tx_pkts=&quot;0&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;0&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;			&lt;SUB interface=&quot;wlan0&quot; tx_pkts=&quot;485&quot; rx_pkts=&quot;161&quot; tx_bytes=&quot;75992&quot; rx_bytes=&quot;50581&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;			&lt;SUB interface=&quot;eth1&quot; tx_pkts=&quot;2023&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;686136&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;			&lt;SUB interface=&quot;eth0&quot; tx_pkts=&quot;44410&quot; rx_pkts=&quot;49873&quot; tx_bytes=&quot;34125041&quot; rx_bytes=&quot;18727781&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;		&lt;/ifrate_sub&gt;	&lt;/ITEM&gt;&lt;/return&gt;
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;return&gt;    &lt;ITEM index=&quot;1&quot; cmd=&quot;ifrate&quot; status=&quot;done&quot;&gt;        &lt;ifrate_sub&gt;            &lt;SUB interface=&quot;wlan3&quot; tx_pkts=&quot;490&quot; rx_pkts=&quot;367&quot; tx_bytes=&quot;38872&quot; rx_bytes=&quot;56368&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;            &lt;SUB interface=&quot;wlan2&quot; tx_pkts=&quot;0&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;0&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;            &lt;SUB interface=&quot;wlan1&quot; tx_pkts=&quot;0&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;0&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;            &lt;SUB interface=&quot;wlan0&quot; tx_pkts=&quot;485&quot; rx_pkts=&quot;161&quot; tx_bytes=&quot;75992&quot; rx_bytes=&quot;50581&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;            &lt;SUB interface=&quot;eth1&quot; tx_pkts=&quot;2023&quot; rx_pkts=&quot;0&quot; tx_bytes=&quot;686136&quot; rx_bytes=&quot;0&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;            &lt;SUB interface=&quot;eth0&quot; tx_pkts=&quot;44410&quot; rx_pkts=&quot;49873&quot; tx_bytes=&quot;34125041&quot; rx_bytes=&quot;18727781&quot; tx_rate=&quot;0&quot; rx_rate=&quot;0&quot;/&gt;        &lt;/ifrate_sub&gt;    &lt;/ITEM&gt;&lt;/return&gt;
 </code></pre>
 
       

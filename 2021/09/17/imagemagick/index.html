@@ -238,7 +238,7 @@
 <p>这样输出图片为PDF就没问题了。</p>
 <p>备注：我在Deepin上测试，得到的“PDF”文件打不开，用file查看是图片格式：</p>
 <blockquote>
-<p>output.pdf: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries&#x3D;14, height&#x3D;3264, bps&#x3D;0, description&#x3D;smart, manufacturer&#x3D;HUAWEI, model&#x3D;CND-AN00, orientation&#x3D;upper-left, xresolution&#x3D;200, yresolution&#x3D;208, resolutionunit&#x3D;2, software&#x3D;CND-AN00 10.1.1.166(C00E140R3P1), datetime&#x3D;2021:08:14 08:02:45, width&#x3D;2448], baseline, precision 8, 2448x3264, components 3</p>
+<p>output.pdf: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=14, height=3264, bps=0, description=smart, manufacturer=HUAWEI, model=CND-AN00, orientation=upper-left, xresolution=200, yresolution=208, resolutionunit=2, software=CND-AN00 10.1.1.166(C00E140R3P1), datetime=2021:08:14 08:02:45, width=2448], baseline, precision 8, 2448x3264, components 3</p>
 </blockquote>
 <p>Deepin上convert版本：<code>Version: ImageMagick 6.9.10-23 Q16 x86_64 20190101 https://imagemagick.org Copyright: © 1999-2019 ImageMagick Studio LLC</code></p>
 <p>在Manjaro ARM 21.08上测试没问题，得到了正常的PDF文件。Manjaro ARM 21.08上convert版本为<code>Version: ImageMagick 7.1.0-6 Q16-HDRI aarch64 2021-09-04 https://imagemagick.org Copyright: (C) 1999-2021 ImageMagick Studio LLC</code>。另外Manjaro上不需要修改policy文件，默认就正常运行。</p>

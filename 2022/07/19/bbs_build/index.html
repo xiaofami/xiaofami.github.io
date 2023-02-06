@@ -295,7 +295,7 @@ sudo ldconfig
 1    4    1   1      230   4     1     10     30/60   UDYL  433.650
 2    8    2   0      250   2     1     10     00/60   TUWR  Telnet
 </code></pre>
-<p>本例中，telnet端口号为6300,转换为16进制即为 <strong>189C</strong>。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**&#x2F;dev&#x2F;cua0** 也不存在，不过不影响Telnet端口的使用。</p>
+<p>本例中，telnet端口号为6300,转换为16进制即为 <strong>189C</strong>。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**/dev/cua0** 也不存在，不过不影响Telnet端口的使用。</p>
 <p>（编者补充：在linux中，com设备一般被命名为cua）</p>
 <h1 id="AX-25探究"><a href="#AX-25探究" class="headerlink" title="AX.25探究"></a>AX.25探究</h1><p><code>fbb-7.0.11/doc/html/tllinux.htm</code> 成文时间久远（1997），许多内容已经过时。不过其提及的<a target="_blank" rel="noopener" href="https://www.linuxdoc.org/HOWTO/AX25-HOWTO/">AX25-HOWTO</a>（成稿于2001年九月）值得阅读。如果上面链接不幸死掉了，可以访问 <a target="_blank" rel="noopener" href="https://tldp.org/HOWTO/AX25-HOWTO/">https://tldp.org/HOWTO/AX25-HOWTO/</a>  。</p>
 <h2 id="加载AX25内核模块"><a href="#加载AX25内核模块" class="headerlink" title="加载AX25内核模块"></a>加载AX25内核模块</h2><p>这一部分不太乐观。简单检查了一下Manjaro系统（21.3.3）的内核模块，以下是默认具备的：</p>
@@ -313,7 +313,7 @@ sudo ldconfig
 <li>编译安装<code>linuxax25-ax25tools-1.0.4</code>其中的三个模块。上文中已完成。</li>
 <li>执行 <code>sudo modporbe ax25</code></li>
 </ol>
-<p>编者按：ax25这个模块貌似是系统自带的，**&#x2F;lib&#x2F;modules&#x2F;5.16.20-2-MANJARO&#x2F;kernel&#x2F;net&#x2F;ax25&#x2F;ax25.ko.xz** 的创建时间远远早于编译时间。</p>
+<p>编者按：ax25这个模块貌似是系统自带的，**/lib/modules/5.16.20-2-MANJARO/kernel/net/ax25/ax25.ko.xz** 的创建时间远远早于编译时间。</p>
 <p>如果需要系统启动时自动加载这个模块，可以利用 <code>/etc/modules-load.d</code> 实现，具体参见 <code>man modules-load.d</code>。</p>
 <h3 id="整合Direwolf"><a href="#整合Direwolf" class="headerlink" title="整合Direwolf"></a>整合Direwolf</h3><p>参考<a target="_blank" rel="noopener" href="https://packet-radio.net/xrpi-interfacing-with-linfbb/">XRpi interfacing with LinFBB</a> 一文，作者使用 <strong>socat</strong> 创建了虚拟COM口供 <strong>XRouter</strong> 和 <strong>LinFBB</strong> 使用。Linux中万物皆文件，所以使用socat创造的虚拟COM口也是一个文件，将这个文件提供给<strong>XRouter</strong> 和 <strong>LinFBB</strong>的配置文件，让它们都使用这个虚拟COM口，就实现了利用虚拟COM口连接<strong>XRouter</strong> 和 <strong>LinFBB</strong> 的目的。</p>
 <p>Direwolf手册中描述了利用 <strong>com0com</strong> 创建虚拟COM接口以及修改Direwolf的步骤，可以作为参考。</p>

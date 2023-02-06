@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡&#x2F;U盘。 Manjaro提供了2个工具，manjaro-arm-tools和manjaro-arm-installer。manjaro-arm-tools可生成镜像包，目前仅支持Manjaro。manjaro-arm-installer用于直接制作启动盘，可运行在任意发行版。">
+  <meta name="description" content="Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡&#x2F;U盘。 Manjaro提供了2个工具，manjaro-arm-tools和manjaro-arm-installer。manjaro-arm-tools可生成镜像包，目前仅支持Manjaro。manjaro-arm-installer用于直接制作启动盘，可运行在任意发行版。也可以通过">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自制Manjaro ARM启动TF卡&#x2F;U盘">
 <meta property="og:url" content="http://xiaofami.github.io/2021/10/21/DIY-Manjaro-ARM/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡&#x2F;U盘。 Manjaro提供了2个工具，manjaro-arm-tools和manjaro-arm-installer。manjaro-arm-tools可生成镜像包，目前仅支持Manjaro。manjaro-arm-installer用于直接制作启动盘，可运行在任意发行版。">
+<meta property="og:description" content="Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡&#x2F;U盘。 Manjaro提供了2个工具，manjaro-arm-tools和manjaro-arm-installer。manjaro-arm-tools可生成镜像包，目前仅支持Manjaro。manjaro-arm-installer用于直接制作启动盘，可运行在任意发行版。也可以通过">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-21T02:29:18.000Z">
 <meta property="article:modified_time" content="2023-02-06T01:03:38.504Z">
@@ -213,7 +213,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡&#x2F;U盘。</p>
+        <p>Manjaro ARM官方制作维护了许多开箱即用的镜像，不过同时提供了打包工具，可以用来自行制作镜像包或启动TF卡/U盘。</p>
 <p>Manjaro提供了2个工具，manjaro-arm-tools和manjaro-arm-installer。manjaro-arm-tools可生成镜像包，目前仅支持Manjaro。manjaro-arm-installer用于直接制作启动盘，可运行在任意发行版。也可以通过创建loop设备方式，将镜像写入磁盘，方便分发使用。</p>
 <p>本例中，在deepin上配置使用manjaro-arm-installer。</p>
 <h1 id="下载manjaro-arm-installer"><a href="#下载manjaro-arm-installer" class="headerlink" title="下载manjaro-arm-installer"></a>下载manjaro-arm-installer</h1><p><code>manjaro-arm-installer</code>就是一个bash脚本，下载地址： <a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-installer/-/tags">https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-installer/-/tags</a> 选择最新的即可。</p>
@@ -222,7 +222,7 @@
 </code></pre>
 <p>大部分依赖系统已预装，或者直接按包名安装即可，注意在deepin中，<code>systemd-nspawn</code>由<code>systemd-container</code>提供。</p>
 <p>另外<code>qemu-user-static</code>也要安装。装好后，进入<code>/usr/lib/binfmt.d</code>。这个目录下针对不同架构有许多文件，我们的盒子是aarch64架构，所以将<code>qemu-aarch64-static.conf</code>复制一份，改名为<code>qemu-static.conf</code>。</p>
-<h1 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h1><p>按提示进行选择机型、版本、设置用户名密码、时区等操作即可。建议全程出国上网，直连下载rootfs很慢（约170.11M）。完成后，对应TF卡&#x2F;U盘存在fat与ext4两分区，用过Armbian的应该很熟悉下步配置了。</p>
+<h1 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h1><p>按提示进行选择机型、版本、设置用户名密码、时区等操作即可。建议全程出国上网，直连下载rootfs很慢（约170.11M）。完成后，对应TF卡/U盘存在fat与ext4两分区，用过Armbian的应该很熟悉下步配置了。</p>
 
     </div>
 

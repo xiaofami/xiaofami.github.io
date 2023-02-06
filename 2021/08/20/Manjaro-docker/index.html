@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="主要来源：在 Manjaro Linux 系统使用 Docker 提要硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux 安装Dockersudo pacman -S">
+  <meta name="description" content="主要来源：在 Manjaro Linux 系统使用 Docker 提要硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux 安装Dockersudo pacman -Syu su">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Manjaro安装配置docker">
 <meta property="og:url" content="http://xiaofami.github.io/2021/08/20/Manjaro-docker/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="主要来源：在 Manjaro Linux 系统使用 Docker 提要硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux 安装Dockersudo pacman -S">
+<meta property="og:description" content="主要来源：在 Manjaro Linux 系统使用 Docker 提要硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux 安装Dockersudo pacman -Syu su">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-20T07:51:21.000Z">
 <meta property="article:modified_time" content="2023-02-06T01:03:38.504Z">
@@ -214,7 +214,7 @@
 
       
         <p>主要来源：<a target="_blank" rel="noopener" href="https://blog.huangz.me/2020/docker-on-linux.html">在 Manjaro Linux 系统使用 Docker</a></p>
-<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 <strong>5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux</strong></p>
+<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 <strong>5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU/Linux</strong></p>
 <h1 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h1><pre><code class="bash">sudo pacman -Syu
 sudo pacman -S docker
 </code></pre>
@@ -225,7 +225,7 @@ sudo pacman -S docker
 <h1 id="添加当前用户到Docker组"><a href="#添加当前用户到Docker组" class="headerlink" title="添加当前用户到Docker组"></a>添加当前用户到Docker组</h1><p>这样当前用户就有足够权限操作docker而不必sudo权限。</p>
 <pre><code class="bash">sudo usermod -aG docker $USER
 </code></pre>
-<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>打开或创建 &#x2F;etc&#x2F;docker&#x2F;daemon.json 文件：</p>
+<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>打开或创建 /etc/docker/daemon.json 文件：</p>
 <pre><code class="bash">&#123;
     &quot;registry-mirrors&quot;: [
         &quot;https://registry.docker-cn.com&quot;

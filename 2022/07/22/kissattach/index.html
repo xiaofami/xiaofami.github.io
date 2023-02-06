@@ -219,8 +219,8 @@ spattach [-b] [-l] [-m mtu] [-v] tty port [inetaddr]
 </code></pre>
 <p>编者按：kissattach默认使用KISS模式，spattach默认使用6PACK模式，此外并无分别。</p>
 <h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>将一个KISS或者6PACK接口连接到KISS或者6PACK模式的TNC，就像一条普通的tty连接线一样。这个程序在执行后会自动变成后台进程，可以通过给这个后台进程发送 <strong>SIGTERM</strong> 以终止。</p>
-<p>kissattach从 <strong>axports</strong> 文件中读取port以及相关的参数（编者补充：传统上axports路径为&#x2F;etc&#x2F;ax25,kissattatch也会在这里寻找axports,不过我自己编译安装的ax25toos会在&#x2F;usr&#x2F;local&#x2F;etc&#x2F;ax25&#x2F;目录下寻找。另外make install后不知为何axports等配置文件没有被复制到这些位置，需要自己手动复制）。如果axports中speed是一个非零值，那么这个值会被用作串口通信速度，如果是0则意味着没有设置速度（貌似是废话）。paclen是设备的MTU值，可以通过-m选项覆盖。</p>
-<p>tty在传统上是与KISS或者6PACK TNC连接的串口，不过也可以和伪终端（编者按：这是我们需要的，和Direwolf生成的伪终端连接）或者例如SCC卡这种KISS端口模拟器连接。kissattach也支持BSD和Unix98风格的伪终端。如果tty参数是 <strong>&#x2F;dev&#x2F;ptmx</strong> ，那么Kissattach就会自动适应Unix98的行为。对于Unix98伪终端，从tty名称是不可预见的，所以kissattach会在标准输出上另起一行输出对应从伪终端的名字。</p>
+<p>kissattach从 <strong>axports</strong> 文件中读取port以及相关的参数（编者补充：传统上axports路径为/etc/ax25,kissattatch也会在这里寻找axports,不过我自己编译安装的ax25toos会在/usr/local/etc/ax25/目录下寻找。另外make install后不知为何axports等配置文件没有被复制到这些位置，需要自己手动复制）。如果axports中speed是一个非零值，那么这个值会被用作串口通信速度，如果是0则意味着没有设置速度（貌似是废话）。paclen是设备的MTU值，可以通过-m选项覆盖。</p>
+<p>tty在传统上是与KISS或者6PACK TNC连接的串口，不过也可以和伪终端（编者按：这是我们需要的，和Direwolf生成的伪终端连接）或者例如SCC卡这种KISS端口模拟器连接。kissattach也支持BSD和Unix98风格的伪终端。如果tty参数是 <strong>/dev/ptmx</strong> ，那么Kissattach就会自动适应Unix98的行为。对于Unix98伪终端，从tty名称是不可预见的，所以kissattach会在标准输出上另起一行输出对应从伪终端的名字。</p>
 <p>port就是从axports文件中读取的portname值。</p>
 <p>inetaddr参数是可选的，它是这个新接口的IP地址。有时这个选项不能省略，不过总体而言给这个接口分配IP地址的意义不大。（编者按：可以通过给接口分配IP地址来测试是否与Direwolf连接成功，该方法参考自Direwolf文档）</p>
 <h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><p>-6 使用6PACK而非KISS。使用spattach调用时该选项默认开启。</p>
@@ -251,7 +251,7 @@ ip a show ax0
 ping 10.89.1.123
 </code></pre>
 <p>主机的IP地址为10.89.1.122，给wl2k这个接口分配地址为10.89.1.123，此时从10.89.1.122 ping 10.89.1.123，Direwolf中会出现大量信息。</p>
-<p>另外Direwolf文档声称kissattach对符号链接支持不佳，所以没有直接用 <strong>&#x2F;tmp&#x2F;kisstnc</strong> ， 而是通过命令展开方式获取了设备实际地址。</p>
+<p>另外Direwolf文档声称kissattach对符号链接支持不佳，所以没有直接用 <strong>/tmp/kisstnc</strong> ， 而是通过命令展开方式获取了设备实际地址。</p>
 
     </div>
 

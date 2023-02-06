@@ -215,9 +215,7 @@
 <li>声卡<br>几块钱包邮的USB声卡。</li>
 <li>电台连接器<br>这个是整套系统中最有难度抑或最花钱的部分。成品难找而且价格普遍不菲，DIY需要专业知识以及动手能力。</li>
 <li>电台<br>电台要求很低，最廉价的FM收发机即可，当然要结合电台连接器。</li>
-<li>TNC 软件<br>使用Dire Wolf。这个软件的功能比较多，对于我的用途而言使用KISS协议作为一个远程TNC即可。</li>
-</ol>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><ol>
+<li>TNC 软件<br>使用Dire Wolf。这个软件的功能比较多，对于我的用途而言使用KISS协议作为一个远程TNC即可。<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1></li>
 <li>在R3300-M上运行Dire Wolf。毫无难度，按说明编译运行即可。</li>
 <li>声卡配置。USB声卡即插即用，为方便配置可以安装 <code>alsa-utils</code>，这个包提供了 <code>alsamixer</code> ，可以比较直观地对音频进行配置。</li>
 <li>电台连接器。从马工淘宝店250块钱买的。</li>
@@ -229,9 +227,7 @@
 <h1 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h1><h2 id="已完成"><a href="#已完成" class="headerlink" title="已完成"></a>已完成</h2><ol>
 <li>所有必备硬件已准备完毕。</li>
 <li>Dire Wolf编译完毕，可正常运行。</li>
-<li>必虎路由器刷机完毕。</li>
-</ol>
-<h2 id="计划中"><a href="#计划中" class="headerlink" title="计划中"></a>计划中</h2><ol>
+<li>必虎路由器刷机完毕。<h2 id="计划中"><a href="#计划中" class="headerlink" title="计划中"></a>计划中</h2></li>
 <li>安装合适的Packet Radio终端软件。</li>
 <li>连接系统各硬件模块。</li>
 <li>参照手册对Dire Wolf进行配置。</li>
@@ -684,9 +680,9 @@ NA&#39;s   :2690
 </code></pre>
 <p>剔除零值后数据变得更有意义了。</p>
 <p>拓展阅读：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/48472404">如何理解R中因子(factor)的概念?</a>，猴子的回答同时阐明了 <strong>因子</strong> 的概念。</p>
-<p>library(hms)<br>rpm &lt;- data.frame(x &#x3D; data$time, y &#x3D; data$”高度 (GPS) (m)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>plot(as_hms(rpm$x), rpm$y, type &#x3D; “l”, main &#x3D; “高度随时间变化折线图”, xlab &#x3D; “时间”, ylab &#x3D; “高度”)</p>
-<p>library(hms)<br>rpm &lt;- data.frame(x &#x3D; data$time, y &#x3D; data$”燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>rpm &lt;- rpm[!is.na(quantile(rpm$y,probs&#x3D;c(.3, .75),na.rm&#x3D;TRUE)),]<br>plot(as_hms(rpm$x), rpm$y, type &#x3D; “l”, main &#x3D; “燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”, xlab &#x3D; “时间”, ylab &#x3D; “燃油平均消耗（升&#x2F;100公里） (L&#x2F;100km)”)</p>
-<p>y&#x3D;log2(x)<br>x&#x3D;2^y</p>
+<p>library(hms)<br>rpm &lt;- data.frame(x = data$time, y = data$”高度 (GPS) (m)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>plot(as_hms(rpm$x), rpm$y, type = “l”, main = “高度随时间变化折线图”, xlab = “时间”, ylab = “高度”)</p>
+<p>library(hms)<br>rpm &lt;- data.frame(x = data$time, y = data$”燃油平均消耗（升/100公里） (L/100km)”)<br>rpm &lt;- rpm[!is.na(rpm$y),]<br>rpm &lt;- rpm[!is.na(quantile(rpm$y,probs=c(.3, .75),na.rm=TRUE)),]<br>plot(as_hms(rpm$x), rpm$y, type = “l”, main = “燃油平均消耗（升/100公里） (L/100km)”, xlab = “时间”, ylab = “燃油平均消耗（升/100公里） (L/100km)”)</p>
+<p>y=log2(x)<br>x=2^y</p>
 
       
     </div>
@@ -840,11 +836,10 @@ NA&#39;s   :2690
 <p>此外有几点需要留意：</p>
 <ol>
 <li>迭代器。使用迭代器会发生所有权的转移！所以该借用（borrow）就借用吧。</li>
-<li>字符串。需要留意 <strong>+</strong> 运算符对于字符串的实现，大致看起来这样：</li>
-</ol>
-<pre><code class="rust">fn add(self, s: &amp;str) -&gt; String &#123;
+<li>字符串。需要留意 <strong>+</strong> 运算符对于字符串的实现，大致看起来这样：<pre><code class="rust">fn add(self, s: &amp;str) -&gt; String &#123;
 </code></pre>
-<p>所以对于一般 <code>let s3 = s1 + &amp;s2</code> 的情形， <strong>s1</strong> 所有权会发生转移。</p>
+所以对于一般 <code>let s3 = s1 + &amp;s2</code> 的情形， <strong>s1</strong> 所有权会发生转移。</li>
+</ol>
 <p>如果要避免所有权转移的麻烦，使用<code>format!</code>即可。</p>
 <pre><code class="rust">#[derive(Debug)]
 struct Rect1 &#123;
@@ -1021,7 +1016,7 @@ fn main() &#123;
 <p>问题1对于无头服务器影响轻微，即便是第一次开机初始化配置也可以通过SSH远程完成，完成初始化配置前root用户无密码可远程登录。</p>
 <p>问题2只要不频繁重启主机影响也不大。除了更新内核外，必须重启的场景不多。关机基本不存在的，低功耗零噪音7X24开机运行无压力。</p>
 <p>值得一提的是，放弃主线内核后，有线网卡MAC地址不会每次重启后变化了，所以不再需要用nmtui提供的mac address clone功能固定地址。</p>
-<p>当然对于需要从低版本更新到21.12的盒子，还是建议在 <strong>&#x2F;etc&#x2F;pacman.conf</strong> 中，将 <strong>boot-vim2</strong> 添加到 <strong>IgnorePkg</strong> 中。直接更新 <strong>boot-vim2</strong> 会干掉 <strong>Image</strong>，而且不会更新启动配置文件，稳妥起见不要乱折腾为宜。</p>
+<p>当然对于需要从低版本更新到21.12的盒子，还是建议在 <strong>/etc/pacman.conf</strong> 中，将 <strong>boot-vim2</strong> 添加到 <strong>IgnorePkg</strong> 中。直接更新 <strong>boot-vim2</strong> 会干掉 <strong>Image</strong>，而且不会更新启动配置文件，稳妥起见不要乱折腾为宜。</p>
 
       
     </div>
@@ -1088,12 +1083,12 @@ fn main() &#123;
       
           <h1 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h1><p>过去在R3300-M上进行过几次不成功的试验。无论是balbes150的Armbian 20.10还是目前使用的Manjaro Linux ARM，使用所提供的安装脚本均无法启动。最近发现论坛上名为pista一网友遇到类似问题并成功解决，看看我们能不能成功复现。</p>
 <p><a target="_blank" rel="noopener" href="https://forum.armbian.com/topic/18902-s905-failed-to-boot-from-emmc/">https://forum.armbian.com/topic/18902-s905-failed-to-boot-from-emmc/</a></p>
-<h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><p>Minix Neo U1 … S905, 2GB RAM &#x2F; 16GB Flash ，搭配meson-gxbb-vega-s95-meta.dtb运行Armbian_20.10_Arm-64_bullseye_current_5.9.0.img。既然和R3300-M同为GXBB S905，那么如果Minix Neo U1可以从emmc启动linux，R3300-M也没有问题。</p>
+<h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><p>Minix Neo U1 … S905, 2GB RAM / 16GB Flash ，搭配meson-gxbb-vega-s95-meta.dtb运行Armbian_20.10_Arm-64_bullseye_current_5.9.0.img。既然和R3300-M同为GXBB S905，那么如果Minix Neo U1可以从emmc启动linux，R3300-M也没有问题。</p>
 <h1 id="默认安装脚本从EMMC启动Armbian-20-10遇到的问题"><a href="#默认安装脚本从EMMC启动Armbian-20-10遇到的问题" class="headerlink" title="默认安装脚本从EMMC启动Armbian_20.10遇到的问题"></a>默认安装脚本从EMMC启动Armbian_20.10遇到的问题</h1><pre><code class="bash">** No partition table - mmc 2 **
 </code></pre>
 <p>与R3300-M当时遇到的问题一致。</p>
 <h1 id="妥协方案"><a href="#妥协方案" class="headerlink" title="妥协方案"></a>妥协方案</h1><p>emmc分区保留前700MB，剩余空间分给ROOTFS，然后利用TF卡启动。在R3300-M上也曾试验成功，但我们的目的是完全脱离TF卡，于是pista开始了深入研究。</p>
-<h1 id="纯emmc方案"><a href="#纯emmc方案" class="headerlink" title="纯emmc方案"></a>纯emmc方案</h1><p>pista成功从EMMC分区启动了Armbian 20.10。关键所在是使用 <strong>mmc read</strong> 而不是 <strong>load&#x2F;fatload</strong> 来加载 *<strong>kernel</strong>， <strong>ramdisk</strong> ，以及 <strong>dtb</strong> 。检查了Manjaro Linux ARM， <strong>&#x2F;boot&#x2F;boot.ini</strong> 内容如下：</p>
+<h1 id="纯emmc方案"><a href="#纯emmc方案" class="headerlink" title="纯emmc方案"></a>纯emmc方案</h1><p>pista成功从EMMC分区启动了Armbian 20.10。关键所在是使用 <strong>mmc read</strong> 而不是 <strong>load/fatload</strong> 来加载 *<strong>kernel</strong>， <strong>ramdisk</strong> ，以及 <strong>dtb</strong> 。检查了Manjaro Linux ARM， <strong>/boot/boot.ini</strong> 内容如下：</p>
 <pre><code class="ini">ODROIDN2-UBOOT-CONFIG
 #ODROIDC2-UBOOT-CONFIG
 
@@ -1101,7 +1096,7 @@ if test &quot;$&#123;devtype&#125;&quot; = &quot;&quot;; then setenv devtype &qu
 
 if fatload $&#123;devtype&#125; $&#123;devnum&#125; 0x1000000 u-boot.ext; then go 0x1000000; fi;
 </code></pre>
-<p>看来需要想办法用 <strong>mmc read</strong> 替换 <strong>load&#x2F;fatload</strong> 。</p>
+<p>看来需要想办法用 <strong>mmc read</strong> 替换 <strong>load/fatload</strong> 。</p>
 <h1 id="深入研究"><a href="#深入研究" class="headerlink" title="深入研究"></a>深入研究</h1><h2 id="emmc分区理论"><a href="#emmc分区理论" class="headerlink" title="emmc分区理论"></a>emmc分区理论</h2><p>首先对emmc分区进行描述，pista的看起来这样：</p>
 <pre><code class="bash">blkdevparts=mmcblk1:209715200@1463812096(boot),-@1673528320(root)
 </code></pre>
@@ -1116,27 +1111,19 @@ if fatload $&#123;devtype&#125; $&#123;devnum&#125; 0x1000000 u-boot.ext; then g
 <p>pista为了保险起见，在EMMC分区头部保留了足足1396MB大小的空间。我们的R3300-M的EMMC容量总共才3728MB，可以适当减小预留空间，比如700MB。这样root分区大概有2.5GB空间可用，可以装下Manjaro ARM Minimal或者openwrt等无GUI界面的Linux发行版了。</p>
 <h2 id="emmc实际分区操作"><a href="#emmc实际分区操作" class="headerlink" title="emmc实际分区操作"></a>emmc实际分区操作</h2><p>pista没有给出具体命令，只是介绍了大概过程：</p>
 <ol>
-<li>预留出 <strong>&#x2F;dev&#x2F;mmcblk1</strong> 头部1396MB空间；</li>
-<li>新建 <strong>&#x2F;dev&#x2F;mmcblk1p1</strong> 和 <strong>&#x2F;dev&#x2F;mmcblk1p2</strong>两个分区，分别对应boot和root分区。root分区内容直接复制过去即可，重点是boot分区，需要使用dd命令，将 <strong>mainline uboot</strong> 、 <strong>kernel</strong> 、 <strong>ramdisk</strong> 和 <strong>dtb</strong> 写入预定义的区块位置，例如：</li>
-</ol>
-<pre><code class="bash">dd if=zImage of=/dev/mmcblk1p2 bs=512 seek=2859008 count=54841&#39;
+<li>预留出 <strong>/dev/mmcblk1</strong> 头部1396MB空间；</li>
+<li>新建 <strong>/dev/mmcblk1p1</strong> 和 <strong>/dev/mmcblk1p2</strong>两个分区，分别对应boot和root分区。root分区内容直接复制过去即可，重点是boot分区，需要使用dd命令，将 <strong>mainline uboot</strong> 、 <strong>kernel</strong> 、 <strong>ramdisk</strong> 和 <strong>dtb</strong> 写入预定义的区块位置，例如：<pre><code class="bash">dd if=zImage of=/dev/mmcblk1p2 bs=512 seek=2859008 count=54841&#39;
 </code></pre>
-<ol start="3">
-<li>对于Amlogic的uboot，使用 <strong>mmc read</strong> 替代 <strong>fatload</strong> 来加载全部文件，例如：</li>
-</ol>
-<pre><code class="bash">mmc read 0x08080000 0x2BA3FC 0xD639
+</li>
+<li>对于Amlogic的uboot，使用 <strong>mmc read</strong> 替代 <strong>fatload</strong> 来加载全部文件，例如： <pre><code class="bash">mmc read 0x08080000 0x2BA3FC 0xD639
 </code></pre>
-<ol start="4">
-<li>在被链式启动的Mainline uboot中，使用 <strong>booti 0x08080000 0x13000000 0x08008000</strong> 替代 <strong>bootcmd</strong> 来启动系统。</li>
-</ol>
-<h1 id="重现流程"><a href="#重现流程" class="headerlink" title="重现流程"></a>重现流程</h1><p>pista并没有给出可无脑照抄的流程，所以我们试着重现具体过程。</p>
-<h2 id="建立分区"><a href="#建立分区" class="headerlink" title="建立分区"></a>建立分区</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>保留EMMC分区前700MB，创建200MB的 <strong>BOOT_MNJRO</strong> 分区，然后剩余空间创建 <strong>ROOT_MNJRO</strong> 分区。分区名称来自在Manjaro ARM Minimal中用 <strong>e2label</strong> 查看的结果。fdisk结果如下：</p>
-<pre><code class="bash">Device         Boot  Start       End   Sectors   Size Id Type
+</li>
+<li>在被链式启动的Mainline uboot中，使用 <strong>booti 0x08080000 0x13000000 0x08008000</strong> 替代 <strong>bootcmd</strong> 来启动系统。<h1 id="重现流程"><a href="#重现流程" class="headerlink" title="重现流程"></a>重现流程</h1>pista并没有给出可无脑照抄的流程，所以我们试着重现具体过程。<h2 id="建立分区"><a href="#建立分区" class="headerlink" title="建立分区"></a>建立分区</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3>保留EMMC分区前700MB，创建200MB的 <strong>BOOT_MNJRO</strong> 分区，然后剩余空间创建 <strong>ROOT_MNJRO</strong> 分区。分区名称来自在Manjaro ARM Minimal中用 <strong>e2label</strong> 查看的结果。fdisk结果如下：<pre><code class="bash">Device         Boot  Start       End   Sectors   Size Id Type
 /dev/mmcblk0p1       62500    500000    437501 213.6M  c W95 FAT32 (LBA)
 /dev/mmcblk0p2      500001 250347519 249847519 119.1G 83 Linux
 </code></pre>
-<p>利用 <strong>df -h</strong> 查看，<strong>BOOT_MNJRO</strong> 使用了54MB大小空间，故分配200MB应该够用。（Manjaro ARM分配了214MB）</p>
-<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>然后就不会了 XD 求指点</p>
+利用 <strong>df -h</strong> 查看，<strong>BOOT_MNJRO</strong> 使用了54MB大小空间，故分配200MB应该够用。（Manjaro ARM分配了214MB）<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3>然后就不会了 XD 求指点</li>
+</ol>
 
       
     </div>

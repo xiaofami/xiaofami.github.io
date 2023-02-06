@@ -233,7 +233,7 @@
 <p>这样输出图片为PDF就没问题了。</p>
 <p>备注：我在Deepin上测试，得到的“PDF”文件打不开，用file查看是图片格式：</p>
 <blockquote>
-<p>output.pdf: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries&#x3D;14, height&#x3D;3264, bps&#x3D;0, description&#x3D;smart, manufacturer&#x3D;HUAWEI, model&#x3D;CND-AN00, orientation&#x3D;upper-left, xresolution&#x3D;200, yresolution&#x3D;208, resolutionunit&#x3D;2, software&#x3D;CND-AN00 10.1.1.166(C00E140R3P1), datetime&#x3D;2021:08:14 08:02:45, width&#x3D;2448], baseline, precision 8, 2448x3264, components 3</p>
+<p>output.pdf: JPEG image data, JFIF standard 1.01, resolution (DPI), density 72x72, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=14, height=3264, bps=0, description=smart, manufacturer=HUAWEI, model=CND-AN00, orientation=upper-left, xresolution=200, yresolution=208, resolutionunit=2, software=CND-AN00 10.1.1.166(C00E140R3P1), datetime=2021:08:14 08:02:45, width=2448], baseline, precision 8, 2448x3264, components 3</p>
 </blockquote>
 <p>Deepin上convert版本：<code>Version: ImageMagick 6.9.10-23 Q16 x86_64 20190101 https://imagemagick.org Copyright: © 1999-2019 ImageMagick Studio LLC</code></p>
 <p>在Manjaro ARM 21.08上测试没问题，得到了正常的PDF文件。Manjaro ARM 21.08上convert版本为<code>Version: ImageMagick 7.1.0-6 Q16-HDRI aarch64 2021-09-04 https://imagemagick.org Copyright: (C) 1999-2021 ImageMagick Studio LLC</code>。另外Manjaro上不需要修改policy文件，默认就正常运行。</p>
@@ -972,7 +972,7 @@ Output HDMI-A-1 &#39;Unknown Q27D530VHP 0x00000000&#39; (focused)
     640x480 @ 72.809 Hz
     640x480 @ 75.000 Hz
     720x480 @ 59.940 Hz
-    800x600 @ 60.317 Hz	
+    800x600 @ 60.317 Hz    
     800x600 @ 72.188 Hz
     800x600 @ 75.000 Hz
     1024x768 @ 60.004 Hz
@@ -998,7 +998,7 @@ Output HDMI-A-1 &#39;Unknown Q27D530VHP 0x00000000&#39; (focused)
 </code></pre>
 <p>这样看起来好了很多。</p>
 <h2 id="输入法安装"><a href="#输入法安装" class="headerlink" title="输入法安装"></a>输入法安装</h2><pre><code class="bash">sudo pacman -S fcitx5-im #安装所有
-sudo pacman -S fcitx5-chinese-addons	
+sudo pacman -S fcitx5-chinese-addons    
 </code></pre>
 <p>然后打开<code>/etc/environment</code>添加参数：</p>
 <pre><code class="bash">GTK_IM_MODULE=fcitx
@@ -1267,15 +1267,14 @@ vim2-post-install
 <p>复制镜像到本地家目录：<code>scp Manjaro-ARM-minimal-vim2m-2108img.xz tccmu@192.168.1.221:/home/tccmu</code></p>
 <p>tccmu是电脑上当前用户名，替换成自己的即可。192.168.1.221是自己电脑的IP（不是盒子），同样要替换。</p>
 <ol start="6">
-<li>写入镜像到TF卡：</li>
-</ol>
-<pre><code class="bash">xz -dc Manjaro-ARM-minimal-vim2m-2108.img.xz | dd of=/dev/sdX bs=1M status=progress conv=fsync
+<li>写入镜像到TF卡：<pre><code class="bash">xz -dc Manjaro-ARM-minimal-vim2m-2108.img.xz | dd of=/dev/sdX bs=1M status=progress conv=fsync
 </code></pre>
-<p>写入设备名自己替换。</p>
+写入设备名自己替换。</li>
+</ol>
 <p>之后的配置没有任何难度了，修改<strong>extlinux.conf</strong>使用合适dtb,修改u-boot-s905为u-boot.ext就完事大吉。</p>
 <h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><p>目前镜像已生成完毕，但未经实机测试。</p>
 <h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>测试生成的镜像无法启动，连u-boot都进不去，直接进入盒子安卓系统的recovery。怀疑是rootfs包下载错误问题。</p>
-<p>另外最新发布的21.08经测试可以正常启动运行，其搭载的主线内核 <strong>5.13.12-1-MANJARO-ARM #1 SMP Wed Aug 18 07:36:58 UTC 2021 aarch64 GNU&#x2F;Linux</strong>一切正常，所以替换aml内核貌似就没必要了。</p>
+<p>另外最新发布的21.08经测试可以正常启动运行，其搭载的主线内核 <strong>5.13.12-1-MANJARO-ARM #1 SMP Wed Aug 18 07:36:58 UTC 2021 aarch64 GNU/Linux</strong>一切正常，所以替换aml内核貌似就没必要了。</p>
 
       
     </div>
@@ -1409,7 +1408,7 @@ vim2-post-install
 
       
           <p>主要来源：<a target="_blank" rel="noopener" href="https://blog.huangz.me/2020/docker-on-linux.html">在 Manjaro Linux 系统使用 Docker</a></p>
-<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 <strong>5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU&#x2F;Linux</strong></p>
+<h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>硬件平台还是百视通R3300-M …… 安装Manjaro Arm 21.04后已升级到21.08，内核版本 <strong>5.13.0-1-MANJARO-ARM #1 SMP PREEMPT Wed Jun 30 23:07:51 +03 2021 aarch64 GNU/Linux</strong></p>
 <h1 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h1><pre><code class="bash">sudo pacman -Syu
 sudo pacman -S docker
 </code></pre>
@@ -1420,7 +1419,7 @@ sudo pacman -S docker
 <h1 id="添加当前用户到Docker组"><a href="#添加当前用户到Docker组" class="headerlink" title="添加当前用户到Docker组"></a>添加当前用户到Docker组</h1><p>这样当前用户就有足够权限操作docker而不必sudo权限。</p>
 <pre><code class="bash">sudo usermod -aG docker $USER
 </code></pre>
-<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>打开或创建 &#x2F;etc&#x2F;docker&#x2F;daemon.json 文件：</p>
+<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>打开或创建 /etc/docker/daemon.json 文件：</p>
 <pre><code class="bash">&#123;
     &quot;registry-mirrors&quot;: [
         &quot;https://registry.docker-cn.com&quot;

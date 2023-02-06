@@ -239,7 +239,7 @@ https://github.com/manjaro-arm/vim2-images/releases/download/21.04/Manjaro-ARM-x
 <li>如果使用U盘启动，需要在<code>extlinux.conf</code>中指定<code>usb-storage.quirks</code>参数。例如：</li>
 </ol>
 <blockquote>
-<p>APPEND root&#x3D;PARTUUID&#x3D;5418e4d8-02 rootflags&#x3D;data&#x3D;writeback rw console&#x3D;ttyAML0,115200n8 console&#x3D;tty0 no_console_suspend consoleblank&#x3D;0 fsck.fix&#x3D;yes fsck.repair&#x3D;yes net.ifnames&#x3D;0 quiet splash plymouth.ignore-serial-consoles usb-storage.quirks&#x3D;152d:1561:u</p>
+<p>APPEND root=PARTUUID=5418e4d8-02 rootflags=data=writeback rw console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0 quiet splash plymouth.ignore-serial-consoles usb-storage.quirks=152d:1561:u</p>
 </blockquote>
 <p>152d:1561为U盘vendor和product的ID号码。在linux下可以使用<code>lsusb</code>查看，Windows下也有类似小工具。<br>3. 无法使用root身份SSH登录，会提示密码错误。建议用普通用户连接后再切换身份。<br>4. 有线网卡Mac地址不固定，每次重启都会变化。<br>5. WIFI暂不可用，待进一步测试。<br>6. 类似21.06等感觉可以通过替换Image和initramfs-linux.img实现从内核从主线到Amlogic分支切换，有兴趣的可以测试。</p>
 

@@ -257,7 +257,7 @@ EXIT;
 <h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><pre><code class="bash">sudo pacman -S php php-fpm php-gd
 sudo systemctl enable --now php-fpm
 </code></pre>
-<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>&#x2F;etc&#x2F;php&#x2F;php.ini</strong> ，启用以下扩展（删掉行首的注释即可）：</p>
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>/etc/php/php.ini</strong> ，启用以下扩展（删掉行首的注释即可）：</p>
 <pre><code class="ini">extension=bz2
 extension=curl
 extension=gd
@@ -270,7 +270,7 @@ extension=zip
 post_max_size=100M
 upload_max_file_size=100M
 </code></pre>
-<p>编辑 <strong>&#x2F;etc&#x2F;php&#x2F;php-fpm.d&#x2F;<a target="_blank" rel="noopener" href="http://www.conf/">www.conf</a></strong> 文件，使其以caddy身份运行：</p>
+<p>编辑 <strong>/etc/php/php-fpm.d/<a target="_blank" rel="noopener" href="http://www.conf/">www.conf</a></strong> 文件，使其以caddy身份运行：</p>
 <pre><code class="conf">user = http
 group = http
 </code></pre>
@@ -285,13 +285,13 @@ group = caddy
 <pre><code class="bash">cd ~/
 curl -O https://wordpress.org/latest.tar.gz
 </code></pre>
-<p>移动到 <strong>&#x2F;srv&#x2F;http</strong> 目录下并解压缩：</p>
+<p>移动到 <strong>/srv/http</strong> 目录下并解压缩：</p>
 <pre><code class="bash">sudo mv ~/latest.tar.gz /srv/http
 cd /srv/http
 sudo tar -zxvf latest.tar.gz
 </code></pre>
-<p>然后在 <strong>&#x2F;srv&#x2F;http</strong> 会出现 <strong>wordpress</strong> 文件夹。</p>
-<p>早年用过 <strong>centos</strong> 等Linux发行版的人可能对 <strong>&#x2F;srv&#x2F;http</strong> 不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在哪里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。</p>
+<p>然后在 <strong>/srv/http</strong> 会出现 <strong>wordpress</strong> 文件夹。</p>
+<p>早年用过 <strong>centos</strong> 等Linux发行版的人可能对 <strong>/srv/http</strong> 不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在哪里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。</p>
 <p>完成后，开始调配Caddy。</p>
 <h1 id="Caddy"><a href="#Caddy" class="headerlink" title="Caddy"></a>Caddy</h1><h2 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h2><pre><code class="bash">sudo pacman -S caddy
 </code></pre>
@@ -317,7 +317,7 @@ sudo tar -zxvf latest.tar.gz
 &#125;
 </code></pre>
 <p>这个配置是从<a target="_blank" rel="noopener" href="https://caddy.community/t/example-configure-wordpress-with-a-static-cache/8215">Example: configure WordPress with a static cache</a>略微修改来的，你如果同样使用Manjaro ARM，那么只需要用自己的域名替换就行了。</p>
-<p>在 <strong>&#x2F;etc&#x2F;caddy</strong> 目录中，将默认的<code>Caddyfile</code>复制一份并改名为<code>Caddyfile.ori</code>，然后清空<code>Caddyfile</code>，把自己的配置粘贴进去保存即可。</p>
+<p>在 <strong>/etc/caddy</strong> 目录中，将默认的<code>Caddyfile</code>复制一份并改名为<code>Caddyfile.ori</code>，然后清空<code>Caddyfile</code>，把自己的配置粘贴进去保存即可。</p>
 <h2 id="修改wp-content权限"><a href="#修改wp-content权限" class="headerlink" title="修改wp-content权限"></a>修改wp-content权限</h2><pre><code class="bash">sudo chown -R caddy:caddy /srv/http/wordpress/wp-content/
 </code></pre>
 <p>这步的操作目的是将 <strong>wp-content</strong> 目录用户和组修改为caddy。刚才解压后得到的wordpress目录中，所有文件用户和组均为 <strong>nobody</strong> ，权限大部分为644，故caddy只有可读权限，无法写入，在后续安装使用（比如安装插件）中会产生许多麻烦。网上流传的所谓<code>sudo chmod -R 755</code>甚至<code>sudo chmod -R 777</code>方法不要用，因其对linux权限系统的破坏是不可逆的。用户与组至少随时可以改回来。严格来说 <strong>wp-content</strong> 用户与组修改为 <strong>caddy</strong> 也不安全，不过在只运行一个网站的情况下，安全性应该还行？</p>

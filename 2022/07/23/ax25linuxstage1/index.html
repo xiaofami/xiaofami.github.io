@@ -224,24 +224,20 @@
 </ol>
 <h1 id="Direwolf"><a href="#Direwolf" class="headerlink" title="Direwolf"></a>Direwolf</h1><p>编译安装方法之前已详细介绍，额外几点补充说明：</p>
 <ol>
-<li>需要启用 <strong>avahi</strong> 服务，否则 Direwolf 会提示 <strong>DNS-SD: Avahi: Failed to create Avahi client: Daemon not running</strong> ：</li>
-</ol>
-<pre><code class="bash">sudo systemctl enable --now avahi-daemon.service
+<li>需要启用 <strong>avahi</strong> 服务，否则 Direwolf 会提示 <strong>DNS-SD: Avahi: Failed to create Avahi client: Daemon not running</strong> ：<pre><code class="bash">sudo systemctl enable --now avahi-daemon.service
 </code></pre>
-<ol start="2">
-<li>合理设置以避免使用root权限运行Direwolf。我使用了FT232将串口转换成USB（淘宝买的U5-Link），在Manjaro中对应设备为 <strong>&#x2F;dev&#x2F;ttyUSB0</strong> ：</li>
-</ol>
-<pre><code class="bash">$ ls /dev/ttyUSB0
+</li>
+<li>合理设置以避免使用root权限运行Direwolf。我使用了FT232将串口转换成USB（淘宝买的U5-Link），在Manjaro中对应设备为 <strong>/dev/ttyUSB0</strong> ：<pre><code class="bash">$ ls /dev/ttyUSB0
 Permissions  Size User Group Date Modified Name
 crw-rw----  188,0 root uucp   3 Jun 20:59  /dev/ttyUSB0
 </code></pre>
-<p>为了能够以普通用户身份读写 <code>/dev/ttyUSB0</code> ，需要将当前用户（我的用户名是marly） 添加到 <strong>uucp</strong> 这个组中：</p>
-<pre><code class="bash">$ sudo usermod -aG uucp marly
+为了能够以普通用户身份读写 <code>/dev/ttyUSB0</code> ，需要将当前用户（我的用户名是marly） 添加到 <strong>uucp</strong> 这个组中：<pre><code class="bash">$ sudo usermod -aG uucp marly
 $ id marly
 uid=1000(marly) gid=1000(marly) groups=1000(marly),3(sys),90(network),98(power),998(wheel),996(audio),994(input),991(lp),987(storage),986(uucp),985(video),984(users),970(sambashare)
 </code></pre>
-<p>通过id命令可以得知当前用户已成功加入到 <strong>uucp</strong> 组中。 <strong>重新登录SSH以使改动生效！</strong></p>
-<p>另外Direwolf每次启动都会创建 <strong>&#x2F;tmp&#x2F;kisstnc</strong> 这个指向实际pts设备的符号连接。所以如果你之前用root身份运行过direwolf，direwolf就无法新建 <strong>&#x2F;tmp&#x2F;kisstnc</strong> ，把**&#x2F;tmp&#x2F;kisstnc<strong>删除一次就可以了。以后创建的</strong>&#x2F;tmp&#x2F;kisstnc**不会再遇到这种权限问题。</p>
+通过id命令可以得知当前用户已成功加入到 <strong>uucp</strong> 组中。 <strong>重新登录SSH以使改动生效！</strong></li>
+</ol>
+<p>另外Direwolf每次启动都会创建 <strong>/tmp/kisstnc</strong> 这个指向实际pts设备的符号连接。所以如果你之前用root身份运行过direwolf，direwolf就无法新建 <strong>/tmp/kisstnc</strong> ，把**/tmp/kisstnc<strong>删除一次就可以了。以后创建的</strong>/tmp/kisstnc**不会再遇到这种权限问题。</p>
 <h1 id="KISS-TNC配置"><a href="#KISS-TNC配置" class="headerlink" title="KISS TNC配置"></a>KISS TNC配置</h1><p>测试Direwolf时，发现Direwolf提示</p>
 <pre><code class="config">Are you using AX.25 for Linux?  It might be trying to use a modified version of KISS which uses the channel field differently than the original KISS protocol specification.  The solution might be to use a command like &quot;kissparms -c 1 -p radio&quot; to set CRC none mode. Another way of doing this is pre-loading the &quot;kiss&quot; kernel module with CRC disabled: sudo /sbin/modprobe -q mkiss crc_force=1
 </code></pre>

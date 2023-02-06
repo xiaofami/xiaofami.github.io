@@ -225,7 +225,7 @@
 
 <p>实际上在设置中你会发现，每个亚音有N和I两种，以023为例，有D023N和D023I两种，这是怎么回事呢？</p>
 <p>字面含义，N是正码（normal），I是反码（inverted），两者选用的原则又是什么呢？</p>
-<p>经过一番搜索，在<a target="_blank" rel="noopener" href="https://www.transmission1.net/viewtopic.php?t=18800">D023N&#x2F;D0231</a>找到了答案。信号经过单相放大电路时（原文single stage amplifier circuit，不知这样翻译是否妥当），信号相位会翻转180°，在这种情况下，需要用反码。中文以<strong>放大器 相位反转</strong>为关键词搜索，可以找到许多解释及解决办法。</p>
+<p>经过一番搜索，在<a target="_blank" rel="noopener" href="https://www.transmission1.net/viewtopic.php?t=18800">D023N/D0231</a>找到了答案。信号经过单相放大电路时（原文single stage amplifier circuit，不知这样翻译是否妥当），信号相位会翻转180°，在这种情况下，需要用反码。中文以<strong>放大器 相位反转</strong>为关键词搜索，可以找到许多解释及解决办法。</p>
 <p>另外需要澄清，反码一般上不作为DCS的拓展，简单的例子，D413N与D054I是一模一样的，并不是说用了反码DCS范围就拓展到原来的2倍。</p>
 <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>亚音的运用可以屏蔽干扰。比如在繁忙的信道，通过约定接收亚音与发射亚音，不符合条件的信号得以过滤。需要特别指出，亚音本身并非加密手段，对于未设置接收亚音的收听者，无论信号有无亚音，被如何设置，他都可以接受到。</p>
 

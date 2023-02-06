@@ -216,11 +216,10 @@
 <p>此外有几点需要留意：</p>
 <ol>
 <li>迭代器。使用迭代器会发生所有权的转移！所以该借用（borrow）就借用吧。</li>
-<li>字符串。需要留意 <strong>+</strong> 运算符对于字符串的实现，大致看起来这样：</li>
-</ol>
-<pre><code class="rust">fn add(self, s: &amp;str) -&gt; String &#123;
+<li>字符串。需要留意 <strong>+</strong> 运算符对于字符串的实现，大致看起来这样：<pre><code class="rust">fn add(self, s: &amp;str) -&gt; String &#123;
 </code></pre>
-<p>所以对于一般 <code>let s3 = s1 + &amp;s2</code> 的情形， <strong>s1</strong> 所有权会发生转移。</p>
+所以对于一般 <code>let s3 = s1 + &amp;s2</code> 的情形， <strong>s1</strong> 所有权会发生转移。</li>
+</ol>
 <p>如果要避免所有权转移的麻烦，使用<code>format!</code>即可。</p>
 <pre><code class="rust">#[derive(Debug)]
 struct Rect1 &#123;

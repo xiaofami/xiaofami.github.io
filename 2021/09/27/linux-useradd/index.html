@@ -233,38 +233,28 @@ CREATE_MAIL_SPOOL=no
 <pre><code class="bash">sudo useradd marly
 </code></pre>
 <ol start="3">
-<li>创建密码</li>
+<li>创建密码<pre><code class="bash">sudo passwd marly
+</code></pre>
+</li>
+<li>创建home目录<br>useradd默认情况下不会创建home目录（尽管会根据模板写入passwd文件），所以需要自行创建。<br>mkhomedir_helper用法：<pre><code class="bash">mkhomedir_helper &#123;user&#125; [umask [ path-to-skel ]]
+</code></pre>
+第一个参数用户名必选，umask与skel路径可选。默认umask为0022，默认skel路径为/etc/skel（模板里可以看到）。skel里面的内容会被复制一份到marly的家目录中。<pre><code class="bash">sudo mkhomedir_helper marly
+</code></pre>
+</li>
+<li>添加用户备注<br>勤于写备注是好习惯：<pre><code class="bash">sudo usermod -c &quot;guess who is marly&quot; marly
+</code></pre>
+</li>
+<li>查看用户组<br>查看当前用户group：<pre><code class="bash">groups
+</code></pre>
+等价于<br>查看当前用户group：<pre><code class="bash">groups $USER
+</code></pre>
+查看其他用户group：<br>```bash<br>$ groups git</li>
 </ol>
-<pre><code class="bash">sudo passwd marly
-</code></pre>
-<ol start="4">
-<li>创建home目录<br>useradd默认情况下不会创建home目录（尽管会根据模板写入passwd文件），所以需要自行创建。<br>mkhomedir_helper用法：</li>
-</ol>
-<pre><code class="bash">mkhomedir_helper &#123;user&#125; [umask [ path-to-skel ]]
-</code></pre>
-<p>第一个参数用户名必选，umask与skel路径可选。默认umask为0022，默认skel路径为&#x2F;etc&#x2F;skel（模板里可以看到）。skel里面的内容会被复制一份到marly的家目录中。</p>
-<pre><code class="bash">sudo mkhomedir_helper marly
-</code></pre>
-<ol start="5">
-<li>添加用户备注<br>勤于写备注是好习惯：</li>
-</ol>
-<pre><code class="bash">sudo usermod -c &quot;guess who is marly&quot; marly
-</code></pre>
-<ol start="6">
-<li>查看用户组<br>查看当前用户group：</li>
-</ol>
-<pre><code class="bash">groups
-</code></pre>
-<p>等价于<br>查看当前用户group：</p>
-<pre><code class="bash">groups $USER
-</code></pre>
-<p>查看其他用户group：</p>
-<pre><code class="bash">$ groups git
-
-git
-</code></pre>
-<p>不需要特殊权限即可查看。<br>7. 添加用户到group：</p>
-<pre><code class="bash">sudo usermod -aG existgroup newuser
+<p>git</p>
+<pre><code>不需要特殊权限即可查看。
+7. 添加用户到group：
+```bash
+sudo usermod -aG existgroup newuser
 </code></pre>
 <p>-aG为追加用户到现有组。</p>
 <p>新创建的用户默认会自动创建并加入与用户名同名的组，为了实现各种功能，需要将其添加到更多的组。例如，需要赋予marly管理员权限，就需要将其加入wheel组：</p>
@@ -272,10 +262,10 @@ git
 </code></pre>
 <p>这样marly就有权使用sudo命令了。在debian中sudo组替代了wheel。</p>
 <ol start="8">
-<li>一步创建：</li>
-</ol>
-<pre><code class="bash">useradd -c &quot;this shows how to create user in single line&quot; -G git,wheel -m  fredman
+<li>一步创建：<pre><code class="bash">useradd -c &quot;this shows how to create user in single line&quot; -G git,wheel -m  fredman
 </code></pre>
+</li>
+</ol>
 <p>不推荐用-p直接分配密码。删除用户用userdel：</p>
 <pre><code class="bash">userdel -r fredman
 </code></pre>

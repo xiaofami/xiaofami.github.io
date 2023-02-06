@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="经过一些阅读，比如Pt&#x2F;Direwolf&#x2F;SignaLink，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。 Pat是什么Pat是一个跨平台的 Winlink 客户端，提供了命令行界面和网页界面 特点：  收信发信（简单的信箱功能）； 自动压缩图片附件； 可以">
+  <meta name="description" content="经过一些阅读，比如Pt&#x2F;Direwolf&#x2F;SignaLink，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。 Pat是什么Pat是一个跨平台的 Winlink 客户端，提供了命令行界面和网页界面 特点：  收信发信（简单的信箱功能）； 自动压缩图片附件； 可以通过GPS设备，网页">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Manjaro ARM中编译运行Pat">
 <meta property="og:url" content="http://xiaofami.github.io/2022/07/21/pat/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="经过一些阅读，比如Pt&#x2F;Direwolf&#x2F;SignaLink，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。 Pat是什么Pat是一个跨平台的 Winlink 客户端，提供了命令行界面和网页界面 特点：  收信发信（简单的信箱功能）； 自动压缩图片附件； 可以">
+<meta property="og:description" content="经过一些阅读，比如Pt&#x2F;Direwolf&#x2F;SignaLink，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。 Pat是什么Pat是一个跨平台的 Winlink 客户端，提供了命令行界面和网页界面 特点：  收信发信（简单的信箱功能）； 自动压缩图片附件； 可以通过GPS设备，网页">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-21T06:22:47.000Z">
 <meta property="article:modified_time" content="2023-02-06T01:03:38.764Z">
@@ -212,7 +212,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>经过一些阅读，比如<a target="_blank" rel="noopener" href="https://groups.google.com/g/pat-users/c/tY1b15MD7ZM">Pt&#x2F;Direwolf&#x2F;SignaLink</a>，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。</p>
+        <p>经过一些阅读，比如<a target="_blank" rel="noopener" href="https://groups.google.com/g/pat-users/c/tY1b15MD7ZM">Pt/Direwolf/SignaLink</a>，Linux上的AX.25栈在过去的20年中没有得到良好维护，在2022年的可用性堪忧。这些问题暂且搁置，继续收集Linux实现Packet radio的拼图🧩碎片。</p>
 <h1 id="Pat是什么"><a href="#Pat是什么" class="headerlink" title="Pat是什么"></a>Pat是什么</h1><p>Pat是一个跨平台的 <strong>Winlink</strong> 客户端，提供了命令行界面和网页界面</p>
 <p>特点：</p>
 <ul>
@@ -239,8 +239,8 @@ sudo ./make.bash
 <p>Pat的网络页面提供了多样连接方式，在既无TNC又没有电台的情况下可以使用telnet连接，经测试连接正常。</p>
 <h1 id="Direwolf-AX-25-Pat"><a href="#Direwolf-AX-25-Pat" class="headerlink" title="Direwolf, AX.25, Pat"></a>Direwolf, AX.25, Pat</h1><p><a target="_blank" rel="noopener" href="https://groups.io/g/direwolf/topic/use_pat_with_direwolf/80185118?p=,,,20,0,0,0::recentpostdate/sticky,,,20,0,40,80185118">https://groups.io/g/direwolf/topic/use_pat_with_direwolf/80185118?p=,,,20,0,0,0::recentpostdate%2Fsticky,,,20,0,40,80185118</a></p>
 <p>参见Direwolf用户手册 <strong>5.8 Kiss TNC emulation-seial port</strong> (第25页)一节：</p>
-<p>Direwolf可以扮演成一个使用Kiss协议、通过伪终端（pseudo terminal,设备路径形如&#x2F;dev&#x2F;pts&#x2F;1）通信的传统TNC。通过伪终端可实现虚拟COM功能（所以之前设想的socat就不需要了）：</p>
-<p>编者按：伪终端（pseudo terminal）的应用很广泛。举个例子，通过SSH远程连接到Linux主机，在主机上便建立了一个伪终端。编号从0开始，由于建立了2个SSH连接，所以0和1便对应两个连接。（此时运行sudo direwolf -p，不出意外&#x2F;tmp&#x2F;kisstnc会指向&#x2F;dev&#x2F;pts&#x2F;2）</p>
+<p>Direwolf可以扮演成一个使用Kiss协议、通过伪终端（pseudo terminal,设备路径形如/dev/pts/1）通信的传统TNC。通过伪终端可实现虚拟COM功能（所以之前设想的socat就不需要了）：</p>
+<p>编者按：伪终端（pseudo terminal）的应用很广泛。举个例子，通过SSH远程连接到Linux主机，在主机上便建立了一个伪终端。编号从0开始，由于建立了2个SSH连接，所以0和1便对应两个连接。（此时运行sudo direwolf -p，不出意外/tmp/kisstnc会指向/dev/pts/2）</p>
 <pre><code class="bash">who
 marly    pts/0        2022-07-22 15:08 (10.89.1.253)
 marly    pts/1        2022-07-22 15:08 (10.89.1.253)

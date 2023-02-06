@@ -222,14 +222,14 @@
 <li>调用API自动更新A记录。GitHub上找到一个看起来不错的项目：<a target="_blank" rel="noopener" href="https://github.com/NewFuture/DDNS">NewFuture DDNS</a>。支持DNSPOD，阿里 DNS，DNS.COM，DNSPOD 国际版，CloudFlare，HE.net(不支持自动创建记录)，华为云。</li>
 <li>签发<code>Let&#39;s Encrypt</code>证书 + 续期。使用<a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh">ACME</a>即可。</li>
 </ol>
-<p>此外还发现<a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps">ehang-io&#x2F;nps</a>，不过没完整折腾过。</p>
+<p>此外还发现<a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps">ehang-io/nps</a>，不过没完整折腾过。</p>
 <h1 id="安装cloudflared"><a href="#安装cloudflared" class="headerlink" title="安装cloudflared"></a>安装cloudflared</h1><p>可以直接下载官方预编译的二进制执行文件或者安装包，地址 <a target="_blank" rel="noopener" href="https://github.com/cloudflare/cloudflared/releases/">https://github.com/cloudflare/cloudflared/releases/</a> ，或者使用<code>yay</code>根据当前最新源码编译安装：</p>
 <pre><code class="bash">$ yay -s 
 </code></pre>
 <p>如果半天没进度，请检查网络状况。</p>
 <p>使用yay安装的cloudflared包含三部分：</p>
 <blockquote>
-<p>&#x2F;usr&#x2F;bin&#x2F;cloudflared &#x2F;etc&#x2F;cloudflared &#x2F;usr&#x2F;share&#x2F;man&#x2F;man1&#x2F;cloudflared.1.gz</p>
+<p>/usr/bin/cloudflared /etc/cloudflared /usr/share/man/man1/cloudflared.1.gz</p>
 </blockquote>
 <p>日志文件为<code>/var/log/cloudflared.log</code>，默认文件权限640。cloudflared以普通用户权限运行所以没法读写这个日志文件，可以手动把它改成666：</p>
 <pre><code class="bash">$ sudo chmod 666 /var/log/cloudflared.log
@@ -255,23 +255,23 @@
 </code></pre>
 <p>查看是否路由成功。</p>
 <h1 id="配置文件创建"><a href="#配置文件创建" class="headerlink" title="配置文件创建"></a>配置文件创建</h1><p><code>cloudflared</code>的配置文件为<code>config.yml</code>，遵循Linux传统，全局文件路径<code>/etc/cloudflared/config.yml</code>，用户文件路径<code>~/.cloudflared/config.yml</code>。</p>
-<h2 id="全局文件默认内容：-96-96-96-yaml"><a href="#全局文件默认内容：-96-96-96-yaml" class="headerlink" title="全局文件默认内容：&#96;&#96;&#96;yaml"></a>全局文件默认内容：<br>&#96;&#96;&#96;yaml</h2><p>logfile: &#x2F;var&#x2F;log&#x2F;cloudflared.log<br>proxy-dns: true<br>proxy-dns-address: 127.0.0.1<br>proxy-dns-port: 5300<br>proxy-dns-upstream:<br>        - <a target="_blank" rel="noopener" href="https://1.1.1.1/dns-query">https://1.1.1.1/dns-query</a><br>        - <a target="_blank" rel="noopener" href="https://1.0.0.1/dns-query">https://1.0.0.1/dns-query</a></p>
-<pre><code>
-在`~/.cloudflared/`中，创建`config.yml`文件：
-
-## 连接到应用
-&gt; url: http://localhost:8000
-tunnel: &lt;Tunnel-UUID&gt;
-credentials-file: /root/.cloudflared/&lt;Tunnel-UUID&gt;.json
-
-根据自身情况修改，比如应用端口，UUID，以及credentials-file位置。
-## 连接到网络
-tunnel: &lt;Tunnel-UUID&gt;
-credentials-file: /root/.cloudflared/&lt;Tunnel-UUID&gt;.json
-
-# tunnel运行
-```bash
-$ cloudflared tunnel run &lt;UUID or NAME&gt;
+<p>全局文件默认内容：</p>
+<pre><code class="yaml">---
+logfile: /var/log/cloudflared.log
+proxy-dns: true
+proxy-dns-address: 127.0.0.1
+proxy-dns-port: 5300
+proxy-dns-upstream:
+        - https://1.1.1.1/dns-query
+        - https://1.0.0.1/dns-query
+</code></pre>
+<p>在<code>~/.cloudflared/</code>中，创建<code>config.yml</code>文件：</p>
+<h2 id="连接到应用-1"><a href="#连接到应用-1" class="headerlink" title="连接到应用"></a>连接到应用</h2><blockquote>
+<p>url: <a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000</a><br>tunnel: <Tunnel-UUID><br>credentials-file: /root/.cloudflared/<Tunnel-UUID>.json</p>
+</blockquote>
+<p>根据自身情况修改，比如应用端口，UUID，以及credentials-file位置。</p>
+<h2 id="连接到网络-1"><a href="#连接到网络-1" class="headerlink" title="连接到网络"></a>连接到网络</h2><p>tunnel: <Tunnel-UUID><br>credentials-file: /root/.cloudflared/<Tunnel-UUID>.json</p>
+<h1 id="tunnel运行"><a href="#tunnel运行" class="headerlink" title="tunnel运行"></a>tunnel运行</h1><pre><code class="bash">$ cloudflared tunnel run &lt;UUID or NAME&gt;
 </code></pre>
 <p>如果存在多个配置文件（比如同时运行了多条tunnel），建议通过<code>--config</code>指定路径：</p>
 <pre><code class="bash">$ cloudflared tunnel --config path/config.yaml run
@@ -384,8 +384,7 @@ sudo systemctl start cloudflared
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">示例说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cloudflared"><span class="nav-number">3.</span> <span class="nav-text">安装cloudflared</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%8E%88%E6%9D%83"><span class="nav-number">4.</span> <span class="nav-text">登录授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tunnel%E5%88%9B%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">tunnel创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">DNS记录生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%BA%94%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">连接到应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E7%BD%91%E7%BB%9C"><span class="nav-number">6.2.</span> <span class="nav-text">连接到网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA"><span class="nav-number">7.</span> <span class="nav-text">配置文件创建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E6%96%87%E4%BB%B6%E9%BB%98%E8%AE%A4%E5%86%85%E5%AE%B9%EF%BC%9A-96-96-96-yaml"><span class="nav-number">7.1.</span> <span class="nav-text">全局文件默认内容：
-&#96;&#96;&#96;yaml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5tunnel%E7%8A%B6%E5%86%B5"><span class="nav-number">8.</span> <span class="nav-text">检查tunnel状况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89"><span class="nav-number">8.1.</span> <span class="nav-text">列出所有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%8D%95%E4%B8%AA"><span class="nav-number">8.2.</span> <span class="nav-text">检查单个</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">9.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">9.1.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C"><span class="nav-number">9.2.</span> <span class="nav-text">作为服务运行</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">示例说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cloudflared"><span class="nav-number">3.</span> <span class="nav-text">安装cloudflared</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%8E%88%E6%9D%83"><span class="nav-number">4.</span> <span class="nav-text">登录授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tunnel%E5%88%9B%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">tunnel创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">DNS记录生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%BA%94%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">连接到应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E7%BD%91%E7%BB%9C"><span class="nav-number">6.2.</span> <span class="nav-text">连接到网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA"><span class="nav-number">7.</span> <span class="nav-text">配置文件创建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%BA%94%E7%94%A8-1"><span class="nav-number">7.1.</span> <span class="nav-text">连接到应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E7%BD%91%E7%BB%9C-1"><span class="nav-number">7.2.</span> <span class="nav-text">连接到网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tunnel%E8%BF%90%E8%A1%8C"><span class="nav-number">8.</span> <span class="nav-text">tunnel运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5tunnel%E7%8A%B6%E5%86%B5"><span class="nav-number">9.</span> <span class="nav-text">检查tunnel状况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89"><span class="nav-number">9.1.</span> <span class="nav-text">列出所有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%8D%95%E4%B8%AA"><span class="nav-number">9.2.</span> <span class="nav-text">检查单个</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C"><span class="nav-number">10.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">10.1.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C"><span class="nav-number">10.2.</span> <span class="nav-text">作为服务运行</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

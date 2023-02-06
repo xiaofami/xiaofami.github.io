@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="源码地址： https:&#x2F;&#x2F;www.cantab.net&#x2F;users&#x2F;john.wiseman&#x2F;Downloads&#x2F;LatestLinBPQSource.zip 为了在Manjaro ARM下成功编译，需要对源文件进行如下改动：  makefile第22行，将  all: CFLAGS &#x3D; -DLINBPQ -MMD -g  修改为 all: CFLAGS &#x3D; -DLINBPQ -MMD -g -">
+  <meta name="description" content="源码地址： https:&#x2F;&#x2F;www.cantab.net&#x2F;users&#x2F;john.wiseman&#x2F;Downloads&#x2F;LatestLinBPQSource.zip 为了在Manjaro ARM下成功编译，需要对源文件进行如下改动：  makefile第22行，将 all: CFLAGS &#x3D; -DLINBPQ -MMD -g  修改为 all: CFLAGS &#x3D; -DLINBPQ -MMD -g -f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Manjaro ARM编译LinBPQ">
 <meta property="og:url" content="http://xiaofami.github.io/2022/07/25/linbpq/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="源码地址： https:&#x2F;&#x2F;www.cantab.net&#x2F;users&#x2F;john.wiseman&#x2F;Downloads&#x2F;LatestLinBPQSource.zip 为了在Manjaro ARM下成功编译，需要对源文件进行如下改动：  makefile第22行，将  all: CFLAGS &#x3D; -DLINBPQ -MMD -g  修改为 all: CFLAGS &#x3D; -DLINBPQ -MMD -g -">
+<meta property="og:description" content="源码地址： https:&#x2F;&#x2F;www.cantab.net&#x2F;users&#x2F;john.wiseman&#x2F;Downloads&#x2F;LatestLinBPQSource.zip 为了在Manjaro ARM下成功编译，需要对源文件进行如下改动：  makefile第22行，将 all: CFLAGS &#x3D; -DLINBPQ -MMD -g  修改为 all: CFLAGS &#x3D; -DLINBPQ -MMD -g -f">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-25T03:17:04.000Z">
 <meta property="article:modified_time" content="2023-02-06T01:03:38.724Z">
@@ -215,25 +215,24 @@
         <p>源码地址： <a target="_blank" rel="noopener" href="https://www.cantab.net/users/john.wiseman/Downloads/LatestLinBPQSource.zip">https://www.cantab.net/users/john.wiseman/Downloads/LatestLinBPQSource.zip</a></p>
 <p>为了在Manjaro ARM下成功编译，需要对源文件进行如下改动：</p>
 <ol>
-<li>makefile第22行，将</li>
-</ol>
+<li><p>makefile第22行，将</p>
 <pre><code class="makefile">all: CFLAGS = -DLINBPQ -MMD -g
 </code></pre>
 <p>修改为</p>
 <pre><code class="makefile">all: CFLAGS = -DLINBPQ -MMD -g -fcommon
 </code></pre>
 <p>如果不加入 <strong>-fcommon</strong> 选项，编译时gcc会提示 <strong>multiple definition</strong> 错误。</p>
-<ol start="2">
-<li><p>makefile第31行，将 <strong>libminiupnpc.a</strong> 修改为 <strong>libminiupnpc.so</strong> 。谨慎起见先检查一下 <strong>miniupnpc</strong> 这个包有没有安装，它提供了 <strong>&#x2F;usr&#x2F;lib&#x2F;libminiupnpc.so</strong> 。</p>
+</li>
+<li><p>makefile第31行，将 <strong>libminiupnpc.a</strong> 修改为 <strong>libminiupnpc.so</strong> 。谨慎起见先检查一下 <strong>miniupnpc</strong> 这个包有没有安装，它提供了 <strong>/usr/lib/libminiupnpc.so</strong> 。</p>
 </li>
 <li><p>BBSUtilities.c 第9797行，将</p>
-</li>
-</ol>
 <pre><code class="c">config_set_auto_convert (&amp;cfg, 1);
 </code></pre>
 <p>修改为</p>
 <pre><code class="c">config_set_option(&amp;cfg, CONFIG_OPTION_AUTOCONVERT, 1); 
 </code></pre>
+</li>
+</ol>
 <p>保存上述修改后执行 <code>make -j$(nproc)</code> 编译即可。结束后当前目录会出现名为 <strong>linbpq</strong> 的可执行程序。这个程序可以移动到其他方便使用的地方，但是注意 <strong>linbpq</strong> 默认会在运行路径下寻找配置文件并生成log，暂时还不清楚如何指定配置文件位置。</p>
 <p>LinBPQ配置比较复杂，可以参考开发者亲自撰写的<a target="_blank" rel="noopener" href="https://www.cantab.net/users/john.wiseman/Documents/LinBPQGuides.html">LinBPQ Guides</a></p>
 <p>再次致谢LinBPQ的开发者 <strong>John G8BPQ</strong> ，他对编译中遇到的问题给出了解决办法，使Manjaro ARM运行LinBPQ成为现实。大师教导参见 <a target="_blank" rel="noopener" href="https://groups.io/g/bpq32/topic/92582455">https://groups.io/g/bpq32/topic/92582455</a> 。</p>
