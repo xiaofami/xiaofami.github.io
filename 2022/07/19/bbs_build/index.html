@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。 BBS系统选择之前连接到hb1bbs觉得还可以，这个BBS使用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建支持telnet和packet radio访问的BBS服务器">
+<meta property="og:url" content="http://xiaofami.github.io/2022/07/19/bbs_build/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="前言硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。 BBS系统选择之前连接到hb1bbs觉得还可以，这个BBS使用的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-19T01:12:47.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.534Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="bbs">
+<meta property="article:tag" content="packet radio">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2022/07/19/bbs_build/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>搭建支持telnet和packet radio访问的BBS服务器 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/19/bbs_build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建支持telnet和packet radio访问的BBS服务器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-19 09:12:47" itemprop="dateCreated datePublished" datetime="2022-07-19T09:12:47+08:00">2022-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。</p>
+<h1 id="BBS系统选择"><a href="#BBS系统选择" class="headerlink" title="BBS系统选择"></a>BBS系统选择</h1><p>之前连接到<a target="_blank" rel="noopener" href="https://hb1bbs.com/">hb1bbs</a>觉得还可以，这个BBS使用的是<a target="_blank" rel="noopener" href="http://www.mysticbbs.com/">Mystic BBS</a>系统。可惜经过测试，这个系统在Manjaro ARM上缺少 <strong>ld-linux.so.3</strong> 库文件所以无法运行。 AUR提供的 <strong>arm-linux-gnueabihf-glibc</strong> 可能提供了这个文件不过可惜这个包的依赖不支持arm64,好事者可以在X86-64电脑上安装然后提取。</p>
+<p>迫于上述原因，我转而投向了 <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/LinFBB/">LinFBB</a>。</p>
+<h1 id="LinFBB安装"><a href="#LinFBB安装" class="headerlink" title="LinFBB安装"></a>LinFBB安装</h1><h2 id="编译安装ax25"><a href="#编译安装ax25" class="headerlink" title="编译安装ax25"></a>编译安装ax25</h2><p>到 <a target="_blank" rel="noopener" href="https://github.com/ve7fet/linuxax25">https://github.com/ve7fet/linuxax25</a>  下载最新release然后编译。项目分三部分：ax25apps,ax25tools,libax25，分别进入目录执行</p>
+<pre><code class="bash">./autogen.sh
+./configure
+make -j4
+sudo make install
+</code></pre>
+<p>编译过程大体上比较顺利。不过 <strong>ax25app</strong> 编译过程中会提示</p>
+<pre><code class="bash">
+call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory
+   45 | #include &lt;ncursesw/ncurses.h&gt;
+      | 
+</code></pre>
+<p>开发者是基于Debian编译测试所以头文件名称与Manjaro有差异。按提示进入对应C文件将 <code>#include &lt;ncursesw/ncurses.h&gt;</code>修改为<code>#include &lt;ncurses.h&gt;</code>即可:</p>
+<pre><code class="bash">vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c #修改第45行
+</code></pre>
+<p>另外对于 <strong>ax25tools</strong>，安装后编译文件夹📁下面etc目录中的配置文件没有被复制到预期位置。比如执行</p>
+<pre><code class="bash">$ man axports
+
+AXPORTS(5)                                       Linux Programmer&#39;s Manual                                       AXPORTS(5)
+
+NAME
+       /etc/ax25/axports - AX.25 port configuration file.
+
+DESCRIPTION
+……（以下省略）
+</code></pre>
+<p>在man文件描述的位置并没有这个配置文件，<code>/usr/local</code> 下面也没有。或许有必要手动创建<code>/etc/ax25</code>，然后把这些配置文件复制过去？</p>
+<h2 id="使libax25可被动态加载"><a href="#使libax25可被动态加载" class="headerlink" title="使libax25可被动态加载"></a>使libax25可被动态加载</h2><pre><code class="bash">cd /etc/ld.so.conf.d/
+sudo vim userlocal.conf # 加入 /usr/local/lib 并保存
+sudo ldconfig
+</code></pre>
+<p>这样刚才自编译安装的 <strong>libax25</strong> 就可以被动态加载了。一种比较古老的方式是使用 <strong>LD_LIBRARY_PATH</strong> 这个环境变量，不过Manjaro已经将其抛弃了，这个值默认是空的。</p>
+<h2 id="编译安装LinFBB"><a href="#编译安装LinFBB" class="headerlink" title="编译安装LinFBB"></a>编译安装LinFBB</h2><p>经过上面步骤后LinFBB编译安装水到渠成，照旧configure make make install三部曲，这个最后额外多了一步 <code>make installconf</code>。</p>
+<p>如果刚才没有安装配置好 <strong>libax25</strong>，这里在configure时会提示 <strong>configure: error: Could not find the libax25 libraries; aborting</strong> 导致编译无法进行。</p>
+<p>另外需要指出，我的编译环境没有X11,所以不会编译xfbbx X11客户端。</p>
+<h1 id="LinFBB配置"><a href="#LinFBB配置" class="headerlink" title="LinFBB配置"></a>LinFBB配置</h1><p>上述编译安装步骤没有难度，从这里开始就要花一些心思了。</p>
+<h2 id="首次运行"><a href="#首次运行" class="headerlink" title="首次运行"></a>首次运行</h2><pre><code class="bash">sudo fbb
+</code></pre>
+<p>首次运行会提示许多文件不存在，按提示选择新建即可，然后添加呼号，姓名等必要信息。这些之后都可以在配置文件中修改，所以即便填错也没关系。</p>
+<p>之后管理fbb应当使用 <code>/usr/local/share/doc/fbb/fbb.sh</code>这个脚本，用法如下：</p>
+<pre><code class="bash">fbb.sh start | stop | status | restart
+</code></pre>
+<p>等一切配置妥当后写一个systemd service用起来会更方便一点。</p>
+<p>LinFBB提供了 <strong>xfbbd</strong> 和 <strong>xfbbC</strong> 。先不研究它们，当前的目的是配置端口以便能够通过telnet访问这个BBS。</p>
+<h2 id="telnet配置"><a href="#telnet配置" class="headerlink" title="telnet配置"></a>telnet配置</h2><p>LinFBB虽然在持续的开发维护中，但BBS作为旧时代的遗珍，包括笔者在内的许多人对它很陌生。教人用wordpress之类东西搭建博客的教程浩如烟海，BBS的资料则只能散见于互联网的角落。 尽管搭建于上个世纪， <a target="_blank" rel="noopener" href="https://www.f6fbb.org/">https://www.f6fbb.org/</a> 仍然保留了大量价值无边的资料，可以作为配置LinFBB的指导。</p>
+<p>此外 <code>/home/manjaro/fbb-7.0.11/doc/html/</code> 目录中也提供了帮助文档，可以阅读。</p>
+<p>参考页面： <a target="_blank" rel="noopener" href="https://www.f6fbb.org/fbbdoc/fmttelne.htm">https://www.f6fbb.org/fbbdoc/fmttelne.htm</a><br>编辑PORT.SYS:</p>
+<pre><code class="conf">
+#Ports：端口数量
+#TNCs：总共有几个TNC（调制解调器）。在使用多工器的情况下，一个端口最多可以有4个TNC。
+#Ports TNCs
+2      2
+
+#COM：串口序号，注意与Windows中的COM1 COM2概念不同，此处仅作为序号。
+#Interface：在LinFBB中仅有9一个可选项，代表Linux，可以用于串口、AX25域套接字、Telnet端口。
+# Address：设备名/端口号。需要确保合适权限使LinFBB可以访问设备。此外，当使用 AF_AX25 内核端口时，地址是不需要的；当使用Telenet时，地址是Tenlet端口的16进制形式。
+# Baud：端口的波特率。BPQ，AF_AX25内核套接字，以及Telnet无视该设定所以填0即可。
+# 这一栏目的行数与上面的端口数量保持一致。（本例中为2）
+
+#Com Interface Address (device)   Baud
+1    9         /dev/cua0          9600
+2    9         189C               0
+
+# TNC：使用中的TNC数量。0代表文件转发。
+# NbCh：TNC使用的频道数量，上限取决于TNC固件。（编者注：对于direwolf之类soundcard modem,是否意味着一个TNC只有一个Channel？）
+# Com：COM口的序号，需要与前文保持一致。
+# MultCh：使用端口多工器情况下的频道数量，否则为1。对于DRSI用途，值为0～7；by KAM use 1/VHF and 2/HF；Linux中使用AF_AX25内核套接字时，MultCh为接口名称（例如：ax0）
+# Paclen：TNC的Paclen（这是啥）
+# Maxfr：TNC最大可以同时发送的帧数
+# NbFwd：最多同时向外发送的频道数量。
+# MaxBloc：forward-block的大小，单位为kb。
+# M/P-Fwd：M代表每小时中开始转发的起始分钟，P-Fwd代表每次转发开始之间的时间间隔
+# Mode：单个字母的组合，每个字母代表一种允许的模式，太长了不翻。以TUWR为例，T代表Ethernet/TCP-IP（host-mode），U代表正常模式（Port mode），W代表网关允许这个频率（附加内容），R代表调制解调器端口允许只读模式（附加内容）
+# Freq：用于描述这个端口的字符串，长度最大为9,不允许空格（编者注：用Comment是不是更直观一点）
+
+#TNC NbCh Com MultCh Pacln Maxfr NbFwd MxBloc M/P-Fwd Mode Freq
+0    0    0   0      0     0     0     0      00/01   ----  File-fwd.
+1    4    1   1      230   4     1     10     30/60   UDYL  433.650
+2    8    2   0      250   2     1     10     00/60   TUWR  Telnet
+</code></pre>
+<p>本例中，telnet端口号为6300,转换为16进制即为 <strong>189C</strong>。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**&#x2F;dev&#x2F;cua0** 也不存在，不过不影响Telnet端口的使用。</p>
+<p>（编者补充：在linux中，com设备一般被命名为cua）</p>
+<h1 id="AX-25探究"><a href="#AX-25探究" class="headerlink" title="AX.25探究"></a>AX.25探究</h1><p><code>fbb-7.0.11/doc/html/tllinux.htm</code> 成文时间久远（1997），许多内容已经过时。不过其提及的<a target="_blank" rel="noopener" href="https://www.linuxdoc.org/HOWTO/AX25-HOWTO/">AX25-HOWTO</a>（成稿于2001年九月）值得阅读。如果上面链接不幸死掉了，可以访问 <a target="_blank" rel="noopener" href="https://tldp.org/HOWTO/AX25-HOWTO/">https://tldp.org/HOWTO/AX25-HOWTO/</a>  。</p>
+<h2 id="加载AX25内核模块"><a href="#加载AX25内核模块" class="headerlink" title="加载AX25内核模块"></a>加载AX25内核模块</h2><p>这一部分不太乐观。简单检查了一下Manjaro系统（21.3.3）的内核模块，以下是默认具备的：</p>
+<ul>
+<li>ax25</li>
+<li>netrom</li>
+<li>rose</li>
+<li>slip</li>
+<li>mkiss</li>
+<li>lp</li>
+<li>baycom_par baycom_ser_fdx baycom_ser_hdx</li>
+</ul>
+<p>关键的soundmodem（sm0）不在其中。<a target="_blank" rel="noopener" href="https://github.com/VK3FNG/soundmodem">https://github.com/VK3FNG/soundmodem</a> 显示这个模块代码已经被开发者放弃。</p>
+<ol>
+<li>编译安装<code>linuxax25-ax25tools-1.0.4</code>其中的三个模块。上文中已完成。</li>
+<li>执行 <code>sudo modporbe ax25</code></li>
+</ol>
+<p>编者按：ax25这个模块貌似是系统自带的，**&#x2F;lib&#x2F;modules&#x2F;5.16.20-2-MANJARO&#x2F;kernel&#x2F;net&#x2F;ax25&#x2F;ax25.ko.xz** 的创建时间远远早于编译时间。</p>
+<p>如果需要系统启动时自动加载这个模块，可以利用 <code>/etc/modules-load.d</code> 实现，具体参见 <code>man modules-load.d</code>。</p>
+<h3 id="整合Direwolf"><a href="#整合Direwolf" class="headerlink" title="整合Direwolf"></a>整合Direwolf</h3><p>参考<a target="_blank" rel="noopener" href="https://packet-radio.net/xrpi-interfacing-with-linfbb/">XRpi interfacing with LinFBB</a> 一文，作者使用 <strong>socat</strong> 创建了虚拟COM口供 <strong>XRouter</strong> 和 <strong>LinFBB</strong> 使用。Linux中万物皆文件，所以使用socat创造的虚拟COM口也是一个文件，将这个文件提供给<strong>XRouter</strong> 和 <strong>LinFBB</strong>的配置文件，让它们都使用这个虚拟COM口，就实现了利用虚拟COM口连接<strong>XRouter</strong> 和 <strong>LinFBB</strong> 的目的。</p>
+<p>Direwolf手册中描述了利用 <strong>com0com</strong> 创建虚拟COM接口以及修改Direwolf的步骤，可以作为参考。</p>
+<p>未完待续</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/bbs/" rel="tag"># bbs</a>
+              <a href="/tags/packet-radio/" rel="tag"># packet radio</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/05/ham_linux/" rel="prev" title="业余无线电linux发行版">
+      <i class="fa fa-chevron-left"></i> 业余无线电linux发行版
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/21/pat/" rel="next" title="在Manjaro ARM中编译运行Pat">
+      在Manjaro ARM中编译运行Pat <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BBS%E7%B3%BB%E7%BB%9F%E9%80%89%E6%8B%A9"><span class="nav-number">2.</span> <span class="nav-text">BBS系统选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinFBB%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">LinFBB安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85ax25"><span class="nav-number">3.1.</span> <span class="nav-text">编译安装ax25</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BFlibax25%E5%8F%AF%E8%A2%AB%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="nav-number">3.2.</span> <span class="nav-text">使libax25可被动态加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LinFBB"><span class="nav-number">3.3.</span> <span class="nav-text">编译安装LinFBB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinFBB%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">LinFBB配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E8%BF%90%E8%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">首次运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telnet%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">telnet配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AX-25%E6%8E%A2%E7%A9%B6"><span class="nav-number">5.</span> <span class="nav-text">AX.25探究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDAX25%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">5.1.</span> <span class="nav-text">加载AX25内核模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E5%90%88Direwolf"><span class="nav-number">5.1.1.</span> <span class="nav-text">整合Direwolf</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="提要先回顾一下，我们之前为R3300-M刷入了ATV固件，目的是提升CPU主频；在TF卡上刷入了VIM2的Manjaro ARM Minimal 21.10镜像，并使用meson-gxbb-p201.dtb启动。随后，用linux-odroid替换了主线内核。配合编译WIFI驱动、更换软件源、设置NetworkManager等操作，现在Manjaro ARM已经能够稳定运行，为运行各种服务做好了充">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro ARM Minimal装修">
+<meta property="og:url" content="http://xiaofami.github.io/2021/12/07/finetune-manjaro/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="提要先回顾一下，我们之前为R3300-M刷入了ATV固件，目的是提升CPU主频；在TF卡上刷入了VIM2的Manjaro ARM Minimal 21.10镜像，并使用meson-gxbb-p201.dtb启动。随后，用linux-odroid替换了主线内核。配合编译WIFI驱动、更换软件源、设置NetworkManager等操作，现在Manjaro ARM已经能够稳定运行，为运行各种服务做好了充">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-07T06:35:36.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.714Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="R3300-M">
+<meta property="article:tag" content="AARCH64">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2021/12/07/finetune-manjaro/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Manjaro ARM Minimal装修 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/12/07/finetune-manjaro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Manjaro ARM Minimal装修
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-07 14:35:36" itemprop="dateCreated datePublished" datetime="2021-12-07T14:35:36+08:00">2021-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h1><p>先回顾一下，我们之前为R3300-M刷入了ATV固件，目的是提升CPU主频；在TF卡上刷入了VIM2的Manjaro ARM Minimal 21.10镜像，并使用meson-gxbb-p201.dtb启动。随后，用linux-odroid替换了主线内核。配合编译WIFI驱动、更换软件源、设置NetworkManager等操作，现在Manjaro ARM已经能够稳定运行，为运行各种服务做好了充分准备。不过默认命令行界面略显简陋，下文将介绍如何用较少的硬件资源使Manjaro ARM Minimal看起来更现代、更好用。</p>
+<h1 id="配置nano高亮"><a href="#配置nano高亮" class="headerlink" title="配置nano高亮"></a>配置nano高亮</h1><p>nano是Manjaro ARM Minimal的默认文本编辑器，稍作修改使其更好用：</p>
+<h2 id="安装拓展高亮"><a href="#安装拓展高亮" class="headerlink" title="安装拓展高亮"></a>安装拓展高亮</h2><pre><code class="bash">sudo pacman -Sy nano-syntax-highlighting
+</code></pre>
+<h2 id="应用高亮"><a href="#应用高亮" class="headerlink" title="应用高亮"></a>应用高亮</h2><p>编辑 <strong>&#x2F;etc&#x2F;nanorc</strong> ，加入以下两行：</p>
+<pre><code class="nanorc">include &quot;/usr/share/nano/*.nanorc&quot;
+include &quot;/usr/share/nano-syntax-highlighting/*.nanorc&quot;
+</code></pre>
+<p>重新登录后生效。</p>
+<h1 id="美化命令行界面"><a href="#美化命令行界面" class="headerlink" title="美化命令行界面"></a>美化命令行界面</h1><h2 id="silver安装"><a href="#silver安装" class="headerlink" title="silver安装"></a>silver安装</h2><pre><code class="bash">sudo pacman -Sy silver ttf-nerd-fonts-symbols
+</code></pre>
+<h2 id="silver配置"><a href="#silver配置" class="headerlink" title="silver配置"></a>silver配置</h2><p>创建 <strong>~&#x2F;.config&#x2F;silver&#x2F;silver.toml</strong> 文件，内容如下：</p>
+<pre><code class="toml">[[left]]
+name = &quot;status&quot;
+color.background = &quot;black&quot;
+color.foreground = &quot;white&quot;
+
+[[left]]
+name = &quot;user&quot;
+color.background = &quot;yellow&quot;
+color.foreground = &quot;black&quot;
+
+[[left]]
+name = &quot;dir&quot;
+color.background = &quot;blue&quot;
+color.foreground = &quot;black&quot;
+
+[[left]]
+name = &quot;git&quot;
+color.background = &quot;green&quot;
+color.foreground = &quot;black&quot;
+
+[[left]]
+name = &quot;cmdtime&quot;
+color.background = &quot;magenta&quot;
+color.foreground = &quot;black&quot;
+</code></pre>
+<p>然后修改 <strong>~&#x2F;.bashrc</strong> 文件。默认文件大概这样：</p>
+<pre><code class="bash">#
+# ~/.bashrc
+#
+
+# If not running interactively, don&#39;t do anything
+[[ $- != *i* ]] &amp;&amp; return
+
+alias ls=&#39;ls --color=auto&#39;
+PS1=&#39;[\u@\h \W]\$ &#39;
+</code></pre>
+<p>修改成这样：</p>
+<pre><code class="bash">#
+# ~/.bashrc
+#
+
+# If not running interactively, don&#39;t do anything
+[[ $- != *i* ]] &amp;&amp; return
+
+PS1=&#39;[\u@\h \W]\$ &#39;
+
+# configure silver command prompt
+export SILVER_ICONS=nerd
+source &lt;(silver init)
+
+# source bash aliases
+source ~/.bash_aliases
+</code></pre>
+<p>现在还没有 <strong>~&#x2F;.bash_aliases</strong> ，手动创建一个，一会儿要用。</p>
+<h1 id="老命令替代"><a href="#老命令替代" class="headerlink" title="老命令替代"></a>老命令替代</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="bash">sudo pacman -Sy exa bat chafa
+</code></pre>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>~&#x2F;.bash_aliases</strong> ，加入以下内容：</p>
+<pre><code class="bash">alias ls=&quot;exa -aglh --icons&quot;
+alias tree=&quot;exa --tree --icons&quot;
+alias cat=&quot;bat&quot;
+alias chafa=&quot;chafa -f sixel&quot;
+</code></pre>
+<p>exa和bat分别是ls和cat的现代化替代。chafa比较有意思，可以将图片转换为在命令行终端中显示的字符画。</p>
+<p>保存后，重新登录或者执行<code>source ~/.bashrc</code>生效。</p>
+<h1 id="安装文件浏览器"><a href="#安装文件浏览器" class="headerlink" title="安装文件浏览器"></a>安装文件浏览器</h1><pre><code class="bash">sudo pacman -Ss mc ranger
+</code></pre>
+<p>mc是老前辈，ranger是后生，根据个人喜好使用。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Manjaro/" rel="tag"># Manjaro</a>
+              <a href="/tags/R3300-M/" rel="tag"># R3300-M</a>
+              <a href="/tags/AARCH64/" rel="tag"># AARCH64</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/02/linux-odroid/" rel="prev" title="Manjaro ARM更换linux-odroid内核">
+      <i class="fa fa-chevron-left"></i> Manjaro ARM更换linux-odroid内核
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/08/s905inemmc/" rel="next" title="GXBB S905从EMMC启动Linux研究">
+      GXBB S905从EMMC启动Linux研究 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">提要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEnano%E9%AB%98%E4%BA%AE"><span class="nav-number">2.</span> <span class="nav-text">配置nano高亮</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8B%93%E5%B1%95%E9%AB%98%E4%BA%AE"><span class="nav-number">2.1.</span> <span class="nav-text">安装拓展高亮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E9%AB%98%E4%BA%AE"><span class="nav-number">2.2.</span> <span class="nav-text">应用高亮</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BE%8E%E5%8C%96%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="nav-number">3.</span> <span class="nav-text">美化命令行界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#silver%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">silver安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#silver%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">silver配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%81%E5%91%BD%E4%BB%A4%E6%9B%BF%E4%BB%A3"><span class="nav-number">4.</span> <span class="nav-text">老命令替代</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">安装文件浏览器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="之前搭建packet radio节点的试验告一段落了。由于本地没有使用packet radio的ham，所以没办法测试解码效果。不过编码发送功能没有问题。另外systemd脚本也有一些问题。理想情况下ax25bind应该伴随direwolf一并重启，不过实际中虽然指定了PartOf参数，这个功能没有实现，算是小小的不完美。为了吸引到更多的爱好者参与packet radio，我计划整理出一个从理论到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="业余无线电B证备考">
+<meta property="og:url" content="http://xiaofami.github.io/2022/08/01/b-test/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="之前搭建packet radio节点的试验告一段落了。由于本地没有使用packet radio的ham，所以没办法测试解码效果。不过编码发送功能没有问题。另外systemd脚本也有一些问题。理想情况下ax25bind应该伴随direwolf一并重启，不过实际中虽然指定了PartOf参数，这个功能没有实现，算是小小的不完美。为了吸引到更多的爱好者参与packet radio，我计划整理出一个从理论到">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T07:11:20.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.524Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="业余无线电考试">
+<meta property="article:tag" content="B">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2022/08/01/b-test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>业余无线电B证备考 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/08/01/b-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          业余无线电B证备考
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-01 15:11:20" itemprop="dateCreated datePublished" datetime="2022-08-01T15:11:20+08:00">2022-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>之前搭建packet radio节点的试验告一段落了。由于本地没有使用packet radio的ham，所以没办法测试解码效果。不过编码发送功能没有问题。另外systemd脚本也有一些问题。理想情况下ax25bind应该伴随direwolf一并重启，不过实际中虽然指定了PartOf参数，这个功能没有实现，算是小小的不完美。为了吸引到更多的爱好者参与packet radio，我计划整理出一个从理论到实操比较完整的入门教程。不过业余无线电考试快到了，B级考试还是要准备一下，packet radio暂时要放一放了。</p>
+<p>B级考试需要记忆频率、Q短语、名词等比较琐碎的知识点。虽然有取巧记忆方法，不过为了日后规范使用频率，还是应该理解记忆。</p>
+<h1 id="频段"><a href="#频段" class="headerlink" title="频段"></a>频段</h1><h2 id="业余业务作为专用业务频段"><a href="#业余业务作为专用业务频段" class="headerlink" title="业余业务作为专用业务频段"></a>业余业务作为专用业务频段</h2><p>7-7.2MHz（7.03-7.2 LSB） 14-14.25MHz（14.1 IARU, 14.1-14.35 USB） 21-21.45MHz（21.15 IARU， 21.125-21.45可USB， 除去21.1495-21.1505，即避让信标±500Hz） 28-29.7MHz（28.2 IARU, 28.3-29.3 USB， 29.51-29.7 FM） 47GHz</p>
+<h2 id="业余业务作为主要业务的频段"><a href="#业余业务作为主要业务的频段" class="headerlink" title="业余业务作为主要业务的频段"></a>业余业务作为主要业务的频段</h2><p>1.8-2MHz 3.5-3.9MHz 14.25-14.35MHz 18.068-18.168MHz （WARC, 18.11 IARU， 18.1105-18.168 USB） 24.89-24.99MHz （WARC, 24.93 IARU， 24.9305-24.99 USB） 50-54MHz 144-148MHz（144-146唯一主要，146-148共同主要，避让 144-144.035和145.8-146）</p>
+<h2 id="业余业务作为次要业务频段"><a href="#业余业务作为次要业务频段" class="headerlink" title="业余业务作为次要业务频段"></a>业余业务作为次要业务频段</h2><p>135.7-137.5KHz 10.1-10.15MHz（WARC，不能用于通话） 430-440MHz（避让431.9-432.240和435-438）</p>
+<p>LF（低频，例135.7-137.8KHz）<br>MF（中频，例1.8-2MHz）<br>HF（高频，例28-29.87MHz）<br>VHF（甚高频，米波，例50-54MHz）<br>UHF（特高频，分米波，例2300-1450MHz）<br>SHF（超高频，厘米波，例C、Ku波段卫星电视广播）<br>EHF（极高频，毫米波，例241-250GHz）</p>
+<h1 id="Q简语"><a href="#Q简语" class="headerlink" title="Q简语"></a>Q简语</h1><p>Q简语   问句含义   答句含义<br>QRA   你的电台名称是？   我的电台名称是…<br>QRB   你台离我台多远？   我们相距约为…<br>QRG   我的准确频率是多少?   你的准确频率是…<br>QRI   我的音调如何?   你的音调是(T1-T9)<br>QRJ   我的信号小吗   你的信号小<br>QRK   我的信号可辩度是多少?   你的信号可辩度是(R1-R5)<br>QRL   你忙吗？   我正忙<br>QRM   你受到他台干扰吗？   我正受到他台干扰 1.无 2.稍有 3.中等 4.严重 5.极端<br>QRN   你受到天电干扰吗？   我正受到天电干扰 1.无 2.稍有 3.中等 4.严重 5.极端<br>QRO   要我增加发信功率吗？   请增加发信功率<br>QRP   要我减低发信功率吗？   请减低发信功率<br>QRQ   要我发得快些吗？   请发快些<br>QRS   要我发得慢些吗？   请发慢些<br>QRT   要我停止拍发吗？   请停止拍发<br>QRU   你有事吗?   无事<br>QRV   你准备好了吗？   我已准备好了<br>QRW   需要我转告吗?   请转告<br>QRX   要我等多长时间？   请等待… …分钟<br>QRZ   谁在呼叫我？   …正在呼叫你</p>
+<p>QSA   我的信号强度是多少?   你的信号强度是…<br>QSB   我的信号有衰落吗？   你的信号强度是，1.几乎不能抄收 2.弱 3.还好 4.好 5.很好<br>QSD   我的信号不完整吗?   你的信号不完整<br>QSL   你确认收妥&#x2F;QSL卡片吗？   我确认收妥&#x2F;QSL卡片<br>QSO   你能否和…直接（或转接）通信？   你能和…直接（或转接）通信？<br>QSP   你能中转到…吗   我能中转到…<br>QSU   能在这个频率(或某个频率)回复吗?   我将在此频率(或某频率)回复<br>QSV   有天电干扰要我在此频率发一串 V 字吗？   请在此频率发一串 V 字<br>QSW   你将在此频率(或某频率)发吗？   我将在此频率(或某频率)发<br>QSX   你将在某频率收听吗？   我将在某频率收听<br>QSY   要我改用其他频率拍发吗？   请改用…KHz&#x2F;MHz拍发<br>QSZ   要我每组发两遍吗？   请每组发两遍<br>QTB   要我查对组数吗？   请查对组数<br>QTC   你有几分报要发?   我有…分报要发<br>QTH   你的地理位置是？   我的地理位置是…<br>QTR   你的标准时间是?   我的标准时间是…</p>
+<h1 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h1><p>SASE 写好收信人地址的信封<br>ALC  发信自动电平控制<br>AT   自动天线调谐<br>ATT  收信机自动增益衰减<br>AGC  收信机自动增益控制<br>PRE  收信机前置放大器<br>PROC 发信语音压缩<br>RIT  接收增量调谐<br>XIT  发射增量调谐</p>
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><h2 id="CQ分区"><a href="#CQ分区" class="headerlink" title="CQ分区"></a>CQ分区</h2><p>23 24（东沙、钓鱼） 27（黄岩岛）</p>
+<h2 id="ITU分区"><a href="#ITU分区" class="headerlink" title="ITU分区"></a>ITU分区</h2><p>我国大区为3区，33 42 43 44（东沙、钓鱼） 50（黄岩岛）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%9A%E4%BD%99%E6%97%A0%E7%BA%BF%E7%94%B5%E8%80%83%E8%AF%95/" rel="tag"># 业余无线电考试</a>
+              <a href="/tags/B/" rel="tag"># B</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/28/packet-systemd/" rel="prev" title="Packet Radio Systemd服务">
+      <i class="fa fa-chevron-left"></i> Packet Radio Systemd服务
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/03/s905-emmc/" rel="next" title="R3300-M刷入Linux实验计划">
+      R3300-M刷入Linux实验计划 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">频段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E4%BD%99%E4%B8%9A%E5%8A%A1%E4%BD%9C%E4%B8%BA%E4%B8%93%E7%94%A8%E4%B8%9A%E5%8A%A1%E9%A2%91%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">业余业务作为专用业务频段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E4%BD%99%E4%B8%9A%E5%8A%A1%E4%BD%9C%E4%B8%BA%E4%B8%BB%E8%A6%81%E4%B8%9A%E5%8A%A1%E7%9A%84%E9%A2%91%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">业余业务作为主要业务的频段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E4%BD%99%E4%B8%9A%E5%8A%A1%E4%BD%9C%E4%B8%BA%E6%AC%A1%E8%A6%81%E4%B8%9A%E5%8A%A1%E9%A2%91%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">业余业务作为次要业务频段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q%E7%AE%80%E8%AF%AD"><span class="nav-number">2.</span> <span class="nav-text">Q简语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%A9%E5%86%99"><span class="nav-number">3.</span> <span class="nav-text">缩写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%8C%BA"><span class="nav-number">4.</span> <span class="nav-text">分区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CQ%E5%88%86%E5%8C%BA"><span class="nav-number">4.1.</span> <span class="nav-text">CQ分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ITU%E5%88%86%E5%8C%BA"><span class="nav-number">4.2.</span> <span class="nav-text">ITU分区</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

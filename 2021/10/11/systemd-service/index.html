@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="需要开机自动执行的脚本#!&#x2F;bin&#x2F;bash # rustdocs.sh # 别忘记给它可执行权限 &#x2F;home&#x2F;marly&#x2F;.cargo&#x2F;bin&#x2F;mdbook serve -n 0.0.0.0 -p 3000 &#x2F;home&#x2F;marly&#x2F;Documents&#x2F;rust&#x2F;trpl-zh-cn&amp; &#x2F;home&#x2F;marly&#x2F;.cargo&#x2F;bin&#x2F;mdbook serve -n 0.0.0.0 -p 40">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Systemd实现以用户身份开机自动执行脚本">
+<meta property="og:url" content="http://xiaofami.github.io/2021/10/11/systemd-service/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="需要开机自动执行的脚本#!&#x2F;bin&#x2F;bash # rustdocs.sh # 别忘记给它可执行权限 &#x2F;home&#x2F;marly&#x2F;.cargo&#x2F;bin&#x2F;mdbook serve -n 0.0.0.0 -p 3000 &#x2F;home&#x2F;marly&#x2F;Documents&#x2F;rust&#x2F;trpl-zh-cn&amp; &#x2F;home&#x2F;marly&#x2F;.cargo&#x2F;bin&#x2F;mdbook serve -n 0.0.0.0 -p 40">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-11T07:18:42.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.764Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="ARM">
+<meta property="article:tag" content="aarch64">
+<meta property="article:tag" content="Systemd">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2021/10/11/systemd-service/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用Systemd实现以用户身份开机自动执行脚本 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/10/11/systemd-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Systemd实现以用户身份开机自动执行脚本
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-11 15:18:42" itemprop="dateCreated datePublished" datetime="2021-10-11T15:18:42+08:00">2021-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="需要开机自动执行的脚本"><a href="#需要开机自动执行的脚本" class="headerlink" title="需要开机自动执行的脚本"></a>需要开机自动执行的脚本</h1><pre><code class="bash">#!/bin/bash
+# rustdocs.sh
+# 别忘记给它可执行权限
+/home/marly/.cargo/bin/mdbook serve -n 0.0.0.0 -p 3000 /home/marly/Documents/rust/trpl-zh-cn&amp;
+/home/marly/.cargo/bin/mdbook serve -n 0.0.0.0 -p 4000 /home/marly/Documents/rust/rust-by-example-cn&amp;
+</code></pre>
+<p>第一行如果末尾不加”&amp;”，第二句命令就不会执行。</p>
+<p>另外脚本启动发生在marly登录bash之前，所以类似<code>.bash_profile</code>中自定义的<code>$PATH</code>无效，需要使用绝对路径。</p>
+<h1 id="systemd服务"><a href="#systemd服务" class="headerlink" title="systemd服务"></a>systemd服务</h1><pre><code class="bash">[Unit]
+Description=Start rust doc service on boot
+Requires=network-online.target
+Documentation=man:rustc
+
+[Service]
+User=marly
+Type=forking
+ExecStart=/home/marly/.local/bin/rustdocs.sh
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>把它命名为 <code>rustdoc-start.service</code> 即可，必须以<code>.service</code>结尾。</p>
+<h1 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h1><p>将上述service文件放置在<code>/etc/systemd/system</code>或<code>/usr/lib/systemd/system/</code>中，然后执行<code>sudo systemctl enable rustdoc-start.service</code>。完毕后重启设备观察效果，如无意外mdbook服务会自动启动。</p>
+<p>注意<code>sudo systemctl enable rustdoc-start.service</code>的细节。此步骤在<code>/etc/systemd/system/multi-user.target.wants</code>创建了指向<code>rustdoc-start.service</code>的同名符号链接。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>上面的User，Type，ExecStart，WantedBy是重点。<code>User=marly</code>即以用户marly身份执行，<code>ExecStart</code>为所执行命令，本例中即刚才编写的脚本路径。<code>WantedBy</code>决定了服务启动时机，<code>multi-user.target</code>对应的系统状态大致为： (参考自 <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/506347/why-do-most-systemd-examples-contain-wantedby-multi-user-target">Why do most systemd examples contain WantedBy&#x3D;multi-user.target?</a>)</p>
+<blockquote>
+<p>multi-user.target normally defines a system state where all network services are started up and the system will accept logins, but a local GUI is not started. This is the typical default system state for server systems, which might be rack-mounted headless systems in a remote server room.</p>
+</blockquote>
+<blockquote>
+<p>所有网络服务已启动，系统已经做好接受登录的准备，但是GUI还未启动。对于无头服务器而言，这是默认的系统状态。</p>
+</blockquote>
+<p>本例需要对外提供网络服务，所以<code>WantedBy=multi-user.target</code>是合适的。</p>
+<p>最后是<code>Type</code>，有<code>simple, exec, forking, oneshot, dbus, notify, idle</code>几种类型。借用下<a target="_blank" rel="noopener" href="http://www.jinbuguo.com/systemd/systemd.service.html">金步国先生的翻译</a> ：</p>
+<blockquote>
+<p>如果设为 forking ，那么表示 ExecStart&#x3D; 进程将会在启动过程中使用 fork() 系统调用。 也就是当所有通信渠道都已建好、启动亦已成功之后，父进程将会退出，而子进程将作为主服务进程继续运行。 这是传统UNIX守护进程的经典做法。 在这种情况下，systemd 会认为在父进程退出之后，该服务就已经启动完成。 如果使用了此种类型，那么建议同时设置 PIDFile&#x3D; 选项，以帮助 systemd 准确可靠的定位该服务的主进程。 systemd 将会在父进程退出之后 立即开始启动后继单元。</p>
+</blockquote>
+<p>个人理解，执行<code>rustdocs.sh</code>本身创建了一个进程，其中的两条mdbook命令又创建了2个子进程。只有2个子进程存续，我们的rust doc服务才能访问。所以oneshot，simple等都不行。</p>
+<p>简单验证一下猜想：</p>
+<pre><code class="bash">$ ps x | grep rust
+    403 ?        Sl     0:05 /home/marly/.cargo/bin/mdbook serve -n 0.0.0.0 -p 3000 /home/marly/Documents/rust/trpl-zh-cn
+    404 ?        Sl     0:05 /home/marly/.cargo/bin/mdbook serve -n 0.0.0.0 -p 4000 /home/marly/Documents/rust/rust-by-example-cn
+  63046 pts/0    S+     0:00 grep rust
+</code></pre>
+<p>验证成功。再顺便看看进程的owner：</p>
+<pre><code class="bash">$ stat -c &#39;%U&#39; /proc/403 /proc/404
+marly
+marly
+</code></pre>
+<p>符合预期。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Manjaro/" rel="tag"># Manjaro</a>
+              <a href="/tags/ARM/" rel="tag"># ARM</a>
+              <a href="/tags/aarch64/" rel="tag"># aarch64</a>
+              <a href="/tags/Systemd/" rel="tag"># Systemd</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/08/Manjaro-ARM-Kernel/" rel="prev" title="Manjaro ARM内核比较">
+      <i class="fa fa-chevron-left"></i> Manjaro ARM内核比较
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/19/transmission/" rel="next" title="Manjaro安装使用transmission">
+      Manjaro安装使用transmission <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E7%9A%84%E8%84%9A%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">需要开机自动执行的脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#systemd%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">systemd服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">分析</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

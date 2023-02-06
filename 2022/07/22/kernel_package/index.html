@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="linux-odroid内核没有预编译AX25模块，无法正常使用 kissattach 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。 获取内核软件包并修改配置文件git clone https:&#x2F;&#x2F;gitlab.manjaro.org&#x2F;manjaro-arm&#x2F;packages&#x2F;core&#x2F;linux-odroid.git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro ARM重新配置内核并打包">
+<meta property="og:url" content="http://xiaofami.github.io/2022/07/22/kernel_package/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="linux-odroid内核没有预编译AX25模块，无法正常使用 kissattach 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。 获取内核软件包并修改配置文件git clone https:&#x2F;&#x2F;gitlab.manjaro.org&#x2F;manjaro-arm&#x2F;packages&#x2F;core&#x2F;linux-odroid.git">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-22T01:46:47.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.724Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="ARM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2022/07/22/kernel_package/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Manjaro ARM重新配置内核并打包 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/22/kernel_package/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Manjaro ARM重新配置内核并打包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-22 09:46:47" itemprop="dateCreated datePublished" datetime="2022-07-22T09:46:47+08:00">2022-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>linux-odroid内核没有预编译AX25模块，无法正常使用 <strong>kissattach</strong> 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。</p>
+<h1 id="获取内核软件包并修改配置文件"><a href="#获取内核软件包并修改配置文件" class="headerlink" title="获取内核软件包并修改配置文件"></a>获取内核软件包并修改配置文件</h1><pre><code class="bash">git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux-odroid.git
+cd linux-odroid
+vim config # 修改 # CONFIG_AX25 is not set
+</code></pre>
+<p>以下配置供参考：</p>
+<pre><code class="conf">1732 CONFIG_HAMRADIO=y
+1733 
+1734 #
+1735 # Packet Radio protocols
+1736 #
+1737 CONFIG_AX25=m
+1738 CONFIG_AX25_DAMA_SLAVE=y
+1739 CONFIG_NETROM=m
+1740 CONFIG_ROSE=m
+1741 
+1742 #
+1743 # AX.25 network device drivers
+1744 #
+1745 CONFIG_MKISS=m
+1746 CONFIG_6PACK=m
+1747 CONFIG_BPQETHER=m
+1748 CONFIG_BAYCOM_SER_FDX=m
+1749 CONFIG_BAYCOM_SER_HDX=m
+1750 CONFIG_YAM=m
+1751 # end of AX.25 network device drivers
+</code></pre>
+<h1 id="开始打包"><a href="#开始打包" class="headerlink" title="开始打包"></a>开始打包</h1><pre><code class="bash">makepkg --skipchecksums # 刚才修改了config文件所以无法通过校验，索性就不校验了
+==&gt; Making package: linux-odroid 5.18.12-1 (Fri 22 Jul 2022 10:10:46 AM CST)
+==&gt; Checking runtime dependencies...
+==&gt; Checking buildtime dependencies...
+==&gt; Retrieving sources...
+  -&gt; Found 65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz
+  -&gt; Found 0065-add-ugoos-device.patch
+  -&gt; Found config
+  -&gt; Found linux.preset
+  -&gt; Found 60-linux.hook
+  -&gt; Found 90-linux.hook
+==&gt; WARNING: Skipping verification of source file checksums.
+==&gt; Extracting sources...
+  -&gt; Extracting 65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz with bsdtar
+# 以下省略
+</code></pre>
+<h1 id="2000-YEARS-LATER"><a href="#2000-YEARS-LATER" class="headerlink" title="2000 YEARS LATER"></a>2000 YEARS LATER</h1><p>若干小时后编译还没有完成的迹象，还是找开发者吧 😂 已经私信了linux-odroid管理员，如果一切顺利linux-odroid 5.18.12即可支持AX25。</p>
+<h1 id="再更新"><a href="#再更新" class="headerlink" title="再更新"></a>再更新</h1><p>发现编译已完成，R3300-M四核马力全开足足跑了5个小时。编译完成前的输出如下：</p>
+<pre><code class="bash">==&gt; Tidying install...
+  -&gt; Removing libtool files...
+  -&gt; Purging unwanted files...
+  -&gt; Removing static library files...
+  -&gt; Compressing man and info pages...
+==&gt; Checking for packaging issues...
+==&gt; Creating package &quot;linux-odroid&quot;...
+  -&gt; Generating .PKGINFO file...
+  -&gt; Generating .BUILDINFO file...
+  -&gt; Adding install file...
+  -&gt; Generating .MTREE file...
+  -&gt; Compressing package...
+==&gt; Starting package_linux-odroid-headers()...
+Removing scripts/dtc/include-prefixes/openrisc
+Removing scripts/dtc/include-prefixes/nios2
+Removing scripts/dtc/include-prefixes/mips
+Removing scripts/dtc/include-prefixes/arm64
+Removing scripts/dtc/include-prefixes/microblaze
+Removing scripts/dtc/include-prefixes/arm
+Removing scripts/dtc/include-prefixes/arc
+Removing scripts/dtc/include-prefixes/h8300
+Removing scripts/dtc/include-prefixes/powerpc
+Removing scripts/dtc/include-prefixes/sh
+Removing scripts/dtc/include-prefixes/xtensa
+==&gt; Tidying install...
+  -&gt; Removing libtool files...
+  -&gt; Purging unwanted files...
+  -&gt; Removing static library files...
+  -&gt; Compressing man and info pages...
+==&gt; Checking for packaging issues...
+==&gt; Creating package &quot;linux-odroid-headers&quot;...
+  -&gt; Generating .PKGINFO file...
+  -&gt; Generating .BUILDINFO file...
+  -&gt; Generating .MTREE file...
+  -&gt; Compressing package...
+==&gt; Leaving fakeroot environment.
+==&gt; Finished making: linux-odroid 5.18.12-1 (Fri 22 Jul 2022 02:14:03 PM CST)
+</code></pre>
+<pre><code class="bash">marly@manjaro-minimal  /linux-odroid   master   ls
+Permissions Size User  Group Date Modified Name
+drwxr-xr-x     - marly marly 21 Jul 20:42   .git
+.rw-r--r--   241 marly marly 21 Jul 20:42   .gitlab-ci.yml
+.rw-r--r--  4.3k marly marly 22 Jul 10:04   0065-add-ugoos-device.patch
+.rw-r--r--   282 marly marly 21 Jul 20:42   60-linux.hook
+.rw-r--r--  207M marly marly 22 Jul 10:04   65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz
+.rw-r--r--   229 marly marly 21 Jul 20:42   90-linux.hook
+.rwxr-xr-x  228k marly marly 22 Jul  9:58   config
+.rw-r--r--   68M marly marly 22 Jul 14:12   linux-odroid-5.18.12-1-aarch64.pkg.tar.zst
+.rw-r--r--   12M marly marly 22 Jul 14:14   linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst
+.rw-r--r--   239 marly marly 21 Jul 20:42   linux-odroid.install
+.rw-r--r--   234 marly marly 21 Jul 20:42   linux.preset
+drwxr-xr-x     - marly marly 22 Jul 14:12   pkg
+.rwxr-xr-x  7.0k marly marly 21 Jul 20:42   PKGBUILD
+.rw-r--r--  2.1k marly marly 21 Jul 20:42   s912-dmip-mhz.patch
+drwxr-xr-x     - marly marly 22 Jul 10:14   src
+</code></pre>
+<p>成功编译了内核和headers，运行 <code>sudo pacman -U ./linux-odroid-5.18.12-1-aarch64.pkg.tar.zst ./linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst</code> 即可安装：</p>
+<pre><code class="bash"> marly@manjaro-minimal  /linux-odroid   master   sudo pacman -U ./linux-odroid-5.18.12-1-aarch64.pkg.tar.zst ./linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst 
+[sudo] password for marly: 
+loading packages...
+resolving dependencies...
+looking for conflicting packages...
+:: linux-odroid and linux are in conflict. Remove linux? [y/N] y
+
+Packages (3) linux-5.18.11-1 [removal]  linux-odroid-5.18.12-1  linux-odroid-headers-5.18.12-1
+
+Total Installed Size:  139.23 MiB
+Net Upgrade Size:        9.91 MiB
+
+:: Proceed with installation? [Y/n] y
+(2/2) checking keys in keyring                                               [###########################################] 100%
+(2/2) checking package integrity                                             [###########################################] 100%
+(2/2) loading package files                                                  [###########################################] 100%
+(2/2) checking for file conflicts                                            [###########################################] 100%
+(3/3) checking available disk space                                          [###########################################] 100%
+:: Processing package changes...
+(1/1) removing linux                                                         [###########################################] 100%
+(1/2) installing linux-odroid                                                [###########################################] 100%
+Optional dependencies for linux-odroid
+    crda: to set the correct wireless channels of your country [installed]
+(2/2) upgrading linux-odroid-headers                                         [###########################################] 100%
+:: Running post-transaction hooks...
+(1/4) Arming ConditionNeedsUpdate...
+(2/4) Updating module dependencies...
+(3/4) Updating linux-odroid module dependencies...
+(4/4) Updating linux-odroid initcpios...
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux-odroid.preset: &#39;default&#39;
+  -&gt; -k 5.18.12-1-MANJARO-ARM-ODROID -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&gt; Starting build: 5.18.12-1-MANJARO-ARM-ODROID
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [plymouth]
+  -&gt; Running build hook: [autodetect]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [fsck]
+==&gt; WARNING: No modules were added to the image. This is probably not what you want.
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
+==&gt; Image generation successful
+</code></pre>
+<p>至此编译安装内核成功完成，重启盒子继续折腾。</p>
+<h1 id="内核测试"><a href="#内核测试" class="headerlink" title="内核测试"></a>内核测试</h1><pre><code class="bash">uname -a
+Linux manjaro-minimal 5.18.12-1-MANJARO-ARM-ODROID #1 SMP PREEMPT Fri Jul 22 10:17:23 CST 2022 aarch64 GNU/Linux
+
+modinfo ax25
+name:           ax25
+filename:       (builtin)
+alias:          net-pf-3
+license:        GPL
+file:           net/ax25/ax25
+description:    The amateur radio AX.25 link layer protocol
+author:         Jonathan Naylor G4KLX &lt;g4klx@g4klx.demon.co.uk&gt;
+
+modinfo mkiss
+name:           mkiss
+filename:       (builtin)
+alias:          tty-ldisc-5
+license:        GPL
+file:           drivers/net/hamradio/mkiss
+description:    KISS driver for AX.25 over TTYs
+author:         Ralf Baechle DL5RB &lt;ralf@linux-mips.org&gt;
+parm:           crc_force:crc [0 = auto | 1 = none | 2 = flexnet | 3 = smack] (int)
+
+
+sudo direwolf -p
+
+Dire Wolf DEVELOPMENT version 1.7 E (Jun 29 2022)
+Includes optional support for:  cm108-ptt dns-sd
+Dire Wolf requires only privileges available to ordinary users.
+Running this as root is an unnecessary security risk.
+
+Reading config file direwolf.conf
+Audio device for both receive and transmit: plughw:0,0  (channel 0)
+Channel 0: 1200 baud, AFSK 1200 &amp; 2200 Hz, A+, 44100 sample rate.
+Ready to accept AGW client application 0 on port 8000 ...
+Ready to accept KISS TCP client application 0 on port 8001 ...
+DNS-SD: Avahi: Failed to create Avahi client: Daemon not running
+Virtual KISS TNC is available on /dev/pts/1
+Created symlink /tmp/kisstnc -&gt; /dev/pts/1
+
+
+sudo kissattach /dev/pts/1 wl2k
+AX.25 port wl2k bound to device ax0
+</code></pre>
+<p>测试结果符合预期。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Manjaro/" rel="tag"># Manjaro</a>
+              <a href="/tags/ARM/" rel="tag"># ARM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/21/pat/" rel="prev" title="在Manjaro ARM中编译运行Pat">
+      <i class="fa fa-chevron-left"></i> 在Manjaro ARM中编译运行Pat
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/22/kissattach/" rel="next" title="kissattach探究">
+      kissattach探究 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%86%85%E6%A0%B8%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%B9%B6%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">获取内核软件包并修改配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">开始打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2000-YEARS-LATER"><span class="nav-number">3.</span> <span class="nav-text">2000 YEARS LATER</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%8D%E6%9B%B4%E6%96%B0"><span class="nav-number">4.</span> <span class="nav-text">再更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">内核测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

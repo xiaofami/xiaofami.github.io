@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="之前已经成功为Manjaro ARM编译了LinBPQ，现在来研究如何配置。 配置过程中参考了 Winlink Gateway on a Raspberry Pi LinBPQ，这个视频提供了大量配置细节。 生成bpq32.cfg配置文件这个文件可以参考 G8BPQ Home Page ，不过这个过程比较痛苦。好在 John G8BPQ 制作了图形化的配置文件生成器 BPQConfigGen ，下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinBPQ配置">
+<meta property="og:url" content="http://xiaofami.github.io/2022/07/28/linbpq-config/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="之前已经成功为Manjaro ARM编译了LinBPQ，现在来研究如何配置。 配置过程中参考了 Winlink Gateway on a Raspberry Pi LinBPQ，这个视频提供了大量配置细节。 生成bpq32.cfg配置文件这个文件可以参考 G8BPQ Home Page ，不过这个过程比较痛苦。好在 John G8BPQ 制作了图形化的配置文件生成器 BPQConfigGen ，下">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-28T02:45:23.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.724Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="bpq32">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2022/07/28/linbpq-config/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>LinBPQ配置 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/28/linbpq-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LinBPQ配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-28 10:45:23" itemprop="dateCreated datePublished" datetime="2022-07-28T10:45:23+08:00">2022-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>之前已经成功为Manjaro ARM编译了LinBPQ，现在来研究如何配置。</p>
+<p>配置过程中参考了 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F_s4zIUIfew">Winlink Gateway on a Raspberry Pi LinBPQ</a>，这个视频提供了大量配置细节。</p>
+<h1 id="生成bpq32-cfg配置文件"><a href="#生成bpq32-cfg配置文件" class="headerlink" title="生成bpq32.cfg配置文件"></a>生成bpq32.cfg配置文件</h1><p>这个文件可以参考 <a target="_blank" rel="noopener" href="https://www.cantab.net/users/john.wiseman/Documents/index.html">G8BPQ Home Page</a> ，不过这个过程比较痛苦。好在 <strong>John G8BPQ</strong> 制作了图形化的配置文件生成器 <a target="_blank" rel="noopener" href="https://www.cantab.net/users/john.wiseman/Documents/BPQConfigGen.html">BPQConfigGen</a> ，下载运行即可。Windows版本的功能比Linux版少一些，不过在Windows 10下开箱即用，十分便利。生成的配置文件如下：</p>
+<pre><code class="config">; Written by BPQConfigGen
+
+SIMPLE
+NODECALL=BH2VJW-7
+NODEALIAS=FUXIN
+LOCATOR=PN02TA
+
+PORT
+PORTNUM=1
+ ID=Telnet Server
+ DRIVER=TELNET
+ CONFIG
+  LOGGING=1
+  TCPPORT=8010
+  FBBPORT=8011
+  HTTPPORT=8080
+  CMS=1
+  CMSCALL=BH2VJW
+  CMSPASS=密码不告诉你
+  USER=本地管理页面用户名,本地管理页面密码,BH2VJW,,SYSOP;
+ENDPORT
+PORT
+ PORTNUM=2
+ ID=Direwolf
+ TYPE=ASYNC
+ PROTOCOL=KISS
+ IPADDR=127.0.0.1
+ TCPPORT=8001
+ CHANNEL=A
+ PACLEN=128
+ TXDELAY=500
+ FRACK=7000
+ RESPTIME=1500
+ MAXFRAME=4
+ RETRIES=6
+WL2KREPORT PUBLIC, www.winlink.org, 8778, BH2VJW-10, PN02TA, 00-23, 145020000, PKT1200, 20, 2, 5, 0
+ENDPORT
+
+
+APPLICATION 1,BBS,,BH2VJW-9,,0
+APPLICATION 3,RMS,C 1 CMS,BH2VJW-10,,0
+APPLICATION 2,CHAT,,BH2VJW-8,,0
+
+LINMAIL
+LINCHAT
+</code></pre>
+<p>PORT1是用作本地管理的，不要转发到外部。本地访问8080端口可以打开管理网页，8010可支持telnet连接，FBB端口不知道具体作用。</p>
+<p>PORT2配置连接Direwolf。注意这里与Linux下配置AX.25的区别，这里我们使用了Direwolf 的 <strong>KISS over TCP</strong> 协议，没有与Linux的AX.25协议产生关系，所以可以忘掉 <strong>kissattach kissparams axports</strong> 了。</p>
+<p>完成上述配置后运行 <strong>linbpq</strong> 即可，注意 <strong>linbpq</strong> 与 <strong>bpq32.cfg</strong> 放在同一个目录下。</p>
+<p>下面进行连接测试。</p>
+<h1 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h1><pre><code class="bash">call wl2k bh2vjw-7  #连接到Node，连接到Node后可以再行选择连接到下面这些
+call wl2k bh2vjw-8  #连接到聊天服务器
+call wl2k bh2vjw-9  #连接到BBS
+call wl2k bh2vjw-10 #连接到Winlink
+</code></pre>
+<p>测试顺利完成，至此距离我们的Node上线运行只有连接电台一步之遥了！</p>
+<p>为了能够公开节点信息，还需要联系Winlink管理员进行认证。在<a target="_blank" rel="noopener" href="https://winlink.org/rmschannels">Live System Information</a> 页面搜索 <strong>BH2VJW</strong> 可以看到，我们的网关由于未经认证，所以是红色状态，在<a target="_blank" rel="noopener" href="https://winlink.org/rmschannels">Live System Information</a> 地图上也没有显示。话说地图上显示整个东亚地区公共节点数为0，我这个或许会开创先河？</p>
+<p>下步计划撰写systemd服务实现开机自启与进程守护。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node/" rel="tag"># Node</a>
+              <a href="/tags/bpq32/" rel="tag"># bpq32</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/26/packet/" rel="prev" title="Packet Radio科普系列笔记">
+      <i class="fa fa-chevron-left"></i> Packet Radio科普系列笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/28/packet-systemd/" rel="next" title="Packet Radio Systemd服务">
+      Packet Radio Systemd服务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90bpq32-cfg%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">生成bpq32.cfg配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">连接测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

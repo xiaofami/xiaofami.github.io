@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参考：manjaro 切换国内源及软件安装 同步时间时间不准会造成SSL验证失败等一系列问题。同步方式如下：(https:&#x2F;&#x2F;wiki.manjaro.org&#x2F;index.php&#x2F;System_Maintenance#Time_and_Date) user $ timedatectl set-ntp true user $ sudo systemctl enable --now systemd-t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro配置管理">
+<meta property="og:url" content="http://xiaofami.github.io/2021/08/20/Manjaro-setup/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="参考：manjaro 切换国内源及软件安装 同步时间时间不准会造成SSL验证失败等一系列问题。同步方式如下：(https:&#x2F;&#x2F;wiki.manjaro.org&#x2F;index.php&#x2F;System_Maintenance#Time_and_Date) user $ timedatectl set-ntp true user $ sudo systemctl enable --now systemd-t">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-20T01:37:26.000Z">
+<meta property="article:modified_time" content="2023-02-06T01:03:38.504Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xiaofami.github.io/2021/08/20/Manjaro-setup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Manjaro配置管理 | 小荷</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小荷</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/08/20/Manjaro-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Manjaro配置管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-20 09:37:26" itemprop="dateCreated datePublished" datetime="2021-08-20T09:37:26+08:00">2021-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2d096cd9ad61">manjaro 切换国内源及软件安装</a></p>
+<h1 id="同步时间"><a href="#同步时间" class="headerlink" title="同步时间"></a>同步时间</h1><p>时间不准会造成SSL验证失败等一系列问题。同步方式如下：(<a target="_blank" rel="noopener" href="https://wiki.manjaro.org/index.php/System_Maintenance#Time_and_Date">https://wiki.manjaro.org/index.php/System_Maintenance#Time_and_Date</a>)</p>
+<pre><code class="bash">user $ timedatectl set-ntp true
+user $ sudo systemctl enable --now systemd-timesyncd
+</code></pre>
+<p>当然也可以用date手动设置。</p>
+<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><pre><code>sudo pacman-mirrors -i -c China -m rank
+sudo pacman-mirrors -g
+sudo pacman -Syyu
+</code></pre>
+<h1 id="安装ARU包管理工具"><a href="#安装ARU包管理工具" class="headerlink" title="安装ARU包管理工具"></a>安装ARU包管理工具</h1><pre><code>sudo pacman -S yay
+</code></pre>
+<p>原本想通过ARU安装RTL8189ETV启动，但是包依赖linux mainline kernel，貌似不行。手动编译也没成功。</p>
+<h1 id="pacman-conf选项自定义"><a href="#pacman-conf选项自定义" class="headerlink" title="pacman.conf选项自定义"></a>pacman.conf选项自定义</h1><p>添加了Color和ILoveCandy选项，第一个使pacman产生彩色输出，第二个把pacman下载进度条变成吃豆子，虽然没什么用还是设置了。</p>
+<h1 id="pacman常用命令"><a href="#pacman常用命令" class="headerlink" title="pacman常用命令"></a>pacman常用命令</h1><p>参考：<a target="_blank" rel="noopener" href="https://wiki.manjaro.org/index.php/Pacman_Overview">Pacman Overview</a></p>
+<ol>
+<li>安装更新</li>
+</ol>
+<p>To update the package database and update all packages on the system</p>
+<pre><code>user $ sudo pacman -Syu
+</code></pre>
+<p>To force a full refresh of the package database and update all packages on the system. You must do this when switching branches or switching mirrors.</p>
+<pre><code>user $ sudo pacman -Syyu
+</code></pre>
+<p>To force a full refresh of the package database, update all packages on the system and allow packages to be downgraded. Downgrading should be only be needed when switching to an older branch. For example, switching from Testing to Stable.</p>
+<pre><code>user $ sudo pacman -Syyuu
+</code></pre>
+<ol start="2">
+<li>搜索软件包</li>
+</ol>
+<p>To search the Manjaro repositories for available packages you can use the command pacman -Ss keyword. It will search both the package name and the description for the keyword. For example, to search for packages containing the keyword smplayer you could use:</p>
+<pre><code>user $ pacman -Ss smplayer
+</code></pre>
+<p>You can search your installed packages in the same manner using -Qs instead of -Ss. To search your installed packages for smplayer:</p>
+<pre><code>user $ pacman -Qs smplayer
+</code></pre>
+<p>Once you have found a package you can use pacman -Qi to get more information about an installed packages or pacman -Si for packages in the repos. Following the example above you could use</p>
+<pre><code>user $ pacman -Si smplayer
+</code></pre>
+<p>Finally, for a list of all installed packages on your system, enter the following command:</p>
+<p>user $ pacman -Ql</p>
+<ol start="3">
+<li><p>安装软件包<br>To install a software package, the basic syntax is <code>pacman -S packagename</code>. However, installing a package without updating the system will lead to a partial upgrade situation so all the examples here will use pacman -Syu packagename which will install the package and ensure the system is up to date. For example, to install smplayer the command is:</p>
+<p> user $ sudo pacman -Syu smplayer</p>
+</li>
+</ol>
+<p>You will then be presented a list of software to install. You may notice this list has more packages than you requested. This is because many packages also have dependencies which are packages that must be installed in order for the software you selected to function properly.</p>
+<p>Pacman can also directly install packages from the local system or a location on the internet. The format of that command is pacman -U packagelocation. For example, to install a copy of your package cache you could do something like:</p>
+<pre><code>user $ sudo pacman -U /var/cache/pacman/pkg/smplayer-19.5.0-1-x86_64.pkg.tar.xz
+</code></pre>
+<p>Alternatively, you could get it directly from one of Manjaro’s mirrors:</p>
+<pre><code>user $ sudo pacman -U https://mirror.alpix.eu/manjaro/stable/community/x86_64/smplayer-19.5.0-1-x86_64.pkg.tar.xz
+</code></pre>
+<ol start="4">
+<li><p>删除软件包<br>To remove a software package, the basic syntax is sudo pacman -R packagename. We could remove the smplayer package we installed above with:</p>
+<p> user $ sudo pacman -R smplayer</p>
+</li>
+</ol>
+<p>This will remove the package, but will leave all the dependencies behind. If you also want to remove the unneeded dependencies you could use pacman -Rsu packagename as seen in this example:</p>
+<pre><code>user $ sudo pacman -Rsu smplayer
+</code></pre>
+<p>Sometimes when you try to remove a package you will not be able to because there are other packages which depend on it. You can use pacman -Rc packagename to remove a package and everything that depends on it. Be careful to heed the above warning when using this option.</p>
+<pre><code>user $ sudo pacman -Rc smplayer
+</code></pre>
+<p>The most nuclear option is pacman -Rcs packagename. This will remove everything that depends on packagename and continue to do so on its dependencies. This should really only be used in exceptional circumstances such as when removing an entire desktop environment and trying not to leave anything behind.</p>
+<p>Pacman usually also creates backup configuration files when deleting packages. To remove those, you can add n to any of the examples above. For example:</p>
+<pre><code>user $ sudo pacman -Rn smplayer
+user $ sudo pacman -Rsun smplayer
+user $ sudo pacman -Rcn smplayer
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Manjaro/" rel="tag"># Manjaro</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/19/Manjaro-arm/" rel="prev" title="R3300-M安装运行Manjaro ARM">
+      <i class="fa fa-chevron-left"></i> R3300-M安装运行Manjaro ARM
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/20/hexo-git/" rel="next" title="hexo使用git管理">
+      hexo使用git管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%97%B6%E9%97%B4"><span class="nav-number">1.</span> <span class="nav-text">同步时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">换国内源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ARU%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">安装ARU包管理工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pacman-conf%E9%80%89%E9%A1%B9%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">4.</span> <span class="nav-text">pacman.conf选项自定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pacman%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">pacman常用命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">tccmu</p>
+  <div class="site-description" itemprop="description">WXRC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tccmu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
