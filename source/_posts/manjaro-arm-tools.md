@@ -1,6 +1,7 @@
 ---
 title: 使用manjaro-arm-tools定制Manjaro ARM镜像
 date: 2023-02-06 10:41:46
+index_img: /img/manjaro-arm-tools.png
 tags:
 - R3300-M
 - Manjaro ARM
@@ -121,7 +122,7 @@ This software is available in the Manjaro repository.
 
 
 ## Known issues
-Check the [Issues](https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools/-/issues) page.
+Check the [Issues](https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools/) page.
 
 ## Dependencies
 These scripts rely on certain packages, other than what's in the `base` package group, to be able to function. These packages are:
