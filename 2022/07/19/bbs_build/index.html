@@ -1,26 +1,22 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="前言硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。 BBS系统选择之前连接到hb1bbs觉得还可以，这个BBS使用的">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。 BBS系统选择之前连接到hb1bbs觉得还可以，这个BBS使用的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建支持telnet和packet radio访问的BBS服务器">
 <meta property="og:url" content="http://xiaofami.github.io/2022/07/19/bbs_build/index.html">
@@ -32,269 +28,280 @@
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="bbs">
 <meta property="article:tag" content="packet radio">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>搭建支持telnet和packet radio访问的BBS服务器 - 小荷</title>
 
-<link rel="canonical" href="http://xiaofami.github.io/2022/07/19/bbs_build/">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>搭建支持telnet和packet radio访问的BBS服务器 | 小荷</title>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<body>
+  
 
-</head>
+  <header>
+    
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">小荷</h1>
-      <span class="logo-line-after"><i></i></span>
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-      <p class="site-subtitle" itemprop="description">生活记录</p>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-  </ul>
 </nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="搭建支持telnet和packet radio访问的BBS服务器"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-19 09:12" pubdate>
+          2022年7月19日 上午
+        </time>
+      </span>
+    
+  </div>
 
-</div>
-    </header>
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
   </div>
 
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/19/bbs_build/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          搭建支持telnet和packet radio访问的BBS服务器
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-19 09:12:47" itemprop="dateCreated datePublished" datetime="2022-07-19T09:12:47+08:00">2022-07-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        
+      </div>
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">搭建支持telnet和packet radio访问的BBS服务器</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。</p>
 <h1 id="BBS系统选择"><a href="#BBS系统选择" class="headerlink" title="BBS系统选择"></a>BBS系统选择</h1><p>之前连接到<a target="_blank" rel="noopener" href="https://hb1bbs.com/">hb1bbs</a>觉得还可以，这个BBS使用的是<a target="_blank" rel="noopener" href="http://www.mysticbbs.com/">Mystic BBS</a>系统。可惜经过测试，这个系统在Manjaro ARM上缺少 <strong>ld-linux.so.3</strong> 库文件所以无法运行。 AUR提供的 <strong>arm-linux-gnueabihf-glibc</strong> 可能提供了这个文件不过可惜这个包的依赖不支持arm64,好事者可以在X86-64电脑上安装然后提取。</p>
 <p>迫于上述原因，我转而投向了 <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/LinFBB/">LinFBB</a>。</p>
 <h1 id="LinFBB安装"><a href="#LinFBB安装" class="headerlink" title="LinFBB安装"></a>LinFBB安装</h1><h2 id="编译安装ax25"><a href="#编译安装ax25" class="headerlink" title="编译安装ax25"></a>编译安装ax25</h2><p>到 <a target="_blank" rel="noopener" href="https://github.com/ve7fet/linuxax25">https://github.com/ve7fet/linuxax25</a>  下载最新release然后编译。项目分三部分：ax25apps,ax25tools,libax25，分别进入目录执行</p>
-<pre><code class="bash">./autogen.sh
-./configure
-make -j4
-sudo make install
-</code></pre>
-<p>编译过程大体上比较顺利。不过 <strong>ax25app</strong> 编译过程中会提示</p>
-<pre><code class="bash">
-call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory
-   45 | #include &lt;ncursesw/ncurses.h&gt;
-      | 
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">./autogen.sh<br>./configure<br>make -j4<br>sudo make install<br>````<br>编译过程大体上比较顺利。不过 **ax25app** 编译过程中会提示<br><br>```bash<br><br>call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory<br>   45 | <span class="hljs-comment">#include &lt;ncursesw/ncurses.h&gt;</span><br>      | <br></code></pre></td></tr></table></figure>
+
 <p>开发者是基于Debian编译测试所以头文件名称与Manjaro有差异。按提示进入对应C文件将 <code>#include &lt;ncursesw/ncurses.h&gt;</code>修改为<code>#include &lt;ncurses.h&gt;</code>即可:</p>
-<pre><code class="bash">vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c #修改第45行
-</code></pre>
-<p>另外对于 <strong>ax25tools</strong>，安装后编译文件夹📁下面etc目录中的配置文件没有被复制到预期位置。比如执行</p>
-<pre><code class="bash">$ man axports
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c <span class="hljs-comment">#修改第45行</span><br>````<br><br>另外对于 **ax25tools**，安装后编译文件夹📁下面etc目录中的配置文件没有被复制到预期位置。比如执行<br><br>```bash<br>$ man axports<br><br>AXPORTS(5)                                       Linux Programmer<span class="hljs-string">&#x27;s Manual                                       AXPORTS(5)</span><br><span class="hljs-string"></span><br><span class="hljs-string">NAME</span><br><span class="hljs-string">       /etc/ax25/axports - AX.25 port configuration file.</span><br><span class="hljs-string"></span><br><span class="hljs-string">DESCRIPTION</span><br><span class="hljs-string">……（以下省略）</span><br></code></pre></td></tr></table></figure>
 
-AXPORTS(5)                                       Linux Programmer&#39;s Manual                                       AXPORTS(5)
-
-NAME
-       /etc/ax25/axports - AX.25 port configuration file.
-
-DESCRIPTION
-……（以下省略）
-</code></pre>
 <p>在man文件描述的位置并没有这个配置文件，<code>/usr/local</code> 下面也没有。或许有必要手动创建<code>/etc/ax25</code>，然后把这些配置文件复制过去？</p>
-<h2 id="使libax25可被动态加载"><a href="#使libax25可被动态加载" class="headerlink" title="使libax25可被动态加载"></a>使libax25可被动态加载</h2><pre><code class="bash">cd /etc/ld.so.conf.d/
-sudo vim userlocal.conf # 加入 /usr/local/lib 并保存
-sudo ldconfig
-</code></pre>
+<h2 id="使libax25可被动态加载"><a href="#使libax25可被动态加载" class="headerlink" title="使libax25可被动态加载"></a>使libax25可被动态加载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /etc/ld.so.conf.d/<br>sudo vim userlocal.conf <span class="hljs-comment"># 加入 /usr/local/lib 并保存</span><br>sudo ldconfig<br></code></pre></td></tr></table></figure>
 <p>这样刚才自编译安装的 <strong>libax25</strong> 就可以被动态加载了。一种比较古老的方式是使用 <strong>LD_LIBRARY_PATH</strong> 这个环境变量，不过Manjaro已经将其抛弃了，这个值默认是空的。</p>
 <h2 id="编译安装LinFBB"><a href="#编译安装LinFBB" class="headerlink" title="编译安装LinFBB"></a>编译安装LinFBB</h2><p>经过上面步骤后LinFBB编译安装水到渠成，照旧configure make make install三部曲，这个最后额外多了一步 <code>make installconf</code>。</p>
 <p>如果刚才没有安装配置好 <strong>libax25</strong>，这里在configure时会提示 <strong>configure: error: Could not find the libax25 libraries; aborting</strong> 导致编译无法进行。</p>
 <p>另外需要指出，我的编译环境没有X11,所以不会编译xfbbx X11客户端。</p>
 <h1 id="LinFBB配置"><a href="#LinFBB配置" class="headerlink" title="LinFBB配置"></a>LinFBB配置</h1><p>上述编译安装步骤没有难度，从这里开始就要花一些心思了。</p>
-<h2 id="首次运行"><a href="#首次运行" class="headerlink" title="首次运行"></a>首次运行</h2><pre><code class="bash">sudo fbb
-</code></pre>
+<h2 id="首次运行"><a href="#首次运行" class="headerlink" title="首次运行"></a>首次运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo fbb<br></code></pre></td></tr></table></figure>
 <p>首次运行会提示许多文件不存在，按提示选择新建即可，然后添加呼号，姓名等必要信息。这些之后都可以在配置文件中修改，所以即便填错也没关系。</p>
 <p>之后管理fbb应当使用 <code>/usr/local/share/doc/fbb/fbb.sh</code>这个脚本，用法如下：</p>
-<pre><code class="bash">fbb.sh start | stop | status | restart
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fbb.sh start | stop | status | restart<br></code></pre></td></tr></table></figure>
+
 <p>等一切配置妥当后写一个systemd service用起来会更方便一点。</p>
 <p>LinFBB提供了 <strong>xfbbd</strong> 和 <strong>xfbbC</strong> 。先不研究它们，当前的目的是配置端口以便能够通过telnet访问这个BBS。</p>
 <h2 id="telnet配置"><a href="#telnet配置" class="headerlink" title="telnet配置"></a>telnet配置</h2><p>LinFBB虽然在持续的开发维护中，但BBS作为旧时代的遗珍，包括笔者在内的许多人对它很陌生。教人用wordpress之类东西搭建博客的教程浩如烟海，BBS的资料则只能散见于互联网的角落。 尽管搭建于上个世纪， <a target="_blank" rel="noopener" href="https://www.f6fbb.org/">https://www.f6fbb.org/</a> 仍然保留了大量价值无边的资料，可以作为配置LinFBB的指导。</p>
 <p>此外 <code>/home/manjaro/fbb-7.0.11/doc/html/</code> 目录中也提供了帮助文档，可以阅读。</p>
 <p>参考页面： <a target="_blank" rel="noopener" href="https://www.f6fbb.org/fbbdoc/fmttelne.htm">https://www.f6fbb.org/fbbdoc/fmttelne.htm</a><br>编辑PORT.SYS:</p>
-<pre><code class="conf">
-#Ports：端口数量
-#TNCs：总共有几个TNC（调制解调器）。在使用多工器的情况下，一个端口最多可以有4个TNC。
-#Ports TNCs
-2      2
-
-#COM：串口序号，注意与Windows中的COM1 COM2概念不同，此处仅作为序号。
-#Interface：在LinFBB中仅有9一个可选项，代表Linux，可以用于串口、AX25域套接字、Telnet端口。
-# Address：设备名/端口号。需要确保合适权限使LinFBB可以访问设备。此外，当使用 AF_AX25 内核端口时，地址是不需要的；当使用Telenet时，地址是Tenlet端口的16进制形式。
-# Baud：端口的波特率。BPQ，AF_AX25内核套接字，以及Telnet无视该设定所以填0即可。
-# 这一栏目的行数与上面的端口数量保持一致。（本例中为2）
-
-#Com Interface Address (device)   Baud
-1    9         /dev/cua0          9600
-2    9         189C               0
-
-# TNC：使用中的TNC数量。0代表文件转发。
-# NbCh：TNC使用的频道数量，上限取决于TNC固件。（编者注：对于direwolf之类soundcard modem,是否意味着一个TNC只有一个Channel？）
-# Com：COM口的序号，需要与前文保持一致。
-# MultCh：使用端口多工器情况下的频道数量，否则为1。对于DRSI用途，值为0～7；by KAM use 1/VHF and 2/HF；Linux中使用AF_AX25内核套接字时，MultCh为接口名称（例如：ax0）
-# Paclen：TNC的Paclen（这是啥）
-# Maxfr：TNC最大可以同时发送的帧数
-# NbFwd：最多同时向外发送的频道数量。
-# MaxBloc：forward-block的大小，单位为kb。
-# M/P-Fwd：M代表每小时中开始转发的起始分钟，P-Fwd代表每次转发开始之间的时间间隔
-# Mode：单个字母的组合，每个字母代表一种允许的模式，太长了不翻。以TUWR为例，T代表Ethernet/TCP-IP（host-mode），U代表正常模式（Port mode），W代表网关允许这个频率（附加内容），R代表调制解调器端口允许只读模式（附加内容）
-# Freq：用于描述这个端口的字符串，长度最大为9,不允许空格（编者注：用Comment是不是更直观一点）
-
-#TNC NbCh Com MultCh Pacln Maxfr NbFwd MxBloc M/P-Fwd Mode Freq
-0    0    0   0      0     0     0     0      00/01   ----  File-fwd.
-1    4    1   1      230   4     1     10     30/60   UDYL  433.650
-2    8    2   0      250   2     1     10     00/60   TUWR  Telnet
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs conf"><br>#Ports：端口数量<br>#TNCs：总共有几个TNC（调制解调器）。在使用多工器的情况下，一个端口最多可以有4个TNC。<br>#Ports TNCs<br>2      2<br><br>#COM：串口序号，注意与Windows中的COM1 COM2概念不同，此处仅作为序号。<br>#Interface：在LinFBB中仅有9一个可选项，代表Linux，可以用于串口、AX25域套接字、Telnet端口。<br># Address：设备名/端口号。需要确保合适权限使LinFBB可以访问设备。此外，当使用 AF_AX25 内核端口时，地址是不需要的；当使用Telenet时，地址是Tenlet端口的16进制形式。<br># Baud：端口的波特率。BPQ，AF_AX25内核套接字，以及Telnet无视该设定所以填0即可。<br># 这一栏目的行数与上面的端口数量保持一致。（本例中为2）<br><br>#Com Interface Address (device)   Baud<br>1    9         /dev/cua0          9600<br>2    9         189C               0<br><br># TNC：使用中的TNC数量。0代表文件转发。<br># NbCh：TNC使用的频道数量，上限取决于TNC固件。（编者注：对于direwolf之类soundcard modem,是否意味着一个TNC只有一个Channel？）<br># Com：COM口的序号，需要与前文保持一致。<br># MultCh：使用端口多工器情况下的频道数量，否则为1。对于DRSI用途，值为0～7；by KAM use 1/VHF and 2/HF；Linux中使用AF_AX25内核套接字时，MultCh为接口名称（例如：ax0）<br># Paclen：TNC的Paclen（这是啥）<br># Maxfr：TNC最大可以同时发送的帧数<br># NbFwd：最多同时向外发送的频道数量。<br># MaxBloc：forward-block的大小，单位为kb。<br># M/P-Fwd：M代表每小时中开始转发的起始分钟，P-Fwd代表每次转发开始之间的时间间隔<br># Mode：单个字母的组合，每个字母代表一种允许的模式，太长了不翻。以TUWR为例，T代表Ethernet/TCP-IP（host-mode），U代表正常模式（Port mode），W代表网关允许这个频率（附加内容），R代表调制解调器端口允许只读模式（附加内容）<br># Freq：用于描述这个端口的字符串，长度最大为9,不允许空格（编者注：用Comment是不是更直观一点）<br><br>#TNC NbCh Com MultCh Pacln Maxfr NbFwd MxBloc M/P-Fwd Mode Freq<br>0    0    0   0      0     0     0     0      00/01   ----  File-fwd.<br>1    4    1   1      230   4     1     10     30/60   UDYL  433.650<br>2    8    2   0      250   2     1     10     00/60   TUWR  Telnet<br></code></pre></td></tr></table></figure>
 <p>本例中，telnet端口号为6300,转换为16进制即为 <strong>189C</strong>。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**/dev/cua0** 也不存在，不过不影响Telnet端口的使用。</p>
 <p>（编者补充：在linux中，com设备一般被命名为cua）</p>
 <h1 id="AX-25探究"><a href="#AX-25探究" class="headerlink" title="AX.25探究"></a>AX.25探究</h1><p><code>fbb-7.0.11/doc/html/tllinux.htm</code> 成文时间久远（1997），许多内容已经过时。不过其提及的<a target="_blank" rel="noopener" href="https://www.linuxdoc.org/HOWTO/AX25-HOWTO/">AX25-HOWTO</a>（成稿于2001年九月）值得阅读。如果上面链接不幸死掉了，可以访问 <a target="_blank" rel="noopener" href="https://tldp.org/HOWTO/AX25-HOWTO/">https://tldp.org/HOWTO/AX25-HOWTO/</a>  。</p>
@@ -319,196 +326,353 @@ sudo ldconfig
 <p>Direwolf手册中描述了利用 <strong>com0com</strong> 创建虚拟COM接口以及修改Direwolf的步骤，可以作为参考。</p>
 <p>未完待续</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/bbs/">#bbs</a>
+      
+        <a href="/tags/packet-radio/">#packet radio</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>搭建支持telnet和packet radio访问的BBS服务器</div>
+      <div>http://xiaofami.github.io/2022/07/19/bbs_build/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/21/pat/" title="在Manjaro ARM中编译运行Pat">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">在Manjaro ARM中编译运行Pat</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/05/ham_linux/" title="业余无线电linux发行版">
+                        <span class="hidden-mobile">业余无线电linux发行版</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
 
-    
-    
-    
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/bbs/" rel="tag"># bbs</a>
-              <a href="/tags/packet-radio/" rel="tag"># packet radio</a>
-          </div>
-
-        
 
 
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2022/07/05/ham_linux/" rel="prev" title="业余无线电linux发行版">
-      <i class="fa fa-chevron-left"></i> 业余无线电linux发行版
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/07/21/pat/" rel="next" title="在Manjaro ARM中编译运行Pat">
-      在Manjaro ARM中编译运行Pat <i class="fa fa-chevron-right"></i>
-    </a></div>
+  </aside>
+
+
     </div>
-      </footer>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
-  </article>
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
   
   
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-          </div>
-          
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
       }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
     });
-  }
+  });
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
 
-  <aside class="sidebar">
-    <div class="sidebar-inner">
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
+  <script>Fluid.plugins.codeWidget();</script>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BBS%E7%B3%BB%E7%BB%9F%E9%80%89%E6%8B%A9"><span class="nav-number">2.</span> <span class="nav-text">BBS系统选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinFBB%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">LinFBB安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85ax25"><span class="nav-number">3.1.</span> <span class="nav-text">编译安装ax25</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BFlibax25%E5%8F%AF%E8%A2%AB%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="nav-number">3.2.</span> <span class="nav-text">使libax25可被动态加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LinFBB"><span class="nav-number">3.3.</span> <span class="nav-text">编译安装LinFBB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinFBB%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">LinFBB配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E8%BF%90%E8%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">首次运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telnet%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">telnet配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AX-25%E6%8E%A2%E7%A9%B6"><span class="nav-number">5.</span> <span class="nav-text">AX.25探究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDAX25%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">5.1.</span> <span class="nav-text">加载AX25内核模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E5%90%88Direwolf"><span class="nav-number">5.1.1.</span> <span class="nav-text">整合Direwolf</span></a></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">tccmu</p>
-  <div class="site-description" itemprop="description">WXRC</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">87</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">99</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">tccmu</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
 
-<script src="/js/utils.js"></script>
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
 
-<script src="/js/motion.js"></script>
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-<script src="/js/schemes/muse.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
-<script src="/js/next-boot.js"></script>
 
 
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

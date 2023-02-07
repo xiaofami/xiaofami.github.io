@@ -1,26 +1,22 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="路由器主板正面  路由器主板背面  某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。 刷机工作原厂固件自动开启收费共享WIFI无法修改，而且已经绑定了其他人手机号，必须刷机">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="路由器主板正面  路由器主板背面  某小黄鱼上15元捡来的路由器，必虎路由器DC。 硬件配置 SOC：MT7628NN FLASH：16MB RAM：64M 网口：3个 天线：2个 USB：无 供电：5V1A，圆口 指示灯：蓝&#x2F;紫色 特色：磁铁  硬件上没啥好说的，主板与外壳没有任何连接方便拆卸，直接拿来刷机。 刷机工作原厂固件自动开启收费共享WIFI无法修改，而且已经绑定了其他人手机号，必须刷机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="必虎路由器折腾记录">
 <meta property="og:url" content="http://xiaofami.github.io/2021/03/23/bhu-dc/index.html">
@@ -36,191 +32,258 @@
 <meta property="article:tag" content="路由器">
 <meta property="article:tag" content="openwrt">
 <meta property="article:tag" content="linux">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://xiaofami.github.io/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8EDC-%E6%AD%A3%E9%9D%A2.jpg">
+  
+  
+  
+  <title>必虎路由器折腾记录 - 小荷</title>
 
-<link rel="canonical" href="http://xiaofami.github.io/2021/03/23/bhu-dc/">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>必虎路由器折腾记录 | 小荷</title>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<body>
+  
 
-</head>
+  <header>
+    
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">小荷</h1>
-      <span class="logo-line-after"><i></i></span>
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-      <p class="site-subtitle" itemprop="description">生活记录</p>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-  </ul>
 </nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="必虎路由器折腾记录"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-03-23 14:41" pubdate>
+          2021年3月23日 下午
+        </time>
+      </span>
+    
+  </div>
 
-</div>
-    </header>
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          36k 字
+        
+      </span>
+    
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          304 分钟
+        
+      </span>
+    
+
+    
+    
   </div>
 
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/03/23/bhu-dc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          必虎路由器折腾记录
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-23 14:41:15" itemprop="dateCreated datePublished" datetime="2021-03-23T14:41:15+08:00">2021-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        
+      </div>
 
       
-        <p><em>路由器主板正面</em></p>
-<img src="/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8EDC-%E6%AD%A3%E9%9D%A2.jpg" class="" title="路由器主板正面">
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">必虎路由器折腾记录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><em>路由器主板正面</em></p>
+<img src="/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8EDC-%E6%AD%A3%E9%9D%A2.jpg" srcset="/img/loading.gif" lazyload class="" title="路由器主板正面">
 <p><em>路由器主板背面</em></p>
-<img src="/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8EDC-%E8%83%8C%E9%9D%A2.jpg" class="" title="路由器主板背面">
+<img src="/2021/03/23/bhu-dc/%E5%BF%85%E8%99%8EDC-%E8%83%8C%E9%9D%A2.jpg" srcset="/img/loading.gif" lazyload class="" title="路由器主板背面">
 <p>某小黄鱼上15元捡来的路由器，必虎路由器DC。</p>
 <h1 id="硬件配置"><a href="#硬件配置" class="headerlink" title="硬件配置"></a>硬件配置</h1><ul>
 <li>SOC：MT7628NN</li>
@@ -242,729 +305,30 @@
 <details>
 <summary>点击展开查看</summary>
 
-<pre><code>[BEGIN] 2021/3/4 21:11:07
-[040±°08][0′0±0C0E]
-                   DDR Ca&amp;#47650;rati&amp;#60320;DQS r&amp;#18784;= 00°08788
-
-&amp;#1261;Boot ±.1.3 ¨Feb 2· 2017 - 14:21o39)
-
-Boa2¤: &amp;#6889;&amp;#60000;&amp;#1199;C DRAMo  64 MB
-1&amp;#255;t￥Α&amp;#597;new interface driver usbfs
-[    1.272000] usbcore: registered new interface driver hub
-[    1.276000] usbcore: registered new device driver usb
-[    1.280000] bhu_tc_attach : end, g_bhu_tc_salt=-1536776869
-[    1.284000] Switching to clocksource MIPS
-[    1.288000] NET: Registered protocol family 2
-[    1.296000] TCP established hash table entries: 512 (order: 0, 4096 bytes)
-[    1.300000] TCP bind hash table entries: 512 (order: -1, 2048 bytes)
-[    1.308000] TCP: Hash tables configured (established 512 bind 512)
-[    1.316000] TCP: reno registered
-[    1.316000] UDP hash table entries: 256 (order: 0, 4096 bytes)
-[    1.324000] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
-[    1.332000] NET: Registered protocol family 1
-[    1.336000] MTK/Ralink EHCI/OHCI init.
-[    1.340000] squashfs: version 4.0 (2009/01/31) Phillip Lougher
-[    1.348000] jffs2: version 2.2. (NAND) (SUMMARY)  (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
-[    1.360000] msgmni has been set to 118
-[    1.364000] io scheduler noop registered (default)
-[    1.376000] Serial: 8250/16550 driver, 2 ports, IRQ sharing disabled
-[    1.384000] serial8250: ttyS0 at MMIO 0x10000d00 (irq = 21) is a 16550A
-[    1.392000] serial8250: ttyS1 at MMIO 0x10000c00 (irq = 20) is a 16550A
-[    1.400000] led=43, on=1, off=5, blinks=1, rest=0, times=1
-[    1.404000] Ralink gpio driver initialized
-[    1.408000] flash manufacture id: ef, device id 40 18
-[    1.416000] W25Q128BV(ef 40180000) (16384 Kbytes)
-[    1.420000] mtd .name = raspi, .size = 0x01000000 (16M) .erasesize = 0x00010000 (64K) .numeraseregions = 0
-[    1.428000] Creating 8 MTD partitions on &quot;raspi&quot;:
-[    1.432000] 0x000000000000-0x000001000000 : &quot;ALL&quot;
-[    1.440000] 0x000000000000-0x000000040000 : &quot;Bootloader&quot;
-[    1.448000] 0x000000040000-0x000000050000 : &quot;Config&quot;
-[    1.452000] 0x000000050000-0x000000060000 : &quot;Factory&quot;
-[    1.460000] 0x000000060000-0x000000de0000 : &quot;firmware&quot;
-[    1.468000] 0x0000001a398a-0x000000de0000 : &quot;rootfs&quot;
-[    1.472000] mtd: partition &quot;rootfs&quot; must either start or end on erase block boundary or be smaller than an erase block -- forcing read-only
-[    1.488000] mtd: partition &quot;rootfs_data&quot; created automatically, ofs=0x940000, len=0x4a0000
-[    1.496000] 0x000000940000-0x000000de0000 : &quot;rootfs_data&quot;
-[    1.504000] 0x000000de0000-0x000000fe0000 : &quot;user&quot;
-[    1.508000] 0x000000fe0000-0x000000ff0000 : &quot;cfg&quot;
-[    1.516000] 0x000000ff0000-0x000001000000 : &quot;oem&quot;
-[    1.524000] tun: Universal TUN/TAP device driver, 1.6
-[    1.528000] tun: (C) 1999-2004 Max Krasnyansky &lt;maxk@qualcomm.com&gt;
-[    1.532000] GMAC1_MAC_ADRH -- : 0x00008482
-[    1.540000] GMAC1_MAC_ADRL -- : 0xf438c014
-[    1.544000] Ralink APSoC Ethernet Driver Initilization. v3.1  512 rx/tx descriptors allocated, mtu = 1500!
-[    1.552000] GMAC1_MAC_ADRH -- : 0x00008482
-[    1.556000] GMAC1_MAC_ADRL -- : 0xf438c014
-[    1.560000] PROC INIT OK!
-[    1.564000] ehci_hcd: USB 2.0 &#39;Enhanced&#39; Host Controller (EHCI) Driver
-[    1.572000] ehci-pci: EHCI PCI platform driver
-[    1.576000] ehci-platform: EHCI generic platform driver
-[    1.600000] ******MT7628 mtk phy
-[    1.604000] *****run project phy.
-[    1.616000] FM_OUT value: u4FmOut = 0(0x00000000)
-[    1.628000] FM_OUT value: u4FmOut = 124(0x0000007C)
-[    1.632000] FM detection done! loop = 1
-[    1.644000] SR calibration value u1SrCalVal = 7
-[    1.648000] *********Execute mt7628_phy_init!!
-[    1.652000] ehci-platform ehci-platform: EHCI Host Controller
-[    1.656000] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
-[    1.664000] ehci-platform ehci-platform: irq 18, io mem 0x101c0000
-[    1.684000] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
-[    1.688000] hub 1-0:1.0: USB hub found
-[    1.692000] hub 1-0:1.0: 1 port detected
-[    1.696000] ohci_hcd: USB 1.1 &#39;Open&#39; Host Controller (OHCI) Driver
-[    1.724000] *********Execute mt7628_phy_init!!
-[    1.728000] ohci-platform ohci-platform: Generic Platform OHCI Controller
-[    1.736000] ohci-platform ohci-platform: new USB bus registered, assigned bus number 2
-[    1.744000] ohci-platform ohci-platform: irq 18, io mem 0x101c1000
-[    1.812000] hub 2-0:1.0: USB hub found
-[    1.816000] hub 2-0:1.0: 1 port detected
-[    1.820000] Ralink APSoC Hardware Watchdog Timer
-[    1.824000] gre: GRE over IPv4 demultiplexor driver
-[    1.832000] TCP: cubic registered
-[    1.832000] NET: Registered protocol family 10
-[    1.840000] NET: Registered protocol family 17
-[    1.844000] Bridge firewalling registered
-[    1.848000] 8021q: 802.1Q VLAN Support v1.8
-[    1.852000] registered taskstats version 1
-[    1.864000] VFS: Mounted root (squashfs filesystem) readonly on device 31:5.
-[    1.872000] Freeing unused kernel memory: 220K (80389000 - 803c0000)
-procd: Console i[    2.556000] Started WatchDog Timer.
-s alive
-procd: - watchdog -
-[    3.904000] SCSI subsystem initialized
-[    3.916000] usbcore: registered new interface driver usb-storage
-procd: - preinit -
-[    5.104000] jffs2: notice: (239) jffs2_build_xattr_subsystem: complete building xattr subsystem, 53 of xdatum (0 unchecked, 53 orphan) and 53 of xref (0 dead, 53 orphan) found.
-[    5.120000] block: attempting to load /tmp/jffs_cfg/upper/etc/config/fstab
-[    5.128000] block: unable to load configuration (fstab: Entry not found)
-[    5.136000] block: attempting to load /tmp/jffs_cfg/etc/config/fstab
-[    5.140000] block: unable to load configuration (fstab: Entry not found)
-[    5.148000] block: attempting to load /etc/config/fstab
-[    5.288000] block: extroot: not configured
-jffs2 is ready
-No jffs2 marker was found
-[    5.452000] jffs2: notice: (236) jffs2_build_xattr_subsystem: complete building xattr subsystem, 53 of xdatum (0 unchecked, 53 orphan) and 53 of xref (0 dead, 53 orphan) found.
-[    5.836000] block: attempting to load /tmp/jffs_cfg/upper/etc/config/fstab
-[    5.844000] block: unable to load configuration (fstab: Entry not found)
-[    5.848000] block: attempting to load /tmp/jffs_cfg/etc/config/fstab
-[    5.856000] block: unable to load configuration (fstab: Entry not found)
-[    5.864000] block: attempting to load /etc/config/fstab
-[    5.872000] block: extroot: not configured
-switching to overlay
-procd: - early -
-procd: - watchdog -
-procd: - ubus -
-procd: - init -
-Please press Enter to activate this console.
-[    7.052000] NTFS driver 2.1.30 [Flags: R/O MODULE].
-[    7.092000] Initializing XFRM netlink socket
-[    7.100000] NET: Registered protocol family 15
-[    7.156000] nf_conntrack version 0.5.0 (954 buckets, 3816 max)
-[    7.164000] ip6_tables: (C) 2000-2006 Netfilter Core Team
-[    7.240000] Ebtables v2.0 registered
-[    7.248000] ip_tables: (C) 2000-2006 Netfilter Core Team
-[    7.252000] Type=Linux
-[    7.276000] rdm_major = 253
-[    7.300000] xt_time: kernel timezone is -0000
-[    7.316000] PPP generic driver version 2.4.2
-[    7.324000] NET: Registered protocol family 24
-[    7.384000] bhu_stat_register_netlink: family id is 19
-[    7.388000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[    7.392000] bhu_gen_nl_register_netlink: succeed to register bhu gen netlink. family id is 20
-[    7.416000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[    7.420000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20
-[    7.444000] FFFFFF84:FFFFFF82:FFFFFFF4:38:FFFFFFC0:14
-[    7.448000] Raeth v3.1 (Tasklet,SkbRecycle)
-[    7.452000]
-[    7.452000] phy_tx_ring = 0x0328a000, tx_ring = 0xa328a000
-[    7.460000]
-[    7.460000] phy_rx_ring0 = 0x0328c000, rx_ring0 = 0xa328c000
-[    7.484000] GMAC1_MAC_ADRH -- : 0x00008482
-[    7.488000] GMAC1_MAC_ADRL -- : 0xf438c014
-[    7.492000] RT305x_ESW: Link Status Changed
-[    7.492000] [bhu_esw_link_status_change][2061]: stat[0], stat_curr[81808100]
-[    7.492000] BHU ESW LAN link change
-switch reg write offset=14, value=405555
-switch reg write offset=50, value=2001
-switch reg write offset=98, value=7f3f
-switch reg write offset=e4, value=3f
-switch reg write offset=40, value=1002
-switch reg write offset=44, value=1001
-switch reg write offset=48, value=1001
-switch reg write offset=70, value=ffff417e
-switch reg write offset=74, value=ffffffff
-done.
-Setting up networking on loopback device:
-this file has been obseleted. please call &quot;/sbin/block mount&quot; directly
-block: Fall back on RO mount. Permission denied.
-block: /dev/mtdblock6 is already mounted
-[    8.180000] jffs2: notice: (641) jffs2_build_xattr_subsystem: complete building xattr subsystem, 0 of xdatum (0 unchecked, 0 orphan) and 0 of xref (0 dead, 0 orphan) found.
-/etc/rc.common: line 1: config_load: not found
-block: /dev/mtdblock5 is already mounted
-block: /dev/mtdblock6 is already mounted
-block: /dev/mtdblock7 is already mounted
-[    8.980000] device eth5T entered promiscuous mode
-[    9.480000]
-[    9.480000]
-[    9.480000] === pAd = c078b000, size = 845504 ===
-[    9.480000]
-[    9.488000] &lt;-- RTMPAllocTxRxRingMemory, Status=0, ErrorValue=0x
-[    9.496000] &lt;-- RTMPAllocAdapterBlock, Status=0
-[    9.500000] RtmpChipOpsHook(492): Not support for HIF_MT yet!
-[    9.508000] mt7628_init()--&gt;
-[    9.508000] mt7628_init(FW(8a00), HW(8a01), CHIPID(7628))
-[    9.516000] e2.bin mt7628_init(1135)::(2), pChipCap-&gt;fw_len(63888)
-[    9.520000] mt_bcn_buf_init(218): Not support for HIF_MT yet!
-[    9.528000] &lt;--mt7628_init()
-[    9.528000] bhu_stainfo_register_callback: register callback successed
-[    9.540000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[    9.544000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20
-[    9.568000] TX_BCN DESC a29d8000 size = 320
-[    9.572000] RX[0] DESC a29db000 size = 1024
-[    9.576000] RX[1] DESC a29dc000 size = 1024
-[    9.608000] cfg_mode=9
-[    9.612000] cfg_mode=9
-[    9.616000] wmode_band_equal(): Band Equal!
-[    9.620000] AndesSendCmdMsg: Could not send in band command due to diable fRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD
-[    9.632000] APSDCapable[0]=1
-[    9.636000] APSDCapable[1]=1
-[    9.636000] APSDCapable[2]=1
-[    9.640000] APSDCapable[3]=1
-[    9.644000] APSDCapable[4]=1
-[    9.644000] APSDCapable[5]=1
-[    9.648000] APSDCapable[6]=1
-[    9.652000] APSDCapable[7]=1
-[    9.656000] APSDCapable[8]=1
-[    9.656000] APSDCapable[9]=1
-[    9.660000] APSDCapable[10]=1
-[    9.664000] APSDCapable[11]=1
-[    9.668000] APSDCapable[12]=1
-[    9.668000] APSDCapable[13]=1
-[    9.672000] APSDCapable[14]=1
-[    9.676000] APSDCapable[15]=1
-[    9.708000] load fw image from fw_header_image
-[    9.712000] AndesMTLoadFwMethod1(2182)::pChipCap-&gt;fw_len(63888)
-[    9.720000] FW Version:20151201
-[    9.720000] FW Build Date:20151201183641
-[    9.724000] CmdAddressLenReq:(ret = 0)
-[    9.732000] CmdFwStartReq: override = 1, address = 1048576
-[    9.736000] CmdStartDLRsp: WiFI FW Download Success
-[    9.740000] MtAsicDMASchedulerInit(): DMA Scheduler Mode=0(LMAC)
-[    9.748000] efuse_probe: efuse = 10000012
-[    9.752000] RtmpChipOpsEepromHook::e2p_type=0, inf_Type=4
-[    9.756000] RtmpEepromGetDefault::e2p_dafault=2
-[    9.760000] RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P default = 2
-[    9.768000] NVM is FLASH mode
-[    9.772000] 1. Phy Mode = 14
-[    9.936000] Country Region from e2p = ffff
-[    9.940000] tssi_1_target_pwr_g_band = 36
-[    9.944000] 2. Phy Mode = 14
-[    9.944000] 3. Phy Mode = 14
-[    9.948000] NICInitPwrPinCfg(11): Not support for HIF_MT yet!
-[    9.956000] NICInitializeAsic(651): Not support rtmp_mac_sys_reset () for HIF_MT yet!
-[    9.964000] mt_mac_init()--&gt;
-[    9.964000] MtAsicInitMac()--&gt;
-[    9.968000] mt7628_init_mac_cr()--&gt;
-[    9.972000] MtAsicSetMacMaxLen(1276): Set the Max RxPktLen=1024!
-[    9.980000] &lt;--mt_mac_init()
-[    9.980000]         WTBL Segment 1 info:
-[    9.984000]                 MemBaseAddr/FID:0x28000/0
-[    9.988000]                 EntrySize/Cnt:32/128
-[    9.992000]         WTBL Segment 2 info:
-[    9.996000]                 MemBaseAddr/FID:0x40000/0
-[   10.000000]                 EntrySize/Cnt:64/128
-[   10.004000]         WTBL Segment 3 info:
-[   10.008000]                 MemBaseAddr/FID:0x42000/64
-[   10.012000]                 EntrySize/Cnt:64/128
-[   10.012000]         WTBL Segment 4 info:
-[   10.016000]                 MemBaseAddr/FID:0x44000/128
-[   10.020000]                 EntrySize/Cnt:32/128
-[   10.024000] AntCfgInit(2947): Not support for HIF_MT yet!
-[   10.032000] MCS Set = ff ff 00 00 00
-[   10.032000] MtAsicSetChBusyStat(861): Not support for HIF_MT yet!
-[   10.540000] RT305x_ESW: Link Status Changed
-[   10.540000] [bhu_esw_link_status_change][2061]: stat[81808100], stat_curr[a190a110]
-[   10.540000] BHU ESW LAN link change
-[   10.600000] CmdSlotTimeSet:(ret = 0)
-[   12.696000] =====================================================
-[   12.700000] Channel 1 : Dirty = 258, False CCA = 0, Busy Time = 5134, Skip Channel = FALSE
-[   12.708000] Channel 2 : Dirty = 152, False CCA = 0, Busy Time = 6000, Skip Channel = FALSE
-[   12.716000] Channel 3 : Dirty = 222, False CCA = 0, Busy Time = 7537, Skip Channel = FALSE
-[   12.724000] Channel 4 : Dirty = 184, False CCA = 0, Busy Time = 7006, Skip Channel = FALSE
-[   12.732000] Channel 5 : Dirty = 244, False CCA = 0, Busy Time = 8647, Skip Channel = FALSE
-[   12.744000] Channel 6 : Dirty = 144, False CCA = 0, Busy Time = 12316, Skip Channel = FALSE
-[   12.752000] Channel 7 : Dirty = 356, False CCA = 0, Busy Time = 5557, Skip Channel = FALSE
-[   12.760000] Channel 8 : Dirty = 260, False CCA = 0, Busy Time = 5268, Skip Channel = FALSE
-[   12.768000] Channel 9 : Dirty = 310, False CCA = 0, Busy Time = 15987, Skip Channel = FALSE
-[   12.776000] Channel 10 : Dirty = 268, False CCA = 0, Busy Time = 11282, Skip Channel = FALSE
-[   12.784000] Channel 11 : Dirty = 490, False CCA = 0, Busy Time = 10399, Skip Channel = FALSE
-[   12.792000] Channel 12 : Dirty = 254, False CCA = 0, Busy Time = 6015, Skip Channel = TRUE
-[   12.800000] Channel 13 : Dirty = 192, False CCA = 0, Busy Time = 3918, Skip Channel = TRUE
-[   12.808000] =====================================================
-[   12.816000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   12.824000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   12.828000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   12.836000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   12.840000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   12.848000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   12.876000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   12.880000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   12.888000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   12.892000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   12.900000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   12.908000] Main bssid = 84:82:f4:38:c0:15
-[   12.912000] &lt;==== rt28xx_init, Status=0
-[   12.920000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[   12.924000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20
-[   12.948000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[   12.952000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20
-[   12.972000] BHUGenNetlink: bhu_gen_nl_register_netlink
-[   12.976000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20
-[   12.984000] @@@ ed_monitor_exit : ===&gt;
-[   12.988000] @@@ ed_monitor_exit : &lt;===
-[   12.992000] mt7628_set_ed_cca: TURN OFF EDCCA  mac 0x10618 = 0xd7083f0f
-[   13.000000] WiFi Startup Cost (wlan0): 3.432s
-[   15.496000] led=43, on=1, off=5, blinks=1, rest=0, times=1
-[main] &gt;&gt;&gt; Init dispather success!
-BHU Software Version: AP902P07V1.6.0Build798_TU 2017-11-03-09:13 Revision: 798
-procd: - init complete -
-kill: you need to specify whom to kill
-Mongoose web server v.3.9 started on port(s) 80 with web root [/usr/share/www]
-main, 36, svn:798, version:10015, time:[Thu Nov  2 20:56:08 CST 2017]
-wait for pa data initpa_data_init done[   19.788000] bhuhttp_L2_init: register nl family ok
-[   19.796000] user space pid:799
-[http_url_start_timer][269] http url age timer start..
-[   20.036000] cfg_mode=9
-[   20.036000] wmode_band_equal(): Band Equal!
-[   20.044000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-kmod: module is not loaded
-[   20.120000] cfg_mode=9
-[   20.124000] wmode_band_equal(): Band Equal!
-[   20.128000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   20.164000] cfg_mode=9
-[   20.164000] wmode_band_equal(): Band Equal!
-[   20.168000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   20.216000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   20.224000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   20.228000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   20.236000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   20.240000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   20.248000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   20.252000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   20.260000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   20.288000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   20.292000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   20.304000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   20.308000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   20.316000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   20.324000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   20.332000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   20.336000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   20.344000] Main bssid = 84:82:f4:38:c0:15
-[   20.376000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   20.380000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   20.388000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   20.392000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   20.400000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   20.404000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   20.412000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   20.416000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   20.456000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   20.460000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   20.468000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   20.472000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   20.480000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   20.488000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   20.496000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   20.500000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   20.508000] Main bssid = 84:82:f4:38:c0:15
-[   20.572000] device eth0 entered promiscuous mode
-[   20.580000] device wlan0 entered promiscuous mode
-[   20.592000] device wlan2 entered promiscuous mode
-[   20.600000] device wlan3 entered promiscuous mode
-killall: dropbear: no process killed
-kill: you need to specify whom to kill
-[   21.972000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   21.980000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   21.984000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   21.992000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   21.996000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   22.004000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   22.012000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   22.016000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   22.044000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   22.052000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   22.056000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   22.064000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   22.072000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   22.080000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   22.084000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   22.092000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTa￠￥μ&amp;#189;&amp;#1425;= 0xf0
-[   22.096000] Main bssid = 84:82:f4:38:c0:15
-[   22.104000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   22.112000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   22.116000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   22.124000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   22.128000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   22.136000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   22.144000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   22.148000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   22.176000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   22.180000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   22.188000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   22.196000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   22.200000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   22.208000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   22.216000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   22.224000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   22.228000] Main bssid = 84:82:f4:38:c0:15
-[   22.244000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   22.252000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   22.256000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   22.264000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   22.268000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   22.276000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   22.280000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   22.288000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   22.316000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   22.324000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   22.328000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   22.336000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   22.344000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   22.352000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   22.356000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   22.364000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   22.372000] Main bssid = 84:82:f4:38:c0:15
-[   23.416000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   23.424000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   23.428000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   23.436000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   23.440000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   23.448000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   23.452000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   23.460000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   23.488000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   23.492000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   23.500000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   23.504000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   23.512000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   23.520000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   23.528000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   23.532000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   23.540000] Main bssid = 84:82:f4:38:c0:15
-[   23.560000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   23.564000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   23.572000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   23.576000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   23.584000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   23.588000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   23.596000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   23.600000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   23.628000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   23.636000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   23.640000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   23.648000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   23.652000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   23.660000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   23.668000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   23.676000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   23.680000] Main bssid = 84:82:f4:38:c0:15
-[   24.724000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   24.732000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   24.736000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   24.744000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   24.748000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   24.756000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   24.760000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   24.768000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   24.796000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   24.800000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   24.808000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   24.812000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   24.820000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   24.828000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   24.836000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   24.840000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   24.848000] Main bssid = 84:82:f4:38:c0:15
-[   24.868000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
-[   24.872000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   24.880000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   24.884000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   24.892000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   24.896000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   24.904000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   24.908000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   24.936000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   24.944000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0
-[   24.948000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   24.956000] AddTxSType: already registered TxSType (PID = 32, Format = 0
-[   24.964000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   24.972000] AddTxSType: already registered TxSType (PID = 6, Format = 0
-[   24.976000] AddTxSType: already registered TxSType (PID = 8, Format = 0
-[   24.984000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   24.988000] Main bssid = 84:82:f4:38:c0:15
-iptables: No chain/target/match by that name.
-MASQUERADE  all opt -- in * out eth1  0.0.0.0/0  -&gt; 0.0.0.0/0  [24 bytes of unknown target data]
-iptables: No chain/target/match by that name.
-udhcpc (v1.22.1) started
-route: SIOCDELRT: No such process
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-[   27.408000] br-lan: port 2(wlan0) entered forwarding state
-[   27.412000] br-lan: port 2(wlan0) entered forwarding state
-[   27.420000] br-lan: port 1(eth0) entered forwarding state
-[   27.424000] br-lan: port 1(eth0) entered forwarding state
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-iptables: No chain/target/match by that name.
-MASQUERADE  all opt -- in * out [   27.688000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-eth1  0.0.0.0/0 [   27.700000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0x0
--&gt; 0.0.0.0/0  [[   27.704000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-24 bytes of unknown target data]
-MASQUERADE  all opt -- in * out eth1  192.168.62.0/24  -&gt; 0.0.0.0/0  [24 bytes of unknown target data]
-[   27.936000] bhu_tc_send_q_tx: send skb failed, err=2
-[   28.032000] bhu_tc_send_q_tx: send skb failed, err=2
-[   28.240000] tx_kickout_fail_count = 0
-[   28.244000] tx_timeout_fail_count = 0
-[   28.244000] rx_receive_fail_count = 0
-[   28.248000] alloc_cmd_msg = 207
-[   28.252000] free_cmd_msg = 207
-[   28.260000] br-lan: port 2(wlan0) entered disabled state
-iptables: No chain/target/match by that name.
-[   28.308000] TX_BCN DESC a29d8000 size = 320
-[   28.312000] RX[0] DESC a29db000 size = 1024
-[   28.316000] RX[1] DESC a29dc000 size = 1024
-[   28.332000] cfg_mode=9
-[   28.332000] cfg_mode=9
-[   28.336000] wmode_band_equal(): Band Equal!
-[   28.340000] AndesSendCmdMsg: Could not send in band command due to diable fRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD
-[   28.352000] APSDCapable[0]=1
-[   28.356000] APSDCapable[1]=1
-[   28.360000] APSDCapable[2]=1
-[   28.360000] APSDCapable[3]=1
-[   28.364000] APSDCapable[4]=1
-[   28.368000] APSDCapable[5]=1
-[   28.368000] APSDCapable[6]=1
-[   28.372000] APSDCapable[7]=1
-[   28.376000] APSDCapable[8]=1
-[   28.380000] APSDCapable[9]=1
-[   28.380000] APSDCapable[10]=1
-[   28.384000] APSDCapable[11]=1
-[   28.388000] APSDCapable[12]=1
-[   28.392000] APSDCapable[13]=1
-[   28.392000] APSDCapable[14]=1
-[   28.396000] APSDCapable[15]=1
-[   28.428000] load fw image from fw_header_image
-[   28.432000] AndesMTLoadFwMethod1(2182)::pChipCap-&gt;fw_len(63888)
-[   28.440000] FW Version:20151201
-[   28.444000] FW Build Date:20151201183641
-[   28.448000] CmdReStartDLRsp: WiFI FW Download Success
-[   28.452000] CmdAddressLenReq:(ret = 0)
-[   28.456000] CmdFwStartReq: override = 1, address = 1048576
-[   28.464000] CmdStartDLRsp: WiFI FW Download Success
-[   28.468000] MtAsicDMASchedulerInit(): DMA Scheduler Mode=0(LMAC)
-[   28.472000] efuse_probe: efuse = 10000012
-[   28.476000] RtmpChipOpsEepromHook::e2p_type=2, inf_Type=4
-[   28.484000] RtmpEepromGetDefault::e2p_dafault=2
-[   28.488000] RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P default = 2
-[   28.496000] NVM is FLASH mode
-[   28.500000] 1. Phy Mode = 14
-[   28.660000] Country Region from e2p = ffff
-[   28.668000] tssi_1_target_pwr_g_band = 36
-[   28.672000] 2. Phy Mode = 14
-[   28.672000] 3. Phy Mode = 14
-[   28.676000] NICInitPwrPinCfg(11): Not support for HIF_MT yet!
-[   28.680000] NICInitializeAsic(651): Not support rtmp_mac_sys_reset () for HIF_MT yet!
-[   28.688000] mt_mac_init()--&gt;
-[   28.692000] MtAsicInitMac()--&gt;
-[   28.696000] mt7628_init_mac_cr()--&gt;
-[   28.700000] MtAsicSetMacMaxLen(1276): Set the Max RxPktLen=1024!
-[   28.704000] &lt;--mt_mac_init()
-[   28.708000]         WTBL Segment 1 info:
-[   28.712000]                 MemBaseAddr/FID:0x28000/0
-[   28.716000]                 EntrySize/Cnt:32/128
-[   28.720000]         WTBL Segment 2 info:
-[   28.724000]                 MemBaseAddr/FID:0x40000/0
-[   28.728000]                 EntrySize/Cnt:64/128
-[   28.732000]         WTBL Segment 3 info:
-[   28.732000]                 MemBaseAddr/FID:0x42000/64
-[   28.736000]                 EntrySize/Cnt:64/128
-[   28.740000]         WTBL Segment 4 info:
-[   28.744000]                 MemBaseAddr/FID:0x44000/128
-[   28.748000]                 EntrySize/Cnt:32/128
-[   28.752000] AntCfgInit(2947): Not support for HIF_MT yet!
-[   28.756000] MCS Set = ff ff 00 00 00
-[   28.760000] MtAsicSetChBusyStat(861): Not support for HIF_MT yet!
-[   31.416000] =====================================================
-[   31.420000] Channel 1 : Dirty = 254, False CCA = 0, Busy Time = 4969, Skip Channel = FALSE
-[   31.428000] Channel 2 : Dirty = 168, False CCA = 0, Busy Time = 4130, Skip Channel = FALSE
-[   31.436000] Channel 3 : Dirty = 208, False CCA = 0, Busy Time = 3210, Skip Channel = FALSE
-[   31.444000] Channel 4 : Dirty = 250, False CCA = 0, Busy Time = 3656, Skip Channel = FALSE
-[   31.452000] Channel 5 : Dirty = 280, False CCA = 0, Busy Time = 8862, Skip Channel = FALSE
-[   31.464000] Channel 6 : Dirty = 218, False CCA = 0, Busy Time = 6476, Skip Channel = FALSE
-[   31.472000] Channel 7 : Dirty = 432, False CCA = 0, Busy Time = 6117, Skip Channel = FALSE
-[   31.480000] Channel 8 : Dirty = 336, False CCA = 0, Busy Time = 5338, Skip Channel = FALSE
-[   31.488000] Channel 9 : Dirty = 366, False CCA = 0, Busy Time = 9826, Skip Channel = FALSE
-[   31.496000] Channel 10 : Dirty = 324, False CCA = 0, Busy Time = 4860, Skip Channel = FALSE
-[   31.504000] Channel 11 : Dirty = 598, False CCA = 0, Busy Time = 9220, Skip Channel = FALSE
-[   31.512000] Channel 12 : Dirty = 248, False CCA = 0, Busy Time = 6747, Skip Channel = TRUE
-[   31.520000] Channel 13 : Dirty = 216, False CCA = 0, Busy Time = 7909, Skip Channel = TRUE
-[   31.528000] =====================================================
-[   31.536000] [PMF]ap_pmf_init:: apidx=0, MFPC=0, MFPR=0, SHA256=0
-[   31.544000] [PMF]ap_pmf_init:: apidx=1, MFPC=0, MFPR=0, SHA256=0
-[   31.548000] [PMF]ap_pmf_init:: apidx=2, MFPC=0, MFPR=0, SHA256=0
-[   31.556000] [PMF]ap_pmf_init:: apidx=3, MFPC=0, MFPR=0, SHA256=0
-[   31.560000] MtAsicSetRalinkBurstMode(3047): Not support for HIF_MT yet!
-[   31.568000] MtAsicSetPiggyBack(796): Not support for HIF_MT yet!
-[   31.596000] reload DPD from flash , 0x9F = [c600] doReload bit7[0]
-[   31.600000] CmdLoadDPDDataFromFlash: Channel = 2, DoReload = 0
-[   31.608000] MtAsicSetTxPreamble(3026): Not support for HIF_MT yet!
-[   31.616000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
-[   31.624000] MtAsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xf0
-[   31.628000] Main bssid = 84:82:f4:38:c0:15
-[   31.632000] &lt;==== rt28xx_init, Status=0
-[   31.636000] @@@ ed_monitor_exit : ===&gt;
-[   31.640000] @@@ ed_monitor_exit : &lt;===
-[   31.644000] mt7628_set_ed_cca: TURN OFF EDCCA  mac 0x10618 = 0xd7083f0f
-[   31.652000] WiFi Startup Cost (wlan0): 3.344s
-[   31.656000] br-lan: port 2(wlan0) entered forwarding state
-[   31.660000] br-lan: port 2(wlan0) entered forwarding state
-iptables: No chain/target/match by that name.
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: No such file or directory)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-serverctl: BHU Tunnel probably not started (Error: Connection refused)
-[   33.928000] led=43, on=0, off=1, blinks=0, rest=0, times=0
-[   33.984000] led=42, on=2, off=5, blinks=1, rest=0, times=1
-wandetect: eth1 is running
-wandetect: start pppoe_discovery_main thread ok.
-wandetect: start dhcp detect thread ok.
-udhcpc (v1.22.1) started
-wlan_ol_sta_online_proc: add sta 74:97:81:ab:06:dd, count 1
-assoced:74:97:81:ab:06:dd
-[   35.040000] led=43, on=2, off=5, blinks=1, rest=0, times=1
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-No lease, failing
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect: Timeout waiting for PADO packets
-wandetect:
-HOSTNAME login:
-
-[END] 2021/3/4 21:13:04
-</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[BEGIN] 2021/3/4 21:11:07<br>[040±°08][0′0±0C0E]<br>                   DDR Ca&amp;#47650;rati&amp;#60320;DQS r&amp;#18784;= 00°08788<br><br>&amp;#1261;Boot ±.1.3 ¨Feb 2· 2017 - 14:21o39)<br><br>Boa2¤: &amp;#6889;&amp;#60000;&amp;#1199;C DRAMo  64 MB<br>1&amp;#255;t￥Α&amp;#597;new<span class="hljs-built_in"> interface </span>driver usbfs<br>[    1.272000] usbcore: registered new<span class="hljs-built_in"> interface </span>driver hub<br>[    1.276000] usbcore: registered new device driver usb<br>[    1.280000] bhu_tc_attach : end, <span class="hljs-attribute">g_bhu_tc_salt</span>=-1536776869<br>[    1.284000] Switching <span class="hljs-keyword">to</span> clocksource MIPS<br>[    1.288000] NET: Registered protocol family 2<br>[    1.296000] TCP established hash table entries: 512 (order: 0, 4096 bytes)<br>[    1.300000] TCP bind hash table entries: 512 (order: -1, 2048 bytes)<br>[    1.308000] TCP: Hash tables configured (established 512 bind 512)<br>[    1.316000] TCP: reno registered<br>[    1.316000] UDP hash table entries: 256 (order: 0, 4096 bytes)<br>[    1.324000] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)<br>[    1.332000] NET: Registered protocol family 1<br>[    1.336000] MTK/Ralink EHCI/OHCI init.<br>[    1.340000] squashfs: version 4.0 (2009/01/31) Phillip Lougher<br>[    1.348000] jffs2: version 2.2. (NAND) (SUMMARY)  (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.<br>[    1.360000] msgmni has been <span class="hljs-builtin-name">set</span> <span class="hljs-keyword">to</span> 118<br>[    1.364000] io<span class="hljs-built_in"> scheduler </span>noop registered (default)<br>[    1.376000] Serial: 8250/16550 driver, 2 ports,<span class="hljs-built_in"> IRQ </span>sharing disabled<br>[    1.384000] serial8250: ttyS0 at MMIO 0x10000d00 (irq = 21) is a 16550A<br>[    1.392000] serial8250: ttyS1 at MMIO 0x10000c00 (irq = 20) is a 16550A<br>[    1.400000] <span class="hljs-attribute">led</span>=43, <span class="hljs-attribute">on</span>=1, <span class="hljs-attribute">off</span>=5, <span class="hljs-attribute">blinks</span>=1, <span class="hljs-attribute">rest</span>=0, <span class="hljs-attribute">times</span>=1<br>[    1.404000] Ralink gpio driver initialized<br>[    1.408000] flash manufacture id: ef, device id 40 18<br>[    1.416000] W25Q128BV(ef 40180000) (16384 Kbytes)<br>[    1.420000] mtd .name = raspi, .size = 0x01000000 (16M) .erasesize = 0x00010000 (64K) .numeraseregions = 0<br>[    1.428000] Creating 8 MTD partitions on <span class="hljs-string">&quot;raspi&quot;</span>:<br>[    1.432000] 0x000000000000-0x000001000000 : <span class="hljs-string">&quot;ALL&quot;</span><br>[    1.440000] 0x000000000000-0x000000040000 : <span class="hljs-string">&quot;Bootloader&quot;</span><br>[    1.448000] 0x000000040000-0x000000050000 : <span class="hljs-string">&quot;Config&quot;</span><br>[    1.452000] 0x000000050000-0x000000060000 : <span class="hljs-string">&quot;Factory&quot;</span><br>[    1.460000] 0x000000060000-0x000000de0000 : <span class="hljs-string">&quot;firmware&quot;</span><br>[    1.468000] 0x0000001a398a-0x000000de0000 : <span class="hljs-string">&quot;rootfs&quot;</span><br>[    1.472000] mtd: partition <span class="hljs-string">&quot;rootfs&quot;</span> must either start <span class="hljs-keyword">or</span> end on erase block boundary <span class="hljs-keyword">or</span> be smaller than an erase block -- forcing read-only<br>[    1.488000] mtd: partition <span class="hljs-string">&quot;rootfs_data&quot;</span> created automatically, <span class="hljs-attribute">ofs</span>=0x940000, <span class="hljs-attribute">len</span>=0x4a0000<br>[    1.496000] 0x000000940000-0x000000de0000 : <span class="hljs-string">&quot;rootfs_data&quot;</span><br>[    1.504000] 0x000000de0000-0x000000fe0000 : <span class="hljs-string">&quot;user&quot;</span><br>[    1.508000] 0x000000fe0000-0x000000ff0000 : <span class="hljs-string">&quot;cfg&quot;</span><br>[    1.516000] 0x000000ff0000-0x000001000000 : <span class="hljs-string">&quot;oem&quot;</span><br>[    1.524000] tun: Universal TUN/TAP device driver, 1.6<br>[    1.528000] tun: (C) 1999-2004 Max Krasnyansky &lt;maxk@qualcomm.com&gt;<br>[    1.532000] GMAC1_MAC_ADRH -- : 0x00008482<br>[    1.540000] GMAC1_MAC_ADRL -- : 0xf438c014<br>[    1.544000] Ralink APSoC<span class="hljs-built_in"> Ethernet </span>Driver Initilization. v3.1  512 rx/tx descriptors allocated, mtu = 1500!<br>[    1.552000] GMAC1_MAC_ADRH -- : 0x00008482<br>[    1.556000] GMAC1_MAC_ADRL -- : 0xf438c014<br>[    1.560000] PROC INIT OK!<br>[    1.564000] ehci_hcd: USB 2.0 <span class="hljs-string">&#x27;Enhanced&#x27;</span> Host Controller (EHCI) Driver<br>[    1.572000] ehci-pci: EHCI PCI platform driver<br>[    1.576000] ehci-platform: EHCI generic platform driver<br>[    1.600000] ******MT7628 mtk phy<br>[    1.604000] *****<span class="hljs-builtin-name">run</span> project phy.<br>[    1.616000] FM_OUT value: u4FmOut = 0(0x00000000)<br>[    1.628000] FM_OUT value: u4FmOut = 124(0x0000007C)<br>[    1.632000] FM detection done! loop = 1<br>[    1.644000] SR calibration value u1SrCalVal = 7<br>[    1.648000] ********<span class="hljs-number">*E</span>xecute mt7628_phy_init!!<br>[    1.652000] ehci-platform ehci-platform: EHCI Host Controller<br>[    1.656000] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1<br>[    1.664000] ehci-platform ehci-platform:<span class="hljs-built_in"> irq </span>18, io mem 0x101c0000<br>[    1.684000] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00<br>[    1.688000] hub 1-0:1.0: USB hub found<br>[    1.692000] hub 1-0:1.0: 1<span class="hljs-built_in"> port </span>detected<br>[    1.696000] ohci_hcd: USB 1.1 <span class="hljs-string">&#x27;Open&#x27;</span> Host Controller (OHCI) Driver<br>[    1.724000] ********<span class="hljs-number">*E</span>xecute mt7628_phy_init!!<br>[    1.728000] ohci-platform ohci-platform: Generic Platform OHCI Controller<br>[    1.736000] ohci-platform ohci-platform: new USB bus registered, assigned bus number 2<br>[    1.744000] ohci-platform ohci-platform:<span class="hljs-built_in"> irq </span>18, io mem 0x101c1000<br>[    1.812000] hub 2-0:1.0: USB hub found<br>[    1.816000] hub 2-0:1.0: 1<span class="hljs-built_in"> port </span>detected<br>[    1.820000] Ralink APSoC<span class="hljs-built_in"> Hardware Watchdog </span>Timer<br>[    1.824000] gre: GRE over IPv4 demultiplexor driver<br>[    1.832000] TCP: cubic registered<br>[    1.832000] NET: Registered protocol family 10<br>[    1.840000] NET: Registered protocol family 17<br>[    1.844000]<span class="hljs-built_in"> Bridge </span>firewalling registered<br>[    1.848000] 8021q: 802.1Q<span class="hljs-built_in"> VLAN </span>Support v1.8<br>[    1.852000] registered taskstats version 1<br>[    1.864000] VFS: Mounted root (squashfs filesystem) readonly on device 31:5.<br>[    1.872000] Freeing unused kernel memory: 220K (80389000 - 803c0000)<br>procd:<span class="hljs-built_in"> Console </span>i[    2.556000] Started<span class="hljs-built_in"> WatchDog </span>Timer.<br>s alive<br>procd: -<span class="hljs-built_in"> watchdog </span>-<br>[    3.904000] SCSI subsystem initialized<br>[    3.916000] usbcore: registered new<span class="hljs-built_in"> interface </span>driver usb-storage<br>procd: - preinit -<br>[    5.104000] jffs2: notice: (239) jffs2_build_xattr_subsystem: complete building xattr subsystem, 53 of xdatum (0 unchecked, 53 orphan) <span class="hljs-keyword">and</span> 53 of xref (0 dead, 53 orphan) found.<br>[    5.120000] block: attempting <span class="hljs-keyword">to</span> load /tmp/jffs_cfg/upper/etc/config/fstab<br>[    5.128000] block: unable <span class="hljs-keyword">to</span> load configuration (fstab: Entry <span class="hljs-keyword">not</span> found)<br>[    5.136000] block: attempting <span class="hljs-keyword">to</span> load /tmp/jffs_cfg/etc/config/fstab<br>[    5.140000] block: unable <span class="hljs-keyword">to</span> load configuration (fstab: Entry <span class="hljs-keyword">not</span> found)<br>[    5.148000] block: attempting <span class="hljs-keyword">to</span> load /etc/config/fstab<br>[    5.288000] block: extroot: <span class="hljs-keyword">not</span> configured<br>jffs2 is ready<br><span class="hljs-literal">No</span> jffs2 marker was found<br>[    5.452000] jffs2: notice: (236) jffs2_build_xattr_subsystem: complete building xattr subsystem, 53 of xdatum (0 unchecked, 53 orphan) <span class="hljs-keyword">and</span> 53 of xref (0 dead, 53 orphan) found.<br>[    5.836000] block: attempting <span class="hljs-keyword">to</span> load /tmp/jffs_cfg/upper/etc/config/fstab<br>[    5.844000] block: unable <span class="hljs-keyword">to</span> load configuration (fstab: Entry <span class="hljs-keyword">not</span> found)<br>[    5.848000] block: attempting <span class="hljs-keyword">to</span> load /tmp/jffs_cfg/etc/config/fstab<br>[    5.856000] block: unable <span class="hljs-keyword">to</span> load configuration (fstab: Entry <span class="hljs-keyword">not</span> found)<br>[    5.864000] block: attempting <span class="hljs-keyword">to</span> load /etc/config/fstab<br>[    5.872000] block: extroot: <span class="hljs-keyword">not</span> configured<br>switching <span class="hljs-keyword">to</span> overlay<br>procd: - early -<br>procd: -<span class="hljs-built_in"> watchdog </span>-<br>procd: - ubus -<br>procd: - init -<br>Please press Enter <span class="hljs-keyword">to</span> activate this console.<br>[    7.052000] NTFS driver 2.1.30 [Flags: R/O MODULE].<br>[    7.092000] Initializing XFRM netlink socket<br>[    7.100000] NET: Registered protocol family 15<br>[    7.156000] nf_conntrack version 0.5.0 (954 buckets, 3816 max)<br>[    7.164000] ip6_tables: (C) 2000-2006 Netfilter Core Team<br>[    7.240000] Ebtables v2.0 registered<br>[    7.248000] ip_tables: (C) 2000-2006 Netfilter Core Team<br>[    7.252000] <span class="hljs-attribute">Type</span>=Linux<br>[    7.276000] rdm_major = 253<br>[    7.300000] xt_time: kernel timezone is -0000<br>[    7.316000]<span class="hljs-built_in"> PPP </span>generic driver version 2.4.2<br>[    7.324000] NET: Registered protocol family 24<br>[    7.384000] bhu_stat_register_netlink: family id is 19<br>[    7.388000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[    7.392000] bhu_gen_nl_register_netlink: succeed <span class="hljs-keyword">to</span> register bhu gen netlink. family id is 20<br>[    7.416000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[    7.420000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20<br>[    7.444000] FFFFFF84:FFFFFF82:FFFFFFF4:38:FFFFFFC0:14<br>[    7.448000] Raeth v3.1 (Tasklet,SkbRecycle)<br>[    7.452000]<br>[    7.452000] phy_tx_ring = 0x0328a000, tx_ring = 0xa328a000<br>[    7.460000]<br>[    7.460000] phy_rx_ring0 = 0x0328c000, rx_ring0 = 0xa328c000<br>[    7.484000] GMAC1_MAC_ADRH -- : 0x00008482<br>[    7.488000] GMAC1_MAC_ADRL -- : 0xf438c014<br>[    7.492000] RT305x_ESW: Link Status Changed<br>[    7.492000] [bhu_esw_link_status_change][2061]: stat[0], stat_curr[81808100]<br>[    7.492000] BHU ESW<span class="hljs-built_in"> LAN </span>link change<br>switch reg write <span class="hljs-attribute">offset</span>=14, <span class="hljs-attribute">value</span>=405555<br>switch reg write <span class="hljs-attribute">offset</span>=50, <span class="hljs-attribute">value</span>=2001<br>switch reg write <span class="hljs-attribute">offset</span>=98, <span class="hljs-attribute">value</span>=7f3f<br>switch reg write <span class="hljs-attribute">offset</span>=e4, <span class="hljs-attribute">value</span>=3f<br>switch reg write <span class="hljs-attribute">offset</span>=40, <span class="hljs-attribute">value</span>=1002<br>switch reg write <span class="hljs-attribute">offset</span>=44, <span class="hljs-attribute">value</span>=1001<br>switch reg write <span class="hljs-attribute">offset</span>=48, <span class="hljs-attribute">value</span>=1001<br>switch reg write <span class="hljs-attribute">offset</span>=70, <span class="hljs-attribute">value</span>=ffff417e<br>switch reg write <span class="hljs-attribute">offset</span>=74, <span class="hljs-attribute">value</span>=ffffffff<br>done.<br>Setting up networking on loopback device:<br>this file has been obseleted. please call <span class="hljs-string">&quot;/sbin/block mount&quot;</span> directly<br>block: Fall back on RO mount. Permission denied.<br>block: /dev/mtdblock6 is already mounted<br>[    8.180000] jffs2: notice: (641) jffs2_build_xattr_subsystem: complete building xattr subsystem, 0 of xdatum (0 unchecked, 0 orphan) <span class="hljs-keyword">and</span> 0 of xref (0 dead, 0 orphan) found.<br>/etc/rc.common: line 1: config_load: <span class="hljs-keyword">not</span> found<br>block: /dev/mtdblock5 is already mounted<br>block: /dev/mtdblock6 is already mounted<br>block: /dev/mtdblock7 is already mounted<br>[    8.980000] device eth5T entered promiscuous mode<br>[    9.480000]<br>[    9.480000]<br>[    9.480000] === pAd = c078b000, size = 845504 ===<br>[    9.480000]<br>[    9.488000] &lt;-- RTMPAllocTxRxRingMemory, <span class="hljs-attribute">Status</span>=0, <span class="hljs-attribute">ErrorValue</span>=0x<br>[    9.496000] &lt;-- RTMPAllocAdapterBlock, <span class="hljs-attribute">Status</span>=0<br>[    9.500000] RtmpChipOpsHook(492): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[    9.508000] mt7628_init()--&gt;<br>[    9.508000] mt7628_init(FW(8a00), HW(8a01), CHIPID(7628))<br>[    9.516000] e2.bin mt7628_init(1135)::(2), pChipCap-&gt;fw_len(63888)<br>[    9.520000] mt_bcn_buf_init(218): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[    9.528000] &lt;--mt7628_init()<br>[    9.528000] bhu_stainfo_register_callback: register callback successed<br>[    9.540000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[    9.544000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20<br>[    9.568000] TX_BCN DESC a29d8000 size = 320<br>[    9.572000] RX[0] DESC a29db000 size = 1024<br>[    9.576000] RX[1] DESC a29dc000 size = 1024<br>[    9.608000] <span class="hljs-attribute">cfg_mode</span>=9<br>[    9.612000] <span class="hljs-attribute">cfg_mode</span>=9<br>[    9.616000] wmode_band_equal(): Band Equal!<br>[    9.620000] AndesSendCmdMsg: Could <span class="hljs-keyword">not</span> send <span class="hljs-keyword">in</span> band command due <span class="hljs-keyword">to</span> diable fRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD<br>[    9.632000] APSDCapable[0]=1<br>[    9.636000] APSDCapable[1]=1<br>[    9.636000] APSDCapable[2]=1<br>[    9.640000] APSDCapable[3]=1<br>[    9.644000] APSDCapable[4]=1<br>[    9.644000] APSDCapable[5]=1<br>[    9.648000] APSDCapable[6]=1<br>[    9.652000] APSDCapable[7]=1<br>[    9.656000] APSDCapable[8]=1<br>[    9.656000] APSDCapable[9]=1<br>[    9.660000] APSDCapable[10]=1<br>[    9.664000] APSDCapable[11]=1<br>[    9.668000] APSDCapable[12]=1<br>[    9.668000] APSDCapable[13]=1<br>[    9.672000] APSDCapable[14]=1<br>[    9.676000] APSDCapable[15]=1<br>[    9.708000] load fw image <span class="hljs-keyword">from</span> fw_header_image<br>[    9.712000] AndesMTLoadFwMethod1(2182)::pChipCap-&gt;fw_len(63888)<br>[    9.720000] FW Version:20151201<br>[    9.720000] FW Build Date:20151201183641<br>[    9.724000] CmdAddressLenReq:(ret = 0)<br>[    9.732000] CmdFwStartReq: override = 1,<span class="hljs-built_in"> address </span>= 1048576<br>[    9.736000] CmdStartDLRsp: WiFI FW Download Success<br>[    9.740000] MtAsicDMASchedulerInit(): DMA<span class="hljs-built_in"> Scheduler </span><span class="hljs-attribute">Mode</span>=0(LMAC)<br>[    9.748000] efuse_probe: efuse = 10000012<br>[    9.752000] RtmpChipOpsEepromHook::<span class="hljs-attribute">e2p_type</span>=0, <span class="hljs-attribute">inf_Type</span>=4<br>[    9.756000] RtmpEepromGetDefault::<span class="hljs-attribute">e2p_dafault</span>=2<br>[    9.760000] RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P<span class="hljs-built_in"> default </span>= 2<br>[    9.768000] NVM is FLASH mode<br>[    9.772000] 1. Phy Mode = 14<br>[    9.936000] Country Region <span class="hljs-keyword">from</span> e2p = ffff<br>[    9.940000] tssi_1_target_pwr_g_band = 36<br>[    9.944000] 2. Phy Mode = 14<br>[    9.944000] 3. Phy Mode = 14<br>[    9.948000] NICInitPwrPinCfg(11): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[    9.956000] NICInitializeAsic(651): <span class="hljs-keyword">Not</span> support rtmp_mac_sys_reset () <span class="hljs-keyword">for</span> HIF_MT yet!<br>[    9.964000] mt_mac_init()--&gt;<br>[    9.964000] MtAsicInitMac()--&gt;<br>[    9.968000] mt7628_init_mac_cr()--&gt;<br>[    9.972000] MtAsicSetMacMaxLen(1276): <span class="hljs-builtin-name">Set</span> the Max <span class="hljs-attribute">RxPktLen</span>=1024!<br>[    9.980000] &lt;--mt_mac_init()<br>[    9.980000]         WTBL Segment 1 info:<br>[    9.984000]                 MemBaseAddr/FID:0x28000/0<br>[    9.988000]                 EntrySize/Cnt:32/128<br>[    9.992000]         WTBL Segment 2 info:<br>[    9.996000]                 MemBaseAddr/FID:0x40000/0<br>[   10.000000]                 EntrySize/Cnt:64/128<br>[   10.004000]         WTBL Segment 3 info:<br>[   10.008000]                 MemBaseAddr/FID:0x42000/64<br>[   10.012000]                 EntrySize/Cnt:64/128<br>[   10.012000]         WTBL Segment 4 info:<br>[   10.016000]                 MemBaseAddr/FID:0x44000/128<br>[   10.020000]                 EntrySize/Cnt:32/128<br>[   10.024000] AntCfgInit(2947): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   10.032000] MCS <span class="hljs-builtin-name">Set</span> = ff ff 00 00 00<br>[   10.032000] MtAsicSetChBusyStat(861): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   10.540000] RT305x_ESW: Link Status Changed<br>[   10.540000] [bhu_esw_link_status_change][2061]: stat[81808100], stat_curr[a190a110]<br>[   10.540000] BHU ESW<span class="hljs-built_in"> LAN </span>link change<br>[   10.600000] CmdSlotTimeSet:(ret = 0)<br>[   12.696000] =====================================================<br>[   12.700000] Channel 1 : Dirty = 258, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 5134, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.708000] Channel 2 : Dirty = 152, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 6000, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.716000] Channel 3 : Dirty = 222, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 7537, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.724000] Channel 4 : Dirty = 184, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 7006, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.732000] Channel 5 : Dirty = 244, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 8647, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.744000] Channel 6 : Dirty = 144, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 12316, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.752000] Channel 7 : Dirty = 356, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 5557, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.760000] Channel 8 : Dirty = 260, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 5268, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.768000] Channel 9 : Dirty = 310, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 15987, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.776000] Channel 10 : Dirty = 268, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 11282, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.784000] Channel 11 : Dirty = 490, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 10399, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   12.792000] Channel 12 : Dirty = 254, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 6015, Skip Channel = <span class="hljs-literal">TRUE</span><br>[   12.800000] Channel 13 : Dirty = 192, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 3918, Skip Channel = <span class="hljs-literal">TRUE</span><br>[   12.808000] =====================================================<br>[   12.816000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   12.824000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   12.828000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   12.836000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   12.840000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   12.848000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   12.876000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   12.880000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   12.888000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   12.892000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   12.900000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   12.908000] Main bssid = 84:82:f4:38:c0:15<br>[   12.912000] &lt;==== rt28xx_init, <span class="hljs-attribute">Status</span>=0<br>[   12.920000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[   12.924000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20<br>[   12.948000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[   12.952000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20<br>[   12.972000] BHUGenNetlink: bhu_gen_nl_register_netlink<br>[   12.976000] bhu_gen_nl_register_netlink: BHU gen netlink has been registered. Family id is 20<br>[   12.984000] @@@ ed_monitor_exit : ===&gt;<br>[   12.988000] @@@ ed_monitor_exit : &lt;===<br>[   12.992000] mt7628_set_ed_cca: TURN OFF EDCCA  mac 0x10618 = 0xd7083f0f<br>[   13.000000] WiFi Startup Cost (wlan0): 3.432s<br>[   15.496000] <span class="hljs-attribute">led</span>=43, <span class="hljs-attribute">on</span>=1, <span class="hljs-attribute">off</span>=5, <span class="hljs-attribute">blinks</span>=1, <span class="hljs-attribute">rest</span>=0, <span class="hljs-attribute">times</span>=1<br>[main] &gt;&gt;&gt; Init dispather success!<br>BHU Software Version: AP902P07V1.6.0Build798_TU 2017-11-03-09:13 Revision: 798<br>procd: - init complete -<br>kill: you need <span class="hljs-keyword">to</span> specify whom <span class="hljs-keyword">to</span> kill<br>Mongoose web<span class="hljs-built_in"> server </span>v.3.9 started on port(s) 80 with web root [/usr/share/www]<br>main, 36, svn:798, version:10015, time:[Thu Nov  2 20:56:08 CST 2017]<br>wait <span class="hljs-keyword">for</span> pa data initpa_data_init done[   19.788000] bhuhttp_L2_init: register nl family ok<br>[   19.796000]<span class="hljs-built_in"> user </span>space pid:799<br>[http_url_start_timer][269] http url age timer start<span class="hljs-built_in">..</span><br>[   20.036000] <span class="hljs-attribute">cfg_mode</span>=9<br>[   20.036000] wmode_band_equal(): Band Equal!<br>[   20.044000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>kmod: module is <span class="hljs-keyword">not</span> loaded<br>[   20.120000] <span class="hljs-attribute">cfg_mode</span>=9<br>[   20.124000] wmode_band_equal(): Band Equal!<br>[   20.128000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   20.164000] <span class="hljs-attribute">cfg_mode</span>=9<br>[   20.164000] wmode_band_equal(): Band Equal!<br>[   20.168000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   20.216000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   20.224000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.228000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.236000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.240000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.248000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.252000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.260000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.288000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   20.292000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   20.304000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.308000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   20.316000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   20.324000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   20.332000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   20.336000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   20.344000] Main bssid = 84:82:f4:38:c0:15<br>[   20.376000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   20.380000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.388000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.392000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.400000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.404000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   20.412000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.416000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.456000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   20.460000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   20.468000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   20.472000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   20.480000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   20.488000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   20.496000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   20.500000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   20.508000] Main bssid = 84:82:f4:38:c0:15<br>[   20.572000] device eth0 entered promiscuous mode<br>[   20.580000] device wlan0 entered promiscuous mode<br>[   20.592000] device wlan2 entered promiscuous mode<br>[   20.600000] device wlan3 entered promiscuous mode<br>killall: dropbear: <span class="hljs-literal">no</span> process killed<br>kill: you need <span class="hljs-keyword">to</span> specify whom <span class="hljs-keyword">to</span> kill<br>[   21.972000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   21.980000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   21.984000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   21.992000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   21.996000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.004000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.012000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.016000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.044000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   22.052000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   22.056000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.064000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   22.072000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   22.080000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   22.084000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   22.092000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTa￠￥μ&amp;#189;&amp;#1425;= 0xf0<br>[   22.096000] Main bssid = 84:82:f4:38:c0:15<br>[   22.104000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   22.112000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.116000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.124000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.128000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.136000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.144000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.148000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.176000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   22.180000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   22.188000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.196000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   22.200000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   22.208000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   22.216000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   22.224000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   22.228000] Main bssid = 84:82:f4:38:c0:15<br>[   22.244000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   22.252000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.256000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.264000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.268000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.276000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   22.280000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.288000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.316000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   22.324000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   22.328000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   22.336000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   22.344000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   22.352000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   22.356000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   22.364000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   22.372000] Main bssid = 84:82:f4:38:c0:15<br>[   23.416000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   23.424000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.428000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.436000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.440000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.448000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.452000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.460000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.488000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   23.492000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   23.500000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.504000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   23.512000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   23.520000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   23.528000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   23.532000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   23.540000] Main bssid = 84:82:f4:38:c0:15<br>[   23.560000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   23.564000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.572000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.576000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.584000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.588000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   23.596000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.600000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.628000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   23.636000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   23.640000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   23.648000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   23.652000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   23.660000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   23.668000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   23.676000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   23.680000] Main bssid = 84:82:f4:38:c0:15<br>[   24.724000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   24.732000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.736000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.744000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.748000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.756000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.760000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.768000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.796000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   24.800000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   24.808000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.812000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   24.820000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   24.828000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   24.836000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   24.840000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   24.848000] Main bssid = 84:82:f4:38:c0:15<br>[   24.868000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>[   24.872000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.880000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.884000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.892000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.896000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   24.904000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.908000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.936000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   24.944000] CmdLoadDPDDataFromFlash: Channel = 6, DoReload = 0<br>[   24.948000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   24.956000] AddTxSType: already registered TxSType (PID = 32, Format = 0<br>[   24.964000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   24.972000] AddTxSType: already registered TxSType (PID = 6, Format = 0<br>[   24.976000] AddTxSType: already registered TxSType (PID = 8, Format = 0<br>[   24.984000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   24.988000] Main bssid = 84:82:f4:38:c0:15<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>MASQUERADE  all opt -- <span class="hljs-keyword">in</span> * out eth1  0.0.0.0/0  -&gt; 0.0.0.0/0  [24 bytes of unknown target data]<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>udhcpc (v1.22.1) started<br>route: SIOCDELRT: <span class="hljs-literal">No</span> such process<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>[   27.408000] br-lan:<span class="hljs-built_in"> port </span>2(wlan0) entered forwarding state<br>[   27.412000] br-lan:<span class="hljs-built_in"> port </span>2(wlan0) entered forwarding state<br>[   27.420000] br-lan:<span class="hljs-built_in"> port </span>1(eth0) entered forwarding state<br>[   27.424000] br-lan:<span class="hljs-built_in"> port </span>1(eth0) entered forwarding state<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>MASQUERADE  all opt -- <span class="hljs-keyword">in</span> * out [   27.688000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>eth1  0.0.0.0/0 [   27.700000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0x0<br>-&gt; 0.0.0.0/0  [[   27.704000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>24 bytes of unknown target data]<br>MASQUERADE  all opt -- <span class="hljs-keyword">in</span> * out eth1  192.168.62.0/24  -&gt; 0.0.0.0/0  [24 bytes of unknown target data]<br>[   27.936000] bhu_tc_send_q_tx: send skb failed, <span class="hljs-attribute">err</span>=2<br>[   28.032000] bhu_tc_send_q_tx: send skb failed, <span class="hljs-attribute">err</span>=2<br>[   28.240000] tx_kickout_fail_count = 0<br>[   28.244000] tx_timeout_fail_count = 0<br>[   28.244000] rx_receive_fail_count = 0<br>[   28.248000] alloc_cmd_msg = 207<br>[   28.252000] free_cmd_msg = 207<br>[   28.260000] br-lan:<span class="hljs-built_in"> port </span>2(wlan0) entered disabled state<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>[   28.308000] TX_BCN DESC a29d8000 size = 320<br>[   28.312000] RX[0] DESC a29db000 size = 1024<br>[   28.316000] RX[1] DESC a29dc000 size = 1024<br>[   28.332000] <span class="hljs-attribute">cfg_mode</span>=9<br>[   28.332000] <span class="hljs-attribute">cfg_mode</span>=9<br>[   28.336000] wmode_band_equal(): Band Equal!<br>[   28.340000] AndesSendCmdMsg: Could <span class="hljs-keyword">not</span> send <span class="hljs-keyword">in</span> band command due <span class="hljs-keyword">to</span> diable fRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD<br>[   28.352000] APSDCapable[0]=1<br>[   28.356000] APSDCapable[1]=1<br>[   28.360000] APSDCapable[2]=1<br>[   28.360000] APSDCapable[3]=1<br>[   28.364000] APSDCapable[4]=1<br>[   28.368000] APSDCapable[5]=1<br>[   28.368000] APSDCapable[6]=1<br>[   28.372000] APSDCapable[7]=1<br>[   28.376000] APSDCapable[8]=1<br>[   28.380000] APSDCapable[9]=1<br>[   28.380000] APSDCapable[10]=1<br>[   28.384000] APSDCapable[11]=1<br>[   28.388000] APSDCapable[12]=1<br>[   28.392000] APSDCapable[13]=1<br>[   28.392000] APSDCapable[14]=1<br>[   28.396000] APSDCapable[15]=1<br>[   28.428000] load fw image <span class="hljs-keyword">from</span> fw_header_image<br>[   28.432000] AndesMTLoadFwMethod1(2182)::pChipCap-&gt;fw_len(63888)<br>[   28.440000] FW Version:20151201<br>[   28.444000] FW Build Date:20151201183641<br>[   28.448000] CmdReStartDLRsp: WiFI FW Download Success<br>[   28.452000] CmdAddressLenReq:(ret = 0)<br>[   28.456000] CmdFwStartReq: override = 1,<span class="hljs-built_in"> address </span>= 1048576<br>[   28.464000] CmdStartDLRsp: WiFI FW Download Success<br>[   28.468000] MtAsicDMASchedulerInit(): DMA<span class="hljs-built_in"> Scheduler </span><span class="hljs-attribute">Mode</span>=0(LMAC)<br>[   28.472000] efuse_probe: efuse = 10000012<br>[   28.476000] RtmpChipOpsEepromHook::<span class="hljs-attribute">e2p_type</span>=2, <span class="hljs-attribute">inf_Type</span>=4<br>[   28.484000] RtmpEepromGetDefault::<span class="hljs-attribute">e2p_dafault</span>=2<br>[   28.488000] RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P<span class="hljs-built_in"> default </span>= 2<br>[   28.496000] NVM is FLASH mode<br>[   28.500000] 1. Phy Mode = 14<br>[   28.660000] Country Region <span class="hljs-keyword">from</span> e2p = ffff<br>[   28.668000] tssi_1_target_pwr_g_band = 36<br>[   28.672000] 2. Phy Mode = 14<br>[   28.672000] 3. Phy Mode = 14<br>[   28.676000] NICInitPwrPinCfg(11): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   28.680000] NICInitializeAsic(651): <span class="hljs-keyword">Not</span> support rtmp_mac_sys_reset () <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   28.688000] mt_mac_init()--&gt;<br>[   28.692000] MtAsicInitMac()--&gt;<br>[   28.696000] mt7628_init_mac_cr()--&gt;<br>[   28.700000] MtAsicSetMacMaxLen(1276): <span class="hljs-builtin-name">Set</span> the Max <span class="hljs-attribute">RxPktLen</span>=1024!<br>[   28.704000] &lt;--mt_mac_init()<br>[   28.708000]         WTBL Segment 1 info:<br>[   28.712000]                 MemBaseAddr/FID:0x28000/0<br>[   28.716000]                 EntrySize/Cnt:32/128<br>[   28.720000]         WTBL Segment 2 info:<br>[   28.724000]                 MemBaseAddr/FID:0x40000/0<br>[   28.728000]                 EntrySize/Cnt:64/128<br>[   28.732000]         WTBL Segment 3 info:<br>[   28.732000]                 MemBaseAddr/FID:0x42000/64<br>[   28.736000]                 EntrySize/Cnt:64/128<br>[   28.740000]         WTBL Segment 4 info:<br>[   28.744000]                 MemBaseAddr/FID:0x44000/128<br>[   28.748000]                 EntrySize/Cnt:32/128<br>[   28.752000] AntCfgInit(2947): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   28.756000] MCS <span class="hljs-builtin-name">Set</span> = ff ff 00 00 00<br>[   28.760000] MtAsicSetChBusyStat(861): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   31.416000] =====================================================<br>[   31.420000] Channel 1 : Dirty = 254, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 4969, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.428000] Channel 2 : Dirty = 168, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 4130, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.436000] Channel 3 : Dirty = 208, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 3210, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.444000] Channel 4 : Dirty = 250, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 3656, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.452000] Channel 5 : Dirty = 280, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 8862, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.464000] Channel 6 : Dirty = 218, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 6476, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.472000] Channel 7 : Dirty = 432, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 6117, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.480000] Channel 8 : Dirty = 336, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 5338, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.488000] Channel 9 : Dirty = 366, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 9826, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.496000] Channel 10 : Dirty = 324, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 4860, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.504000] Channel 11 : Dirty = 598, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 9220, Skip Channel = <span class="hljs-literal">FALSE</span><br>[   31.512000] Channel 12 : Dirty = 248, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 6747, Skip Channel = <span class="hljs-literal">TRUE</span><br>[   31.520000] Channel 13 : Dirty = 216, <span class="hljs-literal">False</span> CCA = 0, Busy Time = 7909, Skip Channel = <span class="hljs-literal">TRUE</span><br>[   31.528000] =====================================================<br>[   31.536000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=0, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   31.544000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=1, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   31.548000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=2, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   31.556000] [PMF]ap_pmf_init:: <span class="hljs-attribute">apidx</span>=3, <span class="hljs-attribute">MFPC</span>=0, <span class="hljs-attribute">MFPR</span>=0, <span class="hljs-attribute">SHA256</span>=0<br>[   31.560000] MtAsicSetRalinkBurstMode(3047): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   31.568000] MtAsicSetPiggyBack(796): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   31.596000] reload DPD <span class="hljs-keyword">from</span> flash , 0x9F = [c600] doReload bit7[0]<br>[   31.600000] CmdLoadDPDDataFromFlash: Channel = 2, DoReload = 0<br>[   31.608000] MtAsicSetTxPreamble(3026): <span class="hljs-keyword">Not</span> support <span class="hljs-keyword">for</span> HIF_MT yet!<br>[   31.616000] The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4<br>[   31.624000] MtAsicSetPreTbtt(): <span class="hljs-attribute">bss_idx</span>=0, PreTBTT timeout = 0xf0<br>[   31.628000] Main bssid = 84:82:f4:38:c0:15<br>[   31.632000] &lt;==== rt28xx_init, <span class="hljs-attribute">Status</span>=0<br>[   31.636000] @@@ ed_monitor_exit : ===&gt;<br>[   31.640000] @@@ ed_monitor_exit : &lt;===<br>[   31.644000] mt7628_set_ed_cca: TURN OFF EDCCA  mac 0x10618 = 0xd7083f0f<br>[   31.652000] WiFi Startup Cost (wlan0): 3.344s<br>[   31.656000] br-lan:<span class="hljs-built_in"> port </span>2(wlan0) entered forwarding state<br>[   31.660000] br-lan:<span class="hljs-built_in"> port </span>2(wlan0) entered forwarding state<br>iptables: <span class="hljs-literal">No</span> chain/target/match by that name.<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error: <span class="hljs-literal">No</span> such file <span class="hljs-keyword">or</span> directory)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>serverctl: BHU Tunnel probably <span class="hljs-keyword">not</span> started (Error:<span class="hljs-built_in"> Connection </span>refused)<br>[   33.928000] <span class="hljs-attribute">led</span>=43, <span class="hljs-attribute">on</span>=0, <span class="hljs-attribute">off</span>=1, <span class="hljs-attribute">blinks</span>=0, <span class="hljs-attribute">rest</span>=0, <span class="hljs-attribute">times</span>=0<br>[   33.984000] <span class="hljs-attribute">led</span>=42, <span class="hljs-attribute">on</span>=2, <span class="hljs-attribute">off</span>=5, <span class="hljs-attribute">blinks</span>=1, <span class="hljs-attribute">rest</span>=0, <span class="hljs-attribute">times</span>=1<br>wandetect: eth1 is running<br>wandetect: start pppoe_discovery_main thread ok.<br>wandetect: start dhcp detect thread ok.<br>udhcpc (v1.22.1) started<br>wlan_ol_sta_online_proc: <span class="hljs-builtin-name">add</span> sta 74:97:81:ab:06:dd, count 1<br>assoced:74:97:81:ab:06:dd<br>[   35.040000] <span class="hljs-attribute">led</span>=43, <span class="hljs-attribute">on</span>=2, <span class="hljs-attribute">off</span>=5, <span class="hljs-attribute">blinks</span>=1, <span class="hljs-attribute">rest</span>=0, <span class="hljs-attribute">times</span>=1<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br><span class="hljs-literal">No</span> lease, failing<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect: Timeout waiting <span class="hljs-keyword">for</span> PADO packets<br>wandetect:<br>HOSTNAME login:<br><br>[END] 2021/3/4 21:13:04<br></code></pre></td></tr></table></figure>
 </details>
 
 <h2 id="breed"><a href="#breed" class="headerlink" title="breed"></a>breed</h2><p>使用恩山论坛的breed-mt7688-reset38.bin。不能正确识别内存大小，此外没什么问题。这个路由器内存为一片EM68B16CWQH-25H，64MB，breed中识别为128MB，可以在编译openwrt前修改dts设置内存为64MB。</p>
 <h2 id="刷回原厂固件"><a href="#刷回原厂固件" class="headerlink" title="刷回原厂固件"></a>刷回原厂固件</h2><p>breed中刷入一次刚才导出的编程器固件，此步骤作用是恢复mac地址与eeprom。</p>
 <h3 id="openwrt编译"><a href="#openwrt编译" class="headerlink" title="openwrt编译"></a>openwrt编译</h3><p>使用lean/lede代码，选择MT76X8，GL.iNet VIXMINI配置。GL.iNet VIXMINI配置为MT7628NN 8+64，无USB，与必虎mini接近： <a target="_blank" rel="noopener" href="https://www.gl-inet.cn/products/vixmini/">https://www.gl-inet.cn/products/vixmini/</a></p>
-<h4 id="修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network"><a href="#修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network" class="headerlink" title="修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network"></a>修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network</h4><pre><code>glinet,microuter-n300|\
-glinet,vixmini)
-    ucidef_add_switch &quot;switch0&quot; \
-        &quot;0:lan&quot; &quot;6@eth0&quot;
-    ;;
-</code></pre>
+<h4 id="修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network"><a href="#修改-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network" class="headerlink" title="修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network"></a>修改 lede/target/linux/ramips/mt76x8/base-files/etc/board.d/02_network</h4><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">glinet,</span>microuter-n300|\<br><span class="hljs-built_in">glinet,</span>vixmini)<br>	ucidef_add_switch <span class="hljs-string">&quot;switch0&quot;</span> \<br>		<span class="hljs-string">&quot;0:lan&quot;</span> <span class="hljs-string">&quot;6@eth0&quot;</span><br>	<span class="hljs-comment">;;</span><br></code></pre></td></tr></table></figure>
 <p>修改为</p>
-<pre><code>glinet,microuter-n300|\
-glinet,vixmini)
-    ucidef_add_switch &quot;switch0&quot; \
-        &quot;4:lan&quot; &quot;2:lan&quot; &quot;0:wan&quot; &quot;6@eth0&quot;
-    ;;
-</code></pre>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">glinet,</span>microuter-n300|\<br><span class="hljs-built_in">glinet,</span>vixmini)<br>	ucidef_add_switch <span class="hljs-string">&quot;switch0&quot;</span> \<br>		<span class="hljs-string">&quot;4:lan&quot;</span> <span class="hljs-string">&quot;2:lan&quot;</span> <span class="hljs-string">&quot;0:wan&quot;</span> <span class="hljs-string">&quot;6@eth0&quot;</span><br>	<span class="hljs-comment">;;</span><br></code></pre></td></tr></table></figure>
 <p>因为vixmini只有一个网口，我们需要自行添加2个网口，注意对应交换机的2和4。注意MT7628只有一个网卡（interface），内置5口交换机，通过VLAN划分WAN与LAN，WAN一般对应0号口，LAN需要自己测试，本例中为2和4。</p>
-<h4 id="修改lede-target-linux-ramips-image-mt76x8-mk"><a href="#修改lede-target-linux-ramips-image-mt76x8-mk" class="headerlink" title="修改lede/target/linux/ramips/image/mt76x8.mk"></a>修改lede/target/linux/ramips/image/mt76x8.mk</h4><pre><code>define Device/glinet_vixmini
-  IMAGE_SIZE := 7872k
-  DEVICE_VENDOR := GL.iNet
-  DEVICE_MODEL := VIXMINI
-  SUPPORTED_DEVICES += vixmini
-endef
-TARGET_DEVICES += glinet_vixmini
-</code></pre>
+<h4 id="修改lede-target-linux-ramips-image-mt76x8-mk"><a href="#修改lede-target-linux-ramips-image-mt76x8-mk" class="headerlink" title="修改lede/target/linux/ramips/image/mt76x8.mk"></a>修改lede/target/linux/ramips/image/mt76x8.mk</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">define Device/glinet_vixmini<br>  IMAGE_SIZE := <span class="hljs-number">7872</span>k<br>  DEVICE_VENDOR := GL.iNet<br>  DEVICE_MODEL := VIXMINI<br>  SUPPORTED_DEVICES += vixmini<br>endef<br>TARGET_DEVICES += glinet_vixmini<br></code></pre></td></tr></table></figure>
 <p>修改为</p>
-<pre><code>define Device/glinet_vixmini
-  IMAGE_SIZE := 16064k
-  DEVICE_VENDOR := GL.iNet
-  DEVICE_MODEL := VIXMINI
-  SUPPORTED_DEVICES += vixmini
-endef
-TARGET_DEVICES += glinet_vixmini
-</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">define Device/glinet_vixmini<br>  IMAGE_SIZE := <span class="hljs-number">16064</span>k<br>  DEVICE_VENDOR := GL.iNet<br>  DEVICE_MODEL := VIXMINI<br>  SUPPORTED_DEVICES += vixmini<br>endef<br>TARGET_DEVICES += glinet_vixmini<br></code></pre></td></tr></table></figure>
 <p>VIXMINI闪存8M，不如此修改无法生成8M~16M大小的固件。</p>
-<h4 id="修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts"><a href="#修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts" class="headerlink" title="修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts"></a>修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts</h4><pre><code>// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-/dts-v1/;
-
-#include &quot;mt7628an_glinet_vixmini_microuter.dtsi&quot;
-
-/ &#123;
-    compatible = &quot;glinet,vixmini&quot;, &quot;mediatek,mt7628an-soc&quot;;
-    model = &quot;GL.iNet VIXMINI&quot;;
-
-    memory@0 &#123;
-        device_type = &quot;memory&quot;;
-        reg = &lt;0x0 0x4000000&gt;;
-    &#125;;
-&#125;;
-
-&amp;led_power_blue &#123;
-    label = &quot;vixmini:blue:power&quot;;
-&#125;;
-
-&amp;led_wlan_white &#123;
-    label = &quot;vixmini:white:wlan&quot;;
-&#125;;
-
-&amp;firmware_part &#123;
-        reg = &lt;0x50000 0xfb0000&gt;;
-&#125;;
-</code></pre>
+<h4 id="修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts"><a href="#修改lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts" class="headerlink" title="修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts"></a>修改lede/target/linux/ramips/dts/mt7628an_glinet_vixmini.dts</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-comment">// SPDX-License-Identifier: GPL-2.0-or-later OR MIT</span><br><span class="hljs-meta-keyword">/dts-v1/</span>;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;mt7628an_glinet_vixmini_microuter.dtsi&quot;</span></span><br><br><span class="hljs-class">/ &#123;</span><br><span class="hljs-class">	compatible = <span class="hljs-string">&quot;glinet,vixmini&quot;</span>, <span class="hljs-string">&quot;mediatek,mt7628an-soc&quot;</span>;</span><br><span class="hljs-class">	model = <span class="hljs-string">&quot;GL.iNet VIXMINI&quot;</span>;</span><br><span class="hljs-class"></span><br><span class="hljs-class">	<span class="hljs-class">memory@0 </span>&#123;</span><br><span class="hljs-class">		device_type = <span class="hljs-string">&quot;memory&quot;</span>;</span><br><span class="hljs-class">		reg = <span class="hljs-params">&lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x4000000</span>&gt;</span>;</span><br><span class="hljs-class">	&#125;;</span><br>&#125;;<br><br><span class="hljs-variable">&amp;led_power_blue</span> &#123;<br>	label = <span class="hljs-string">&quot;vixmini:blue:power&quot;</span>;<br>&#125;;<br><br><span class="hljs-variable">&amp;led_wlan_white</span> &#123;<br>	label = <span class="hljs-string">&quot;vixmini:white:wlan&quot;</span>;<br>&#125;;<br><br><span class="hljs-variable">&amp;firmware_part</span> &#123;<br>		reg = <span class="hljs-params">&lt;<span class="hljs-number">0x50000</span> <span class="hljs-number">0xfb0000</span>&gt;</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>其中，</p>
-<pre><code>memory@0 &#123;
-    device_type = &quot;memory&quot;;
-    reg = &lt;0x0 0x4000000&gt;;
-    &#125;;
-</code></pre>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-class">memory@0 </span>&#123;<br>	device_type = <span class="hljs-string">&quot;memory&quot;</span>;<br>	reg = <span class="hljs-params">&lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x4000000</span>&gt;</span>;<br>	&#125;;<br></code></pre></td></tr></table></figure>
 <p>这一段是自己加的，本来内存容量应该由BootLoader获取传递给openwrt，不过由于breed识别错误，所以自己手动指定参数。</p>
 <p>经过以上修改后就可以编译固件了，然而由于MT7628开源WIFI驱动贫弱的表现，你很可能会不满意，如此可以继续阅读：</p>
 <h2 id="刷GL-iNet-GL-MT300N-V2固件"><a href="#刷GL-iNet-GL-MT300N-V2固件" class="headerlink" title="刷GL-iNet GL-MT300N-V2固件"></a>刷GL-iNet GL-MT300N-V2固件</h2><p>在GL-iNet官网下载:<a target="_blank" rel="noopener" href="http://download.gl-inet.com/firmware/">http://download.gl-inet.com/firmware/</a></p>
 <p>GL-iNet应该是主打外贸的国内路由器厂商，路由器固件均基于openwrt，包含MTK私有驱动，WIFI表现良好，实测穿2道非承重墙非常轻松。</p>
 <p>GL-MT300N-V2固件初始WIFI密码goodlife，管理页面登录密码admin。首次设置需要通过WIFI连接，通过SSH访问修改<code>/etc/config/network</code>，将vlan为1的交换机端口修改成以下的样子：</p>
-<pre><code>config switch_vlan
-        option device &#39;switch0&#39;
-        option vlan &#39;1&#39;
-        option ports &#39;2 4 6t&#39;
-</code></pre>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gams">config switch_vlan<br>        <span class="hljs-keyword">option</span> device <span class="hljs-string">&#x27;switch0&#x27;</span><br>        <span class="hljs-keyword">option</span> vlan <span class="hljs-string">&#x27;1&#x27;</span><br>        <span class="hljs-keyword">option</span> ports <span class="hljs-string">&#x27;2 4 6t&#x27;</span><br></code></pre></td></tr></table></figure>
+
 <p>对应2和4。之后执行<code>/etc/init.d/network restart</code>LAN口就可用了。</p>
 <h1 id="下步折腾计划"><a href="#下步折腾计划" class="headerlink" title="下步折腾计划"></a>下步折腾计划</h1><p>恩山上看见有人通过刮U露出针脚的方式自己加焊了USB接口……查了下资料MT7628NN的Pin61，62分别对应USB_DP和USB_DM，如果这两个针脚在主板上已经引出就简单了，有空时拿万用表测下。</p>
 <ul>
@@ -973,198 +337,357 @@ TARGET_DEVICES += glinet_vixmini
 <li><a href="/2021/03/23/bhu-dc/25b5h4.bin" title="编程器固件（必虎原厂）">编程器固件（必虎原厂）</a></li>
 </ul>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%BF%85%E8%99%8E/">#必虎</a>
+      
+        <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/">#路由器</a>
+      
+        <a href="/tags/openwrt/">#openwrt</a>
+      
+        <a href="/tags/linux/">#linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>必虎路由器折腾记录</div>
+      <div>http://xiaofami.github.io/2021/03/23/bhu-dc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年3月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/24/hexo-syntax/" title="hexo文章摘要">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">hexo文章摘要</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/23/bhu_tour/" title="必虎路由器原厂固件探索">
+                        <span class="hidden-mobile">必虎路由器原厂固件探索</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
 
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%BF%85%E8%99%8E/" rel="tag"># 必虎</a>
-              <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" rel="tag"># 路由器</a>
-              <a href="/tags/openwrt/" rel="tag"># openwrt</a>
-              <a href="/tags/linux/" rel="tag"># linux</a>
-          </div>
-
-        
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
 
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/03/23/bhu_tour/" rel="prev" title="必虎路由器原厂固件探索">
-      <i class="fa fa-chevron-left"></i> 必虎路由器原厂固件探索
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/24/hexo-syntax/" rel="next" title="hexo文章摘要">
-      hexo文章摘要 <i class="fa fa-chevron-right"></i>
-    </a></div>
+
+  </aside>
+
+
     </div>
-      </footer>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
-  </article>
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
   
   
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-          </div>
-          
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
       }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
     });
-  }
+  });
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
 
-  <aside class="sidebar">
-    <div class="sidebar-inner">
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
+  <script>Fluid.plugins.codeWidget();</script>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">硬件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B7%E6%9C%BA%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">刷机工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">编程器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8E%A5%E6%9D%BF%EF%BC%8C%E5%A4%B9%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">转接板，夹子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UART-USB%EF%BC%9F"><span class="nav-number">2.3.</span> <span class="nav-text">UART-USB？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#breed"><span class="nav-number">2.4.</span> <span class="nav-text">breed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E5%9B%9E%E5%8E%9F%E5%8E%82%E5%9B%BA%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">刷回原厂固件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#openwrt%E7%BC%96%E8%AF%91"><span class="nav-number">2.5.1.</span> <span class="nav-text">openwrt编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-lede-target-linux-ramips-mt76x8-base-files-etc-board-d-02-network"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">修改 lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;mt76x8&#x2F;base-files&#x2F;etc&#x2F;board.d&#x2F;02_network</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9lede-target-linux-ramips-image-mt76x8-mk"><span class="nav-number">2.5.1.2.</span> <span class="nav-text">修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;image&#x2F;mt76x8.mk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9lede-target-linux-ramips-dts-mt7628an-glinet-vixmini-dts"><span class="nav-number">2.5.1.3.</span> <span class="nav-text">修改lede&#x2F;target&#x2F;linux&#x2F;ramips&#x2F;dts&#x2F;mt7628an_glinet_vixmini.dts</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7GL-iNet-GL-MT300N-V2%E5%9B%BA%E4%BB%B6"><span class="nav-number">2.6.</span> <span class="nav-text">刷GL-iNet GL-MT300N-V2固件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E6%AD%A5%E6%8A%98%E8%85%BE%E8%AE%A1%E5%88%92"><span class="nav-number">3.</span> <span class="nav-text">下步折腾计划</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">tccmu</p>
-  <div class="site-description" itemprop="description">WXRC</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">87</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">99</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">tccmu</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
 
-<script src="/js/utils.js"></script>
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
 
-<script src="/js/motion.js"></script>
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-<script src="/js/schemes/muse.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
-<script src="/js/next-boot.js"></script>
 
 
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
