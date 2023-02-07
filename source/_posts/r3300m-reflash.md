@@ -8,9 +8,21 @@ tags:
 
 家里先前运行Manjaro ARM的R3300-M最近出现了开机一段时间后SSH无法登陆的问题，于是备份必要文件后重刷系统。原本以为不需要再水一篇文章，不过刷机过程中遇到了一些问题，有必要记录下来。
 # 镜像选择
-之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 **extlinux.ext** 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参数也精简了许多，毫无意外启动失败了。我参照之前的格式修改，结果无法发现root分区，这肯定就行不通了。于是换用Vim2镜像，这个也有坑。测试了22.12和22.10版本，启动时提示 **reserved mem:failed to allocate memory for node 'linux,cma'** 错误导致启动失败进入 **emergency shell**。几经测试后 **vim2 22.08** 是能够正常使用的最新版本，开机后直接更新系统换主线内核即可。这一部分我将两个镜像中的dtb文件反编译成dts进行了对比，结果如下：
+之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 **extlinux.ext** 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参数也精简了许多，毫无意外启动失败了。我参照之前的格式修改，结果无法发现root分区，这肯定就行不通了。于是换用Vim2镜像，这个也有坑。测试了22.12和22.10版本，启动时提示 **reserved mem:failed to allocate memory for node 'linux,cma'** 错误导致启动失败进入 **emergency shell**。几经测试后 **vim2 22.08** 是能够正常使用的最新版本，开机后直接更新系统换主线内核即可。针对dtb文件区别我进行了简单试验，试验结果如下：
+
+1. 当前使用的dtb文件与Manjaro-ARM-minimal-generic-22.12.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件经过diff比较是完全一致的，符合预期。
+2. 当前使用的dtb文件与Manjaro-ARM-minimal-vim2-22.08.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件diff结果如下：
 ```bash
-# 22.08版本
+
+diff current.dts vim2-08.dts
+50c50
+<                       size = <0x00 0x10000000>;
+---
+>                       size = <0x00 0x38000000>;
+```
+对应dts文件中此部分：
+```bash
+# Manjaro-ARM-minimal-generic-22.12.img
 linux,cma {
         compatible = "shared-dma-pool";
         reusable;
@@ -19,9 +31,8 @@ linux,cma {
         linux,cma-default;
 };
 ```
-
 ```bash
-# 22.12版本
+# Manjaro-ARM-minimal-vim2-22.08.img
 linux,cma {
       compatible = "shared-dma-pool";
       reusable;
@@ -30,7 +41,10 @@ linux,cma {
       linux,cma-default;
 };
 ```
-这个变化应该是内存失败的主因。另外diff可见其他大量phandle的值也发生了变化。如果将22.12版本中的 **meson-gxbb-p201.dtb** 替换成 **22.10** 中的，是不是就能规避这个错误了呢？有心人可以自行测试。
+至于 Manjaro-ARM-minimal-generic-22.12.img 与 Manjaro-ARM-minimal-vim2-22.12.img dtb差异就比较悬殊了，大量的的phandle值不同，而且新增了 ** system-suspend** 、 **rtc@a8** 、 **sound** 、 **vrtc** 内容。
+
+Manjaro ARM提供了[manjaro-arm-tools](https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools)这一工具，可以提供打包应用，制作系统镜像等功能。有空可以为R3300-M定制一份配置文件。
+
 # 编译WIFI驱动
 ```bash
 sudo pacman -S git make gcc bc
