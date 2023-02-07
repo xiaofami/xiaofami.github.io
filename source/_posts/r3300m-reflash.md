@@ -12,15 +12,17 @@ tags:
 
 1. 当前使用的dtb文件与Manjaro-ARM-minimal-generic-22.12.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件经过diff比较是完全一致的，符合预期。
 2. 当前使用的dtb文件与Manjaro-ARM-minimal-vim2-22.08.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件diff结果如下：
-```bash
 
+```bash
 diff current.dts vim2-08.dts
 50c50
 <                       size = <0x00 0x10000000>;
 ---
 >                       size = <0x00 0x38000000>;
 ```
+
 对应dts文件中此部分：
+
 ```bash
 # Manjaro-ARM-minimal-generic-22.12.img
 linux,cma {
@@ -31,6 +33,7 @@ linux,cma {
         linux,cma-default;
 };
 ```
+
 ```bash
 # Manjaro-ARM-minimal-vim2-22.08.img
 linux,cma {
@@ -41,6 +44,7 @@ linux,cma {
       linux,cma-default;
 };
 ```
+
 至于 Manjaro-ARM-minimal-generic-22.12.img 与 Manjaro-ARM-minimal-vim2-22.12.img dtb差异就比较悬殊了，大量的的phandle值不同，而且新增了 ** system-suspend** 、 **rtc@a8** 、 **sound** 、 **vrtc** 内容。
 
 Manjaro ARM提供了[manjaro-arm-tools](https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools)这一工具，可以提供打包应用，制作系统镜像等功能。有空可以为R3300-M定制一份配置文件。
