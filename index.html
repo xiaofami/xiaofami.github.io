@@ -353,6 +353,275 @@ Hi xiaofami! You&#39;ve successfully authenticated, but GitHub does not provide 
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2023/02/06/manjaro-arm-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/06/manjaro-arm-tools/" class="post-title-link" itemprop="url">使用manjaro-arm-tools定制Manjaro ARM镜像</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-06 10:41:46" itemprop="dateCreated datePublished" datetime="2023-02-06T10:41:46+08:00">2023-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-07 14:06:59" itemprop="dateModified" datetime="2023-02-07T14:06:59+08:00">2023-02-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code class="bash">sudo pacman -S manjaro-arm-tools
+</code></pre>
+<h1 id="下载配置文件"><a href="#下载配置文件" class="headerlink" title="下载配置文件"></a>下载配置文件</h1><pre><code class="bash">sudo getarmprofiles -f
+</code></pre>
+<h1 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h1><pre><code class="bash">cd /usr/share/manjaro-arm-tools/profiles/arm-profiles/devices/
+</code></pre>
+<p>随便复制一个然后修改就可以了。我创建的r3300m内容如下：</p>
+<pre><code class="config">## Maintained by Spikerguy ##
+
+# Kernel and bootloader stuff
+linux
+uboot-vim2
+plymouth
+plymouth-theme-manjaro
+
+# Video driver
+
+# Other device specific packages
+crda
+fbset
+kvim2-firmware
+generic-post-install
+vim2-post-install
+</code></pre>
+<p>基本上就是vim2的精简，然后用主线内核替换了aml内核。自己的配置文件注意备份，每次执行 <code>sudo getarmprofiles -f</code> 都会从服务器重新同步配置并清除本地修改内容，切记切记。</p>
+<h1 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h1><pre><code class="bash">sudo buildarmimg -d r3300m -e minimal -v 23.02 -b stable
+</code></pre>
+<p>建议新建一个screen session进行以防SSH连接意外中断前功尽弃，同时解决好网络问题否则rootfs和软件包下不动。输出信息节选如下：</p>
+<pre><code class="bash">==&gt; WARNING: consolefont: no font found in configuration
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
+==&gt; Image generation successful
+(15/16) Reloading system bus configuration...
+  Skipped: Current root is not booted.
+(16/16) Updating fontconfig cache...
+  -&gt; Generating the list of mirrors...
+  -&gt; Enabling services...
+Enabling service systemd-networkd.service...
+Enabling service dhcpcd.service...
+Enabling service sshd.service...
+Enabling service iwd.service...
+Enabling service zswap-arm.service...
+Enabling service systemd-oomd.service...
+Enabling service irqbalance.service...
+Service bootsplash-hide-when-booted.service not found in rootfs, skipping
+Service bootsplash-show-on-shutdown.service not found in rootfs, skipping
+  -&gt; Applying overlays for minimal edition...
+  -&gt; Setting up system settings...
+Enabling SSH login for root user for headless setup...
+Enabling autologin for first setup...
+Correcting permissions from overlay...
+
+==&gt; Creating package list /var/cache/manjaro-arm-tools/img/Manjaro-ARM-minimal-r3300m-23.02-pkgs.txt...
+  -&gt; Removing unwanted files from rootfs...
+  -&gt; Pruning and unmounting package cache...
+==&gt; no candidate packages found for pruning
+
+==&gt; Creating minimal edition rootfs image for r3300m completed successfully
+
+==&gt; Creating minimal edition image for r3300m...
+  -&gt; Creating ext4 partitions...
+  -&gt; Copying files to image...
+  -&gt; Writing the boot loader images...
+Boot PARTUUID is 4f9106b7-b65d-487f-8c7d-9d44a4636acd...
+Root PARTUUID is cb0d5979-0c87-498b-aaae-6ea8f1423feb...
+Root UUID is 44f9ece4-f14d-40cb-bb37-7a0317e76f0f...
+  -&gt; Cleaning up image...
+  -&gt; Compressing Manjaro-ARM-minimal-r3300m-23.02.img with xz...
+xz: Reduced the number of threads from 4 to 1 to not exceed the memory usage limit of 233 MiB
+Manjaro-ARM-minimal-r3300m-23.02.img: 363.6 MiB / 2,820.0 MiB = 0.129, 1.3 MiB/s, 36:23
+  -&gt; Removing rootfs_aarch64...
+
+==&gt; Time elapsed: 48.47 minute(s)
+</code></pre>
+<p>生成镜像花费了48分钟，其中足足36分钟用在了压缩镜像上。受内存限制，xz只利用了一个处理器线程，拖慢了压缩速度。有条件还是用PC操作为宜。</p>
+<p>镜像位于 <code>/var/cache/manjaro-arm-tools/img/</code> ：</p>
+<pre><code class="bash">ls -lh /var/cache/manjaro-arm-tools/img/
+total 364M
+-rw-rw-rw- 1 root root 364M Feb  7 10:18 Manjaro-ARM-minimal-r3300m-23.02.img.xz
+-rw-r--r-- 1 root root 3.9K Feb  7 10:13 Manjaro-ARM-minimal-r3300m-23.02-pkgs.txt
+</code></pre>
+<p>镜像总共包含软件包205个，十分精简，这几天我抽空测试下能否正常启动。</p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools">manjaro-arm-tools</a>使用方式作为附录全文转载，供参考：</p>
+<h1 id="Manjaro-ARM-Tools"><a href="#Manjaro-ARM-Tools" class="headerlink" title="Manjaro ARM Tools"></a>Manjaro ARM Tools</h1><p>Contains scripts and files needed to build and manage manjaro-arm packages and images.</p>
+<p>This software is available in the Manjaro repository.</p>
+<p><em>These tools only work on Manjaro based distributions!</em></p>
+<h2 id="Known-issues"><a href="#Known-issues" class="headerlink" title="Known issues"></a>Known issues</h2><p>Check the <a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools/-/issues">Issues</a> page.</p>
+<h2 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h2><p>These scripts rely on certain packages, other than what’s in the <code>base</code> package group, to be able to function. These packages are:</p>
+<ul>
+<li>parted (arch repo)</li>
+<li>libarchive (arch repo)</li>
+<li>git (arch repo)</li>
+<li>qemu-user-static-binfmt (arch repo)</li>
+<li>dosfstools (arch repo)</li>
+<li>pacman (arch repo)</li>
+<li>polkit (arch repo)</li>
+<li>gnugpg (arch repo)</li>
+<li>wget (arch repo)</li>
+<li>zstd (arch repo) - unzstd used for early package verification and zstd image compression</li>
+<li>systemd-nspawn with support for <code>--resolv-conf=copy-host</code> (arch repo)</li>
+</ul>
+<h3 id="Optional-Dependencies"><a href="#Optional-Dependencies" class="headerlink" title="Optional Dependencies"></a>Optional Dependencies</h3><ul>
+<li>gzip (arch repo) (for <code>builddockerimg</code>)</li>
+<li>docker (arch repo) (for <code>builddockkerimg</code>)</li>
+<li>mktorrent (arch repo) (for torrent support in <code>deployarmimg</code>)</li>
+<li>rsync (arch repo) (for <code>deployarmimg</code>)</li>
+<li>bmap-tools (AUR or manjaro repo) (for BMAP support in <code>buildarmimg</code>)</li>
+<li>btrfs-progs (arch repo) (for btrfs support in <code>buildarmimg</code>)</li>
+<li>grub-efi-arm64 (AUR) (for generic-efi image support in <code>buildarmimg</code>)</li>
+</ul>
+<h1 id="Installation-Manjaro-based-distributions-only"><a href="#Installation-Manjaro-based-distributions-only" class="headerlink" title="Installation (Manjaro based distributions only)"></a>Installation (Manjaro based distributions only)</h1><h2 id="From-Manjaro-repositories-both-x64-and-aarch64"><a href="#From-Manjaro-repositories-both-x64-and-aarch64" class="headerlink" title="From Manjaro repositories (both x64 and aarch64)"></a>From Manjaro repositories (both x64 and aarch64)</h2><p>Simply run <code>sudo pacman -S manjaro-arm-tools</code>.</p>
+<h2 id="From-gitlab-tagged-or-GIT-version"><a href="#From-gitlab-tagged-or-GIT-version" class="headerlink" title="From gitlab (tagged or GIT version)"></a>From gitlab (tagged or GIT version)</h2><ul>
+<li>Download the <code>.zip</code> or <code>.tar.gz</code> file from <a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools">https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools</a>.</li>
+<li>Extract it.</li>
+<li>Copy the contents of <code>lib/</code> to <code>/usr/share/manjaro-arm-tools/lib/</code>.</li>
+<li>Copy the contents of <code>bin/</code> to <code>/usr/bin/</code>. Remember to make them executable.</li>
+<li>Create <code>/var/lib/manjaro-arm-tools/pkg</code> folder.</li>
+<li>Create <code>/var/lib/manjaro-arm-tools/img</code> folder.</li>
+<li>Create <code>/var/lib/manjaro-arm-tools/tmp</code> folder.</li>
+<li>Create <code>/var/cache/manjaro-arm-tools/img</code> folder.</li>
+<li>Create <code>/var/cache/manjaro-arm-tools/pkg</code> folder.</li>
+<li>Install <code>binfmt-qemu-static</code> package and make sure <code>systemd-binfmt</code> is running</li>
+</ul>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><h2 id="buildarmpkg"><a href="#buildarmpkg" class="headerlink" title="buildarmpkg"></a>buildarmpkg</h2><p>This script is used to create packages for ARM architectures.<br>It assumes you have filled out the PACKAGER section of your <code>/etc/makepkg.conf</code>.</p>
+<p>Options inside <code>[</code> <code>]</code> are optional. Use <code>-h</code> to see what the defaults are.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>sudo buildarmpkg -p package [-a architecture] [-k] [-i packages] [-b branch]
+</code></pre>
+<p>To use one or more local packages, put them all in the desired directory, named <code>packages</code> in the example below, before running the utility:</p>
+<pre><code>sudo buildarmpkg -p package [-a architecture] [-k] [-i packages] [-b branch]
+</code></pre>
+<p>To build an aarch64 package against arm-unstable branch use the following command:</p>
+<pre><code>sudo buildarmpkg -p package -a aarch64 -b unstable
+</code></pre>
+<p>You can also build <code>any</code> packages, which will use the aarch64 architecture to build from.</p>
+<pre><code>sudo buildarmpkg -p package -a any
+</code></pre>
+<p>The built packages will be copied to <code>$PKGDIR</code> as specified in <code>/usr/share/manjaro-arm-tools/lib/manjaro-arm-tools.conf</code> and placed in a subdirectory for the respective architecture.<br>Default package destination is <code>/var/cache/manjaro-arm-tools/pkg/</code>.</p>
+<h2 id="signarmpkgs"><a href="#signarmpkgs" class="headerlink" title="signarmpkgs"></a>signarmpkgs</h2><p>This script uses the GPG identity you have setup in your /etc/makepkg.conf to sign the packages in the current folder.</p>
+<pre><code>cd &lt;folder with built packages&gt;
+signarmpkgs
+</code></pre>
+<h2 id="buildarmimg"><a href="#buildarmimg" class="headerlink" title="buildarmimg"></a>buildarmimg</h2><p>For a list of supported devices and editions, please look at the Profiles repository linked below.</p>
+<p>This script will compress the image file and place it in <code>/var/cache/manjaro-arm-tools/img/</code></p>
+<p>Profiles that gets used are from this <a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/arm-profiles">Gitlab</a> repository.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>sudo buildarmimg [-d device] [-e edition] [-v version] [-n] [-x] [-i packages] [-b branch] [-m] [-z compression]
+</code></pre>
+<p>To build a minimal image version 18.07 for the raspberry pi 3 on arm-unstable branch with bmap support:</p>
+<pre><code>sudo buildarmimg -d rpi3 -e minimal -v 18.07 -b unstable -m
+</code></pre>
+<p>To build a minimal version 18.08 RC1 for the odroid-c2 with a new rootfs downloaded:</p>
+<pre><code>sudo buildarmimg -d oc2 -e minimal -v 18.08-rc1 -n
+</code></pre>
+<p>To build an lxqt version with one or more local packages installed for the rock64:</p>
+<pre><code>sudo buildarmimg -d rock64 -e lxqt -i packages
+</code></pre>
+<p>To build an xfce version with one or more local packages installed for the rock64, put them all in the desired directory, named <code>packages</code> in the example below, before running the utility:</p>
+<pre><code>sudo buildarmimg -d rock64 -e xfce -i packages
+</code></pre>
+<p>To build a kde-plasma edition for the Pinebook Pro with btrfs filesystem:</p>
+<pre><code>sudo buildarmimg -d pbpro -e kde-plasma -p btrfs
+</code></pre>
+<p>To build a factory image for the Pinebook Pro, with BSP uboot:</p>
+<pre><code>sudo buildarmimg -d pbpro-bsp -e kde-plasma -f
+</code></pre>
+<p>A log is located at /var/log/manjaro-arm-tools/buildarmimg-$(date +%Y-%m-%d-%H:%M).log</p>
+<h2 id="buildemmcinstaller-depricated"><a href="#buildemmcinstaller-depricated" class="headerlink" title="buildemmcinstaller (depricated)"></a>buildemmcinstaller (depricated)</h2><p>This script does almost the same as the <code>buildarmimg</code> script.</p>
+<p>Except that it always creates a minimal image, with an already existing image inside it, only to be used for internal storage (eMMC) deployments.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>sudo buildemmcinstaller [-d device] [-e edition] -v version [-f flashversion] [-n] [-x] [-i packages]
+</code></pre>
+<p>So to build an eMMC installer image for KDE Plasma 19.04 on Pinebook:</p>
+<pre><code>sudo buildemmcinstaller -d pinebook -e kde-plasma -v 19.04 -f first-emmc-flasher
+</code></pre>
+<p>Be aware that the device, edition and version, most already exist on the OSDN download page, else it won’t work.</p>
+<h2 id="buildrootfs"><a href="#buildrootfs" class="headerlink" title="buildrootfs"></a>buildrootfs</h2><p>This script does exactly what it says it does. It builds a very small rootfs, to be used by the Manjaro ARM Installer and <code>buildarmimg</code>. Right now only supports <code>aarch64</code>.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>sudo buildrootfs
+</code></pre>
+<p>To build an aarch64 rootfs:</p>
+<pre><code>sudo buildrootfs
+</code></pre>
+<p>A log is located at /var/log/manjaro-arm-tools/buildrootfs-$(date +%Y-%m-%d-%H:%M).log</p>
+<h2 id="builddockerimg"><a href="#builddockerimg" class="headerlink" title="builddockerimg"></a>builddockerimg</h2><p>This script is similar to <code>buildrootfs</code>, except that it builds a rootfs ready for package building and turns it into a docker image, that can be uploaded to DockerHub.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>sudo builddockerimg
+</code></pre>
+<p>This uploads the docker file directly to the Manjaro ARM acccount on DockerHub.</p>
+<p>A log is located at /var/log/manjaro-arm-tools/builddockerimg-$(date +%Y-%m-%d-%H:%M).log</p>
+<h2 id="deployarmimg-depricated"><a href="#deployarmimg-depricated" class="headerlink" title="deployarmimg (depricated)"></a>deployarmimg (depricated)</h2><p>This script will create checksums for and upload the newly generated image. It assumes you have upload access to our OSDN server.<br>If you don’t, you can’t use this.</p>
+<p><strong>Syntax</strong></p>
+<pre><code>deployarmimg -i image [-d device] [-e edition] [-v version] -k email@server.org [-t] [-u osdn-username]
+</code></pre>
+<p>To upload an image to the raspberry pi minimal 18.07 folder use with torrent:</p>
+<pre><code>deployarmimg -i Manjaro-ARM-minimal-rpi3-18.07.img.xz -d rpi3 -e minimal -v 18.07 -k email@server.org -t
+</code></pre>
+<h2 id="getarmprofiles"><a href="#getarmprofiles" class="headerlink" title="getarmprofiles"></a>getarmprofiles</h2><p>This script will just clone or update the current profile list in <code>/usr/share/manjaro-arm-tools/profiles/</code>.<br>So nothing fancy.</p>
+<p>This would enable users to clone the profiles repository, make any changes they would like to their images and then build them locally.<br>So if you made changes to the profiles yourself, don’t run <code>getarmprofiles</code> and you will still have your edits.</p>
+<p>But if you messed up your profiles somehow, you can start with the repo ones with:</p>
+<pre><code>sudo getarmprofiles -f
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/12/02/ImageMagick/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -909,85 +1178,6 @@ convert 0.jpg -colorspace Gray 1.jpg #Linux下
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/09/19/fd-dipole-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/19/fd-dipole-2/" class="post-title-link" itemprop="url">晾衣绳天线研究（篇三）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-19 14:30:15" itemprop="dateCreated datePublished" datetime="2022-09-19T14:30:15+08:00">2022-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前测试天线发射指标一直不理想，14MHz的SWR始终降不下来。经过学习后得知馈线的屏蔽层也需要连接。之前由于没有 <strong>SL16-J</strong>的公对公连接头，所以仅仅使用六角螺丝刀连接了内导体，外屏蔽层为开路状态。使用铜线连接屏蔽层后天线终于可以自然谐振在14MHz，算是一大收获，接收效果也有改善。等到连接头到货后估计还能减少一些损耗，SWR也会更稳定。<br>再来审视下这个天线的特性。这个天线如果不考虑馈线，和一个折叠偶极子天线（folded dipole antenna）并无别样。折叠偶极子天线相较于普通的偶极子天线具备如下优点：</p>
-<ol>
-<li>阻抗高，约300Ω，与传输线匹配更好；</li>
-<li>带宽更高；</li>
-<li>信噪比更高。</li>
-</ol>
-<p>不过普通的偶极子天线使用同轴线（coax）馈电，我的这个天线使用双头线（ladder line），馈电位置都是天线中央。这种搭配双头线使用的天线，一般称之为双联天线（doublet antenna），它具备如下特点：</p>
-<ol>
-<li>馈线是天线的一部分。虽然对馈线长度要求并不严格（假设天线左臂右臂长度均为L1，馈线长L2），当L1+L2等于操作频率的四分之一波长时，阻抗匹配最好，此时馈线末端呈现的阻抗大概为50Ω；</li>
-<li>馈线使用平行线（双头线），以减小损耗。一般可选450Ω或600Ω传输线，不过电视用的300Ω馈线也可以。需要指出，电视的300Ω馈线便宜易得，约合1.2元/米，前面两种国内没发现哪里有卖。不同于同轴线，双头线易受环境干扰。尽量将其远离金属、不要与房屋外墙平行放置、不要放在地上，也不要大角度弯折甚至缠起来，否则会发生预期之外的阻抗变化或者电磁泄露；</li>
-<li>由于双头线损耗较小，所以双联天线在配合天调的情况下比较适合多段操作。</li>
-</ol>
-<p>想更深入了解 doublet antenna 推荐阅读 <a target="_blank" rel="noopener" href="https://ftp.unpad.ac.id/orari/library/library-sw-hw/amateur-radio/ant/docs/Introducing%20the%20All-Band%20Doublet.htm">Introducing the “All-Band” Doublet:What the Student and the Instructor Should Keep in Mind</a></p>
-<p>另外在查找 doublet antenna 天线资料时发现了另一类有意思的天线： <strong>Wide-Band Folded Dipole</strong>，简称 <strong>WBFD</strong>，即宽频折叠偶极子天线。它与普通FD天线的区别在于在馈电点正对面插入了一个阻值800至900Ω的无感电阻，然后配合1:16的变换器实现阻抗匹配，以得到宽广范围内较低的SWR值。不过代价是增益比同规格 doublet antenna 低了约6.3dB。而且低SWR不总意味着天线能够高效发射，在操作频率低于某一阈值时，天线指标迅速恶化，作为低SWR的代价，无感电阻承受了大部分功率。感兴趣可以移步至<a target="_blank" rel="noopener" href="http://on5au.be/content/a10/wire/wbfd.html">Notes on the Terminated Wide-Band “Folded Dipole”</a>深入了解。</p>
-<p>最后在此缅怀作者 <strong>L. B. Cebik, W4RNL</strong>，本文引用的两篇文献均出自他的手笔，愿他安息。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1057,7 +1247,7 @@ convert 0.jpg -colorspace Gray 1.jpg #Linux下
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

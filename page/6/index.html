@@ -163,6 +163,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/10/26/hummingbot_amlogic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/26/hummingbot_amlogic/" class="post-title-link" itemprop="url">Manjaro ARM运行hummingbot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-26 09:43:48" itemprop="dateCreated datePublished" datetime="2021-10-26T09:43:48+08:00">2021-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2021年9月15日，人民银行、网信办、最高人民法院、最高人民检察院、工业和信息化部、公安部、市场监管总局、银保监会、证监会、外汇局联合印发《关于进一步防范和处置虚拟货币交易炒作风险的通知》（银发〔2021〕237号），明确虚拟货币相关业务活动属于非法金融活动。不过掌握虚拟货币的基本概念，以及对其工具具备认知仍具备正面意义。本文介绍了在Manjaro ARM平台运行hummingbot过程，仅供学习用途。</p>
+<h1 id="在Docker中运行"><a href="#在Docker中运行" class="headerlink" title="在Docker中运行"></a>在Docker中运行</h1><h2 id="下载一键脚本"><a href="#下载一键脚本" class="headerlink" title="下载一键脚本"></a>下载一键脚本</h2><pre><code class="bash">wget https://raw.githubusercontent.com/CoinAlpha/hummingbot/development/installation/docker-commands/create.sh
+wget https://raw.githubusercontent.com/CoinAlpha/hummingbot/development/installation/docker-commands/start.sh
+wget https://raw.githubusercontent.com/CoinAlpha/hummingbot/development/installation/docker-commands/update.sh
+</code></pre>
+<h2 id="给脚本添加可执行权限"><a href="#给脚本添加可执行权限" class="headerlink" title="给脚本添加可执行权限"></a>给脚本添加可执行权限</h2><pre><code class="bash">chmod a+x *.sh
+</code></pre>
+<h2 id="创建hummingbot实例"><a href="#创建hummingbot实例" class="headerlink" title="创建hummingbot实例"></a>创建hummingbot实例</h2><pre><code class="bash">./create.sh
+</code></pre>
+<p>第一步提示hummingbot镜像版本，对于ARM平台当然需要使用ARM标签。hummingbot更新比较频繁，可以到 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/coinalpha/hummingbot/tags">https://hub.docker.com/r/coinalpha/hummingbot/tags</a> 查看。</p>
+<h2 id="常用docker命令"><a href="#常用docker命令" class="headerlink" title="常用docker命令"></a>常用docker命令</h2><p>列出container：<code>docker container ps</code></p>
+<p>查看container实时状态：<code>dockerc container stats</code></p>
+<p>启动container：<code>docker start hummingbot-instance</code></p>
+<p>连接到container：<code>docker attatch hummingbot-instance</code></p>
+<p>断开container：<code>Ctrl + P 然后 Ctrl + Q</code> （container在后台继续运行）</p>
+<p>至成稿时，最新版本为<code>version-0.43.1-arm_beta</code>。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>刚创建的<code>hummingbot-instance</code>约占用374MB内存以及不低于20%的CPU，CPU有时还会满载，1G内存的S905盒子跑起来略吃力。如果用Manjaro ARM Minimal搭建最小化运行环境可能会略微改善。笔者没有交易所账号，没有进行更深入测试。</p>
+<h1 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h1><p>源码安装比较麻烦，不过可以实现：</p>
+<h2 id="源码拉取"><a href="#源码拉取" class="headerlink" title="源码拉取"></a>源码拉取</h2><pre><code class="bash">https://github.com/coinalpha/hummingbot
+</code></pre>
+<h2 id="python包安装"><a href="#python包安装" class="headerlink" title="python包安装"></a>python包安装</h2><p>官方在树莓派上的教程有些过时了。杂糅下教程中引用的和<code>setup/requirements-arm.txt</code>包，共需要这些依赖：</p>
+<blockquote>
+<p>0x-contract-wrappers 0x-order-utils aioconsole aiohttp aiokafka aioresponses attrdict binance cachetools coverage cython diff-cover eth_account eth_bloom ethsnarks-loopring flake8 idna-ssl jwt mypy_extensions nose numpy objgraph pandas pre-commit prompt_toolkit psutil pyinstall pyjwt pyperclip python-binance python-telegram-bot rsa ruamel.yaml signalr-client-aio simplejson sqlalchemy telegram tzlocal ujson web3 websockets </p>
+</blockquote>
+<p>解决粘贴问题，再加上<code>QtPy</code>。</p>
+<p>另外值得指出，hummingbot依赖<code>sqlalchemy</code>提供的<code>RowProxy</code>。但是在sqlalchemy1.4中，<code>RowProxy</code>被移除了，所以这个包需要用旧版本。</p>
+<p>pip官方源在国内下载很慢，故使用-i选项指定清华镜像。</p>
+<pre><code class="bash">pip install 0x-contract-wrappers 0x-order-utils aioconsole aiohttp aiokafka aioresponses attrdict binance cachetools coverage cython diff-cover eth_account eth_bloom ethsnarks-loopring flake8 idna-ssl jwt mypy_extensions nose numpy objgraph pandas pre-commit prompt_toolkit psutil pyinstall pyjwt pyperclip python-binance python-telegram-bot rsa ruamel.yaml signalr-client-aio simplejson sqlalchemy telegram tzlocal ujson web3 websockets QtPy -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip install --user SQLAlchemy==1.3.6  -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<p>这样python依赖包就安装好了。</p>
+<h2 id="Miniforge3安装"><a href="#Miniforge3安装" class="headerlink" title="Miniforge3安装"></a>Miniforge3安装</h2><pre><code class="bash">wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
+chmod u+x Miniforge3-Linux-aarch64.sh 
+./Miniforge3-Linux-aarch64.sh 
+</code></pre>
+<p>装好后，重新登录系统以使<code>conda</code>命令生效。</p>
+<h2 id="hummingbot编译"><a href="#hummingbot编译" class="headerlink" title="hummingbot编译"></a>hummingbot编译</h2><pre><code class="bash">cd hummingbot
+./clean &amp;&amp; ./compile
+</code></pre>
+<h2 id="hummingbot运行"><a href="#hummingbot运行" class="headerlink" title="hummingbot运行"></a>hummingbot运行</h2><p>在<code>hummingbot</code>源码根目录下，执行<code>bin/hummingbot.py</code>。首次运行会进行一些初始化配置，按提示操作即可。</p>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>用源码折腾很麻烦，CPU照样满载，docker至少方便一些。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/10/21/DIY-Manjaro-ARM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -982,84 +1088,6 @@ sudo usermod -aG existgroup newuser
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/09/18/R3300M-Android6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/R3300M-Android6/" class="post-title-link" itemprop="url">R3300-M Android6.0试验</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-18 09:36:04" itemprop="dateCreated datePublished" datetime="2021-09-18T09:36:04+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>恩山上看到有人在R3300-L上刷入Android 6.0后，成功将openwrt刷入emmc并启动成功。或许R3300-M也可以？</p>
-<p>R3300-M使用meson-gxbb-p201.dtb，搜索外网固件基本上锁定MXQ P201关键词，于是搜到了这个帖子：</p>
-<p><a target="_blank" rel="noopener" href="https://forum.freaktab.com/forum/tv-player-support/amlogic-based-tv-players/s905/others-ac/firmware-roms-tools-bj/789645-ugoos-android-6-0-1-port-mxq-s905-p201">Ugoos Android 6.0.1 port MXQ S905 P201</a></p>
-<p>有网友在MXQ P201上测试，WIFI正常，有线网卡不工作。不过我们现在只关心BootLoader，Amlogic设备的分区表都在BootLoader里，如果这个BootLoader比较新，可以小小期待下从emmc启动。</p>
-<p>从上面帖子追踪到原贴，某位俄国人基于UGOS做的改版固件：  <a target="_blank" rel="noopener" href="https://4pda.to/forum/index.php?showtopic=760441&amp;st=1320">https://4pda.to/forum/index.php?showtopic=760441&amp;st=1320</a></p>
-<p>固件下载地址： <a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1ECX6Peu5tELNMbLKo5_dBJN76DlvuX6L">https://drive.google.com/drive/folders/1ECX6Peu5tELNMbLKo5_dBJN76DlvuX6L</a></p>
-<p>其中：（谷歌渣翻译加猜测，原文俄文看不懂）</p>
-<ol>
-<li>ugos7 wifi.img ： 只有 WIFI 工作</li>
-<li>ugos9 wifi s pdu.img ： Wifi 工作和远程控制</li>
-<li>ugos10 wifi s pdu ckear.img ：Wifi 工作正常，删除了一些 ugos预装应用和启动器（作者说这个最精简，最快）</li>
-</ol>
-<p>ugos10应该最适合，如果这个固件内核版本高于3.14，那么从emmc启动openwrt（5.4内核）就很有希望。Manjaro主线内核已经滚到了5.14.2，不抱希望。（如果没记错，恩山Flippy在某帖子中提到5.10内核后Amlogic都无法从emmc启动linux）有空时候测试下。</p>
-<p>更新：去Coreelec又看了下关于内核的讨论，GXBB S905只有3.14内核，无缘4.9，所以emmc启动没戏了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1129,7 +1157,7 @@ sudo usermod -aG existgroup newuser
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

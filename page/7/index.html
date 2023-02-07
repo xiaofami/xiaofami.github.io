@@ -163,6 +163,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/09/18/R3300M-Android6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/18/R3300M-Android6/" class="post-title-link" itemprop="url">R3300-M Android6.0试验</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-18 09:36:04" itemprop="dateCreated datePublished" datetime="2021-09-18T09:36:04+08:00">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>恩山上看到有人在R3300-L上刷入Android 6.0后，成功将openwrt刷入emmc并启动成功。或许R3300-M也可以？</p>
+<p>R3300-M使用meson-gxbb-p201.dtb，搜索外网固件基本上锁定MXQ P201关键词，于是搜到了这个帖子：</p>
+<p><a target="_blank" rel="noopener" href="https://forum.freaktab.com/forum/tv-player-support/amlogic-based-tv-players/s905/others-ac/firmware-roms-tools-bj/789645-ugoos-android-6-0-1-port-mxq-s905-p201">Ugoos Android 6.0.1 port MXQ S905 P201</a></p>
+<p>有网友在MXQ P201上测试，WIFI正常，有线网卡不工作。不过我们现在只关心BootLoader，Amlogic设备的分区表都在BootLoader里，如果这个BootLoader比较新，可以小小期待下从emmc启动。</p>
+<p>从上面帖子追踪到原贴，某位俄国人基于UGOS做的改版固件：  <a target="_blank" rel="noopener" href="https://4pda.to/forum/index.php?showtopic=760441&amp;st=1320">https://4pda.to/forum/index.php?showtopic=760441&amp;st=1320</a></p>
+<p>固件下载地址： <a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1ECX6Peu5tELNMbLKo5_dBJN76DlvuX6L">https://drive.google.com/drive/folders/1ECX6Peu5tELNMbLKo5_dBJN76DlvuX6L</a></p>
+<p>其中：（谷歌渣翻译加猜测，原文俄文看不懂）</p>
+<ol>
+<li>ugos7 wifi.img ： 只有 WIFI 工作</li>
+<li>ugos9 wifi s pdu.img ： Wifi 工作和远程控制</li>
+<li>ugos10 wifi s pdu ckear.img ：Wifi 工作正常，删除了一些 ugos预装应用和启动器（作者说这个最精简，最快）</li>
+</ol>
+<p>ugos10应该最适合，如果这个固件内核版本高于3.14，那么从emmc启动openwrt（5.4内核）就很有希望。Manjaro主线内核已经滚到了5.14.2，不抱希望。（如果没记错，恩山Flippy在某帖子中提到5.10内核后Amlogic都无法从emmc启动linux）有空时候测试下。</p>
+<p>更新：去Coreelec又看了下关于内核的讨论，GXBB S905只有3.14内核，无缘4.9，所以emmc启动没戏了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/09/17/hexo-push2git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1383,74 +1461,6 @@ vim2-post-install
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2021/08/20/openconnect-client-cli/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/20/openconnect-client-cli/" class="post-title-link" itemprop="url">使用openconnect命令行客户端</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-20 16:18:36" itemprop="dateCreated datePublished" datetime="2021-08-20T16:18:36+08:00">2021-08-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>部分linux发行版网络配置GUI强制openconnect使用密钥，用户名-密码登录可以通过命令行实现：</p>
-<pre><code class="bash">sudo openconnect [域名或IP地址]:[端口号]
-</code></pre>
-<p>然后根据提示操作就可以了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1520,7 +1530,7 @@ vim2-post-install
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

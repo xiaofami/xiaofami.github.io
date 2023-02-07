@@ -163,6 +163,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/08/01/b-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tccmu">
+      <meta itemprop="description" content="WXRC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小荷">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/01/b-test/" class="post-title-link" itemprop="url">业余无线电B证备考</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-01 15:11:20" itemprop="dateCreated datePublished" datetime="2022-08-01T15:11:20+08:00">2022-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前搭建packet radio节点的试验告一段落了。由于本地没有使用packet radio的ham，所以没办法测试解码效果。不过编码发送功能没有问题。另外systemd脚本也有一些问题。理想情况下ax25bind应该伴随direwolf一并重启，不过实际中虽然指定了PartOf参数，这个功能没有实现，算是小小的不完美。为了吸引到更多的爱好者参与packet radio，我计划整理出一个从理论到实操比较完整的入门教程。不过业余无线电考试快到了，B级考试还是要准备一下，packet radio暂时要放一放了。</p>
+<p>B级考试需要记忆频率、Q短语、名词等比较琐碎的知识点。虽然有取巧记忆方法，不过为了日后规范使用频率，还是应该理解记忆。</p>
+<h1 id="频段"><a href="#频段" class="headerlink" title="频段"></a>频段</h1><h2 id="业余业务作为专用业务频段"><a href="#业余业务作为专用业务频段" class="headerlink" title="业余业务作为专用业务频段"></a>业余业务作为专用业务频段</h2><p>7-7.2MHz（7.03-7.2 LSB） 14-14.25MHz（14.1 IARU, 14.1-14.35 USB） 21-21.45MHz（21.15 IARU， 21.125-21.45可USB， 除去21.1495-21.1505，即避让信标±500Hz） 28-29.7MHz（28.2 IARU, 28.3-29.3 USB， 29.51-29.7 FM） 47GHz</p>
+<h2 id="业余业务作为主要业务的频段"><a href="#业余业务作为主要业务的频段" class="headerlink" title="业余业务作为主要业务的频段"></a>业余业务作为主要业务的频段</h2><p>1.8-2MHz 3.5-3.9MHz 14.25-14.35MHz 18.068-18.168MHz （WARC, 18.11 IARU， 18.1105-18.168 USB） 24.89-24.99MHz （WARC, 24.93 IARU， 24.9305-24.99 USB） 50-54MHz 144-148MHz（144-146唯一主要，146-148共同主要，避让 144-144.035和145.8-146）</p>
+<h2 id="业余业务作为次要业务频段"><a href="#业余业务作为次要业务频段" class="headerlink" title="业余业务作为次要业务频段"></a>业余业务作为次要业务频段</h2><p>135.7-137.5KHz 10.1-10.15MHz（WARC，不能用于通话） 430-440MHz（避让431.9-432.240和435-438）</p>
+<p>LF（低频，例135.7-137.8KHz）<br>MF（中频，例1.8-2MHz）<br>HF（高频，例28-29.87MHz）<br>VHF（甚高频，米波，例50-54MHz）<br>UHF（特高频，分米波，例2300-1450MHz）<br>SHF（超高频，厘米波，例C、Ku波段卫星电视广播）<br>EHF（极高频，毫米波，例241-250GHz）</p>
+<h1 id="Q简语"><a href="#Q简语" class="headerlink" title="Q简语"></a>Q简语</h1><p>Q简语   问句含义   答句含义<br>QRA   你的电台名称是？   我的电台名称是…<br>QRB   你台离我台多远？   我们相距约为…<br>QRG   我的准确频率是多少?   你的准确频率是…<br>QRI   我的音调如何?   你的音调是(T1-T9)<br>QRJ   我的信号小吗   你的信号小<br>QRK   我的信号可辩度是多少?   你的信号可辩度是(R1-R5)<br>QRL   你忙吗？   我正忙<br>QRM   你受到他台干扰吗？   我正受到他台干扰 1.无 2.稍有 3.中等 4.严重 5.极端<br>QRN   你受到天电干扰吗？   我正受到天电干扰 1.无 2.稍有 3.中等 4.严重 5.极端<br>QRO   要我增加发信功率吗？   请增加发信功率<br>QRP   要我减低发信功率吗？   请减低发信功率<br>QRQ   要我发得快些吗？   请发快些<br>QRS   要我发得慢些吗？   请发慢些<br>QRT   要我停止拍发吗？   请停止拍发<br>QRU   你有事吗?   无事<br>QRV   你准备好了吗？   我已准备好了<br>QRW   需要我转告吗?   请转告<br>QRX   要我等多长时间？   请等待… …分钟<br>QRZ   谁在呼叫我？   …正在呼叫你</p>
+<p>QSA   我的信号强度是多少?   你的信号强度是…<br>QSB   我的信号有衰落吗？   你的信号强度是，1.几乎不能抄收 2.弱 3.还好 4.好 5.很好<br>QSD   我的信号不完整吗?   你的信号不完整<br>QSL   你确认收妥/QSL卡片吗？   我确认收妥/QSL卡片<br>QSO   你能否和…直接（或转接）通信？   你能和…直接（或转接）通信？<br>QSP   你能中转到…吗   我能中转到…<br>QSU   能在这个频率(或某个频率)回复吗?   我将在此频率(或某频率)回复<br>QSV   有天电干扰要我在此频率发一串 V 字吗？   请在此频率发一串 V 字<br>QSW   你将在此频率(或某频率)发吗？   我将在此频率(或某频率)发<br>QSX   你将在某频率收听吗？   我将在某频率收听<br>QSY   要我改用其他频率拍发吗？   请改用…KHz/MHz拍发<br>QSZ   要我每组发两遍吗？   请每组发两遍<br>QTB   要我查对组数吗？   请查对组数<br>QTC   你有几分报要发?   我有…分报要发<br>QTH   你的地理位置是？   我的地理位置是…<br>QTR   你的标准时间是?   我的标准时间是…</p>
+<h1 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h1><p>SASE 写好收信人地址的信封<br>ALC  发信自动电平控制<br>AT   自动天线调谐<br>ATT  收信机自动增益衰减<br>AGC  收信机自动增益控制<br>PRE  收信机前置放大器<br>PROC 发信语音压缩<br>RIT  接收增量调谐<br>XIT  发射增量调谐</p>
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><h2 id="CQ分区"><a href="#CQ分区" class="headerlink" title="CQ分区"></a>CQ分区</h2><p>23 24（东沙、钓鱼） 27（黄岩岛）</p>
+<h2 id="ITU分区"><a href="#ITU分区" class="headerlink" title="ITU分区"></a>ITU分区</h2><p>我国大区为3区，33 42 43 44（东沙、钓鱼） 50（黄岩岛）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/28/packet-systemd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1286,176 +1361,6 @@ pat http # 启动pat的网页页面
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://xiaofami.github.io/2022/07/19/bbs_build/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="tccmu">
-      <meta itemprop="description" content="WXRC">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小荷">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/19/bbs_build/" class="post-title-link" itemprop="url">搭建支持telnet和packet radio访问的BBS服务器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-19 09:12:47" itemprop="dateCreated datePublished" datetime="2022-07-19T09:12:47+08:00">2022-07-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-06 09:03:38" itemprop="dateModified" datetime="2023-02-06T09:03:38+08:00">2023-02-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>硬件平台还是运行Manjaro ARM的R3300-M盒子，之前已经编译运行了direwolf，理论上连接各组件后即可使用。不过我的FT-8900R在车上，之前的试验中在车上给盒子供电的5V转12V升压线被烧掉了，所以一时半会儿还无法完成测试，可能加上1个12V直流稳压模块比较好。于是在这个“间隙”中，研究一下BBS系统的搭建。</p>
-<h1 id="BBS系统选择"><a href="#BBS系统选择" class="headerlink" title="BBS系统选择"></a>BBS系统选择</h1><p>之前连接到<a target="_blank" rel="noopener" href="https://hb1bbs.com/">hb1bbs</a>觉得还可以，这个BBS使用的是<a target="_blank" rel="noopener" href="http://www.mysticbbs.com/">Mystic BBS</a>系统。可惜经过测试，这个系统在Manjaro ARM上缺少 <strong>ld-linux.so.3</strong> 库文件所以无法运行。 AUR提供的 <strong>arm-linux-gnueabihf-glibc</strong> 可能提供了这个文件不过可惜这个包的依赖不支持arm64,好事者可以在X86-64电脑上安装然后提取。</p>
-<p>迫于上述原因，我转而投向了 <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/LinFBB/">LinFBB</a>。</p>
-<h1 id="LinFBB安装"><a href="#LinFBB安装" class="headerlink" title="LinFBB安装"></a>LinFBB安装</h1><h2 id="编译安装ax25"><a href="#编译安装ax25" class="headerlink" title="编译安装ax25"></a>编译安装ax25</h2><p>到 <a target="_blank" rel="noopener" href="https://github.com/ve7fet/linuxax25">https://github.com/ve7fet/linuxax25</a>  下载最新release然后编译。项目分三部分：ax25apps,ax25tools,libax25，分别进入目录执行</p>
-<pre><code class="bash">./autogen.sh
-./configure
-make -j4
-sudo make install
-</code></pre>
-<p>编译过程大体上比较顺利。不过 <strong>ax25app</strong> 编译过程中会提示</p>
-<pre><code class="bash">
-call.c:45:10: fatal error: ncursesw/ncurses.h：No such file or directory
-   45 | #include &lt;ncursesw/ncurses.h&gt;
-      | 
-</code></pre>
-<p>开发者是基于Debian编译测试所以头文件名称与Manjaro有差异。按提示进入对应C文件将 <code>#include &lt;ncursesw/ncurses.h&gt;</code>修改为<code>#include &lt;ncurses.h&gt;</code>即可:</p>
-<pre><code class="bash">vim linuxax25-ax25tools-1.0.4/ax25apps/call/call.c #修改第45行
-</code></pre>
-<p>另外对于 <strong>ax25tools</strong>，安装后编译文件夹📁下面etc目录中的配置文件没有被复制到预期位置。比如执行</p>
-<pre><code class="bash">$ man axports
-
-AXPORTS(5)                                       Linux Programmer&#39;s Manual                                       AXPORTS(5)
-
-NAME
-       /etc/ax25/axports - AX.25 port configuration file.
-
-DESCRIPTION
-……（以下省略）
-</code></pre>
-<p>在man文件描述的位置并没有这个配置文件，<code>/usr/local</code> 下面也没有。或许有必要手动创建<code>/etc/ax25</code>，然后把这些配置文件复制过去？</p>
-<h2 id="使libax25可被动态加载"><a href="#使libax25可被动态加载" class="headerlink" title="使libax25可被动态加载"></a>使libax25可被动态加载</h2><pre><code class="bash">cd /etc/ld.so.conf.d/
-sudo vim userlocal.conf # 加入 /usr/local/lib 并保存
-sudo ldconfig
-</code></pre>
-<p>这样刚才自编译安装的 <strong>libax25</strong> 就可以被动态加载了。一种比较古老的方式是使用 <strong>LD_LIBRARY_PATH</strong> 这个环境变量，不过Manjaro已经将其抛弃了，这个值默认是空的。</p>
-<h2 id="编译安装LinFBB"><a href="#编译安装LinFBB" class="headerlink" title="编译安装LinFBB"></a>编译安装LinFBB</h2><p>经过上面步骤后LinFBB编译安装水到渠成，照旧configure make make install三部曲，这个最后额外多了一步 <code>make installconf</code>。</p>
-<p>如果刚才没有安装配置好 <strong>libax25</strong>，这里在configure时会提示 <strong>configure: error: Could not find the libax25 libraries; aborting</strong> 导致编译无法进行。</p>
-<p>另外需要指出，我的编译环境没有X11,所以不会编译xfbbx X11客户端。</p>
-<h1 id="LinFBB配置"><a href="#LinFBB配置" class="headerlink" title="LinFBB配置"></a>LinFBB配置</h1><p>上述编译安装步骤没有难度，从这里开始就要花一些心思了。</p>
-<h2 id="首次运行"><a href="#首次运行" class="headerlink" title="首次运行"></a>首次运行</h2><pre><code class="bash">sudo fbb
-</code></pre>
-<p>首次运行会提示许多文件不存在，按提示选择新建即可，然后添加呼号，姓名等必要信息。这些之后都可以在配置文件中修改，所以即便填错也没关系。</p>
-<p>之后管理fbb应当使用 <code>/usr/local/share/doc/fbb/fbb.sh</code>这个脚本，用法如下：</p>
-<pre><code class="bash">fbb.sh start | stop | status | restart
-</code></pre>
-<p>等一切配置妥当后写一个systemd service用起来会更方便一点。</p>
-<p>LinFBB提供了 <strong>xfbbd</strong> 和 <strong>xfbbC</strong> 。先不研究它们，当前的目的是配置端口以便能够通过telnet访问这个BBS。</p>
-<h2 id="telnet配置"><a href="#telnet配置" class="headerlink" title="telnet配置"></a>telnet配置</h2><p>LinFBB虽然在持续的开发维护中，但BBS作为旧时代的遗珍，包括笔者在内的许多人对它很陌生。教人用wordpress之类东西搭建博客的教程浩如烟海，BBS的资料则只能散见于互联网的角落。 尽管搭建于上个世纪， <a target="_blank" rel="noopener" href="https://www.f6fbb.org/">https://www.f6fbb.org/</a> 仍然保留了大量价值无边的资料，可以作为配置LinFBB的指导。</p>
-<p>此外 <code>/home/manjaro/fbb-7.0.11/doc/html/</code> 目录中也提供了帮助文档，可以阅读。</p>
-<p>参考页面： <a target="_blank" rel="noopener" href="https://www.f6fbb.org/fbbdoc/fmttelne.htm">https://www.f6fbb.org/fbbdoc/fmttelne.htm</a><br>编辑PORT.SYS:</p>
-<pre><code class="conf">
-#Ports：端口数量
-#TNCs：总共有几个TNC（调制解调器）。在使用多工器的情况下，一个端口最多可以有4个TNC。
-#Ports TNCs
-2      2
-
-#COM：串口序号，注意与Windows中的COM1 COM2概念不同，此处仅作为序号。
-#Interface：在LinFBB中仅有9一个可选项，代表Linux，可以用于串口、AX25域套接字、Telnet端口。
-# Address：设备名/端口号。需要确保合适权限使LinFBB可以访问设备。此外，当使用 AF_AX25 内核端口时，地址是不需要的；当使用Telenet时，地址是Tenlet端口的16进制形式。
-# Baud：端口的波特率。BPQ，AF_AX25内核套接字，以及Telnet无视该设定所以填0即可。
-# 这一栏目的行数与上面的端口数量保持一致。（本例中为2）
-
-#Com Interface Address (device)   Baud
-1    9         /dev/cua0          9600
-2    9         189C               0
-
-# TNC：使用中的TNC数量。0代表文件转发。
-# NbCh：TNC使用的频道数量，上限取决于TNC固件。（编者注：对于direwolf之类soundcard modem,是否意味着一个TNC只有一个Channel？）
-# Com：COM口的序号，需要与前文保持一致。
-# MultCh：使用端口多工器情况下的频道数量，否则为1。对于DRSI用途，值为0～7；by KAM use 1/VHF and 2/HF；Linux中使用AF_AX25内核套接字时，MultCh为接口名称（例如：ax0）
-# Paclen：TNC的Paclen（这是啥）
-# Maxfr：TNC最大可以同时发送的帧数
-# NbFwd：最多同时向外发送的频道数量。
-# MaxBloc：forward-block的大小，单位为kb。
-# M/P-Fwd：M代表每小时中开始转发的起始分钟，P-Fwd代表每次转发开始之间的时间间隔
-# Mode：单个字母的组合，每个字母代表一种允许的模式，太长了不翻。以TUWR为例，T代表Ethernet/TCP-IP（host-mode），U代表正常模式（Port mode），W代表网关允许这个频率（附加内容），R代表调制解调器端口允许只读模式（附加内容）
-# Freq：用于描述这个端口的字符串，长度最大为9,不允许空格（编者注：用Comment是不是更直观一点）
-
-#TNC NbCh Com MultCh Pacln Maxfr NbFwd MxBloc M/P-Fwd Mode Freq
-0    0    0   0      0     0     0     0      00/01   ----  File-fwd.
-1    4    1   1      230   4     1     10     30/60   UDYL  433.650
-2    8    2   0      250   2     1     10     00/60   TUWR  Telnet
-</code></pre>
-<p>本例中，telnet端口号为6300,转换为16进制即为 <strong>189C</strong>。重启fbb,通过nmap可以看到本机6300端口已打开，局域网中其他设备也可以通过telnet访问BBS。虽然我们的TNC尚未配置好，**/dev/cua0** 也不存在，不过不影响Telnet端口的使用。</p>
-<p>（编者补充：在linux中，com设备一般被命名为cua）</p>
-<h1 id="AX-25探究"><a href="#AX-25探究" class="headerlink" title="AX.25探究"></a>AX.25探究</h1><p><code>fbb-7.0.11/doc/html/tllinux.htm</code> 成文时间久远（1997），许多内容已经过时。不过其提及的<a target="_blank" rel="noopener" href="https://www.linuxdoc.org/HOWTO/AX25-HOWTO/">AX25-HOWTO</a>（成稿于2001年九月）值得阅读。如果上面链接不幸死掉了，可以访问 <a target="_blank" rel="noopener" href="https://tldp.org/HOWTO/AX25-HOWTO/">https://tldp.org/HOWTO/AX25-HOWTO/</a>  。</p>
-<h2 id="加载AX25内核模块"><a href="#加载AX25内核模块" class="headerlink" title="加载AX25内核模块"></a>加载AX25内核模块</h2><p>这一部分不太乐观。简单检查了一下Manjaro系统（21.3.3）的内核模块，以下是默认具备的：</p>
-<ul>
-<li>ax25</li>
-<li>netrom</li>
-<li>rose</li>
-<li>slip</li>
-<li>mkiss</li>
-<li>lp</li>
-<li>baycom_par baycom_ser_fdx baycom_ser_hdx</li>
-</ul>
-<p>关键的soundmodem（sm0）不在其中。<a target="_blank" rel="noopener" href="https://github.com/VK3FNG/soundmodem">https://github.com/VK3FNG/soundmodem</a> 显示这个模块代码已经被开发者放弃。</p>
-<ol>
-<li>编译安装<code>linuxax25-ax25tools-1.0.4</code>其中的三个模块。上文中已完成。</li>
-<li>执行 <code>sudo modporbe ax25</code></li>
-</ol>
-<p>编者按：ax25这个模块貌似是系统自带的，**/lib/modules/5.16.20-2-MANJARO/kernel/net/ax25/ax25.ko.xz** 的创建时间远远早于编译时间。</p>
-<p>如果需要系统启动时自动加载这个模块，可以利用 <code>/etc/modules-load.d</code> 实现，具体参见 <code>man modules-load.d</code>。</p>
-<h3 id="整合Direwolf"><a href="#整合Direwolf" class="headerlink" title="整合Direwolf"></a>整合Direwolf</h3><p>参考<a target="_blank" rel="noopener" href="https://packet-radio.net/xrpi-interfacing-with-linfbb/">XRpi interfacing with LinFBB</a> 一文，作者使用 <strong>socat</strong> 创建了虚拟COM口供 <strong>XRouter</strong> 和 <strong>LinFBB</strong> 使用。Linux中万物皆文件，所以使用socat创造的虚拟COM口也是一个文件，将这个文件提供给<strong>XRouter</strong> 和 <strong>LinFBB</strong>的配置文件，让它们都使用这个虚拟COM口，就实现了利用虚拟COM口连接<strong>XRouter</strong> 和 <strong>LinFBB</strong> 的目的。</p>
-<p>Direwolf手册中描述了利用 <strong>com0com</strong> 创建虚拟COM接口以及修改Direwolf的步骤，可以作为参考。</p>
-<p>未完待续</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1525,7 +1430,7 @@ sudo ldconfig
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
