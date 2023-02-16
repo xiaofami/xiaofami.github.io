@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>Manjaro使用密钥登录SSH</title>
+    <link href="/2023/02/16/manjaro-ssh/"/>
+    <url>/2023/02/16/manjaro-ssh/</url>
+    
+    <content type="html"><![CDATA[<p>为了方便在外面连接家里的Manjaro ARM小机，我打算把22端口转发出去，于是安全性有必要加强，使用密钥登录取代弱口令。</p><h1 id="生产密钥"><a href="#生产密钥" class="headerlink" title="生产密钥"></a>生产密钥</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ssh-keygen -t rsa<br>Generating public/private rsa key pair.<br>Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/marly/.ssh/id_rsa):<br>Created directory <span class="hljs-string">&#x27;/home/marly/.ssh&#x27;</span>.<br>Enter passphrase (empty <span class="hljs-keyword">for</span> no passphrase):<br>Enter same passphrase again:<br>Your identification has been saved <span class="hljs-keyword">in</span> /home/marly/tmp/id_rsa<br>Your public key has been saved <span class="hljs-keyword">in</span> /home/marly/tmp/id_rsa.pub<br>The key fingerprint is:<br>SHA256:FNPW7n5ub8l5PKn0/DZXQ7yK0ZqJyZJ9pLVFL6l6A2I marly@manjaro<br>The key<span class="hljs-string">&#x27;s randomart image is:</span><br><span class="hljs-string">+---[RSA 3072]----+</span><br><span class="hljs-string">|        o. .     |</span><br><span class="hljs-string">|         oo .    |</span><br><span class="hljs-string">|        .. .  .  |</span><br><span class="hljs-string">|       .    .. o |</span><br><span class="hljs-string">|        S  .o + .|</span><br><span class="hljs-string">|       E . +.= +.|</span><br><span class="hljs-string">|      . = B.X.+.*|</span><br><span class="hljs-string">|       o * @o.=B*|</span><br><span class="hljs-string">|        ..+ .=o*O|</span><br><span class="hljs-string">+----[SHA256]-----+</span><br><span class="hljs-string">$ ls ~/.ssh</span><br><span class="hljs-string">id_rsa  id_rsa.pub</span><br><span class="hljs-string">$ cat ~/.ssh/id_rsa.pub&gt;&gt;authorized_key</span><br></code></pre></td></tr></table></figure><p>公钥放在服务器上，私钥存放在本地用于登录，不要在服务器上存放。<br>另外权限需要格外注意，如果配置不当会产生许多问题，建议按如下配置（id_rsa不建议存储在服务器上）：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ chmod 700 ~/.ssh<br>$ chmod 600 ~/.ssh/id_rsa<br>$ chmod 600 ~/.ssh/id_rsa.pub<br>$ chmod 600 ~/.ssh/authroized_keys<br></code></pre></td></tr></table></figure><h1 id="修改ssh-config"><a href="#修改ssh-config" class="headerlink" title="修改ssh_config"></a>修改ssh_config</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo vim /etc/ssh/sshd_config<br></code></pre></td></tr></table></figure><p>主要确认这两行内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs config">AuthorizedKeysFile .ssh/authorized_keys<br>PasswordAuthentication no<br></code></pre></td></tr></table></figure><p>最后执行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo systemctl restart sshd.service<br></code></pre></td></tr></table></figure><p>重启服务就完事了。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>R3300-M</tag>
+      
+      <tag>Manjaro ARM</tag>
+      
+      <tag>SSH</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用manjaro-arm-tools定制Manjaro ARM镜像</title>
     <link href="/2023/02/06/manjaro-arm-tools/"/>
     <url>/2023/02/06/manjaro-arm-tools/</url>
