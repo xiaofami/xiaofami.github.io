@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>华为GT2 Pro ECG写入NFC门禁卡记录</title>
+    <link href="/2023/02/21/huaweigtnfc/"/>
+    <url>/2023/02/21/huaweigtnfc/</url>
+    
+    <content type="html"><![CDATA[<h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><ol><li>Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象；</li><li>vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上；</li><li>小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片；</li><li>Proxmark3设备一台，购于苏州龙达科技淘宝店.<h1 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h1></li><li>Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定电脑；</li><li>华为运动健康app，安装于vivo iQOO Neo 7。<h1 id="破解原NFC卡片"><a href="#破解原NFC卡片" class="headerlink" title="破解原NFC卡片"></a>破解原NFC卡片</h1></li><li>vivo iQOO Neo 7中打开关机刷卡功能，并选中欲破解的NFC卡片；</li><li>Neo 7关机；</li><li>Neo 7放在Proxmark3设备感应区，进行解析。快速解析后还有2个扇区处于加密状态，单独对这两个扇区进行暴力破解，用i3-8100配置的电脑破解约耗时30分钟。破解结束后点击 <strong>读S50</strong> 然后保存明文数据备用。<h1 id="手表写卡"><a href="#手表写卡" class="headerlink" title="手表写卡"></a>手表写卡</h1></li><li>Neo 7开机，在华为健康app中选择模拟门禁卡。用小米10手机模拟vivo iQOO Neo 7门禁卡的卡号，然后用手表对小米10进行模拟。注意不要给手表下发空白卡，否则卡号改不过来；</li><li>手表放在Proxmark3感应区，选择 <strong>S50写卡</strong> ，首次写入后中间8个扇区数据提示写入失败，使用 <strong>S50密写</strong> 功能再写一次就成功了。个别内容全为0的扇区如果提示写入失败也无妨，NFC卡片默认扇区数据本来就是用0充填的，可以读取手表数据核实。<h1 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h1>用手表测试小区大门、单元楼门、电梯成功。注意 <strong>手表测试成功后一定要第一时间删掉手机中的卡片</strong> ，现在电梯梯控普遍使用了滚动码，被发现复制卡后会即时拉黑。<h1 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h1>分析数据对电梯卡延期，给物业减轻工作负担。</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>R3300-M</tag>
+      
+      <tag>Manjaro ARM</tag>
+      
+      <tag>dhcpcd</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Manjaro设置静态IP</title>
     <link href="/2023/02/16/manjaro-staticip/"/>
     <url>/2023/02/16/manjaro-staticip/</url>

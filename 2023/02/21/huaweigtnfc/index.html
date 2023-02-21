@@ -18,26 +18,26 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="R3300-M的IP地址变来变去比较烦人，于是给它设置一下静态IP。由于没有使用NetworkManager，我们用dhcpcd来实现。 1sudo vim &#x2F;etc&#x2F;dhcpcd.conf 在文件末尾添加如下内容，根据自身实际修改。 123456789interface eth0static ip_address&#x3D;10.0.0.100&#x2F;24static routers&#x3D;10.0.0.1stati">
+    <meta name="description" content="设备 Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象； vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上； 小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片； Proxmark3设备一台，购于苏州龙达科技淘宝店.软件 Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定电脑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Manjaro设置静态IP">
-<meta property="og:url" content="http://xiaofami.github.io/2023/02/16/manjaro-staticip/index.html">
+<meta property="og:title" content="华为GT2 Pro ECG写入NFC门禁卡记录">
+<meta property="og:url" content="http://xiaofami.github.io/2023/02/21/huaweigtnfc/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="R3300-M的IP地址变来变去比较烦人，于是给它设置一下静态IP。由于没有使用NetworkManager，我们用dhcpcd来实现。 1sudo vim &#x2F;etc&#x2F;dhcpcd.conf 在文件末尾添加如下内容，根据自身实际修改。 123456789interface eth0static ip_address&#x3D;10.0.0.100&#x2F;24static routers&#x3D;10.0.0.1stati">
+<meta property="og:description" content="设备 Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象； vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上； 小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片； Proxmark3设备一台，购于苏州龙达科技淘宝店.软件 Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定电脑">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/dhcpcd.png">
-<meta property="article:published_time" content="2023-02-16T02:40:22.000Z">
-<meta property="article:modified_time" content="2023-02-16T03:08:52.227Z">
+<meta property="og:image" content="http://xiaofami.github.io/img/gt2pro.jpg">
+<meta property="article:published_time" content="2023-02-21T01:54:55.000Z">
+<meta property="article:modified_time" content="2023-02-21T02:48:34.839Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="R3300-M">
 <meta property="article:tag" content="Manjaro ARM">
 <meta property="article:tag" content="dhcpcd">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/dhcpcd.png">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/gt2pro.jpg">
   
   
   
-  <title>Manjaro设置静态IP - 小荷</title>
+  <title>华为GT2 Pro ECG写入NFC门禁卡记录 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Manjaro设置静态IP"></span>
+            <span id="subtitle" data-typed-text="华为GT2 Pro ECG写入NFC门禁卡记录"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-16 10:40" pubdate>
-          2023年2月16日 上午
+        <time datetime="2023-02-21 09:54" pubdate>
+          2023年2月21日 上午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          497 字
+          678 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -275,16 +275,24 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Manjaro设置静态IP</h1>
+            <h1 style="display: none">华为GT2 Pro ECG写入NFC门禁卡记录</h1>
             
             
               <div class="markdown-body">
                 
-                <p>R3300-M的IP地址变来变去比较烦人，于是给它设置一下静态IP。由于没有使用NetworkManager，我们用dhcpcd来实现。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/dhcpcd.conf<br></code></pre></td></tr></table></figure>
-<p>在文件末尾添加如下内容，根据自身实际修改。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs conf">interface eth0<br>static ip_address=10.0.0.100/24<br>static routers=10.0.0.1<br>static domain_name_servers=75.75.75.75 75.75.76.76 2001:558:feed::1 2001:558:feed::2<br><br>interface wlan0<br>static ip_address=10.0.0.99/24<br>static routers=10.0.0.1<br>static domain_name_servers=75.75.75.75 75.75.76.76 2001:558:feed::1 2001:558:feed::2<br></code></pre></td></tr></table></figure>
-<p>DNS服务器根据自身喜好填写，可以参考 <code>/etc/resolv.conf</code> 内容。保存后执行 sudo systemctl restart dhcpcd.service` 重启服务即可。</p>
+                <h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><ol>
+<li>Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象；</li>
+<li>vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上；</li>
+<li>小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片；</li>
+<li>Proxmark3设备一台，购于苏州龙达科技淘宝店.<h1 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h1></li>
+<li>Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定电脑；</li>
+<li>华为运动健康app，安装于vivo iQOO Neo 7。<h1 id="破解原NFC卡片"><a href="#破解原NFC卡片" class="headerlink" title="破解原NFC卡片"></a>破解原NFC卡片</h1></li>
+<li>vivo iQOO Neo 7中打开关机刷卡功能，并选中欲破解的NFC卡片；</li>
+<li>Neo 7关机；</li>
+<li>Neo 7放在Proxmark3设备感应区，进行解析。快速解析后还有2个扇区处于加密状态，单独对这两个扇区进行暴力破解，用i3-8100配置的电脑破解约耗时30分钟。破解结束后点击 <strong>读S50</strong> 然后保存明文数据备用。<h1 id="手表写卡"><a href="#手表写卡" class="headerlink" title="手表写卡"></a>手表写卡</h1></li>
+<li>Neo 7开机，在华为健康app中选择模拟门禁卡。用小米10手机模拟vivo iQOO Neo 7门禁卡的卡号，然后用手表对小米10进行模拟。注意不要给手表下发空白卡，否则卡号改不过来；</li>
+<li>手表放在Proxmark3感应区，选择 <strong>S50写卡</strong> ，首次写入后中间8个扇区数据提示写入失败，使用 <strong>S50密写</strong> 功能再写一次就成功了。个别内容全为0的扇区如果提示写入失败也无妨，NFC卡片默认扇区数据本来就是用0充填的，可以读取手表数据核实。<h1 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h1>用手表测试小区大门、单元楼门、电梯成功。注意 <strong>手表测试成功后一定要第一时间删掉手机中的卡片</strong> ，现在电梯梯控普遍使用了滚动码，被发现复制卡后会即时拉黑。<h1 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h1>分析数据对电梯卡延期，给物业减轻工作负担。</li>
+</ol>
 
                 
               </div>
@@ -313,8 +321,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Manjaro设置静态IP</div>
-      <div>http://xiaofami.github.io/2023/02/16/manjaro-staticip/</div>
+      <div>华为GT2 Pro ECG写入NFC门禁卡记录</div>
+      <div>http://xiaofami.github.io/2023/02/21/huaweigtnfc/</div>
     </div>
     <div class="license-meta">
       
@@ -326,7 +334,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月16日</div>
+          <div>2023年2月21日</div>
         </div>
       
       
@@ -358,18 +366,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/21/huaweigtnfc/" title="华为GT2 Pro ECG写入NFC门禁卡记录">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">华为GT2 Pro ECG写入NFC门禁卡记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/16/manjaro-ssh/" title="Manjaro使用密钥登录SSH">
-                        <span class="hidden-mobile">Manjaro使用密钥登录SSH</span>
+                      <a href="/2023/02/16/manjaro-staticip/" title="Manjaro设置静态IP">
+                        <span class="hidden-mobile">Manjaro设置静态IP</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
