@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/img/gt2pro.jpg">
 <meta property="article:published_time" content="2023-02-21T01:54:55.000Z">
-<meta property="article:modified_time" content="2023-02-21T06:03:41.903Z">
+<meta property="article:modified_time" content="2023-02-22T02:59:33.470Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="R3300-M">
 <meta property="article:tag" content="Manjaro ARM">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          783 字
+          1.1k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          7 分钟
+          10 分钟
         
       </span>
     
@@ -303,6 +303,7 @@
 <h1 id="关于在手表上使用百度地图和高德地图"><a href="#关于在手表上使用百度地图和高德地图" class="headerlink" title="关于在手表上使用百度地图和高德地图"></a>关于在手表上使用百度地图和高德地图</h1><p>手机客户端必须从华为应用商店下载，否则无法连接手表使用。</p>
 <h1 id="关于GPS定位速度、精度"><a href="#关于GPS定位速度、精度" class="headerlink" title="关于GPS定位速度、精度"></a>关于GPS定位速度、精度</h1><p>通过蓝牙连接手机时，手表默认使用手机定位。独立定位一般不超过30秒，精度不及手机，会有些许漂移。</p>
 <h1 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h1><p>分析数据对电梯卡延期，给物业减轻工作负担。</p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>成功实现电梯卡延期，直接一步到位续到了2099年1月1日 。。。 方法其实很简单，用客服提供的软件对dump文件进行数据分析，可知梯控采用了 <strong>大华1系统</strong> ，日期对应位置为10区1块6-8，数据为 <strong>17071F</strong> 。这个值没有做校验，直接修改即可。需要解决的第二个问题是日期转换，如何将 <strong>2099年1月1日</strong> 转换为电梯能识别的6位编码呢？ 在软件中利用日期反查功能查询  <strong>17071F</strong> ，软件会以各种常见算法进行推算，得到了 <strong>2031年7月23日</strong> 和 <strong>2023年7月31日</strong> 两个有效日期，很显然 <strong>2023年7月31日</strong> 对应正确算法。利用这个算法对 <strong>2099年1月1日</strong> 进行转换，得到 <strong>630101</strong> ，写卡后顺利完成测试。唯一的问题是，我活不到2099年了 😭😭😭</p>
 
                 
               </div>
