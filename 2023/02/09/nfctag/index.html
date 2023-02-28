@@ -18,26 +18,25 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="为了方便在外面连接家里的Manjaro ARM小机，我打算把22端口转发出去，于是安全性有必要加强，使用密钥登录取代弱口令。 生产密钥12345678910111213141516171819202122232425$ ssh-keygen -t rsaGenerating public&#x2F;private rsa key pair.Enter file in which to save the ke">
+    <meta name="description" content="最近看到有人将网易云歌曲链接写入NFC标签，实现手机触碰播放音乐的功能，于是自己也动手试了试，基本达到了预期效果。 标签选择常用的NFC标签主要有两类。一类是 NTAG21X ，包括 NTAG213， NTAG215 和 NTAG216，可用容量分别为144，504和888字节，技术规格参考 NTAG213&#x2F;215&#x2F;216。 另一类是 MIFARE Classic 1K， 多用于门禁卡，卡片总容量">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Manjaro使用密钥登录SSH">
-<meta property="og:url" content="http://xiaofami.github.io/2023/02/16/manjaro-ssh/index.html">
+<meta property="og:title" content="NFC标签写入NDEF数据探究">
+<meta property="og:url" content="http://xiaofami.github.io/2023/02/09/nfctag/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="为了方便在外面连接家里的Manjaro ARM小机，我打算把22端口转发出去，于是安全性有必要加强，使用密钥登录取代弱口令。 生产密钥12345678910111213141516171819202122232425$ ssh-keygen -t rsaGenerating public&#x2F;private rsa key pair.Enter file in which to save the ke">
+<meta property="og:description" content="最近看到有人将网易云歌曲链接写入NFC标签，实现手机触碰播放音乐的功能，于是自己也动手试了试，基本达到了预期效果。 标签选择常用的NFC标签主要有两类。一类是 NTAG21X ，包括 NTAG213， NTAG215 和 NTAG216，可用容量分别为144，504和888字节，技术规格参考 NTAG213&#x2F;215&#x2F;216。 另一类是 MIFARE Classic 1K， 多用于门禁卡，卡片总容量">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/ssh.png">
-<meta property="article:published_time" content="2023-02-16T00:59:42.000Z">
-<meta property="article:modified_time" content="2023-02-16T01:25:31.043Z">
+<meta property="og:image" content="http://xiaofami.github.io/img/m1card.jpg">
+<meta property="article:published_time" content="2023-02-09T02:58:10.000Z">
+<meta property="article:modified_time" content="2023-02-28T06:07:47.733Z">
 <meta property="article:author" content="tccmu">
-<meta property="article:tag" content="R3300-M">
-<meta property="article:tag" content="Manjaro ARM">
-<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="NFC">
+<meta property="article:tag" content="NDEF">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/ssh.png">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/m1card.jpg">
   
   
   
-  <title>Manjaro使用密钥登录SSH - 小荷</title>
+  <title>NFC标签写入NDEF数据探究 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Manjaro使用密钥登录SSH"></span>
+            <span id="subtitle" data-typed-text="NFC标签写入NDEF数据探究"></span>
           
         </div>
 
@@ -214,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-16 08:59" pubdate>
-          2023年2月16日 早上
+        <time datetime="2023-02-09 10:58" pubdate>
+          2023年2月9日 上午
         </time>
       </span>
     
@@ -226,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1k 字
         
       </span>
     
@@ -275,21 +274,25 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Manjaro使用密钥登录SSH</h1>
+            <h1 style="display: none">NFC标签写入NDEF数据探究</h1>
             
             
               <div class="markdown-body">
                 
-                <p>为了方便在外面连接家里的Manjaro ARM小机，我打算把22端口转发出去，于是安全性有必要加强，使用密钥登录取代弱口令。</p>
-<h1 id="生产密钥"><a href="#生产密钥" class="headerlink" title="生产密钥"></a>生产密钥</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ssh-keygen -t rsa<br>Generating public/private rsa key pair.<br>Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/marly/.ssh/id_rsa):<br>Created directory <span class="hljs-string">&#x27;/home/marly/.ssh&#x27;</span>.<br>Enter passphrase (empty <span class="hljs-keyword">for</span> no passphrase):<br>Enter same passphrase again:<br>Your identification has been saved <span class="hljs-keyword">in</span> /home/marly/tmp/id_rsa<br>Your public key has been saved <span class="hljs-keyword">in</span> /home/marly/tmp/id_rsa.pub<br>The key fingerprint is:<br>SHA256:FNPW7n5ub8l5PKn0/DZXQ7yK0ZqJyZJ9pLVFL6l6A2I marly@manjaro<br>The key<span class="hljs-string">&#x27;s randomart image is:</span><br><span class="hljs-string">+---[RSA 3072]----+</span><br><span class="hljs-string">|        o. .     |</span><br><span class="hljs-string">|         oo .    |</span><br><span class="hljs-string">|        .. .  .  |</span><br><span class="hljs-string">|       .    .. o |</span><br><span class="hljs-string">|        S  .o + .|</span><br><span class="hljs-string">|       E . +.= +.|</span><br><span class="hljs-string">|      . = B.X.+.*|</span><br><span class="hljs-string">|       o * @o.=B*|</span><br><span class="hljs-string">|        ..+ .=o*O|</span><br><span class="hljs-string">+----[SHA256]-----+</span><br><span class="hljs-string">$ ls ~/.ssh</span><br><span class="hljs-string">id_rsa  id_rsa.pub</span><br><span class="hljs-string">$ cat ~/.ssh/id_rsa.pub&gt;&gt;authorized_key</span><br></code></pre></td></tr></table></figure>
-<p>公钥放在服务器上，私钥存放在本地用于登录，不要在服务器上存放。<br>另外权限需要格外注意，如果配置不当会产生许多问题，建议按如下配置（id_rsa不建议存储在服务器上）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ chmod 700 ~/.ssh<br>$ chmod 600 ~/.ssh/id_rsa<br>$ chmod 600 ~/.ssh/id_rsa.pub<br>$ chmod 600 ~/.ssh/authroized_keys<br></code></pre></td></tr></table></figure>
-<h1 id="修改ssh-config"><a href="#修改ssh-config" class="headerlink" title="修改ssh_config"></a>修改ssh_config</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo vim /etc/ssh/sshd_config<br></code></pre></td></tr></table></figure>
-<p>主要确认这两行内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs config">AuthorizedKeysFile .ssh/authorized_keys<br>PasswordAuthentication no<br></code></pre></td></tr></table></figure>
-<p>最后执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo systemctl restart sshd.service<br></code></pre></td></tr></table></figure>
-<p>重启服务就完事了。</p>
+                <p>最近看到有人将网易云歌曲链接写入NFC标签，实现手机触碰播放音乐的功能，于是自己也动手试了试，基本达到了预期效果。</p>
+<h1 id="标签选择"><a href="#标签选择" class="headerlink" title="标签选择"></a>标签选择</h1><p>常用的NFC标签主要有两类。一类是 <strong>NTAG21X</strong> ，包括 <strong>NTAG213</strong>， <strong>NTAG215</strong> 和 <strong>NTAG216</strong>，可用容量分别为144，504和888字节，技术规格参考 <a target="_blank" rel="noopener" href="https://www.nxp.com/docs/zh/data-sheet/NTAG213_215_216.pdf">NTAG213/215/216</a>。 另一类是 <strong>MIFARE Classic 1K</strong>， 多用于门禁卡，卡片总容量1k，技术规格参考<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/zh/data-sheet/MF1S50YYX_V1.pdf">MF1S50YYX_V1</a>。对于这两类标签，主要从以下方面进行比较。</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>这两类标签在功能上是否通用？从本人试验结果来看，两类标签提供了等价功能，在用nfc tools写入网易音乐连接、执行nfc task等方面没有展示出区别。不过 <strong>MIFARE Classic 1K</strong> 还可以用来制作门禁卡。</p>
+<h2 id="容量"><a href="#容量" class="headerlink" title="容量"></a>容量</h2><p><strong>NTAG21X</strong> 和 <strong>MIFARE Classic 1K</strong> 的存储结构并不相同。<strong>NTAG21X</strong>按照页面组织，每页4字节。 <strong>MIFARE Classic 1K</strong> 按扇区和块组织，不过我们不需要关注这些底层实现。<strong>NTAG21X</strong>的容量已经十分明确，<strong>MIFARE Classic 1K</strong> 实际可用容量又有多少呢？<br>参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26343357/mifare-card-memory-space">Mifare card memory space?</a>提供了解答。<strong>MIFARE Classic 1K</strong> 卡片总容量1k，去掉UID、厂商信息、Key、访问位等占用，存储 <strong>NDEF</strong> 信息最大容量716字节，再减去header、length等占用位，实际可用容量710字节，居于<strong>NTAG215</strong> 和 <strong>NTAG216</strong> 之间。</p>
+<h2 id="价格"><a href="#价格" class="headerlink" title="价格"></a>价格</h2><p>在PDD随机搜了几家店，每百张价格如下：</p>
+<ul>
+<li>NTAG213             ： 45.5元；</li>
+<li>NTAG215             ： 83元；</li>
+<li>NTAG216             ： 260元；</li>
+<li>MIFARE Classic 1K ： 48.25元！</li>
+</ul>
+<p>三番比较下来，自然是便宜大碗的<strong>MIFARE Classic 1K</strong>中标，PDD搜索 <strong>M1 标签</strong>即可。</p>
+<h1 id="将网易云音乐链接写入标签实操"><a href="#将网易云音乐链接写入标签实操" class="headerlink" title="将网易云音乐链接写入标签实操"></a>将网易云音乐链接写入标签实操</h1><p>参考了这篇酷安教程： <a target="_blank" rel="noopener" href="https://www.coolapk.com/feed/41272230">NFC音乐相册（安卓版）制作工序</a>，作者使用的是 <strong>NTAG216</strong>，实测使用 <strong>MIFARE Classic 1K</strong> 在过程上没有不同，结果也一致。</p>
+<h1 id="关于手机写卡的避坑提示"><a href="#关于手机写卡的避坑提示" class="headerlink" title="关于手机写卡的避坑提示"></a>关于手机写卡的避坑提示</h1><p>我最初使用 <strong>vivo iQOO Neo7</strong> 写卡，但是总是提示写入失败，而且读卡结果显示容量为零，换用小米11写卡成功。经过分析，<strong>vivo iQOO Neo7</strong> 的NFC读写逻辑有问题，面对新卡时认为卡片容量为零，导致写入失败。经过小米11写过1次后的卡片，用 <strong>vivo iQOO Neo7</strong> 能够正常识别容量并覆盖写入，可以支持上述观点。关于vivo手机的这一bug已反馈给官方，能否修复就不好说了。</p>
 
                 
               </div>
@@ -302,11 +305,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/R3300-M/">#R3300-M</a>
+        <a href="/tags/NFC/">#NFC</a>
       
-        <a href="/tags/Manjaro-ARM/">#Manjaro ARM</a>
-      
-        <a href="/tags/SSH/">#SSH</a>
+        <a href="/tags/NDEF/">#NDEF</a>
       
     </div>
   
@@ -318,8 +319,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Manjaro使用密钥登录SSH</div>
-      <div>http://xiaofami.github.io/2023/02/16/manjaro-ssh/</div>
+      <div>NFC标签写入NDEF数据探究</div>
+      <div>http://xiaofami.github.io/2023/02/09/nfctag/</div>
     </div>
     <div class="license-meta">
       
@@ -331,7 +332,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月16日</div>
+          <div>2023年2月9日</div>
         </div>
       
       
@@ -363,9 +364,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/16/manjaro-staticip/" title="Manjaro设置静态IP">
+                      <a href="/2023/02/16/manjaro-ssh/" title="Manjaro使用密钥登录SSH">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Manjaro设置静态IP</span>
+                        <span class="hidden-mobile">Manjaro使用密钥登录SSH</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -373,8 +374,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/09/nfctag/" title="NFC标签写入NDEF数据探究">
-                        <span class="hidden-mobile">NFC标签写入NDEF数据探究</span>
+                      <a href="/2023/02/06/manjaro-arm-tools/" title="使用manjaro-arm-tools定制Manjaro ARM镜像">
+                        <span class="hidden-mobile">使用manjaro-arm-tools定制Manjaro ARM镜像</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
