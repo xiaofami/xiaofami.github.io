@@ -41,12 +41,13 @@ http://127.0.0.1:5244/dav or hit enter for none.
 **/opt/alist/mnt** 目录是我自己建立的，用于本地挂载。命令执行后会提示输入用户名密码，确认后挂载成功。
 每次开机手动挂载比较麻烦，可以通过 **Systemd** 自动化。
 
-首先修改 **davfs2** 添加webdav登录网址、用户名以及密码：
+首先修改 **davfs2** 配置文件添加webdav登录网址、用户名以及密码：
 ```bash
 sudo vim /etc/davfs2/secrets
 ```
 
 加入 **http://127.0.0.1:5244/dav admin 123456** 一行。登录地址、用户名、密码请自行替换。
+
 下一步来创建Systemd单元文件。参考[How to mount WebDAV share using systemd](https://sleeplessbeastie.eu/2017/09/25/how-to-mount-webdav-share-using-systemd/)一文，创建以下2个unit文件。 **注意，unit文件命名必须遵从挂载目录名称，例如，我想挂载到/opt/alist/mnt目录下，那么两个unit文件命名就必须为opt-alist-mnt.mount和opt-alist-mnt.automount** ，如果不遵从该原则，启动服务时就会提示 **Where= setting doesn't match unit name. Refusing.** 错误。
 
 ```bash
