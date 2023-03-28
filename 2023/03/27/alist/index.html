@@ -18,26 +18,27 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="设备 Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象； vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上； 小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片； Proxmark3设备一台，购于苏州龙达科技淘宝店。  软件 Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定">
+    <meta name="description" content="最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ） 安装alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单： 1curl -fsSL &quot;https:&#x2F;&#x2F;alist.n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="华为GT2 Pro ECG写入NFC门禁卡记录">
-<meta property="og:url" content="http://xiaofami.github.io/2023/02/21/huaweigtnfc/index.html">
+<meta property="og:title" content="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
+<meta property="og:url" content="http://xiaofami.github.io/2023/03/27/alist/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="设备 Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象； vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上； 小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片； Proxmark3设备一台，购于苏州龙达科技淘宝店。  软件 Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定">
+<meta property="og:description" content="最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ） 安装alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单： 1curl -fsSL &quot;https:&#x2F;&#x2F;alist.n">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/gt2pro.jpg">
-<meta property="article:published_time" content="2023-02-21T01:54:55.000Z">
-<meta property="article:modified_time" content="2023-02-22T02:59:33.470Z">
+<meta property="og:image" content="http://xiaofami.github.io/img/alist.jpg">
+<meta property="article:published_time" content="2023-03-27T07:42:32.000Z">
+<meta property="article:modified_time" content="2023-03-28T07:52:42.197Z">
 <meta property="article:author" content="tccmu">
-<meta property="article:tag" content="R3300-M">
 <meta property="article:tag" content="Manjaro ARM">
-<meta property="article:tag" content="dhcpcd">
+<meta property="article:tag" content="alist">
+<meta property="article:tag" content="webdav">
+<meta property="article:tag" content="dlna">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/gt2pro.jpg">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/alist.jpg">
   
   
   
-  <title>华为GT2 Pro ECG写入NFC门禁卡记录 - 小荷</title>
+  <title>Manjaro ARM安装运行alist并通过webdav挂载到本地目录 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="华为GT2 Pro ECG写入NFC门禁卡记录"></span>
+            <span id="subtitle" data-typed-text="Manjaro ARM安装运行alist并通过webdav挂载到本地目录"></span>
           
         </div>
 
@@ -214,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-21 09:54" pubdate>
-          2023年2月21日 上午
+        <time datetime="2023-03-27 15:42" pubdate>
+          2023年3月27日 下午
         </time>
       </span>
     
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          2.6k 字
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          10 分钟
+          22 分钟
         
       </span>
     
@@ -275,35 +276,42 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">华为GT2 Pro ECG写入NFC门禁卡记录</h1>
+            <h1 style="display: none">Manjaro ARM安装运行alist并通过webdav挂载到本地目录</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><ol>
-<li>Huawei Watch GT 2 Pro ECG，准备写入NFC数据的对象；</li>
-<li>vivo iQOO Neo 7，原门禁卡信息储存在此手机中，计划转移到手表上；</li>
-<li>小米10手机，用来模拟加密NFC卡的卡号，供手表模拟出卡号一致的卡片；</li>
-<li>Proxmark3设备一台，购于苏州龙达科技淘宝店。</li>
-</ol>
-<h1 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h1><ol>
-<li>Proxmark3软件，由店铺提供。店铺定制的软件主要对常用命令进行了封装，用起来比较便利，缺点绑定电脑；</li>
-<li>华为运动健康app，安装于vivo iQOO Neo 7。</li>
-</ol>
-<h1 id="破解原NFC卡片"><a href="#破解原NFC卡片" class="headerlink" title="破解原NFC卡片"></a>破解原NFC卡片</h1><ol>
-<li>vivo iQOO Neo 7中打开关机刷卡功能，并选中欲破解的NFC卡片；</li>
-<li>Neo 7关机；</li>
-<li>Neo 7放在Proxmark3设备感应区，进行解析。快速解析后还有2个扇区处于加密状态，单独对这两个扇区进行暴力破解，用i3-8100配置的电脑破解约耗时30分钟。破解结束后点击 <strong>读S50</strong> 然后保存明文数据备用。</li>
-</ol>
-<h1 id="手表写卡"><a href="#手表写卡" class="headerlink" title="手表写卡"></a>手表写卡</h1><ol>
-<li>Neo 7开机，在华为健康app中选择模拟门禁卡。用小米10手机模拟vivo iQOO Neo 7门禁卡的卡号，然后用手表对小米10进行模拟。注意不要给手表下发空白卡，否则卡号改不过来；</li>
-<li>手表放在Proxmark3感应区，选择 <strong>S50写卡</strong> ，首次写入后中间8个扇区数据提示写入失败，使用 <strong>S50密写</strong> 功能再写一次就成功了。个别内容全为0的扇区如果提示写入失败也无妨，NFC卡片默认扇区数据本来就是用0充填的，可以读取手表数据核实。</li>
-</ol>
-<h1 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h1><p>用手表测试小区大门、单元楼门、电梯成功。注意 <strong>手表测试成功后一定要第一时间删掉手机中的卡片</strong> ，现在电梯梯控普遍使用了滚动码，被发现复制卡后会即时拉黑。</p>
-<h1 id="关于在手表上使用百度地图和高德地图"><a href="#关于在手表上使用百度地图和高德地图" class="headerlink" title="关于在手表上使用百度地图和高德地图"></a>关于在手表上使用百度地图和高德地图</h1><p>手机客户端必须从华为应用商店下载，否则无法连接手表使用。</p>
-<h1 id="关于GPS定位速度、精度"><a href="#关于GPS定位速度、精度" class="headerlink" title="关于GPS定位速度、精度"></a>关于GPS定位速度、精度</h1><p>通过蓝牙连接手机时，手表默认使用手机定位。独立定位一般不超过30秒，精度不及手机，会有些许漂移。</p>
-<h1 id="下步计划"><a href="#下步计划" class="headerlink" title="下步计划"></a>下步计划</h1><p>分析数据对电梯卡延期，给物业减轻工作负担。</p>
-<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>成功实现电梯卡延期，直接一步到位续到了2099年1月1日 。。。 方法其实很简单，用客服提供的软件对dump文件进行数据分析，可知梯控采用了 <strong>大华1系统</strong> ，日期对应位置为10区1块6-8，数据为 <strong>17071F</strong> 。这个值没有做校验，直接修改即可。需要解决的第二个问题是日期转换，如何将 <strong>2099年1月1日</strong> 转换为电梯能识别的6位编码呢？ 在软件中利用日期反查功能查询  <strong>17071F</strong> ，软件会以各种常见算法进行推算，得到了 <strong>2031年7月23日</strong> 和 <strong>2023年7月31日</strong> 两个有效日期，很显然 <strong>2023年7月31日</strong> 对应正确算法。利用这个算法对 <strong>2099年1月1日</strong> 进行转换，得到 <strong>630101</strong> ，写卡后顺利完成测试。唯一的问题是，我活不到2099年了 😭😭😭</p>
+                <p>最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ）</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fsSL <span class="hljs-string">&quot;https://alist.nn.ci/v2.sh&quot;</span> | bash -s install<br></code></pre></td></tr></table></figure>
+
+<p>结束后终端界面会输出页面地址、账号信息等内容，浏览器中打开管理页面进行设置即可。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>使用浏览器即可实现阅读电子书、播放视频等功能。值得一提，alist通过302重定向使客户端获取到文件的真实地址，所以文件传输流量不经过alist服务器。<br>alist还支持webdav，在PotPlayer、RaiDrive、nplayer、Kodi中可以方便挂载，Windows系统本身也支持通过webdav将网盘挂载成为本地硬盘。不过在Manjaro ARM中，应该如何操作呢？</p>
+<h1 id="Manjaro-ARM-挂载webdav"><a href="#Manjaro-ARM-挂载webdav" class="headerlink" title="Manjaro ARM 挂载webdav"></a>Manjaro ARM 挂载webdav</h1><p>参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Davfs2">archlinux wiki</a>，该功能由davfs2软件包提供，位于AUR中。通过yay安装即可，安装选项全为默认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S davfs2<br></code></pre></td></tr></table></figure>
+<p>完成后进行挂载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro alist]$ sudo mount -t davfs http://127.0.0.1:5244/dav /opt/alist/mnt<br>Please enter the username to authenticate with server<br>http://127.0.0.1:5244/dav or hit enter <span class="hljs-keyword">for</span> none.<br>  Username: admin<br>Please enter the password to authenticate user admin with server<br>http://127.0.0.1:5244/dav or hit enter <span class="hljs-keyword">for</span> none.<br>  Password:<br></code></pre></td></tr></table></figure>
+
+<p><strong>/opt/alist/mnt</strong> 目录是我自己建立的，用于本地挂载。命令执行后会提示输入用户名密码，确认后挂载成功。<br>每次开机手动挂载比较麻烦，可以通过 <strong>Systemd</strong> 自动化。</p>
+<p>首先修改 <strong>davfs2</strong> 添加webdav登录网址、用户名以及密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/davfs2/secrets<br></code></pre></td></tr></table></figure>
+
+<p>加入 <strong><a target="_blank" rel="noopener" href="http://127.0.0.1:5244/dav">http://127.0.0.1:5244/dav</a> admin 123456</strong> 一行。登录地址、用户名、密码请自行替换。<br>下一步来创建Systemd单元文件。参考<a target="_blank" rel="noopener" href="https://sleeplessbeastie.eu/2017/09/25/how-to-mount-webdav-share-using-systemd/">How to mount WebDAV share using systemd</a>一文，创建以下2个unit文件。 <strong>注意，unit文件命名必须遵从挂载目录名称，例如，我想挂载到/opt/alist/mnt目录下，那么两个unit文件命名就必须为opt-alist-mnt.mount和opt-alist-mnt.automount</strong> ，如果不遵从该原则，启动服务时就会提示 <strong>Where= setting doesn’t match unit name. Refusing.</strong> 错误。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/systemd/system/opt-alist-mnt.mount</span><br>[Unit]<br>Description=Mount alist webdav share<br>After=network-online.target<br>Wants=network-online.target<br><br>[Mount]<br>What=http://127.0.0.1:5244/dav/<br>Where=/opt/alist/mnt<br>Options=noauto,user,uid=marly,gid=marly<br>Type=davfs<br>TimeoutSec=60<br><br>[Install]<br>WantedBy=remote-fs.target<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/systemd/system/opt-alist-mnt.automount</span><br>[Unit]<br>Description=Mount alist webdav share<br>After=network-online.target<br>Wants=network-online.target<br><br>[Automount]<br>Where=/opt/alist/mnt<br>TimeoutIdleSec=300<br><br>[Install]<br>WantedBy=remote-fs.target<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl daemon-reload<br>sudo systemctl <span class="hljs-built_in">enable</span> opt-alist-mnt.mount<br>sudo systemctl <span class="hljs-built_in">enable</span> opt-alist-mnt.automount<br>sudo systemctl start opt-alist-mnt.automount<br></code></pre></td></tr></table></figure>
+<p>至此alist共享就通过webdav挂载到了本地目录，可以正常访问。</p>
+<h1 id="密码找回"><a href="#密码找回" class="headerlink" title="密码找回"></a>密码找回</h1><p>忘记密码是常有的事。进入一键脚本默认安装目录执行命令查看密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /opt/alist/<br>sudo ./alist admin<br></code></pre></td></tr></table></figure>
+
+<p>执行后admin的密码就在终端中打印出来啦！</p>
+<h1 id="与DLNA的结合"><a href="#与DLNA的结合" class="headerlink" title="与DLNA的结合"></a>与DLNA的结合</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S minidlna <span class="hljs-comment">#安装</span><br></code></pre></td></tr></table></figure>
+<p>然后参照 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/ReadyMedia">ReadyMedia</a> 对 <strong>/etc/minidlna.conf</strong> 进行修改，按照音乐，视频，图片等分类进行共享。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐    <span class="hljs-comment"># Mounted Media_Collection drive directories</span><br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材      <span class="hljs-comment"># Use A, P, and V to restrict media &#x27;type&#x27; in directory</span><br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
+
+<p>最后重启服务即大功告成： <code>sudo systemctl restart minidlna.service</code> 。前文已提到，alist的WebDAV策略为302重定向到真实链接，所以理论上播放速度并不受R3300-M的百兆网口限制。但是通过davfs2挂载后重定向能否生效还有待考察，晚些时候拿小米电视播放器试试效果。</p>
 
                 
               </div>
@@ -316,11 +324,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/R3300-M/">#R3300-M</a>
-      
         <a href="/tags/Manjaro-ARM/">#Manjaro ARM</a>
       
-        <a href="/tags/dhcpcd/">#dhcpcd</a>
+        <a href="/tags/alist/">#alist</a>
+      
+        <a href="/tags/webdav/">#webdav</a>
+      
+        <a href="/tags/dlna/">#dlna</a>
       
     </div>
   
@@ -332,8 +342,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>华为GT2 Pro ECG写入NFC门禁卡记录</div>
-      <div>http://xiaofami.github.io/2023/02/21/huaweigtnfc/</div>
+      <div>Manjaro ARM安装运行alist并通过webdav挂载到本地目录</div>
+      <div>http://xiaofami.github.io/2023/03/27/alist/</div>
     </div>
     <div class="license-meta">
       
@@ -345,7 +355,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月21日</div>
+          <div>2023年3月27日</div>
         </div>
       
       
@@ -377,18 +387,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/27/alist/" title="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Manjaro ARM安装运行alist并通过webdav挂载到本地目录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/16/manjaro-staticip/" title="Manjaro设置静态IP">
-                        <span class="hidden-mobile">Manjaro设置静态IP</span>
+                      <a href="/2023/02/21/huaweigtnfc/" title="华为GT2 Pro ECG写入NFC门禁卡记录">
+                        <span class="hidden-mobile">华为GT2 Pro ECG写入NFC门禁卡记录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
