@@ -106,9 +106,26 @@ sudo pacman -S minidlna #安装
 然后参照 [ReadyMedia](https://wiki.archlinux.org/title/ReadyMedia) 对 **/etc/minidlna.conf** 进行修改，按照音乐，视频，图片等分类进行共享。
 
 ```bash
-media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐    # Mounted Media_Collection drive directories
-media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材      # Use A, P, and V to restrict media 'type' in directory
+media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐
+media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材
 media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪
 ```
 
 最后重启服务即大功告成： `sudo systemctl restart minidlna.service` 。前文已提到，alist的WebDAV策略为302重定向到真实链接，所以理论上播放速度并不受R3300-M的百兆网口限制。但是通过davfs2挂载后重定向能否生效还有待考察，晚些时候拿小米电视播放器试试效果。
+
+# 测试
+使用小米电视自带的视频播放器测试，列出目录正常，速度也很快，但是看不到文件。后来检查配置文件，发现提示媒体路径不存在。将
+
+```bash
+media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐
+media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材
+media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪
+```
+
+修改为
+
+```bash
+media_dir=/opt/alist/mnt/alist/xiaoya/
+```
+
+后重启服务，未再报错，晚些时候再测试一次。另外我发现了一款支持webdav的安卓平台视频播放器  [NOVA: opeN sOurce Video plAyer](https://github.com/nova-video-player/aos-AVP) 。目前作者已在测试版中加入了webdav支持，（[点我进入下载页面](https://github.com/nova-video-player/aos-AVP/releases)） ，正式版估计也快更新了。播放器界面适配了手机、平板和电视，支持音频直通，功能丰富无广告，而且支持中文。手机上测试连接webdav正常，速度也很快。但是不知为何webdav中的视频没有被添加到媒体库中，手动添加也没反应，目前只能手动进入webdav目录选择单一文件进行播放。
