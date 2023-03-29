@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/img/alist.jpg">
 <meta property="article:published_time" content="2023-03-27T07:42:32.000Z">
-<meta property="article:modified_time" content="2023-03-28T07:58:29.625Z">
+<meta property="article:modified_time" content="2023-03-29T02:40:32.629Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="Manjaro ARM">
 <meta property="article:tag" content="alist">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          3k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          22 分钟
+          25 分钟
         
       </span>
     
@@ -310,9 +310,16 @@
 <p>执行后admin的密码就在终端中打印出来啦！</p>
 <h1 id="与DLNA的结合"><a href="#与DLNA的结合" class="headerlink" title="与DLNA的结合"></a>与DLNA的结合</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S minidlna <span class="hljs-comment">#安装</span><br></code></pre></td></tr></table></figure>
 <p>然后参照 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/ReadyMedia">ReadyMedia</a> 对 <strong>/etc/minidlna.conf</strong> 进行修改，按照音乐，视频，图片等分类进行共享。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐    <span class="hljs-comment"># Mounted Media_Collection drive directories</span><br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材      <span class="hljs-comment"># Use A, P, and V to restrict media &#x27;type&#x27; in directory</span><br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐<br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材<br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
 
 <p>最后重启服务即大功告成： <code>sudo systemctl restart minidlna.service</code> 。前文已提到，alist的WebDAV策略为302重定向到真实链接，所以理论上播放速度并不受R3300-M的百兆网口限制。但是通过davfs2挂载后重定向能否生效还有待考察，晚些时候拿小米电视播放器试试效果。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>使用小米电视自带的视频播放器测试，列出目录正常，速度也很快，但是看不到文件。后来检查配置文件，发现提示媒体路径不存在。将</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐<br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材<br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
+
+<p>修改为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=/opt/alist/mnt/alist/xiaoya/<br></code></pre></td></tr></table></figure>
+
+<p>后重启服务，未再报错，晚些时候再测试一次。另外我发现了一款支持webdav的安卓平台视频播放器  <a target="_blank" rel="noopener" href="https://github.com/nova-video-player/aos-AVP">NOVA: opeN sOurce Video plAyer</a> 。目前作者已在测试版中加入了webdav支持，（<a target="_blank" rel="noopener" href="https://github.com/nova-video-player/aos-AVP/releases">点我进入下载页面</a>） ，正式版估计也快更新了。播放器界面适配了手机、平板和电视，支持音频直通，功能丰富无广告，而且支持中文。手机上测试连接webdav正常，速度也很快。但是不知为何webdav中的视频没有被添加到媒体库中，手动添加也没反应，目前只能手动进入webdav目录选择单一文件进行播放。</p>
 
                 
               </div>
