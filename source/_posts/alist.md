@@ -128,4 +128,4 @@ media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪
 media_dir=/opt/alist/mnt/alist/xiaoya/
 ```
 
-后重启服务，未再报错，晚些时候再测试一次。另外我发现了一款支持webdav的安卓平台视频播放器  [NOVA: opeN sOurce Video plAyer](https://github.com/nova-video-player/aos-AVP) 。目前作者已在测试版中加入了webdav支持，（[点我进入下载页面](https://github.com/nova-video-player/aos-AVP/releases)） ，正式版估计也快更新了。播放器界面适配了手机、平板和电视，支持音频直通，功能丰富无广告，而且支持中文。手机上测试连接webdav正常，速度也很快。但是不知为何webdav中的视频没有被添加到媒体库中，手动添加也没反应，目前只能手动进入webdav目录选择单一文件进行播放。
+后重启服务，未再报错，晚些时候再测试一次。另外我发现了一款支持webdav的安卓平台视频播放器  [NOVA: opeN sOurce Video plAyer](https://github.com/nova-video-player/aos-AVP) 。目前作者已在测试版中加入了webdav支持，（[点我进入下载页面](https://github.com/nova-video-player/aos-AVP/releases)） ，正式版估计也快更新了。播放器界面适配了手机、平板和电视，支持音频直通，功能丰富无广告，而且支持中文。手机上测试连接webdav正常，速度也很快，电影刮削效果很满意。可惜动漫刮削效果不理想，希望未来予以改进。
