@@ -18,27 +18,26 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ） 安装alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单： 1curl -fsSL &quot;https:&#x2F;&#x2F;alist.n">
+    <meta name="description" content="本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。 Manjaro ARM本地运行duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。在Manjar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
-<meta property="og:url" content="http://xiaofami.github.io/2023/03/27/alist/index.html">
+<meta property="og:title" content="duplicati 试用">
+<meta property="og:url" content="http://xiaofami.github.io/2023/04/03/duplicati/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ） 安装alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单： 1curl -fsSL &quot;https:&#x2F;&#x2F;alist.n">
+<meta property="og:description" content="本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。 Manjaro ARM本地运行duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。在Manjar">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/alist.jpg">
-<meta property="article:published_time" content="2023-03-27T07:42:32.000Z">
-<meta property="article:modified_time" content="2023-03-29T07:31:49.035Z">
+<meta property="og:image" content="http://xiaofami.github.io/img/duplicati.jpg">
+<meta property="article:published_time" content="2023-04-03T02:14:19.000Z">
+<meta property="article:modified_time" content="2023-04-06T01:45:21.961Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="Manjaro ARM">
-<meta property="article:tag" content="alist">
-<meta property="article:tag" content="webdav">
-<meta property="article:tag" content="dlna">
+<meta property="article:tag" content="duplicati">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/alist.jpg">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/duplicati.jpg">
   
   
   
-  <title>Manjaro ARM安装运行alist并通过webdav挂载到本地目录 - 小荷</title>
+  <title>duplicati 试用 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Manjaro ARM安装运行alist并通过webdav挂载到本地目录"></span>
+            <span id="subtitle" data-typed-text="duplicati 试用"></span>
           
         </div>
 
@@ -215,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-27 15:42" pubdate>
-          2023年3月27日 下午
+        <time datetime="2023-04-03 10:14" pubdate>
+          2023年4月3日 上午
         </time>
       </span>
     
@@ -227,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.7k 字
         
       </span>
     
@@ -238,7 +237,7 @@
         
         
         
-          26 分钟
+          32 分钟
         
       </span>
     
@@ -276,51 +275,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Manjaro ARM安装运行alist并通过webdav挂载到本地目录</h1>
+            <h1 style="display: none">duplicati 试用</h1>
             
             
               <div class="markdown-body">
                 
-                <p>最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ）</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fsSL <span class="hljs-string">&quot;https://alist.nn.ci/v2.sh&quot;</span> | bash -s install<br></code></pre></td></tr></table></figure>
+                <p>本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。</p>
+<h1 id="Manjaro-ARM本地运行"><a href="#Manjaro-ARM本地运行" class="headerlink" title="Manjaro ARM本地运行"></a>Manjaro ARM本地运行</h1><p>duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。<br>在Manjaro ARM上安装主要用于验证duplicati对aarch64的支持程度，顺便备份一些有用数据。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S duplicati-beta-bin<br></code></pre></td></tr></table></figure>
+<p>duplicati位于AUR仓库中，使用yay安装，全部选项默认即可，结束后 <strong>Duplicati - 2.0.6.3_beta_2021-06-17</strong> （截至2023年4月3日最新版本）便已安装完成。</p>
+<h2 id="允许局域网访问"><a href="#允许局域网访问" class="headerlink" title="允许局域网访问"></a>允许局域网访问</h2><p>duplicati默认只允许localhost通过8200端口访问，这带来2个问题。其一，localhost没有图形界面，自然也没有浏览器可用，无法通过页面配置。其二，8200端口与minidlna冲突，需要想办法修改。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://duplicati.readthedocs.io/en/latest/02-installation/#installing-duplicati-on-linux">Installing Duplicati on Linux</a>一文，进行配置：</p>
+<p>首先停止服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">disable</span> duplicati.service<br>sudo systemctl stop duplicati.service<br></code></pre></td></tr></table></figure>
 
-<p>结束后终端界面会输出页面地址、账号信息等内容，浏览器中打开管理页面进行设置即可。</p>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>使用浏览器即可实现阅读电子书、播放视频等功能。值得一提，alist通过302重定向使客户端获取到文件的真实地址，所以文件传输流量不经过alist服务器。<br>alist还支持webdav，在PotPlayer、RaiDrive、nplayer、Kodi中可以方便挂载，Windows系统本身也支持通过webdav将网盘挂载成为本地硬盘。不过在Manjaro ARM中，应该如何操作呢？</p>
-<h1 id="Manjaro-ARM-挂载webdav"><a href="#Manjaro-ARM-挂载webdav" class="headerlink" title="Manjaro ARM 挂载webdav"></a>Manjaro ARM 挂载webdav</h1><p>参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Davfs2">archlinux wiki</a>，该功能由davfs2软件包提供，位于AUR中。通过yay安装即可，安装选项全为默认：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S davfs2<br></code></pre></td></tr></table></figure>
-<p>完成后进行挂载：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro alist]$ sudo mount -t davfs http://127.0.0.1:5244/dav /opt/alist/mnt<br>Please enter the username to authenticate with server<br>http://127.0.0.1:5244/dav or hit enter <span class="hljs-keyword">for</span> none.<br>  Username: admin<br>Please enter the password to authenticate user admin with server<br>http://127.0.0.1:5244/dav or hit enter <span class="hljs-keyword">for</span> none.<br>  Password:<br></code></pre></td></tr></table></figure>
+<p>配置dpulicati环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/default/duplicati<br></code></pre></td></tr></table></figure>
+<p>加入 <code>DAEMON_OPTS=&quot;--webservice-interface=any --webservice-port=8600 --portable-mode&quot;</code> 一行。</p>
+<p>再修改systemd单元文件，使用上述变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /usr/lib/systemd/system/duplicati.service<br></code></pre></td></tr></table></figure>
 
-<p><strong>/opt/alist/mnt</strong> 目录是我自己建立的，用于本地挂载。命令执行后会提示输入用户名密码，确认后挂载成功。<br>每次开机手动挂载比较麻烦，可以通过 <strong>Systemd</strong> 自动化。</p>
-<p>首先修改 <strong>davfs2</strong> 配置文件添加webdav登录网址、用户名以及密码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/davfs2/secrets<br></code></pre></td></tr></table></figure>
+<p>修改前：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ cat /usr/lib/systemd/system/duplicati.service<br>[Unit]<br>Description=Duplicati<br>After=network.target<br><br>[Service]<br>ExecStart=/usr/bin/mono /opt/duplicati/Duplicati.Server.exe --webservice-port=8200<br>Restart=on-abort<br>EnvironmentFile=-/etc/default/duplicati<br>User=duplicati<br>Group=duplicati<br><br>[Install]<br>WantedBy=default.target<br></code></pre></td></tr></table></figure>
 
-<p>加入 <strong><a target="_blank" rel="noopener" href="http://127.0.0.1:5244/dav">http://127.0.0.1:5244/dav</a> admin 123456</strong> 一行。登录地址、用户名、密码请自行替换。</p>
-<p>下一步来创建Systemd单元文件。参考<a target="_blank" rel="noopener" href="https://sleeplessbeastie.eu/2017/09/25/how-to-mount-webdav-share-using-systemd/">How to mount WebDAV share using systemd</a>一文，创建以下2个unit文件。 <strong>注意，unit文件命名必须遵从挂载目录名称，例如，我想挂载到/opt/alist/mnt目录下，那么两个unit文件命名就必须为opt-alist-mnt.mount和opt-alist-mnt.automount</strong> ，如果不遵从该原则，启动服务时就会提示 <strong>Where= setting doesn’t match unit name. Refusing.</strong> 错误。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/systemd/system/opt-alist-mnt.mount</span><br>[Unit]<br>Description=Mount alist webdav share<br>After=network-online.target<br>Wants=network-online.target<br><br>[Mount]<br>What=http://127.0.0.1:5244/dav/<br>Where=/opt/alist/mnt<br>Options=noauto,user,uid=marly,gid=marly<br>Type=davfs<br>TimeoutSec=60<br><br>[Install]<br>WantedBy=remote-fs.target<br></code></pre></td></tr></table></figure>
+<p>修改后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ cat /usr/lib/systemd/system/duplicati.service<br>[Unit]<br>Description=Duplicati<br>After=network.target<br><br>[Service]<br>ExecStart=/usr/bin/mono /opt/duplicati/Duplicati.Server.exe <span class="hljs-variable">$DAEMON_OPTS</span><br>Restart=on-abort<br>EnvironmentFile=-/etc/default/duplicati<br>User=duplicati<br>Group=duplicati<br><br>[Install]<br>WantedBy=default.target<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/systemd/system/opt-alist-mnt.automount</span><br>[Unit]<br>Description=Mount alist webdav share<br>After=network-online.target<br>Wants=network-online.target<br><br>[Automount]<br>Where=/opt/alist/mnt<br>TimeoutIdleSec=300<br><br>[Install]<br>WantedBy=remote-fs.target<br></code></pre></td></tr></table></figure>
+<p>安装程序提供的单元文件虽然指定了环境文件路径，但是没有使用。改过来即可。另外注意duplicati服务以duplicati用户和组的身份执行，用于备份本地home目录会遇到权限问题，可以将上面的User和Group内容用自己的用户名和组替换。</p>
+<p>最后启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> duplicati.service<br>sudo systemctl daemon-reload<br>sudo systemctl start duplicati.service <br></code></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl daemon-reload<br>sudo systemctl <span class="hljs-built_in">enable</span> opt-alist-mnt.mount<br>sudo systemctl <span class="hljs-built_in">enable</span> opt-alist-mnt.automount<br>sudo systemctl start opt-alist-mnt.automount<br></code></pre></td></tr></table></figure>
-<p>至此alist共享就通过webdav挂载到了本地目录，可以正常访问。</p>
-<h1 id="密码找回"><a href="#密码找回" class="headerlink" title="密码找回"></a>密码找回</h1><p>忘记密码是常有的事。进入一键脚本默认安装目录执行命令查看密码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /opt/alist/<br>sudo ./alist admin<br></code></pre></td></tr></table></figure>
-
-<p>执行后admin的密码就在终端中打印出来啦！</p>
-<h1 id="与DLNA的结合"><a href="#与DLNA的结合" class="headerlink" title="与DLNA的结合"></a>与DLNA的结合</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S minidlna <span class="hljs-comment">#安装</span><br></code></pre></td></tr></table></figure>
-<p>然后参照 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/ReadyMedia">ReadyMedia</a> 对 <strong>/etc/minidlna.conf</strong> 进行修改，按照音乐，视频，图片等分类进行共享。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐<br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材<br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
-
-<p>最后重启服务即大功告成： <code>sudo systemctl restart minidlna.service</code> 。前文已提到，alist的WebDAV策略为302重定向到真实链接，所以理论上播放速度并不受R3300-M的百兆网口限制。但是通过davfs2挂载后重定向能否生效还有待考察，晚些时候拿小米电视播放器试试效果。</p>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>使用小米电视自带的视频播放器测试，列出目录正常，速度也很快，但是看不到文件。后来检查配置文件，发现提示媒体路径不存在。将</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=A,/opt/alist/mnt/alist/xiaoya/音乐<br>media_dir=PV,/opt/alist/mnt/xiaoya/资料/素材<br>media_dir=V,/opt/alist/mnt/alist/xiaoya/动漫/姬路白雪<br></code></pre></td></tr></table></figure>
-
-<p>修改为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">media_dir=/opt/alist/mnt/alist/xiaoya/<br></code></pre></td></tr></table></figure>
-
-<p>后重启服务，未再报错，晚些时候再测试一次。另外我发现了一款支持webdav的安卓平台视频播放器  <a target="_blank" rel="noopener" href="https://github.com/nova-video-player/aos-AVP">NOVA: opeN sOurce Video plAyer</a> 。目前作者已在测试版中加入了webdav支持，（<a target="_blank" rel="noopener" href="https://github.com/nova-video-player/aos-AVP/releases">点我进入下载页面</a>） ，正式版估计也快更新了。播放器界面适配了手机、平板和电视，支持音频直通，功能丰富无广告，而且支持中文。手机上测试连接webdav正常，速度也很快，电影刮削效果很满意。可惜动漫刮削效果不理想，希望未来予以改进。</p>
-<h1 id="测试后续更新"><a href="#测试后续更新" class="headerlink" title="测试后续更新"></a>测试后续更新</h1><p>使用VLC、小米电视播放器测试， <strong>alist - webdav - davfs2 - minidlna</strong> 方法行不通。VLC能够浏览到一部分目录，但是所有目录内容为空，与小米电视播放器测试结果一致。</p>
+<p>现在即可在局域网中通过 <strong>ip:8600</strong> 访问管理页面。</p>
+<h1 id="在Docker中运行"><a href="#在Docker中运行" class="headerlink" title="在Docker中运行"></a>在Docker中运行</h1><p>duplicati的docker镜像由linuxserver维护，支持x86-64和arm64，参见<a target="_blank" rel="noopener" href="https://hub.docker.com/r/linuxserver/duplicati">linuxserver/duplicati</a>。</p>
+<h1 id="其他选择"><a href="#其他选择" class="headerlink" title="其他选择"></a>其他选择</h1><p><a target="_blank" rel="noopener" href="https://github.com/gilbertchen/duplicacy">duplicacy</a>号称是当下最先进最快的开源云备份工具，提供了linux arm64的二进制包，可以在Manjaro ARM中直接运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro tmp]$ <span class="hljs-built_in">cd</span> tmp<br>[marly@manjaro tmp]$ wget https://github.com/gilbertchen/duplicacy/releases/download/v3.1.0/duplicacy_linux_arm64_3.1.0<br>[marly@manjaro tmp]$ chmod +x duplicacy_linux_arm64_3.1.0<br><br>[marly@manjaro tmp]$ ./duplicacy_linux_arm64_3.1.0 -h<br>NAME:<br>   duplicacy - A new generation cloud backup tool based on lock-free deduplication<br><br>USAGE:<br>   duplicacy [global options] <span class="hljs-built_in">command</span> [<span class="hljs-built_in">command</span> options] [arguments...]<br><br>VERSION:<br>   3.1.0 (27FF3E)<br><br>COMMANDS:<br>   init         Initialize the storage <span class="hljs-keyword">if</span> necessary and the current directory as the repository<br>   backup       Save a snapshot of the repository to the storage<br>   restore      Restore the repository to a previously saved snapshot<br>   list         List snapshots<br>   check        Check the integrity of snapshots<br>   cat          Print to stdout the specified file, or the snapshot content <span class="hljs-keyword">if</span> no file is specified<br>   diff         Compare two snapshots or two revisions of a file<br>   <span class="hljs-built_in">history</span>      Show the <span class="hljs-built_in">history</span> of a file<br>   prune        Prune snapshots by revision, tag, or retention policy<br>   password     Change the storage password<br>   add          Add an additional storage to be used <span class="hljs-keyword">for</span> the existing repository<br>   <span class="hljs-built_in">set</span>          Change the options <span class="hljs-keyword">for</span> the default or specified storage<br>   copy         Copy snapshots between compatible storages<br>   info         Show the information about the specified storage<br>   benchmark    Run a <span class="hljs-built_in">set</span> of benchmarks to <span class="hljs-built_in">test</span> download and upload speeds<br>   <span class="hljs-built_in">help</span>, h      Shows a list of commands or <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> one <span class="hljs-built_in">command</span><br><br>GLOBAL OPTIONS:<br>   -verbose, -v                 show more detailed information<br>   -debug, -d                   show even more detailed information, useful <span class="hljs-keyword">for</span> debugging<br>   -<span class="hljs-built_in">log</span>                         <span class="hljs-built_in">enable</span> log-style output<br>   -stack                       <span class="hljs-built_in">print</span> the stack trace when an error occurs<br>   -no-script                   <span class="hljs-keyword">do</span> not run script before or after <span class="hljs-built_in">command</span> execution<br>   -background                  <span class="hljs-built_in">read</span> passwords, tokens, or keys only from keychain/keyring or env<br>   -profile &lt;address:port&gt;      <span class="hljs-built_in">enable</span> the profiling tool and listen on the specified address:port<br>   -comment                     add a comment to identify the process<br>   -suppress, -s &lt;id&gt; [+]       suppress logs with the specified id<br>   -print-memory-usage          <span class="hljs-built_in">print</span> memory usage every second<br>   -<span class="hljs-built_in">help</span>, -h                    show <span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
+<p>它支持通过本地磁盘、SFTP、WebDav、Dropbox、Google Drive、Microsoft OneDrive等方式进行数据备份，结合安装简单与性能优势，看起来比duplicati更好用。</p>
 
                 
               </div>
@@ -335,11 +324,9 @@
       
         <a href="/tags/Manjaro-ARM/">#Manjaro ARM</a>
       
-        <a href="/tags/alist/">#alist</a>
+        <a href="/tags/duplicati/">#duplicati</a>
       
-        <a href="/tags/webdav/">#webdav</a>
-      
-        <a href="/tags/dlna/">#dlna</a>
+        <a href="/tags/docker/">#docker</a>
       
     </div>
   
@@ -351,8 +338,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Manjaro ARM安装运行alist并通过webdav挂载到本地目录</div>
-      <div>http://xiaofami.github.io/2023/03/27/alist/</div>
+      <div>duplicati 试用</div>
+      <div>http://xiaofami.github.io/2023/04/03/duplicati/</div>
     </div>
     <div class="license-meta">
       
@@ -364,7 +351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月27日</div>
+          <div>2023年4月3日</div>
         </div>
       
       
@@ -396,18 +383,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/03/duplicati/" title="duplicati 试用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">duplicati 试用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/21/huaweigtnfc/" title="华为GT2 Pro ECG写入NFC门禁卡记录">
-                        <span class="hidden-mobile">华为GT2 Pro ECG写入NFC门禁卡记录</span>
+                      <a href="/2023/03/27/alist/" title="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
+                        <span class="hidden-mobile">Manjaro ARM安装运行alist并通过webdav挂载到本地目录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
