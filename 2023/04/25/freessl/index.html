@@ -18,26 +18,24 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。 Manjaro ARM本地运行duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。在Manjar">
+    <meta name="description" content="最近参照编译了个Gen8黑群引导支持最新7.1.1-62962正式版-物理机安装给尘封已久的 HP ProLiant MicroServer Gen8 安装了 DSM 7.1.1-42962 Update 5 ，于是开始了新一轮折腾。 申请使用freessl免费证书freessl网址： https:&#x2F;&#x2F;freessl.org&#x2F; ，注意后缀不是cn。群晖本身支持一键申请Let’s Encrypt证书">
 <meta property="og:type" content="article">
-<meta property="og:title" content="duplicati 试用">
-<meta property="og:url" content="http://xiaofami.github.io/2023/04/03/duplicati/index.html">
+<meta property="og:title" content="HP ProLiant MicroServer Gen8再战群晖(2023)">
+<meta property="og:url" content="http://xiaofami.github.io/2023/04/25/freessl/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。 Manjaro ARM本地运行duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。在Manjar">
+<meta property="og:description" content="最近参照编译了个Gen8黑群引导支持最新7.1.1-62962正式版-物理机安装给尘封已久的 HP ProLiant MicroServer Gen8 安装了 DSM 7.1.1-42962 Update 5 ，于是开始了新一轮折腾。 申请使用freessl免费证书freessl网址： https:&#x2F;&#x2F;freessl.org&#x2F; ，注意后缀不是cn。群晖本身支持一键申请Let’s Encrypt证书">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/duplicati.jpg">
-<meta property="article:published_time" content="2023-04-03T02:14:19.000Z">
-<meta property="article:modified_time" content="2023-04-06T01:45:21.961Z">
+<meta property="article:published_time" content="2023-04-25T06:13:57.000Z">
+<meta property="article:modified_time" content="2023-04-25T07:05:12.000Z">
 <meta property="article:author" content="tccmu">
-<meta property="article:tag" content="Manjaro ARM">
-<meta property="article:tag" content="duplicati">
-<meta property="article:tag" content="docker">
+<meta property="article:tag" content="synology">
+<meta property="article:tag" content="freessl">
+<meta property="article:tag" content="[object Object]">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/duplicati.jpg">
   
   
   
-  <title>duplicati 试用 - 小荷</title>
+  <title>HP ProLiant MicroServer Gen8再战群晖(2023) - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="duplicati 试用"></span>
+            <span id="subtitle" data-typed-text="HP ProLiant MicroServer Gen8再战群晖(2023)"></span>
           
         </div>
 
@@ -214,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-03 10:14" pubdate>
-          2023年4月3日 上午
+        <time datetime="2023-04-25 14:13" pubdate>
+          2023年4月25日 下午
         </time>
       </span>
     
@@ -226,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          893 字
         
       </span>
     
@@ -237,7 +235,7 @@
         
         
         
-          32 分钟
+          8 分钟
         
       </span>
     
@@ -275,41 +273,23 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">duplicati 试用</h1>
+            <h1 style="display: none">HP ProLiant MicroServer Gen8再战群晖(2023)</h1>
             
             
               <div class="markdown-body">
                 
-                <p>本地数据会因磁盘故障损毁，组RAID的NAS会被一窝端，云盘可能会意外泄露隐私。权衡利弊，可以将重要数据存储在NAS阵列中，加密后同步到云盘。duplicati为此提供了一套解决方案。</p>
-<h1 id="Manjaro-ARM本地运行"><a href="#Manjaro-ARM本地运行" class="headerlink" title="Manjaro ARM本地运行"></a>Manjaro ARM本地运行</h1><p>duplicati主要用于备份本机数据，所以在局域网内搭建一台备份服务器，然后给其他设备提供备份服务的想法不太完美。当然可以将远程目录挂载到本地，不过这不在讨论范围之内。<br>在Manjaro ARM上安装主要用于验证duplicati对aarch64的支持程度，顺便备份一些有用数据。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S duplicati-beta-bin<br></code></pre></td></tr></table></figure>
-<p>duplicati位于AUR仓库中，使用yay安装，全部选项默认即可，结束后 <strong>Duplicati - 2.0.6.3_beta_2021-06-17</strong> （截至2023年4月3日最新版本）便已安装完成。</p>
-<h2 id="允许局域网访问"><a href="#允许局域网访问" class="headerlink" title="允许局域网访问"></a>允许局域网访问</h2><p>duplicati默认只允许localhost通过8200端口访问，这带来2个问题。其一，localhost没有图形界面，自然也没有浏览器可用，无法通过页面配置。其二，8200端口与minidlna冲突，需要想办法修改。</p>
-<p>参考<a target="_blank" rel="noopener" href="https://duplicati.readthedocs.io/en/latest/02-installation/#installing-duplicati-on-linux">Installing Duplicati on Linux</a>一文，进行配置：</p>
-<p>首先停止服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">disable</span> duplicati.service<br>sudo systemctl stop duplicati.service<br></code></pre></td></tr></table></figure>
+                <p>最近参照<a target="_blank" rel="noopener" href="http://www.gebi1.com/thread-302165-1-1.html">编译了个Gen8黑群引导支持最新7.1.1-62962正式版-物理机安装</a>给尘封已久的 <em>HP ProLiant MicroServer Gen8</em> 安装了 <em>DSM 7.1.1-42962 Update 5</em> ，于是开始了新一轮折腾。</p>
+<h1 id="申请使用freessl免费证书"><a href="#申请使用freessl免费证书" class="headerlink" title="申请使用freessl免费证书"></a>申请使用freessl免费证书</h1><p>freessl网址： <a target="_blank" rel="noopener" href="https://freessl.org/">https://freessl.org/</a> ，注意后缀不是cn。群晖本身支持一键申请Let’s Encrypt证书，但是家宽被封了80端口，所以退而求其次，使用邮箱申请。成功后得到4个文件：</p>
+<ul>
+<li>domian.key : 私钥；</li>
+<li>domain.pem : 证书。</li>
+</ul>
+<p>在群晖中导入上述两个文件即可。剩下的 intermediate.pem 和 root.pem 用不到。443端口自然也不通，于是我将8443端口映射到了5001端口。</p>
+<h1 id="修改DownloadStation下载缓存"><a href="#修改DownloadStation下载缓存" class="headerlink" title="修改DownloadStation下载缓存"></a>修改DownloadStation下载缓存</h1><p>控制面板里打开SSH，连接后进行修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat /var/packages/DownloadStation/etc/settings.conf<br><br>btsearch_server=<span class="hljs-string">&quot;https://update.synology.com/btsearchupdate/getServerInfo.php&quot;</span><br>download_bt_cache_limit=<span class="hljs-string">&quot;32&quot;</span><br>download_maxtasks_limit=<span class="hljs-string">&quot;80&quot;</span><br>download_enable_amule=yes<br>download_ul_rate=0<br>download_enable_bt_port_forwarding=yes<br>download_seeding_interval=1440<br>download_seeding_ratio=100<br>download_amule_ul_rate=0<br></code></pre></td></tr></table></figure>
 
-<p>配置dpulicati环境变量：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/default/duplicati<br></code></pre></td></tr></table></figure>
-<p>加入 <code>DAEMON_OPTS=&quot;--webservice-interface=any --webservice-port=8600 --portable-mode&quot;</code> 一行。</p>
-<p>再修改systemd单元文件，使用上述变量：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /usr/lib/systemd/system/duplicati.service<br></code></pre></td></tr></table></figure>
-
-<p>修改前：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ cat /usr/lib/systemd/system/duplicati.service<br>[Unit]<br>Description=Duplicati<br>After=network.target<br><br>[Service]<br>ExecStart=/usr/bin/mono /opt/duplicati/Duplicati.Server.exe --webservice-port=8200<br>Restart=on-abort<br>EnvironmentFile=-/etc/default/duplicati<br>User=duplicati<br>Group=duplicati<br><br>[Install]<br>WantedBy=default.target<br></code></pre></td></tr></table></figure>
-
-<p>修改后：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ cat /usr/lib/systemd/system/duplicati.service<br>[Unit]<br>Description=Duplicati<br>After=network.target<br><br>[Service]<br>ExecStart=/usr/bin/mono /opt/duplicati/Duplicati.Server.exe <span class="hljs-variable">$DAEMON_OPTS</span><br>Restart=on-abort<br>EnvironmentFile=-/etc/default/duplicati<br>User=duplicati<br>Group=duplicati<br><br>[Install]<br>WantedBy=default.target<br></code></pre></td></tr></table></figure>
-
-<p>安装程序提供的单元文件虽然指定了环境文件路径，但是没有使用。改过来即可。另外注意duplicati服务以duplicati用户和组的身份执行，用于备份本地home目录会遇到权限问题，可以将上面的User和Group内容用自己的用户名和组替换。</p>
-<p>最后启动服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> duplicati.service<br>sudo systemctl daemon-reload<br>sudo systemctl start duplicati.service <br></code></pre></td></tr></table></figure>
-
-<p>现在即可在局域网中通过 <strong>ip:8600</strong> 访问管理页面。</p>
-<h1 id="在Docker中运行"><a href="#在Docker中运行" class="headerlink" title="在Docker中运行"></a>在Docker中运行</h1><p>duplicati的docker镜像由linuxserver维护，支持x86-64和arm64，参见<a target="_blank" rel="noopener" href="https://hub.docker.com/r/linuxserver/duplicati">linuxserver/duplicati</a>。</p>
-<h1 id="其他选择"><a href="#其他选择" class="headerlink" title="其他选择"></a>其他选择</h1><p><a target="_blank" rel="noopener" href="https://github.com/gilbertchen/duplicacy">duplicacy</a>号称是当下最先进最快的开源云备份工具，提供了linux arm64的二进制包，可以在Manjaro ARM中直接运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro tmp]$ <span class="hljs-built_in">cd</span> tmp<br>[marly@manjaro tmp]$ wget https://github.com/gilbertchen/duplicacy/releases/download/v3.1.0/duplicacy_linux_arm64_3.1.0<br>[marly@manjaro tmp]$ chmod +x duplicacy_linux_arm64_3.1.0<br><br>[marly@manjaro tmp]$ ./duplicacy_linux_arm64_3.1.0 -h<br>NAME:<br>   duplicacy - A new generation cloud backup tool based on lock-free deduplication<br><br>USAGE:<br>   duplicacy [global options] <span class="hljs-built_in">command</span> [<span class="hljs-built_in">command</span> options] [arguments...]<br><br>VERSION:<br>   3.1.0 (27FF3E)<br><br>COMMANDS:<br>   init         Initialize the storage <span class="hljs-keyword">if</span> necessary and the current directory as the repository<br>   backup       Save a snapshot of the repository to the storage<br>   restore      Restore the repository to a previously saved snapshot<br>   list         List snapshots<br>   check        Check the integrity of snapshots<br>   cat          Print to stdout the specified file, or the snapshot content <span class="hljs-keyword">if</span> no file is specified<br>   diff         Compare two snapshots or two revisions of a file<br>   <span class="hljs-built_in">history</span>      Show the <span class="hljs-built_in">history</span> of a file<br>   prune        Prune snapshots by revision, tag, or retention policy<br>   password     Change the storage password<br>   add          Add an additional storage to be used <span class="hljs-keyword">for</span> the existing repository<br>   <span class="hljs-built_in">set</span>          Change the options <span class="hljs-keyword">for</span> the default or specified storage<br>   copy         Copy snapshots between compatible storages<br>   info         Show the information about the specified storage<br>   benchmark    Run a <span class="hljs-built_in">set</span> of benchmarks to <span class="hljs-built_in">test</span> download and upload speeds<br>   <span class="hljs-built_in">help</span>, h      Shows a list of commands or <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> one <span class="hljs-built_in">command</span><br><br>GLOBAL OPTIONS:<br>   -verbose, -v                 show more detailed information<br>   -debug, -d                   show even more detailed information, useful <span class="hljs-keyword">for</span> debugging<br>   -<span class="hljs-built_in">log</span>                         <span class="hljs-built_in">enable</span> log-style output<br>   -stack                       <span class="hljs-built_in">print</span> the stack trace when an error occurs<br>   -no-script                   <span class="hljs-keyword">do</span> not run script before or after <span class="hljs-built_in">command</span> execution<br>   -background                  <span class="hljs-built_in">read</span> passwords, tokens, or keys only from keychain/keyring or env<br>   -profile &lt;address:port&gt;      <span class="hljs-built_in">enable</span> the profiling tool and listen on the specified address:port<br>   -comment                     add a comment to identify the process<br>   -suppress, -s &lt;id&gt; [+]       suppress logs with the specified id<br>   -print-memory-usage          <span class="hljs-built_in">print</span> memory usage every second<br>   -<span class="hljs-built_in">help</span>, -h                    show <span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
-<p>它支持通过本地磁盘、SFTP、WebDav、Dropbox、Google Drive、Microsoft OneDrive等方式进行数据备份，结合安装简单与性能优势，看起来比duplicati更好用。</p>
+<p>利用vi将 <strong>download_bt_cache_limit</strong> 调大。我的内存是16G，所以设置成了2048。<br>然后重启DownloadStation：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo synopkg stop DownloadStation<br>sudo synopkg start DownloadStation<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -322,11 +302,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Manjaro-ARM/">#Manjaro ARM</a>
+        <a href="/tags/synology/">#synology</a>
       
-        <a href="/tags/duplicati/">#duplicati</a>
+        <a href="/tags/freessl/">#freessl</a>
       
-        <a href="/tags/docker/">#docker</a>
+        <a href="/tags/object-Object/">#[object Object]</a>
       
     </div>
   
@@ -338,8 +318,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>duplicati 试用</div>
-      <div>http://xiaofami.github.io/2023/04/03/duplicati/</div>
+      <div>HP ProLiant MicroServer Gen8再战群晖(2023)</div>
+      <div>http://xiaofami.github.io/2023/04/25/freessl/</div>
     </div>
     <div class="license-meta">
       
@@ -351,7 +331,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月3日</div>
+          <div>2023年4月25日</div>
         </div>
       
       
@@ -383,18 +363,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/freessl/" title="HP ProLiant MicroServer Gen8再战群晖(2023)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HP ProLiant MicroServer Gen8再战群晖(2023)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/27/alist/" title="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
-                        <span class="hidden-mobile">Manjaro ARM安装运行alist并通过webdav挂载到本地目录</span>
+                      <a href="/2023/04/03/duplicati/" title="duplicati 试用">
+                        <span class="hidden-mobile">duplicati 试用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

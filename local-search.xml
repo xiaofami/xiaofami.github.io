@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>HP ProLiant MicroServer Gen8再战群晖(2023)</title>
+    <link href="/2023/04/25/freessl/"/>
+    <url>/2023/04/25/freessl/</url>
+    
+    <content type="html"><![CDATA[<p>最近参照<a href="http://www.gebi1.com/thread-302165-1-1.html">编译了个Gen8黑群引导支持最新7.1.1-62962正式版-物理机安装</a>给尘封已久的 <em>HP ProLiant MicroServer Gen8</em> 安装了 <em>DSM 7.1.1-42962 Update 5</em> ，于是开始了新一轮折腾。</p><h1 id="申请使用freessl免费证书"><a href="#申请使用freessl免费证书" class="headerlink" title="申请使用freessl免费证书"></a>申请使用freessl免费证书</h1><p>freessl网址： <a href="https://freessl.org/">https://freessl.org/</a> ，注意后缀不是cn。群晖本身支持一键申请Let’s Encrypt证书，但是家宽被封了80端口，所以退而求其次，使用邮箱申请。成功后得到4个文件：</p><ul><li>domian.key : 私钥；</li><li>domain.pem : 证书。</li></ul><p>在群晖中导入上述两个文件即可。剩下的 intermediate.pem 和 root.pem 用不到。443端口自然也不通，于是我将8443端口映射到了5001端口。</p><h1 id="修改DownloadStation下载缓存"><a href="#修改DownloadStation下载缓存" class="headerlink" title="修改DownloadStation下载缓存"></a>修改DownloadStation下载缓存</h1><p>控制面板里打开SSH，连接后进行修改：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat /var/packages/DownloadStation/etc/settings.conf<br><br>btsearch_server=<span class="hljs-string">&quot;https://update.synology.com/btsearchupdate/getServerInfo.php&quot;</span><br>download_bt_cache_limit=<span class="hljs-string">&quot;32&quot;</span><br>download_maxtasks_limit=<span class="hljs-string">&quot;80&quot;</span><br>download_enable_amule=yes<br>download_ul_rate=0<br>download_enable_bt_port_forwarding=yes<br>download_seeding_interval=1440<br>download_seeding_ratio=100<br>download_amule_ul_rate=0<br></code></pre></td></tr></table></figure><p>利用vi将 <strong>download_bt_cache_limit</strong> 调大。我的内存是16G，所以设置成了2048。<br>然后重启DownloadStation：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo synopkg stop DownloadStation<br>sudo synopkg start DownloadStation<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>synology</tag>
+      
+      <tag>freessl</tag>
+      
+      <tag>[object Object]</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>duplicati 试用</title>
     <link href="/2023/04/03/duplicati/"/>
     <url>/2023/04/03/duplicati/</url>
