@@ -4,7 +4,7 @@ date: 2023-04-25 14:13:57
 tags:
 - synology
 - freessl
-- dockerindex_img: /img/Screenshot_20230425_150454.png
+index_img: /img/Screenshot_20230425_150454.png
 ---
 
 最近参照[编译了个Gen8黑群引导支持最新7.1.1-62962正式版-物理机安装](http://www.gebi1.com/thread-302165-1-1.html)给尘封已久的 *HP ProLiant MicroServer Gen8* 安装了 *DSM 7.1.1-42962 Update 5* ，于是开始了新一轮折腾。
