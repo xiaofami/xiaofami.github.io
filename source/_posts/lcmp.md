@@ -43,6 +43,7 @@ sudo systemctl restart NetworkManager
 
 为什么要安装**networkmanager**呢？因为盒子的有线网卡mac地址每次开机都变化，所以DHCP获取到的IP地址也变来变去。我知悉的唯一有效解决办法是使用**nmtui**提供的mac-address-clone功能固定mac地址，而 **nmtui** 由 **networkmanager** 提供。
 
+更新：建议用dhcpcd实现静态IP，参见[Manjaro设置静态IP](https://tccmu.com/2023/02/16/manjaro-staticip/)
 # mariadb
 ## 安装
 ```bash
@@ -58,7 +59,7 @@ sudo mysql_secure_installation
 ## 配置
 首先登录到数据库：
 ```bash
-mysql -u root -p
+sudo mysql -u root -p
 ```
 然后新建一个名为 **wordpress** 的数据库，字符集为 **utf8mb4** ；新建一个名为 **wp** 的用户，密码为"password"（你需要自行替换密码），赋予这个用户全部权限：
 ```sql
@@ -88,18 +89,24 @@ extension=zip
 ```ini
 memory_limit=256M
 post_max_size=100M
-upload_max_file_size=100M
+upload_max_filesize=100M
 ```
 
 编辑 **/etc/php/php-fpm.d/www.conf** 文件，使其以caddy身份运行：
 ```conf
 user = http
 group = http
+
+listen.owner = http
+listen.group = http
 ```
 修改为
 ```conf
 user = caddy
 group = caddy
+
+listen.owner = caddy
+listen.group = caddy
 ```
 如果不改成caddy，过一会儿试图安装WordPress时caddy会报502错误。
 ## 重新加载
