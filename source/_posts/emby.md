@@ -5,7 +5,7 @@ tags:
 - synology
 - emby
 - let's encrypt
-index_img: /img/.png
+index_img: /img/emby.png
 ---
 # 序
 2022年双十一时候购买了绿联DX4600，打算替换掉运行接近十年的 HP ProLiant MicroServer Gen8 。但是绿联这个openwrt用起来真是一言难尽，体验远不及刷了黑裙的HP ProLiant MicroServer Gen8。本次emby配置在Gen8上进行。
