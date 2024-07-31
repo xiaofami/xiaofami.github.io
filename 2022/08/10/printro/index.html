@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言当初买FT-8900R时笔者还是纯纯的小白，买它的原因之一是《业余无线电通信（第五版）》的推荐，其二是电台支持四频段双工操作，其三是DATA插孔具有极强的迷惑性。我一度以为只要用数据线连接电台和电脑，就能传输数字信息，当然实际上并非如此。后来读了几遍手册，说是要用到TNC这个东西，然而国内根本没得卖，资料也近乎为零，ham群里大多在讨论mmdvm和FT8，没有人在玩Packet Radio。经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FT-8900R操作Packet Radio教程——By BH2VJW">
+<meta property="og:url" content="http://xiaofami.github.io/2022/08/10/printro/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="前言当初买FT-8900R时笔者还是纯纯的小白，买它的原因之一是《业余无线电通信（第五版）》的推荐，其二是电台支持四频段双工操作，其三是DATA插孔具有极强的迷惑性。我一度以为只要用数据线连接电台和电脑，就能传输数字信息，当然实际上并非如此。后来读了几遍手册，说是要用到TNC这个东西，然而国内根本没得卖，资料也近乎为零，ham群里大多在讨论mmdvm和FT8，没有人在玩Packet Radio。经">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-10T08:23:12.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.989Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="packet radio">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>FT-8900R操作Packet Radio教程——By BH2VJW - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FT-8900R操作Packet Radio教程——By BH2VJW"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-10 16:23" pubdate>
+          2022年8月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">FT-8900R操作Packet Radio教程——By BH2VJW</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>当初买FT-8900R时笔者还是纯纯的小白，买它的原因之一是《业余无线电通信（第五版）》的推荐，其二是电台支持四频段双工操作，其三是DATA插孔具有极强的迷惑性。我一度以为只要用数据线连接电台和电脑，就能传输数字信息，当然实际上并非如此。后来读了几遍手册，说是要用到TNC这个东西，然而国内根本没得卖，资料也近乎为零，ham群里大多在讨论mmdvm和FT8，没有人在玩Packet Radio。经过一段时间摸索，笔者终于验证出FT-8900R进行Packet Radio操作的一套可行方案。</p>
+<h1 id="Packet-Radio沿革"><a href="#Packet-Radio沿革" class="headerlink" title="Packet Radio沿革"></a>Packet Radio沿革</h1><p>讨论Packet Radio无法跳过它的发展历史，否则许多疑惑就很难解答。一个比较系统的介绍是 <strong>WB9LOZ</strong> 成稿于上世纪九十年代的<a target="_blank" rel="noopener" href="https://www.choisser.com/packet/">INTRODUCTION TO PACKET RADIO</a>，里面详细介绍了硬件构成、TNC命令、中继与节点的区别、BBS使用等内容。简而言之，Packet Radio起源于1980年的加拿大，并迅速在美国、西欧等地流行。那时Packet Radio的硬件系统一般为 <strong>电台-TNC-电脑&#x2F;哑终端</strong> ，也有 <strong>电台-调制解调器-电脑（运行软件充当软TNC）</strong> 这种比较少见的形式。TNC实现了 <strong>ASCII字符 - AFSK语音</strong> 之间的转换，是一种硬件设备，比较经典的TNC有TAPR出品的TNC-1和TNC-2，当年售价大概100美元。同时期国内爱好者能凑齐电台、电脑、TNC的恐怕凤毛麟角，这解释了为什么许多国内爱好者对Packet Radio、TNC之类名词毫无概念。</p>
+<h1 id="2022年利用FT-8900R操作Packet-Radio所需的软硬件"><a href="#2022年利用FT-8900R操作Packet-Radio所需的软硬件" class="headerlink" title="2022年利用FT-8900R操作Packet Radio所需的软硬件"></a>2022年利用FT-8900R操作Packet Radio所需的软硬件</h1><h2 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h2><ol>
+<li>FT-8900R电台。</li>
+<li>马工盒子，充当电台连接器，同时提供PTT控制。对于八重洲那些采用6 PIN mini-DIN接口（笔者按:貌似就是PS&#x2F;2接口）的车台，国外的成品连接器<a target="_blank" rel="noopener" href="https://hamprojects.info/dinah/">Dinah</a>提供了更简洁的接口。Dinah使用CM119声卡方案，利用CM119的GPIO针脚实现了PTT控制功能，这样连接器只需要通过一个6 PIN mini-DIN接口连接电台，一个USB接口连接电脑就可以了，不再需要额外的声卡，也不需要额外的USB接口提供PTT控制。动手能力强的爱好者可以购买CM108&#x2F;CM119方案的USB声卡自行改造。</li>
+<li>USB声卡，9.9元包邮款即可，需要Speaker与MIC有独自接口。高级一些的还会有Line IN接口不过非必需。</li>
+<li>电脑。为降低成本，我在一个40元的电视盒子上运行Manjaro ARM系统，充当电脑主机。这个盒子具备4核2GHz的处理器，令当年专门用来搭建Node、BBS的奔腾处理器电脑望尘莫及，所以不需要担心硬件性能不够。</li>
+</ol>
+<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/wb2osz/direwolf">Direwolf</a><br>我们用它来充当软件KISS TNC。通过KISS OVER TCP功能可以方便地进行远程连接，即运行Direwolf和与电台直接连接的电脑，与我们运行客户端软件用来收发消息的电脑不必是同一台，这为远程使用提供了便利。Direwolf也可以创建伪终端设备（编者按：该特性仅对Linux有效）供老式程序使用。此外Direwolf还可以提供APRS GPS Tracker、Digipeater、IGate、APRStt gateway等功能，有兴趣的可以深入了解。<br>Direwolf的编译毫无难度，拉取Github源码后编译即可，需要的依赖Manjaro仓库中都有提供。</li>
+<li><a target="_blank" rel="noopener" href="https://www.cantab.net/users/john.wiseman/Documents/LinBPQGuides.html">LinBPQ</a><br>LinBPQ可以在一台电脑上同时提供Node、BBS、聊天服务器、WinLink网关等功能，支持KISS OVER TCP。编译和配置稍显麻烦，方法可以参考<a target="_blank" rel="noopener" href="https://tccmu.com/2022/07/25/linbpq/">Manjaro ARM编译LinBPQ</a>和<a target="_blank" rel="noopener" href="https://tccmu.com/2022/07/28/linbpq-config/">LinBPQ配置</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ve7fet/linuxax25/releases/tag/ax25tools-1.0.4">ax25tools</a><br><strong>ax25tools</strong> 提供了ax25apps， ax25tools和libax25，需要分别编译安装。注意对于ax25app，需要将<strong>linuxax25-ax25tools-1.0.4&#x2F;ax25apps&#x2F;call&#x2F;call.c</strong>中第45行 <strong>#include &lt;ncursesw&#x2F;ncurses.h&gt;</strong> 修改为 <strong>#include &lt;ncurses.h&gt;</strong> 才能顺利编译。可以参考<a target="_blank" rel="noopener" href="https://tccmu.com/2022/07/21/pat/">在Manjaro ARM中编译运行Pat</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/la5nta/pat">Pat</a><br>Pat是一个跨平台的 Winlink 客户端，提供了命令行界面和网页界面，特性和编译使用方法可以参考<a target="_blank" rel="noopener" href="https://tccmu.com/2022/07/21/pat/">在Manjaro ARM中编译运行Pat</a>。</li>
+</ol>
+<h1 id="系统测试"><a href="#系统测试" class="headerlink" title="系统测试"></a>系统测试</h1><h2 id="硬件连接"><a href="#硬件连接" class="headerlink" title="硬件连接"></a>硬件连接</h2><p>电视盒子1号USB连接USB声卡，2号USB口连接马工盒子。马工盒子Data口连接电台，speaker与mic分别连接声卡的speaker与mic。</p>
+<h2 id="编解码测试"><a href="#编解码测试" class="headerlink" title="编解码测试"></a>编解码测试</h2><p>测试了1200与9600两种模式，经测试PTT控制正常，1200模式下能够清楚收听到经过调制的音频信号，编码解码正常。packet-1200对设备的要求很小，甚至用喇叭对着麦克风也能工作。<br>9600模式不经历 <strong>数字信号-调制语音</strong>之间的转换，通过FSK方式调制，听起来就像沙沙的噪音，无法分辨细节。Direwolf提供了几个便利的小工具用于测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gen_packets -o x.wav -B 9600 <span class="hljs-comment">#生成音频</span><br>$ atest -B 9600 x.wav <span class="hljs-comment"># 对音频解码</span><br>44100 samples per second.  16 bits per sample.  1 audio channels.<br>32576 audio bytes <span class="hljs-keyword">in</span> file.  Duration = 0.4 seconds.<br>Fix Bits level = 0<br>Channel 0: 9600 baud, K9NG/G3RUH,  , 44100 sample rate x 3.<br>The ratio of audio samples per sec (44100) to data rate <span class="hljs-keyword">in</span> baud (9600) is 4.6<br>This is on the low side <span class="hljs-keyword">for</span> best performance.  Can you use a higher sample rate?<br>For example, can you use 48000 rather than 44100?<br><br>DECODED[1] 0:00.091 WB2OSZ-15 audio level = 50(+33/-33)<br>[0] WB2OSZ-15&gt;TEST:,The quick brown fox jumps over the lazy dog!  1 of 4<br><br>DECODED[2] 0:00.183 WB2OSZ-15 audio level = 50(+33/-33)<br>[0] WB2OSZ-15&gt;TEST:,The quick brown fox jumps over the lazy dog!  2 of 4<br><br>DECODED[3] 0:00.275 WB2OSZ-15 audio level = 50(+33/-33)<br>[0] WB2OSZ-15&gt;TEST:,The quick brown fox jumps over the lazy dog!  3 of 4<br><br>DECODED[4] 0:00.368 WB2OSZ-15 audio level = 50(+33/-33)<br>[0] WB2OSZ-15&gt;TEST:,The quick brown fox jumps over the lazy dog!  4 of 4<br><br><br>4 from x.wav<br>4 packets decoded <span class="hljs-keyword">in</span> 0.014 seconds.  25.8 x realtime<br></code></pre></td></tr></table></figure>
+<p>在另一台笔记本电脑上使用gen_packets生成音频，笔记本speaker输出口连接运行Direwolf主机的USB声卡MIC口，测试解码效果。经过测试音频中包含的4条信息在95%以上的情况下只能解码出前3条，最后一条消失不见。调整输出音频与声卡音量后，问题无改善。或许是USB声卡的带宽不够？这说明9600对系统硬件的要求更高。</p>
+<h2 id="Node，BBS，聊天服务器测试"><a href="#Node，BBS，聊天服务器测试" class="headerlink" title="Node，BBS，聊天服务器测试"></a>Node，BBS，聊天服务器测试</h2><p>由于附近没有操作Packet Radio的爱好者故未能完成测试，不过不连接电台直接通过AX.25本地连接测试没问题，推测运行正常。另外LinBPQ的管理页面Bug较多，如需修改配置请直接改动配置文件，在网页修改容易报错崩溃。</p>
+<h2 id="Pat测试"><a href="#Pat测试" class="headerlink" title="Pat测试"></a>Pat测试</h2><p>国内没有2米段的节点所以无法测试通过电波访问情况，不过使用telnet收发信正常，AX.25支持正常，推断无问题。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/packet-radio/" class="print-no-link">#packet radio</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FT-8900R操作Packet Radio教程——By BH2VJW</div>
+      <div>http://xiaofami.github.io/2022/08/10/printro/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/31/%E6%99%BE%E8%A1%A3%E7%BB%B3%E5%A4%A9%E7%BA%BF%E7%A0%94%E7%A9%B6/" title="晾衣绳天线研究">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">晾衣绳天线研究</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/08/qqlost/" title="QQ号丢了">
+                        <span class="hidden-mobile">QQ号丢了</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

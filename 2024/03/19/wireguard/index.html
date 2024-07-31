@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言折腾对象还是Bestv 3300M这个机顶盒 。。。家里新办了移动千兆宽带，资费比先前的联通300M还要便宜一大截，实测网速可达到 940&#x2F;100 。可惜不提供公网IPv4地址，于是只能从IPv6上下功夫，就用wireguard + DDNS搞定吧。 光猫改桥接移动送的光猫是 ZXHN F7000MV3 ，类型如下： 产品名称：10Gbit&#x2F;s无源光网络用户端设备（XG-PON ON">
+<meta property="og:type" content="article">
+<meta property="og:title" content="manjaro arm运行wireguard作为跳板机">
+<meta property="og:url" content="http://xiaofami.github.io/2024/03/19/wireguard/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="前言折腾对象还是Bestv 3300M这个机顶盒 。。。家里新办了移动千兆宽带，资费比先前的联通300M还要便宜一大截，实测网速可达到 940&#x2F;100 。可惜不提供公网IPv4地址，于是只能从IPv6上下功夫，就用wireguard + DDNS搞定吧。 光猫改桥接移动送的光猫是 ZXHN F7000MV3 ，类型如下： 产品名称：10Gbit&#x2F;s无源光网络用户端设备（XG-PON ON">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaofami.github.io/img/wireguard.jpg">
+<meta property="article:published_time" content="2024-03-19T07:21:53.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:03.000Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="wireguard">
+<meta property="article:tag" content="routeros">
+<meta property="article:tag" content="manjaro arm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/wireguard.jpg">
+  
+  
+  
+  <title>manjaro arm运行wireguard作为跳板机 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="manjaro arm运行wireguard作为跳板机"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-19 15:21" pubdate>
+          2024年3月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">manjaro arm运行wireguard作为跳板机</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>折腾对象还是Bestv 3300M这个机顶盒 。。。家里新办了移动千兆宽带，资费比先前的联通300M还要便宜一大截，实测网速可达到 940&#x2F;100 。可惜不提供公网IPv4地址，于是只能从IPv6上下功夫，就用wireguard + DDNS搞定吧。</p>
+<h1 id="光猫改桥接"><a href="#光猫改桥接" class="headerlink" title="光猫改桥接"></a>光猫改桥接</h1><p>移动送的光猫是 <strong>ZXHN F7000MV3</strong> ，类型如下：</p>
+<pre><code class="hljs">产品名称：10Gbit/s无源光网络用户端设备（XG-PON ONU）
+产品类型：中国移动智能家庭网关 类型十九
+产品型号：ZXHN F7000MV3
+默认终端配置地址：192.168.1.1
+电源规格：12V 1A
+生产日期：2024-02-29
+1个光口，4个千兆LAN口，1个USB2.0接口，1个USB3.0接口
+</code></pre>
+<p>光猫通过LOID自动下发配置，默认光猫拨号，可获得60长度的IPv6前缀。超级用户账号密码就是常见的CMCCAdmin和aDm8H%MdA2，注册设备后密码会被修改。尝试了 factorymode_crack ， 中兴telnet开启工具 等软件，均无法开启telnet。用U盘导出的配置文件也无法被ztecfg.exe解码。换一种思路，用普通用户账号进入后台记录连接信息，共3条：</p>
+<pre><code class="hljs">1_TR069_R_VID_4011
+2_INTERNET_R_VID_1073
+3_OTHER_B_VID_4017
+</code></pre>
+<p>自行为上网和机顶盒创建2条桥接方式连接，绑定好LAN口后填写LOID通过验证。验证后 <strong>TR069</strong> 会恢复并修改超密，不过关键的两条手动创建桥接没有被改动，至此光猫配置顺利完成，通过拨号可以获得60长度的前缀。</p>
+<h1 id="路由器关闭防火墙"><a href="#路由器关闭防火墙" class="headerlink" title="路由器关闭防火墙"></a>路由器关闭防火墙</h1><p>拨号主路由是Linksys 8300，默认开启IPv6 SPI防火墙，记得关掉。MR8300作为WIFI5时代产物，WIFI测速只能勉强达到600M，不过好在家里大部分设备都采用有线接入，没必要破费升级到WIFI6了。</p>
+<h1 id="manjaro-arm运行ddns"><a href="#manjaro-arm运行ddns" class="headerlink" title="manjaro arm运行ddns"></a>manjaro arm运行ddns</h1><p>采用 Newfuture DDNS更新AAAA记录，之前写过教程，不再赘述。</p>
+<h1 id="manjaro-arm-配置-wireguard"><a href="#manjaro-arm-配置-wireguard" class="headerlink" title="manjaro arm 配置 wireguard"></a>manjaro arm 配置 wireguard</h1><h2 id="检查内核"><a href="#检查内核" class="headerlink" title="检查内核"></a>检查内核</h2><p>比较新的linux内核已经包含wireguard了，可使用modinfo确认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ modinfo wireguard<br>filename:       /lib/modules/6.4.3-1-MANJARO-ARM-ODROID/kernel/drivers/net/wireguard/wireguard.ko.gz<br><span class="hljs-built_in">alias</span>:          net-pf-16-proto-16-family-wireguard<br><span class="hljs-built_in">alias</span>:          rtnl-link-wireguard<br>version:        1.0.0<br>author:         Jason A. Donenfeld &lt;Jason@zx2c4.com&gt;<br>description:    WireGuard secure network tunnel<br>license:        GPL v2<br>srcversion:     C5E63ADC650EA5DDFE3643C<br>depends:        libcurve25519-generic,libchacha20poly1305<br>intree:         Y<br>name:           wireguard<br>vermagic:       6.4.3-1-MANJARO-ARM-ODROID SMP preempt mod_unload aarch64<br>[marly@manjaro ~]$<br></code></pre></td></tr></table></figure>
+<p>由于我们的manjaro arm是跳板机，需要经由它访问局域网内其他设备，所以需要打开内核流量转发功能。首先检查流量转发是否已启用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@manjaro wireguard]# sysctl -a | grep forward<br>net.ipv4.conf.all.bc_forwarding = 0<br>net.ipv4.conf.all.forwarding = 0<br>net.ipv4.conf.all.mc_forwarding = 0<br>net.ipv4.conf.default.bc_forwarding = 0<br>net.ipv4.conf.default.forwarding = 0<br>net.ipv4.conf.default.mc_forwarding = 0<br>net.ipv4.conf.eth0.bc_forwarding = 0<br>net.ipv4.conf.eth0.forwarding = 0<br>net.ipv4.conf.eth0.mc_forwarding = 0<br>net.ipv4.conf.ip6tnl0.bc_forwarding = 0<br>net.ipv4.conf.ip6tnl0.forwarding = 0<br>net.ipv4.conf.ip6tnl0.mc_forwarding = 0<br>net.ipv4.conf.lo.bc_forwarding = 0<br>net.ipv4.conf.lo.forwarding = 0<br>net.ipv4.conf.lo.mc_forwarding = 0<br>net.ipv4.conf.wg0.bc_forwarding = 0<br>net.ipv4.conf.wg0.forwarding = 0<br>net.ipv4.conf.wg0.mc_forwarding = 0<br>net.ipv4.ip_forward = 0<br>net.ipv4.ip_forward_update_priority = 1<br>net.ipv4.ip_forward_use_pmtu = 0<br>net.ipv6.conf.all.forwarding = 0<br>net.ipv6.conf.all.mc_forwarding = 0<br>net.ipv6.conf.default.forwarding = 0<br>net.ipv6.conf.default.mc_forwarding = 0<br>net.ipv6.conf.eth0.forwarding = 0<br>net.ipv6.conf.eth0.mc_forwarding = 0<br>net.ipv6.conf.ip6tnl0.forwarding = 0<br>net.ipv6.conf.ip6tnl0.mc_forwarding = 0<br>net.ipv6.conf.lo.forwarding = 0<br>net.ipv6.conf.lo.mc_forwarding = 0<br>net.ipv6.conf.wg0.forwarding = 0<br>net.ipv6.conf.wg0.mc_forwarding = 0<br></code></pre></td></tr></table></figure>
+<p>输出结果表明流量转发并未开启，需要修改sysctl配置文件。找下这个文件位置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">[marly@manjaro ~]$ systemd-analyze cat-config sysctl.d<br><span class="hljs-comment"># /usr/lib/sysctl.d/10-arch.conf</span><br><span class="hljs-comment"># Raise inotify resource limits</span><br>fs.inotify.max_user_instances = 1024<br>fs.inotify.max_user_watches = 524288<br><br><span class="hljs-comment"># /usr/lib/sysctl.d/50-coredump.conf</span><br><span class="hljs-comment">#  This file is part of systemd.</span><br></code></pre></td></tr></table></figure>
+
+<p>看来修改 <strong>&#x2F;usr&#x2F;lib&#x2F;sysctl.d&#x2F;10-arch.conf</strong> 这个文件就行了。打开这个文件，添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">net.ipv4.ip_forward = 1<br>net.ipv4.conf.all.forwarding = 1<br>net.ipv6.conf.all.forwarding = 1<br></code></pre></td></tr></table></figure>
+<p>然后执行 <code>sudo sysctl -p /usr/lib/sysctl.d/10-arch.conf</code> 即可生效。</p>
+<h2 id="生成密钥和配置文件"><a href="#生成密钥和配置文件" class="headerlink" title="生成密钥和配置文件"></a>生成密钥和配置文件</h2><p>首先安装 <strong>wireguard-tools</strong>。这个软件包提供了密钥工具、systemd服务单元文件等，能极大降低配置难度：<code>sudo pacman -Sy wireguard-tools</code> 。然后生成密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wg genkey | <span class="hljs-built_in">tee</span> key.txt | wg pubkey &gt;&gt; key.txt<br></code></pre></td></tr></table></figure>
+<p>key.txt中，第一行为私钥，第二行为公钥。</p>
+<p>最后创建 <code>/etc/wireguard/wg0.conf</code> ，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs conf">[Interface]<br>ListenPort = 6666<br>PrivateKey = 私钥，对应刚才key.txt的第一行内容<br>Address = 192.168.9.1/24<br>PostUp = iptables -I FORWARD -i wg0 -j ACCEPT; iptables -I FORWARD -o wg0 -j ACCEPT; iptables -I INPUT -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE<br>PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT; iptables -D INPUT -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE<br><br>[Peer]<br># xiaomi 12<br>PublicKey = peer的公钥<br>AllowedIPs = 192.168.9.2/32<br></code></pre></td></tr></table></figure>
+<p>上述iptables中的eth0请结合实际修改，具体名称可通过 <code>ip a</code> 查看。</p>
+<h2 id="启动-wireguard-服务"><a href="#启动-wireguard-服务" class="headerlink" title="启动 wireguard 服务"></a>启动 wireguard 服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now wg-quick@wg0<br></code></pre></td></tr></table></figure>
+<p>至此manjaro arm中的wireguard配置完成。peer连接到manjaro arm后，即可通过ipv4局域网地址访问各种服务。</p>
+<h1 id="跋"><a href="#跋" class="headerlink" title="跋"></a>跋</h1><p>如果wireguard主机同时具备公网IPv4与IPv6地址，可以实现仅具备IPv4地址的peer访问IPv6站点，笔者已在routeros中配置成功。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/wireguard/" class="print-no-link">#wireguard</a>
+      
+        <a href="/tags/routeros/" class="print-no-link">#routeros</a>
+      
+        <a href="/tags/manjaro-arm/" class="print-no-link">#manjaro arm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>manjaro arm运行wireguard作为跳板机</div>
+      <div>http://xiaofami.github.io/2024/03/19/wireguard/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/22/emby/" title="emby部署ssl证书">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">emby部署ssl证书</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/22/w5000/" title="FirePro W5000显卡测评">
+                        <span class="hidden-mobile">FirePro W5000显卡测评</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

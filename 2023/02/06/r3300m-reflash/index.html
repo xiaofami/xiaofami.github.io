@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="家里先前运行Manjaro ARM的R3300-M最近出现了开机一段时间后SSH无法登陆的问题，于是备份必要文件后重刷系统。原本以为不需要再水一篇文章，不过刷机过程中遇到了一些问题，有必要记录下来。 镜像选择之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 extlinux.ext 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R3300-M再刷机">
+<meta property="og:url" content="http://xiaofami.github.io/2023/02/06/r3300m-reflash/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="家里先前运行Manjaro ARM的R3300-M最近出现了开机一段时间后SSH无法登陆的问题，于是备份必要文件后重刷系统。原本以为不需要再水一篇文章，不过刷机过程中遇到了一些问题，有必要记录下来。 镜像选择之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 extlinux.ext 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaofami.github.io/img/p201.png">
+<meta property="article:published_time" content="2023-02-06T02:41:46.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.989Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="R3300-M">
+<meta property="article:tag" content="Manjaro ARM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/p201.png">
+  
+  
+  
+  <title>R3300-M再刷机 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="R3300-M再刷机"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-06 10:41" pubdate>
+          2023年2月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">R3300-M再刷机</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>家里先前运行Manjaro ARM的R3300-M最近出现了开机一段时间后SSH无法登陆的问题，于是备份必要文件后重刷系统。原本以为不需要再水一篇文章，不过刷机过程中遇到了一些问题，有必要记录下来。</p>
+<h1 id="镜像选择"><a href="#镜像选择" class="headerlink" title="镜像选择"></a>镜像选择</h1><p>之前我写过一篇文章建议使用generic镜像，我记得当时试验很顺利。不过我发现最新版的generic镜像 <strong>extlinux.ext</strong> 文件结构发生了较大变化，不仅取消了DTB文件指定，而且启动参数也精简了许多，毫无意外启动失败了。我参照之前的格式修改，结果无法发现root分区，这肯定就行不通了。于是换用Vim2镜像，这个也有坑。测试了22.12和22.10版本，启动时提示 <strong>reserved mem:failed to allocate memory for node ‘linux,cma’</strong> 错误导致启动失败进入 <strong>emergency shell</strong>。几经测试后 <strong>vim2 22.08</strong> 是能够正常使用的最新版本，开机后直接更新系统换主线内核即可。针对dtb文件区别我进行了简单试验，试验结果如下：</p>
+<ol>
+<li>当前使用的dtb文件与Manjaro-ARM-minimal-generic-22.12.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件经过diff比较是完全一致的，符合预期。</li>
+<li>当前使用的dtb文件与Manjaro-ARM-minimal-vim2-22.08.img中提供的meson-gxbb-p201.dtb文件，反编译后得到的dts文件diff结果如下：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">diff current.dts vim2-08.dts<br>50c50<br>&lt;                       size = &lt;0x00 0x10000000&gt;;<br>---<br>&gt;                       size = &lt;0x00 0x38000000&gt;;<br></code></pre></td></tr></table></figure>
+
+<p>对应dts文件中此部分：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Manjaro-ARM-minimal-generic-22.12.img</span><br>linux,cma &#123;<br>        compatible = <span class="hljs-string">&quot;shared-dma-pool&quot;</span>;<br>        reusable;<br>        size = &lt;0x00 0x10000000&gt;;<br>        alignment = &lt;0x00 0x400000&gt;;<br>        linux,cma-default;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Manjaro-ARM-minimal-vim2-22.08.img</span><br>linux,cma &#123;<br>      compatible = <span class="hljs-string">&quot;shared-dma-pool&quot;</span>;<br>      reusable;<br>      size = &lt;0x00 0x38000000&gt;;<br>      alignment = &lt;0x00 0x400000&gt;;<br>      linux,cma-default;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>至于 Manjaro-ARM-minimal-generic-22.12.img 与 Manjaro-ARM-minimal-vim2-22.12.img dtb差异就比较悬殊了，大量的的phandle值不同，而且新增了 ** system-suspend** 、 <strong>rtc@a8</strong> 、 <strong>sound</strong> 、 <strong>vrtc</strong> 内容。</p>
+<p>Manjaro ARM提供了<a target="_blank" rel="noopener" href="https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools">manjaro-arm-tools</a>这一工具，可以提供打包应用，制作系统镜像等功能。有空可以为R3300-M定制一份配置文件。</p>
+<h1 id="编译WIFI驱动"><a href="#编译WIFI驱动" class="headerlink" title="编译WIFI驱动"></a>编译WIFI驱动</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S git make gcc bc<br>git <span class="hljs-built_in">clone</span> https://github.com/jwrdegoede/rtl8189ES_linux.git<br><span class="hljs-built_in">cd</span> ~/rtl8189ES_linux/<br>make -j$(<span class="hljs-built_in">nproc</span>) ARCH=arm64 KSRC=/usr/lib/modules/$(<span class="hljs-built_in">uname</span> -r)/build<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cp</span> 8189es.ko /usr/lib/modules/$(<span class="hljs-built_in">uname</span> -r)/kernel/drivers/net/wireless/realtek/<br><span class="hljs-built_in">sudo</span> depmod -a<br><span class="hljs-built_in">sudo</span> modprobe 8189es<br></code></pre></td></tr></table></figure>
+<p>较之前的版本补充了依赖关系安装。nproc是一个用于获取CPU线程数的小程序，用来全速编译很便利。</p>
+<h1 id="连接WIFI"><a href="#连接WIFI" class="headerlink" title="连接WIFI"></a>连接WIFI</h1><p>过去我使用 <strong>networkmanager</strong> 提供的 <strong>nmtui</strong> 连接WIFI，优点比较直观。这次换用 <strong>wpa_supplicant</strong> 连接无线网络。<br>刚才编译加载好无线驱动后使用 <code>ip a</code> 查看，可以看到无线网卡名称为 <strong>wlan0</strong> ，使用 <code>sudo iw wlan0 scan</code> 可以扫描到附近的全部无线热点，说明无线网卡已经正常驱动，接下来用pacman安装<strong>wpa_supplicant</strong>。安装程序会自动创建 <strong>&#x2F;etc&#x2F;wpa_supplicant&#x2F;</strong> 这个目录，该目录目前还是空的，需要自行创建WIFI配置文件。</p>
+<p>假设要连接SSID为 <strong>ASUS</strong> ，密码为 <strong>12345678</strong> 的这个WIFI，首先生成配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">wpa_passphrase <span class="hljs-string">&quot;ASUS&quot;</span> <span class="hljs-string">&quot;12345678&quot;</span> <br><br><br>network=&#123;<br>        ssid=<span class="hljs-string">&quot;ASUS&quot;</span><br>        <span class="hljs-comment">#psk=&quot;12345678&quot;</span><br>        psk=a0efc361219475143ca336c62571c833d81e72b952db56e373a5c255ebff7e00<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在 <strong>&#x2F;etc&#x2F;wpa_supplicant&#x2F;</strong> 这个目录下创建 <strong>wpa_supplicant.conf</strong> ，然后把上门的输出内容复制进去保存。然后执行命令连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf &amp;<br></code></pre></td></tr></table></figure>
+<p>这个命令是很直观的，使用wlan0这个无线网卡，根据 <strong>&#x2F;etc&#x2F;wpa_supplicant&#x2F;wpa_supplicant.conf</strong> 配置连接WIFI，并作为后台进程执行。</p>
+<p>当然每次开机手动连接WIFI是不方便的，很自然的想法是利用systemd创建service。事实上 <strong>wpa_supplicant</strong> 也提供了服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>systemctl <span class="hljs-built_in">cat</span> wpa_supplicant<br><span class="hljs-comment"># /usr/lib/systemd/system/wpa_supplicant.service</span><br>[Unit]<br>Description=WPA supplicant<br>Before=network.target<br>After=dbus.service<br>Wants=network.target<br>IgnoreOnIsolate=<span class="hljs-literal">true</span><br><br>[Service]<br>Type=dbus<br>BusName=fi.w1.wpa_supplicant1<br>ExecStart=/usr/bin/wpa_supplicant -u -s -O /run/wpa_supplicant<br><br>[Install]<br>WantedBy=multi-user.target<br>Alias=dbus-fi.w1.wpa_supplicant1.service<br></code></pre></td></tr></table></figure>
+<p>但是这个服务达不到期望目的。参考 <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/361558/difference-between-systemd-wpa-supplicant-service-and-wpa-supplicantwlan0-servi">Difference between systemd wpa_supplicant.service and wpa_supplicant@wlan0.service?</a> 一文，这个服务主要是用于服务 <strong>networkmanager</strong> 的。由于我不打算安装使用 <strong>networkmanager</strong> ，所以这个服务没有意义。真正有意义的是 <strong>wpa_supplicant@.service</strong> ，而且值得特别指出，这是个动态服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">cat</span> wpa_supplicant@.service<br><span class="hljs-comment"># /usr/lib/systemd/system/wpa_supplicant@.service</span><br>[Unit]<br>Description=WPA supplicant daemon (interface-specific version)<br>Requires=sys-subsystem-net-devices-%i.device<br>After=sys-subsystem-net-devices-%i.device<br>Before=network.target<br>Wants=network.target<br><br><span class="hljs-comment"># NetworkManager users will probably want the dbus version instead.</span><br><br>[Service]<br>Type=simple<br>ExecStart=/usr/bin/wpa_supplicant -c/etc/wpa_supplicant/wpa_supplicant-%I.conf -i%I<br><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+
+<p>至此思路就清楚了。首先执行 <code>ps aux | grep wpa</code> 找到并杀死刚才连接WIFI执行的后台进程，然后将 <strong>&#x2F;etc&#x2F;wpa_supplicant&#x2F;wpa_supplicant.conf</strong> 重命名为 <strong>&#x2F;etc&#x2F;wpa_supplicant&#x2F;wpa_supplicant-wlan0.conf</strong> ，最后执行 <code>sudo systemctl enable --now wpa_supplicant@wlan0</code> 激活服务就大功告成。注意体味下此处动态服务的妙用。</p>
+<h1 id="重新安装hexo"><a href="#重新安装hexo" class="headerlink" title="重新安装hexo"></a>重新安装hexo</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S npm<br><span class="hljs-built_in">sudo</span> npm install hexo-cli -g<br><span class="hljs-built_in">sudo</span> npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure>
+<p>这里补充的主要是GitHub使用密钥同步问题：</p>
+<ol>
+<li>修复密钥权限<br><strong>$HOME&#x2F;.ssh</strong>目录下的私钥 <strong>id_rsa</strong> 导回后默认权限为644，程序会抱怨权限太宽，需要手动改成600。成功后测试输出如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -T git@github.com<br>Hi xiaofami! You<span class="hljs-string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br></code></pre></td></tr></table></figure></li>
+<li>修改 <strong>.git&#x2F;config</strong>文件<br><strong>.git</strong> 位于你的hexo目录。我修改后的config文件内容如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs config">[core]<br>        repositoryformatversion = 0<br>        filemode = true<br>        bare = false<br>        logallrefupdates = true<br>[remote &quot;origin&quot;]<br>        url = git@github.com:xiaofami/xiaofami.github.io<br>        fetch = +refs/heads/*:refs/remotes/origin/*<br>[branch &quot;blogSource&quot;]<br>        remote = origin<br>        merge = refs/heads/blogSource<br></code></pre></td></tr></table></figure>
+修改之前 <strong>url</strong> 一行使用的是https格式，所以无法跳过手动输入验证步骤。按照上述形式修改为git即可。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/R3300-M/" class="print-no-link">#R3300-M</a>
+      
+        <a href="/tags/Manjaro-ARM/" class="print-no-link">#Manjaro ARM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>R3300-M再刷机</div>
+      <div>http://xiaofami.github.io/2023/02/06/r3300m-reflash/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/06/manjaro-arm-tools/" title="使用manjaro-arm-tools定制Manjaro ARM镜像">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用manjaro-arm-tools定制Manjaro ARM镜像</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/02/ImageMagick/" title="彩色图片转为黑白">
+                        <span class="hidden-mobile">彩色图片转为黑白</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

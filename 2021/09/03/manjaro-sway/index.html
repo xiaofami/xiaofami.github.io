@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="硬件平台还是R3300-M …… 想要Firefly的Station P2，不过迫于没钱，继续折腾小红盒 XD 前言WIFI设置好后，又动了折腾图形界面的心思。之前测试过XFCE，分辨率不正常，桌面拖动窗口有明显卡顿，打开firefox直接卡死。一则显卡驱动有问题，二则XFCE对于R3300-M还是太重了。于是换用wayland + sway方案，彻底放弃X11。显卡驱动选择Lima，已经集成在了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R3300-M 运行 Manjaro ARM Sway">
+<meta property="og:url" content="http://xiaofami.github.io/2021/09/03/manjaro-sway/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="硬件平台还是R3300-M …… 想要Firefly的Station P2，不过迫于没钱，继续折腾小红盒 XD 前言WIFI设置好后，又动了折腾图形界面的心思。之前测试过XFCE，分辨率不正常，桌面拖动窗口有明显卡顿，打开firefox直接卡死。一则显卡驱动有问题，二则XFCE对于R3300-M还是太重了。于是换用wayland + sway方案，彻底放弃X11。显卡驱动选择Lima，已经集成在了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-03T06:20:44.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.979Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="R3300-M">
+<meta property="article:tag" content="sway">
+<meta property="article:tag" content="arm">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>R3300-M 运行 Manjaro ARM Sway - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="R3300-M 运行 Manjaro ARM Sway"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-09-03 14:20" pubdate>
+          2021年9月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">R3300-M 运行 Manjaro ARM Sway</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>硬件平台还是R3300-M …… 想要Firefly的Station P2，不过迫于没钱，继续折腾小红盒 XD</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>WIFI设置好后，又动了折腾图形界面的心思。之前测试过XFCE，分辨率不正常，桌面拖动窗口有明显卡顿，打开firefox直接卡死。一则显卡驱动有问题，二则XFCE对于R3300-M还是太重了。于是换用<code>wayland + sway</code>方案，彻底放弃X11。显卡驱动选择Lima，已经集成在了mesa软件包中。如果选择尝鲜，也可以安装<code>mesa-git</code>。Lima是在反向官方驱动的基础上，由社区开发维护的开源驱动，对<code>Mali-400</code>、<code>Mali-450</code>提供支持。详情可以在 <a target="_blank" rel="noopener" href="https://docs.mesa3d.org/drivers/lima.html">https://docs.mesa3d.org/drivers/lima.html</a> 查看。感谢Luc Verhaegen和Qiang Yu的开创性工作。</p>
+<h1 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h1><p>参见 <a target="_blank" rel="noopener" href="https://manjaro.org/download/#khadas-vim-2-sway">https://manjaro.org/download/#khadas-vim-2-sway</a> ，下载地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://github.com/manjaro-arm/vim2-images/releases/download/21.08/Manjaro-ARM-sway-vim2-21.08.img.xz<br>https://github.com/manjaro-arm/vim2-images/releases/download/21.08/Manjaro-ARM-sway-vim2-21.08.img.xz.torrent<br></code></pre></td></tr></table></figure>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>烧录镜像、修改u-boot.ext、修改extlinux等与之前无异。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>第一次启动会进入配置引导程序，配置结束后重启，进入sway图形界面。在开始探索之前，先修复系统的小小bug：</p>
+<h2 id="修复greetd服务"><a href="#修复greetd服务" class="headerlink" title="修复greetd服务"></a>修复greetd服务</h2><p>打开<code>/etc/greetd/config.toml</code>，看起来大概这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">[terminal]<br><span class="hljs-comment"># The VT to run the greeter on. Can be &quot;next&quot;, &quot;current&quot; or a number</span><br><span class="hljs-comment"># designating the VT.</span><br>vt = 1<br><br><span class="hljs-comment"># The default session, also known as the greeter.</span><br>[default_session]<br><span class="hljs-comment"># `agreety` is the bundled agetty/login-lookalike. You can replace `$SHELL`</span><br><span class="hljs-comment"># with whatever you want started, such as `sway`.</span><br><span class="hljs-built_in">command</span> = <span class="hljs-string">&quot;sway --config /etc/greetd/sway&quot;</span><br><br><span class="hljs-comment"># The user to run the command as. The privileges this user must have depends</span><br><span class="hljs-comment"># on the greeter. A graphical greeter may for example require the user to be</span><br><span class="hljs-comment"># in the `video` group.</span><br>user = <span class="hljs-string">&quot;greeter&quot;</span><br>[initial_session]<br><span class="hljs-built_in">command</span> = <span class="hljs-string">&quot;sway --config /etc/greetd/oem-setup&quot;</span><br>user = <span class="hljs-string">&quot;oem&quot;</span><br></code></pre></td></tr></table></figure>
+<p><del>你需要将最后一行的<code>oem</code>修改为自己实际的用户名。</del> Manjaro ARM团队提到将[initial_session]部分完整删除（即删除上面配置文件最后三行），此问题预计很快会得到修复。</p>
+<p>这一步本应由配置程序自动完成，如果忘记修改，下次启动将无法进入图形界面。这种情况下，按下<code>Ctrl + Alt + F2</code>进入<code>tty2</code>，手动修改过来就可以了。</p>
+<h2 id="同步时间"><a href="#同步时间" class="headerlink" title="同步时间"></a>同步时间</h2><p>直接摘抄之前的文章：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">user $ timedatectl set-ntp <span class="hljs-literal">true</span><br>user $ <span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now systemd-timesyncd<br></code></pre></td></tr></table></figure>
+<p>时间不准会造成SSL验证失败等一系列问题。</p>
+<h2 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman-mirrors -i -c China -m rank<br><span class="hljs-built_in">sudo</span> pacman-mirrors -g<br><span class="hljs-built_in">sudo</span> pacman -Syyu<br></code></pre></td></tr></table></figure>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="文档获取"><a href="#文档获取" class="headerlink" title="文档获取"></a>文档获取</h2><p>sway作为窗口管理器（window manager）提供了轻量的图形功能，大量依赖配置文件和快捷键操作。遵循<code>linux</code>传统，<code>/etc/sway/config</code>和<code>~/.config/sway/config</code>各存在一份，前者全局，后者本地优先。另外桌面右上角的问号是入门操作文档，没接触过<code>i3</code>或<code>sway</code>的用户必读。<code>sway</code>虽然轻量，但是仍然提供了丰富好用的功能，类似全屏、窗口、区域截图或录制功能均有对应快捷键，不逊色于macOS。</p>
+<h2 id="查看glxinfo输出"><a href="#查看glxinfo输出" class="headerlink" title="查看glxinfo输出"></a>查看glxinfo输出</h2><p>glxinfo由mesa-demos提供：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S mesa-demos<br></code></pre></td></tr></table></figure>
+<p>然后执行<code>glxinfo -B</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">name of display: :0<br>display: :0  screen: 0<br>direct rendering: Yes<br>Extended renderer info (GLX_MESA_query_renderer):<br>    Vendor: lima (0x13b5)<br>    Device: Mali450 (0xffffffff)<br>    Version: 21.1.6<br>    Accelerated: <span class="hljs-built_in">yes</span><br>    Video memory: 0MB<br>    Unified memory: <span class="hljs-built_in">yes</span><br>    Preferred profile: compat (0x2)<br>    Max core profile version: 0.0<br>    Max compat profile version: 2.1<br>    Max GLES1 profile version: 1.1<br>    Max GLES[23] profile version: 2.0<br>OpenGL vendor string: lima<br>OpenGL renderer string: Mali450<br>OpenGL version string: 2.1 Mesa 21.1.6<br>OpenGL shading language version string: 1.20<br><br>OpenGL ES profile version string: OpenGL ES 2.0 Mesa 21.1.6<br>OpenGL ES profile shading language version string: OpenGL ES GLSL ES 1.0.16<br></code></pre></td></tr></table></figure>
+<p>显卡驱动正常。另外执行<code>sensors</code>可以看系统温度，负载一高很容易达到50-60°C，有必要考虑强化散热。</p>
+<h2 id="HiDPI设置"><a href="#HiDPI设置" class="headerlink" title="HiDPI设置"></a>HiDPI设置</h2><p>这部分可以参阅Archlinux：<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Sway">https://wiki.archlinux.org/title/Sway</a></p>
+<p>我使用的某品牌2K分辨率，默认分辨率看起来很正常，实际也是如此：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ swaymsg -t get_outputs<br>Output HDMI-A-1 <span class="hljs-string">&#x27;Unknown Q27D530VHP 0x00000000&#x27;</span> (focused)<br>  Current mode: 2560x1440 @ 59.951 Hz<br>  Position: 0,0<br>  Scale <span class="hljs-built_in">factor</span>: 1.000000<br>  Scale filter: nearest<br>  Subpixel hinting: unknown<br>  Transform: normal<br>  Workspace: 1<br>  Max render time: off<br>  Adaptive <span class="hljs-built_in">sync</span>: disabled<br>  Available modes:<br>    640x480 @ 72.809 Hz<br>    640x480 @ 75.000 Hz<br>    720x480 @ 59.940 Hz<br>    800x600 @ 60.317 Hz	<br>    800x600 @ 72.188 Hz<br>    800x600 @ 75.000 Hz<br>    1024x768 @ 60.004 Hz<br>    1024x768 @ 70.069 Hz<br>    1024x768 @ 75.029 Hz<br>    1280x720 @ 59.940 Hz<br>    1280x720 @ 60.000 Hz<br>    1280x800 @ 59.910 Hz<br>    1366x768 @ 59.964 Hz<br>    1280x1024 @ 60.020 Hz<br>    1280x1024 @ 75.025 Hz<br>    1600x900 @ 60.000 Hz<br>    1680x1050 @ 59.883 Hz<br>    1920x1080 @ 59.940 Hz<br>    1920x1080 @ 60.000 Hz<br>    1920x1080 @ 60.000 Hz<br>    1920x1200 @ 59.950 Hz<br>    2560x1440 @ 59.951 Hz<br></code></pre></td></tr></table></figure>
+<p>执行<code>glxgears</code>可以调出一个齿轮画面测试FPS,R3300-M稳定在34～35之间。电脑上这个值一般都是三位数，不过对于盒子而言已经很不错了。</p>
+<p>2K分辨率下文字有点小，缩放到1.5：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">swaymsg output HDMI-A-1 scale 1.5<br></code></pre></td></tr></table></figure>
+<p>这样看起来好了很多。</p>
+<h2 id="输入法安装"><a href="#输入法安装" class="headerlink" title="输入法安装"></a>输入法安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S fcitx5-im <span class="hljs-comment">#安装所有</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-chinese-addons	<br></code></pre></td></tr></table></figure>
+<p>然后打开<code>/etc/environment</code>添加参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">GTK_IM_MODULE=fcitx<br>QT_IM_MODULE=fcitx<br>XMODIFIERS=@im=fcitx<br></code></pre></td></tr></table></figure>
+<p>最后在<code>Fcitx 5 Configuration</code>中，删除默认的Default Group,新建一个Chinese组，<code>Keyboard-Chinese</code>放上面，<code>Pinyin</code>放下面就万事大吉。默认输入法英文，使用<code>Ctrl Space</code>或<code>Ctrl Shift</code>或<code>Left Shift</code>在中英文之间来回切换。除了候选框小一点没别的问题。</p>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><p>自带的firefox刷个论坛还是很舒服的，测试bilibili弹幕比较卡，而且会丢帧，看视频还是重启到安卓系统吧。libreoffice，gedit等用着很流畅。目前小红盒用来写hexo博客或者看PDF很安逸。</p>
+<p>另外电源管理有点小问题，关机会直接重启。而且有时休眠后显示器点不亮，需要重新拔插HDMI。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/R3300-M/" class="print-no-link">#R3300-M</a>
+      
+        <a href="/tags/sway/" class="print-no-link">#sway</a>
+      
+        <a href="/tags/arm/" class="print-no-link">#arm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>R3300-M 运行 Manjaro ARM Sway</div>
+      <div>http://xiaofami.github.io/2021/09/03/manjaro-sway/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年9月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/07/r3300m-ir/" title="R3300-M在Manjaro ARM 21.08系统下配置红外线遥控">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">R3300-M在Manjaro ARM 21.08系统下配置红外线遥控</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/02/crossplatform/" title="hexo跨平台写作">
+                        <span class="hidden-mobile">hexo跨平台写作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

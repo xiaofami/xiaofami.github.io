@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Manjaro ARM 22.06已经发布一段时间，刚好我们需要重新刷系统，镜像还是选用Vim2： https:&#x2F;&#x2F;github.com&#x2F;manjaro-arm&#x2F;vim2-images&#x2F;releases在最近的几个版本中，系统的启动方式经历了几次变化。在Vim2 22.06镜像中，boot分区只包含下述文件&#x2F;目录： 123456$ ls -l &#x2F;bootdrwxr-xr-x 8 root">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R3300-M运行Manjaro ARM Vim2 22.06">
+<meta property="og:url" content="http://xiaofami.github.io/2022/08/04/manjaro2206/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="Manjaro ARM 22.06已经发布一段时间，刚好我们需要重新刷系统，镜像还是选用Vim2： https:&#x2F;&#x2F;github.com&#x2F;manjaro-arm&#x2F;vim2-images&#x2F;releases在最近的几个版本中，系统的启动方式经历了几次变化。在Vim2 22.06镜像中，boot分区只包含下述文件&#x2F;目录： 123456$ ls -l &#x2F;bootdrwxr-xr-x 8 root">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-04T00:45:48.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.979Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="aarch64">
+<meta property="article:tag" content="arm64">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>R3300-M运行Manjaro ARM Vim2 22.06 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="R3300-M运行Manjaro ARM Vim2 22.06"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-04 08:45" pubdate>
+          2022年8月4日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          884 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">R3300-M运行Manjaro ARM Vim2 22.06</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Manjaro ARM 22.06已经发布一段时间，刚好我们需要重新刷系统，镜像还是选用Vim2： <a target="_blank" rel="noopener" href="https://github.com/manjaro-arm/vim2-images/releases">https://github.com/manjaro-arm/vim2-images/releases</a><br>在最近的几个版本中，系统的启动方式经历了几次变化。在Vim2 22.06镜像中，boot分区只包含下述文件&#x2F;目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">ls</span> -l /boot<br>drwxr-xr-x 8 root root     8192 Aug  3 22:49 dtbs<br>drwxr-xr-x 2 root root     8192 Jun  4 05:03 extlinux<br>-rw-r--r-- 1 root root 24730112 Jul 12 23:44 Image<br>-rw-r--r-- 1 root root  8382621 Aug  3 22:50 initramfs-linux.img<br>-rw-r--r-- 1 root root  1363968 Feb 12 00:11 u-boot.bin<br></code></pre></td></tr></table></figure>
+<p>需要稍加变动以支持R3300-M启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">-rw-r--r-- 1 root root      713 Jul 28 15:17 aml_autoscript<br>-rw-r--r-- 1 root root      463 Jul 28 15:17 aml_autoscript.zip<br>drwxr-xr-x 8 root root     8192 Aug  3 22:49 dtbs<br>drwxr-xr-x 2 root root     8192 Jun  4 05:03 extlinux<br>-rw-r--r-- 1 root root 24730112 Jul 12 23:44 Image<br>-rw-r--r-- 1 root root  8382621 Aug  3 22:50 initramfs-linux.img<br>-rw-r--r-- 1 root root      537 Aug  4 06:34 s905_autoscript<br>-rw-r--r-- 1 root root  1363968 Feb 12 00:11 u-boot.bin<br>-rw-r--r-- 1 root root   609247 Aug  4 06:30 u-boot.ext<br></code></pre></td></tr></table></figure>
+<p>注意补充的几个文件，u-boot.bin可以删掉。这几个文件我已经打包好： <a href="bootfiles.tgz">bootfiles.tgz</a>，注意你需要选择合适的u-boot文件，然后重命名为u-boot.ext。</p>
+<p>Manjaro ARM Mininal 22.06非常简洁，总共占用空间1.5GB，提供了206个软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">df</span> -h<br>Filesystem      Size  Used Avail Use% Mounted on<br>dev             331M     0  331M   0% /dev<br>run             465M  7.5M  457M   2% /run<br>/dev/mmcblk0p2  115G  1.4G  109G   2% /<br>tmpfs           465M     0  465M   0% /dev/shm<br>tmpfs           465M     0  465M   0% /tmp<br>/dev/mmcblk0p1  458M   45M  413M  10% /boot<br>tmpfs            93M     0   93M   0% /run/user/1000<br><br>$ pacman -Q | <span class="hljs-built_in">wc</span><br>206     412    3746<br></code></pre></td></tr></table></figure>
+<p>软件包还可以继续精简，比如 <strong>ap6398s-firmware</strong> 显然可以删掉因为R3300-M使用的是RTL8189ETV。另外经过测试，主线内核在22.06中支持良好，关机重启都正常，没必要使用odroid内核了。不过Vim2镜像自带的 <strong>linux-khadas</strong> 内核简单使用也没发现问题，根据个人喜好选用吧。<br>另外之前将Manjaro ARM安装到emmc分区的试验没有成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br></pre></td><td class="code"><pre><code class="hljs bash">U-Boot 2015.01-gf813653 (Oct 30 2015 - 09:47:48)<br><br>DRAM:  1 GiB<br>Relocation Offset is: 36ed6000<br>register usb cfg[0][1] = 0000000037f62b98<br>register usb cfg[0][2] = 0000000037f62bb8<br>register usb cfg[2][0] = 0000000037f62bd8<br>vpu detect <span class="hljs-built_in">type</span>: 5<br>vpu clk_level = 7<br><span class="hljs-built_in">set</span> vpu clk: 666667000Hz, readback: 666660000Hz(0x300)<br>boot_device_flag : 1<br>Nand PHY Ver:1.01.001.0006 (c) 2013 Amlogic Inc.<br>init bus_cycle=6, bus_timing=8, system=5.0ns<br>reset failed<br>get_chip_type and ret:fffffffe<br>get_chip_type and ret:fffffffe<br>chip detect failed and ret:fffffffe<br>nandphy_init failed and ret=0xfffffff1<br>MMC:   aml_priv-&gt;desc_buf = 0x0000000033ec6770<br>aml_priv-&gt;desc_buf = 0x0000000033ec8900<br>SDIO Port B: 0, SDIO Port C: 1<br>[mmc_init] mmc init success<br>mmc <span class="hljs-built_in">read</span> lba=0x14000, blocks=0x400<br>start dts,buffer=0000000033ecad70,dt_addr=0000000033ecad70<br>parts: 11<br>00:      logo   0000000002000000 1<br>01:  recovery   0000000002000000 1<br>02:       rsv   0000000000800000 1<br>03:       <span class="hljs-built_in">tee</span>   0000000000800000 1<br>04:     crypt   0000000002000000 1<br>05:      misc   0000000002000000 1<br>06: instaboot   0000000020000000 1<br>07:      boot   0000000002000000 1<br>08:    system   0000000050000000 1<br>09:     cache   0000000020000000 2<br>10:      data   ffffffffffffffff 4<br>get_dtb_struct: Get emmc dtb OK!<br>[mmc_get_partition_table] skip cache partition.<br>Partition table get from SPL is :<br>        name                        offset              size              flag<br>===================================================================================<br>   0: bootloader                         0            400000                  0<br>   1: reserved                     2400000           4000000                  0<br>   2: cache                        6c00000          20000000                  2<br>   3: <span class="hljs-built_in">env</span>                         27400000            800000                  0<br>   4: logo                        28400000           2000000                  1<br>   5: recovery                    2ac00000           2000000                  1<br>   6: rsv                         2d400000            800000                  1<br>   7: <span class="hljs-built_in">tee</span>                         2e400000            800000                  1<br>   8: crypt                       2f400000           2000000                  1<br>   9: misc                        31c00000           2000000                  1<br>  10: instaboot                   34400000          20000000                  1<br>  11: boot                        54c00000           2000000                  1<br>  12: system                      57400000          50000000                  1<br>  13: data                        a7c00000          41400000                  4<br>mmc <span class="hljs-built_in">read</span> lba=0x12000, blocks=0x1<br>mmc <span class="hljs-built_in">read</span> lba=0x12001, blocks=0x1<br>mmc_read_partition_tbl: mmc <span class="hljs-built_in">read</span> partition OK!<br>eMMC/TSD partition table have been checked OK!<br>mmc <span class="hljs-built_in">env</span> offset: 0x27400000<br>In:    serial<br>Out:   serial<br>Err:   serial<br>[store]To run cmd[emmc dtb_read 0x1000000 0x40000]<br><span class="hljs-built_in">read</span> emmc dtb<br>Net:   Meson_Ethernet<br>wipe_data=successful<br>wipe_cache=successful<br>upgrade_step=2<br>reboot_mode=normal<br>hpd_state=0<br>[CANVAS]addr=0x3f800000 width=3840, height=2160<br><br>Not find <span class="hljs-string">&#x27;576cvbs&#x27;</span> mapped VIC<br>Err imgread(L315):Logo header err.<br>There is no valid bmp file at the given address<br>amlkey_init() enter!<br>[EFUSE_MSG]keynum is 4<br>[KM]Error:f[key_manage_query_size]L504:key[usid] not programed yet<br>[KM]Error:f[key_manage_query_size]L504:key[deviceid] not programed yet<br>gpio: pin GPIOAO_3 (gpio 122) value is 1<br>Hit any key to stop autoboot:  0<br>ret = 1 .(Re)start USB...<br>USB0:   dwc_usb driver version: 2.94 6-June-2012<br>USB (0) peri reg base: c0000000<br>USB (0) use clock <span class="hljs-built_in">source</span>: XTAL input, div: 1<br>USB (0) base addr: 0xc9000000<br>Force <span class="hljs-built_in">id</span> mode: Host<br>dwc_otg: No USB device found !<br>lowlevel init failed<br>USB1:   dwc_usb driver version: 2.94 6-June-2012<br>USB (1) peri reg base: c0000020<br>USB (1) use clock <span class="hljs-built_in">source</span>: XTAL input, div: 1<br>USB (1) base addr: 0xc9100000<br>Force <span class="hljs-built_in">id</span> mode: Host<br>dwc_otg: No USB device found !<br>lowlevel init failed<br>USB error: all controllers failed lowlevel init<br>** Bad device usb 0 **<br>** Bad device usb 1 **<br>** Bad device usb 2 **<br>** Bad device usb 3 **<br>[mmc_init] mmc init success<br>switch to partitions <span class="hljs-comment">#0, OK</span><br>mmc1(part 0) is current device<br><br>MMC <span class="hljs-built_in">read</span>: dev <span class="hljs-comment"># 1, block # 8192, count 3 ... 3 blocks read: OK</span><br><span class="hljs-comment">## Executing script at 01020000</span><br><span class="hljs-comment">########## cmd=    echo &quot;Select EMMC&quot;</span><br>    mmc dev 1<br>    <span class="hljs-built_in">sleep</span> 3<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Set env variables&quot;</span><br>    setenv dtb_addr 0x1000000<br>    setenv dtb_sector 0x2003<br>    setenv dtb_block_cnt 0x47<br>    setenv env_addr 0x1040000<br>    setenv env_sector 0x204a<br>    setenv env_block_cnt 0x1<br>    setenv env_size 329<br>    setenv kernel_addr 0x11000000<br>    setenv kernel_sector 0x204b<br>    setenv kernel_block_cnt 0xbcae<br>    setenv initrd_addr 0x13000000<br>    setenv initrd_sector 0x32000<br>    setenv initrd_block_cnt 0x3fe7<br>    setenv boot_start booti <span class="hljs-variable">$&#123;kernel_addr&#125;</span> <span class="hljs-variable">$&#123;initrd_addr&#125;</span> <span class="hljs-variable">$&#123;dtb_addr&#125;</span><br>    setenv addmac <span class="hljs-string">&#x27;if printenv mac; then setenv bootargs $&#123;bootargs&#125; mac=$&#123;mac&#125;; elif printenv eth_mac; then setenv bootargs $&#123;bootargs&#125; mac=$&#123;eth_mac&#125;; elif printenv ethaddr; then setenv bootargs $&#123;bootargs&#125; mac=$&#123;ethaddr&#125;; fi&#x27;</span><br><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Read mmc partitions&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Read /boot/uEnv_emmc.txt from EMMC&quot;</span><br>    <span class="hljs-keyword">if</span> mmc <span class="hljs-built_in">read</span> <span class="hljs-variable">$&#123;env_addr&#125;</span> <span class="hljs-variable">$&#123;env_sector&#125;</span> <span class="hljs-variable">$&#123;env_block_cnt&#125;</span>; <span class="hljs-keyword">then</span> <span class="hljs-built_in">env</span> import -t <span class="hljs-variable">$&#123;env_addr&#125;</span> <span class="hljs-variable">$&#123;env_size&#125;</span>;setenv bootargs <span class="hljs-variable">$&#123;APPEND&#125;</span>;<span class="hljs-built_in">printenv</span> bootargs;<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Read zImage from EMMC&quot;</span>;<span class="hljs-keyword">if</span> mmc <span class="hljs-built_in">read</span> <span class="hljs-variable">$&#123;kernel_addr&#125;</span> <span class="hljs-variable">$&#123;kernel_sector&#125;</span> <span class="hljs-variable">$&#123;kernel_block_cnt&#125;</span>; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Read uInitrd from EMMC&quot;</span>;<span class="hljs-keyword">if</span> mmc <span class="hljs-built_in">read</span> <span class="hljs-variable">$&#123;initrd_addr&#125;</span> <span class="hljs-variable">$&#123;initrd_sector&#125;</span> <span class="hljs-variable">$&#123;initrd_block_cnt&#125;</span>; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Read FDT from EMMC&quot;</span>;<span class="hljs-keyword">if</span> mmc <span class="hljs-built_in">read</span> <span class="hljs-variable">$&#123;dtb_addr&#125;</span> <span class="hljs-variable">$&#123;dtb_sector&#125;</span> <span class="hljs-variable">$&#123;dtb_block_cnt&#125;</span>; <span class="hljs-keyword">then</span> run addmac;<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Start booting system...&quot;</span>;run boot_start;<span class="hljs-keyword">fi</span>;<span class="hljs-keyword">fi</span>;<span class="hljs-keyword">fi</span>;<span class="hljs-keyword">fi</span><br><br>Select EMMC<br>[mmc_init] mmc init success<br>switch to partitions <span class="hljs-comment">#0, OK</span><br>mmc1(part 0) is current device<br>Set <span class="hljs-built_in">env</span> variables<br>Read mmc partitions<br>Read /boot/uEnv_emmc.txt from EMMC<br><br>MMC <span class="hljs-built_in">read</span>: dev <span class="hljs-comment"># 1, block # 8266, count 1 ... 1 blocks read: OK</span><br>bootargs=root=/dev/mmcblk1p1 rootflags=data=writeback rw console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=<span class="hljs-built_in">yes</span> fsck.repair=<span class="hljs-built_in">yes</span> net.ifnames=0 quiet splash plymouth.ignore-serial-consoles blkdevparts=mmcblk1:-@116M(rootfs)<br>Read zImage from EMMC<br><br>MMC <span class="hljs-built_in">read</span>: dev <span class="hljs-comment"># 1, block # 8267, count 48302 ... 48302 blocks read: OK</span><br>Read uInitrd from EMMC<br><br>MMC <span class="hljs-built_in">read</span>: dev <span class="hljs-comment"># 1, block # 204800, count 16359 ... 16359 blocks read: OK</span><br>Read FDT from EMMC<br><br>MMC <span class="hljs-built_in">read</span>: dev <span class="hljs-comment"># 1, block # 8195, count 71 ... 71 blocks read: OK</span><br>mac=76:f1:6c:90:00:03<br>Start booting system...<br><span class="hljs-string">&quot;Synchronous Abort&quot;</span> handler, esr 0x96000010<br>ELR:     37ee00cc<br>LR:      37ee00c0<br>x0 : 0000000037f73a00 x1 : 0000000000000000<br>x2 : 0000000001830000 x3 : 0000000001830000<br>x4 : 0000000000000086 x5 : 0000000011000000<br>x6 : 0000000037f455c0 x7 : 0000000000000044<br>x8 : 0000000000000001 x9 : 0000000000000002<br>x10: 8c400409c940146c x11: a850c8189a6e9ad0<br>x12: 0000000000000000 x13: 0000000000000000<br>x14: 0000000000000000 x15: 0000000037ed70d0<br>x16: 0000000037ed72b4 x17: 0000000000000000<br>x18: 0000000033ec5e28 x19: 0000000037f738c0<br>x20: 0000000000000003 x21: 0000000033ed1068<br>x22: 0000000037f73000 x23: 0000000037f738c0<br>x24: 0000000000000000 x25: 0000000033ed1060<br>x26: 0000000037f685e0 x27: 0000000033ed1090<br>x28: 0000000000000000 x29: 0000000033ec4ca0<br><br>Resetting CPU ...<br></code></pre></td></tr></table></figure>
+<p>虽说没成功，但是从UART输出来看已经很接近，而且盒子也没变砖，还是可以从TF卡启动，感兴趣的可以继续研究，我不缺TF卡就不折腾了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/aarch64/" class="print-no-link">#aarch64</a>
+      
+        <a href="/tags/arm64/" class="print-no-link">#arm64</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>R3300-M运行Manjaro ARM Vim2 22.06</div>
+      <div>http://xiaofami.github.io/2022/08/04/manjaro2206/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/05/rtl8189etv/" title="R3300-M之RTL8189ETV特性探究">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">R3300-M之RTL8189ETV特性探究</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/03/s905-emmc/" title="R3300-M刷入Linux实验计划">
+                        <span class="hidden-mobile">R3300-M刷入Linux实验计划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

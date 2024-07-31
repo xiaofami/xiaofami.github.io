@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="linux-odroid内核没有预编译AX25模块，无法正常使用 kissattach 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。 获取内核软件包并修改配置文件123git clone https:&#x2F;&#x2F;gitlab.manjaro.org&#x2F;manjaro-arm&#x2F;packages&#x2F;core&#x2F;linux-odroid.g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro ARM重新配置内核并打包">
+<meta property="og:url" content="http://xiaofami.github.io/2022/07/22/kernel_package/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="linux-odroid内核没有预编译AX25模块，无法正常使用 kissattach 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。 获取内核软件包并修改配置文件123git clone https:&#x2F;&#x2F;gitlab.manjaro.org&#x2F;manjaro-arm&#x2F;packages&#x2F;core&#x2F;linux-odroid.g">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-22T01:46:47.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.979Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="ARM">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Manjaro ARM重新配置内核并打包 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Manjaro ARM重新配置内核并打包"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-22 09:46" pubdate>
+          2022年7月22日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          924 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Manjaro ARM重新配置内核并打包</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>linux-odroid内核没有预编译AX25模块，无法正常使用 <strong>kissattach</strong> 。主线内核预编译了这些模块，可惜与我的电视盒子兼容性不佳，无法正常重启，对于远程使用而言无法接受。于是只好自己编译内核了。</p>
+<h1 id="获取内核软件包并修改配置文件"><a href="#获取内核软件包并修改配置文件" class="headerlink" title="获取内核软件包并修改配置文件"></a>获取内核软件包并修改配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://gitlab.manjaro.org/manjaro-arm/packages/core/linux-odroid.git<br><span class="hljs-built_in">cd</span> linux-odroid<br>vim config <span class="hljs-comment"># 修改 # CONFIG_AX25 is not set</span><br></code></pre></td></tr></table></figure>
+<p>以下配置供参考：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs conf">1732 CONFIG_HAMRADIO=y<br>1733 <br>1734 #<br>1735 # Packet Radio protocols<br>1736 #<br>1737 CONFIG_AX25=m<br>1738 CONFIG_AX25_DAMA_SLAVE=y<br>1739 CONFIG_NETROM=m<br>1740 CONFIG_ROSE=m<br>1741 <br>1742 #<br>1743 # AX.25 network device drivers<br>1744 #<br>1745 CONFIG_MKISS=m<br>1746 CONFIG_6PACK=m<br>1747 CONFIG_BPQETHER=m<br>1748 CONFIG_BAYCOM_SER_FDX=m<br>1749 CONFIG_BAYCOM_SER_HDX=m<br>1750 CONFIG_YAM=m<br>1751 # end of AX.25 network device drivers<br></code></pre></td></tr></table></figure>
+<h1 id="开始打包"><a href="#开始打包" class="headerlink" title="开始打包"></a>开始打包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">makepkg --skipchecksums <span class="hljs-comment"># 刚才修改了config文件所以无法通过校验，索性就不校验了</span><br>==&gt; Making package: linux-odroid 5.18.12-1 (Fri 22 Jul 2022 10:10:46 AM CST)<br>==&gt; Checking runtime dependencies...<br>==&gt; Checking buildtime dependencies...<br>==&gt; Retrieving sources...<br>  -&gt; Found 65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz<br>  -&gt; Found 0065-add-ugoos-device.patch<br>  -&gt; Found config<br>  -&gt; Found linux.preset<br>  -&gt; Found 60-linux.hook<br>  -&gt; Found 90-linux.hook<br>==&gt; WARNING: Skipping verification of <span class="hljs-built_in">source</span> file checksums.<br>==&gt; Extracting sources...<br>  -&gt; Extracting 65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz with bsdtar<br><span class="hljs-comment"># 以下省略</span><br></code></pre></td></tr></table></figure>
+<h1 id="2000-YEARS-LATER"><a href="#2000-YEARS-LATER" class="headerlink" title="2000 YEARS LATER"></a>2000 YEARS LATER</h1><p>若干小时后编译还没有完成的迹象，还是找开发者吧 😂 已经私信了linux-odroid管理员，如果一切顺利linux-odroid 5.18.12即可支持AX25。</p>
+<h1 id="再更新"><a href="#再更新" class="headerlink" title="再更新"></a>再更新</h1><p>发现编译已完成，R3300-M四核马力全开足足跑了5个小时。编译完成前的输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">==&gt; Tidying install...<br>  -&gt; Removing libtool files...<br>  -&gt; Purging unwanted files...<br>  -&gt; Removing static library files...<br>  -&gt; Compressing man and info pages...<br>==&gt; Checking <span class="hljs-keyword">for</span> packaging issues...<br>==&gt; Creating package <span class="hljs-string">&quot;linux-odroid&quot;</span>...<br>  -&gt; Generating .PKGINFO file...<br>  -&gt; Generating .BUILDINFO file...<br>  -&gt; Adding install file...<br>  -&gt; Generating .MTREE file...<br>  -&gt; Compressing package...<br>==&gt; Starting package_linux-odroid-headers()...<br>Removing scripts/dtc/include-prefixes/openrisc<br>Removing scripts/dtc/include-prefixes/nios2<br>Removing scripts/dtc/include-prefixes/mips<br>Removing scripts/dtc/include-prefixes/arm64<br>Removing scripts/dtc/include-prefixes/microblaze<br>Removing scripts/dtc/include-prefixes/arm<br>Removing scripts/dtc/include-prefixes/arc<br>Removing scripts/dtc/include-prefixes/h8300<br>Removing scripts/dtc/include-prefixes/powerpc<br>Removing scripts/dtc/include-prefixes/sh<br>Removing scripts/dtc/include-prefixes/xtensa<br>==&gt; Tidying install...<br>  -&gt; Removing libtool files...<br>  -&gt; Purging unwanted files...<br>  -&gt; Removing static library files...<br>  -&gt; Compressing man and info pages...<br>==&gt; Checking <span class="hljs-keyword">for</span> packaging issues...<br>==&gt; Creating package <span class="hljs-string">&quot;linux-odroid-headers&quot;</span>...<br>  -&gt; Generating .PKGINFO file...<br>  -&gt; Generating .BUILDINFO file...<br>  -&gt; Generating .MTREE file...<br>  -&gt; Compressing package...<br>==&gt; Leaving fakeroot environment.<br>==&gt; Finished making: linux-odroid 5.18.12-1 (Fri 22 Jul 2022 02:14:03 PM CST)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">marly@manjaro-minimal  /linux-odroid   master   <span class="hljs-built_in">ls</span><br>Permissions Size User  Group Date Modified Name<br>drwxr-xr-x     - marly marly 21 Jul 20:42   .git<br>.rw-r--r--   241 marly marly 21 Jul 20:42   .gitlab-ci.yml<br>.rw-r--r--  4.3k marly marly 22 Jul 10:04   0065-add-ugoos-device.patch<br>.rw-r--r--   282 marly marly 21 Jul 20:42   60-linux.hook<br>.rw-r--r--  207M marly marly 22 Jul 10:04   65a1da3b24ddcf7e4ddc52357d6f22d62ba441ad.tar.gz<br>.rw-r--r--   229 marly marly 21 Jul 20:42   90-linux.hook<br>.rwxr-xr-x  228k marly marly 22 Jul  9:58   config<br>.rw-r--r--   68M marly marly 22 Jul 14:12   linux-odroid-5.18.12-1-aarch64.pkg.tar.zst<br>.rw-r--r--   12M marly marly 22 Jul 14:14   linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst<br>.rw-r--r--   239 marly marly 21 Jul 20:42   linux-odroid.install<br>.rw-r--r--   234 marly marly 21 Jul 20:42   linux.preset<br>drwxr-xr-x     - marly marly 22 Jul 14:12   pkg<br>.rwxr-xr-x  7.0k marly marly 21 Jul 20:42   PKGBUILD<br>.rw-r--r--  2.1k marly marly 21 Jul 20:42   s912-dmip-mhz.patch<br>drwxr-xr-x     - marly marly 22 Jul 10:14   src<br></code></pre></td></tr></table></figure>
+<p>成功编译了内核和headers，运行 <code>sudo pacman -U ./linux-odroid-5.18.12-1-aarch64.pkg.tar.zst ./linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst</code> 即可安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash"> marly@manjaro-minimal  /linux-odroid   master   <span class="hljs-built_in">sudo</span> pacman -U ./linux-odroid-5.18.12-1-aarch64.pkg.tar.zst ./linux-odroid-headers-5.18.12-1-aarch64.pkg.tar.zst <br>[<span class="hljs-built_in">sudo</span>] password <span class="hljs-keyword">for</span> marly: <br>loading packages...<br>resolving dependencies...<br>looking <span class="hljs-keyword">for</span> conflicting packages...<br>:: linux-odroid and linux are <span class="hljs-keyword">in</span> conflict. Remove linux? [y/N] y<br><br>Packages (3) linux-5.18.11-1 [removal]  linux-odroid-5.18.12-1  linux-odroid-headers-5.18.12-1<br><br>Total Installed Size:  139.23 MiB<br>Net Upgrade Size:        9.91 MiB<br><br>:: Proceed with installation? [Y/n] y<br>(2/2) checking keys <span class="hljs-keyword">in</span> keyring                                               [###########################################] 100%<br>(2/2) checking package integrity                                             [###########################################] 100%<br>(2/2) loading package files                                                  [###########################################] 100%<br>(2/2) checking <span class="hljs-keyword">for</span> file conflicts                                            [###########################################] 100%<br>(3/3) checking available disk space                                          [###########################################] 100%<br>:: Processing package changes...<br>(1/1) removing linux                                                         [###########################################] 100%<br>(1/2) installing linux-odroid                                                [###########################################] 100%<br>Optional dependencies <span class="hljs-keyword">for</span> linux-odroid<br>    crda: to <span class="hljs-built_in">set</span> the correct wireless channels of your country [installed]<br>(2/2) upgrading linux-odroid-headers                                         [###########################################] 100%<br>:: Running post-transaction hooks...<br>(1/4) Arming ConditionNeedsUpdate...<br>(2/4) Updating module dependencies...<br>(3/4) Updating linux-odroid module dependencies...<br>(4/4) Updating linux-odroid initcpios...<br>==&gt; Building image from preset: /etc/mkinitcpio.d/linux-odroid.preset: <span class="hljs-string">&#x27;default&#x27;</span><br>  -&gt; -k 5.18.12-1-MANJARO-ARM-ODROID -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img<br>==&gt; Starting build: 5.18.12-1-MANJARO-ARM-ODROID<br>  -&gt; Running build hook: [base]<br>  -&gt; Running build hook: [udev]<br>  -&gt; Running build hook: [plymouth]<br>  -&gt; Running build hook: [autodetect]<br>  -&gt; Running build hook: [modconf]<br>  -&gt; Running build hook: [block]<br>  -&gt; Running build hook: [filesystems]<br>  -&gt; Running build hook: [keyboard]<br>  -&gt; Running build hook: [fsck]<br>==&gt; WARNING: No modules were added to the image. This is probably not what you want.<br>==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux.img<br>==&gt; Image generation successful<br></code></pre></td></tr></table></figure>
+<p>至此编译安装内核成功完成，重启盒子继续折腾。</p>
+<h1 id="内核测试"><a href="#内核测试" class="headerlink" title="内核测试"></a>内核测试</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -a<br>Linux manjaro-minimal 5.18.12-1-MANJARO-ARM-ODROID <span class="hljs-comment">#1 SMP PREEMPT Fri Jul 22 10:17:23 CST 2022 aarch64 GNU/Linux</span><br><br>modinfo ax25<br>name:           ax25<br>filename:       (<span class="hljs-built_in">builtin</span>)<br><span class="hljs-built_in">alias</span>:          net-pf-3<br>license:        GPL<br>file:           net/ax25/ax25<br>description:    The amateur radio AX.25 <span class="hljs-built_in">link</span> layer protocol<br>author:         Jonathan Naylor G4KLX &lt;g4klx@g4klx.demon.co.uk&gt;<br><br>modinfo mkiss<br>name:           mkiss<br>filename:       (<span class="hljs-built_in">builtin</span>)<br><span class="hljs-built_in">alias</span>:          tty-ldisc-5<br>license:        GPL<br>file:           drivers/net/hamradio/mkiss<br>description:    KISS driver <span class="hljs-keyword">for</span> AX.25 over TTYs<br>author:         Ralf Baechle DL5RB &lt;ralf@linux-mips.org&gt;<br>parm:           crc_force:crc [0 = auto | 1 = none | 2 = flexnet | 3 = smack] (int)<br><br><br><span class="hljs-built_in">sudo</span> direwolf -p<br><br>Dire Wolf DEVELOPMENT version 1.7 E (Jun 29 2022)<br>Includes optional support <span class="hljs-keyword">for</span>:  cm108-ptt dns-sd<br>Dire Wolf requires only privileges available to ordinary <span class="hljs-built_in">users</span>.<br>Running this as root is an unnecessary security risk.<br><br>Reading config file direwolf.conf<br>Audio device <span class="hljs-keyword">for</span> both receive and transmit: plughw:0,0  (channel 0)<br>Channel 0: 1200 baud, AFSK 1200 &amp; 2200 Hz, A+, 44100 sample rate.<br>Ready to accept AGW client application 0 on port 8000 ...<br>Ready to accept KISS TCP client application 0 on port 8001 ...<br>DNS-SD: Avahi: Failed to create Avahi client: Daemon not running<br>Virtual KISS TNC is available on /dev/pts/1<br>Created symlink /tmp/kisstnc -&gt; /dev/pts/1<br><br><br><span class="hljs-built_in">sudo</span> kissattach /dev/pts/1 wl2k<br>AX.25 port wl2k bound to device ax0<br></code></pre></td></tr></table></figure>
+<p>测试结果符合预期。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/ARM/" class="print-no-link">#ARM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Manjaro ARM重新配置内核并打包</div>
+      <div>http://xiaofami.github.io/2022/07/22/kernel_package/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/22/kissattach/" title="kissattach探究">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">kissattach探究</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/21/pat/" title="在Manjaro ARM中编译运行Pat">
+                        <span class="hidden-mobile">在Manjaro ARM中编译运行Pat</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

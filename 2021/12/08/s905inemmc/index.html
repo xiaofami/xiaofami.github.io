@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="回顾过去在R3300-M上进行过几次不成功的试验。无论是balbes150的Armbian 20.10还是目前使用的Manjaro Linux ARM，使用所提供的安装脚本均无法启动。最近发现论坛上名为pista一网友遇到类似问题并成功解决，看看我们能不能成功复现。 https:&#x2F;&#x2F;forum.armbian.com&#x2F;topic&#x2F;18902-s905-failed-to-boot-from-emm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GXBB S905从EMMC启动Linux研究">
+<meta property="og:url" content="http://xiaofami.github.io/2021/12/08/s905inemmc/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="回顾过去在R3300-M上进行过几次不成功的试验。无论是balbes150的Armbian 20.10还是目前使用的Manjaro Linux ARM，使用所提供的安装脚本均无法启动。最近发现论坛上名为pista一网友遇到类似问题并成功解决，看看我们能不能成功复现。 https:&#x2F;&#x2F;forum.armbian.com&#x2F;topic&#x2F;18902-s905-failed-to-boot-from-emm">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-08T08:05:17.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.989Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="R3300-M">
+<meta property="article:tag" content="AARCH64">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>GXBB S905从EMMC启动Linux研究 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="GXBB S905从EMMC启动Linux研究"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-08 16:05" pubdate>
+          2021年12月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          822 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">GXBB S905从EMMC启动Linux研究</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h1><p>过去在R3300-M上进行过几次不成功的试验。无论是balbes150的Armbian 20.10还是目前使用的Manjaro Linux ARM，使用所提供的安装脚本均无法启动。最近发现论坛上名为pista一网友遇到类似问题并成功解决，看看我们能不能成功复现。</p>
+<p><a target="_blank" rel="noopener" href="https://forum.armbian.com/topic/18902-s905-failed-to-boot-from-emmc/">https://forum.armbian.com/topic/18902-s905-failed-to-boot-from-emmc/</a></p>
+<h1 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h1><p>Minix Neo U1 … S905, 2GB RAM &#x2F; 16GB Flash ，搭配meson-gxbb-vega-s95-meta.dtb运行Armbian_20.10_Arm-64_bullseye_current_5.9.0.img。既然和R3300-M同为GXBB S905，那么如果Minix Neo U1可以从emmc启动linux，R3300-M也没有问题。</p>
+<h1 id="默认安装脚本从EMMC启动Armbian-20-10遇到的问题"><a href="#默认安装脚本从EMMC启动Armbian-20-10遇到的问题" class="headerlink" title="默认安装脚本从EMMC启动Armbian_20.10遇到的问题"></a>默认安装脚本从EMMC启动Armbian_20.10遇到的问题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">** No partition table - mmc 2 **<br></code></pre></td></tr></table></figure>
+<p>与R3300-M当时遇到的问题一致。</p>
+<h1 id="妥协方案"><a href="#妥协方案" class="headerlink" title="妥协方案"></a>妥协方案</h1><p>emmc分区保留前700MB，剩余空间分给ROOTFS，然后利用TF卡启动。在R3300-M上也曾试验成功，但我们的目的是完全脱离TF卡，于是pista开始了深入研究。</p>
+<h1 id="纯emmc方案"><a href="#纯emmc方案" class="headerlink" title="纯emmc方案"></a>纯emmc方案</h1><p>pista成功从EMMC分区启动了Armbian 20.10。关键所在是使用 <strong>mmc read</strong> 而不是 <strong>load&#x2F;fatload</strong> 来加载 *<strong>kernel</strong>， <strong>ramdisk</strong> ，以及 <strong>dtb</strong> 。检查了Manjaro Linux ARM， <strong>&#x2F;boot&#x2F;boot.ini</strong> 内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini">ODROIDN2-UBOOT-CONFIG<br><span class="hljs-comment">#ODROIDC2-UBOOT-CONFIG</span><br><br>if test <span class="hljs-attr">&quot;$&#123;devtype&#125;&quot;</span> = <span class="hljs-string">&quot;&quot;</span><span class="hljs-comment">; then setenv devtype &quot;mmc&quot;; fi</span><br><br>if fatload $&#123;devtype&#125; $&#123;devnum&#125; 0x1000000 u-boot.ext<span class="hljs-comment">; then go 0x1000000; fi;</span><br></code></pre></td></tr></table></figure>
+<p>看来需要想办法用 <strong>mmc read</strong> 替换 <strong>load&#x2F;fatload</strong> 。</p>
+<h1 id="深入研究"><a href="#深入研究" class="headerlink" title="深入研究"></a>深入研究</h1><h2 id="emmc分区理论"><a href="#emmc分区理论" class="headerlink" title="emmc分区理论"></a>emmc分区理论</h2><p>首先对emmc分区进行描述，pista的看起来这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">blkdevparts=mmcblk1:209715200@1463812096(boot),-@1673528320(root)<br></code></pre></td></tr></table></figure>
+<p>209715200Byte对应200MByte，1463812096Byte对应1396MByte，1673528320约合1596MByte，并非精确匹配。</p>
+<p>查询可知blkdevparts命令用法： <a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/block/cmdline-partition.html">https://www.kernel.org/doc/html/latest/block/cmdline-partition.html</a></p>
+<p>通过学习，可知pista的分区描述为boot分区大小200MB（offset为1396MB，即emmc的前1396MB跳过，保留给为Amlogic的老uboot），这样EMMC的前1596MB就分配完毕了，209715200加上1463812096等于1673527296，比1673528320刚好小了1024。至此分区全貌一目了然：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">1 - 1463812096 (前1396MB) 预留<br>1463812097 - 1673527296 boot分区，大小200MB<br>1673527297 - 1673528320 预留，大小1MB<br>1673528321 -           root分区，占据剩余空间<br></code></pre></td></tr></table></figure>
+
+<p>pista为了保险起见，在EMMC分区头部保留了足足1396MB大小的空间。我们的R3300-M的EMMC容量总共才3728MB，可以适当减小预留空间，比如700MB。这样root分区大概有2.5GB空间可用，可以装下Manjaro ARM Minimal或者openwrt等无GUI界面的Linux发行版了。</p>
+<h2 id="emmc实际分区操作"><a href="#emmc实际分区操作" class="headerlink" title="emmc实际分区操作"></a>emmc实际分区操作</h2><p>pista没有给出具体命令，只是介绍了大概过程：</p>
+<ol>
+<li>预留出 <strong>&#x2F;dev&#x2F;mmcblk1</strong> 头部1396MB空间；</li>
+<li>新建 <strong>&#x2F;dev&#x2F;mmcblk1p1</strong> 和 <strong>&#x2F;dev&#x2F;mmcblk1p2</strong>两个分区，分别对应boot和root分区。root分区内容直接复制过去即可，重点是boot分区，需要使用dd命令，将 <strong>mainline uboot</strong> 、 <strong>kernel</strong> 、 <strong>ramdisk</strong> 和 <strong>dtb</strong> 写入预定义的区块位置，例如：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=zImage of=/dev/mmcblk1p2 bs=512 seek=2859008 count=54841<span class="hljs-string">&#x27;</span><br></code></pre></td></tr></table></figure></li>
+<li>对于Amlogic的uboot，使用 <strong>mmc read</strong> 替代 <strong>fatload</strong> 来加载全部文件，例如： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mmc <span class="hljs-built_in">read</span> 0x08080000 0x2BA3FC 0xD639<br></code></pre></td></tr></table></figure></li>
+<li>在被链式启动的Mainline uboot中，使用 <strong>booti 0x08080000 0x13000000 0x08008000</strong> 替代 <strong>bootcmd</strong> 来启动系统。</li>
+</ol>
+<h1 id="重现流程"><a href="#重现流程" class="headerlink" title="重现流程"></a>重现流程</h1><p>pista并没有给出可无脑照抄的流程，所以我们试着重现具体过程。</p>
+<h2 id="建立分区"><a href="#建立分区" class="headerlink" title="建立分区"></a>建立分区</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>保留EMMC分区前700MB，创建200MB的 <strong>BOOT_MNJRO</strong> 分区，然后剩余空间创建 <strong>ROOT_MNJRO</strong> 分区。分区名称来自在Manjaro ARM Minimal中用 <strong>e2label</strong> 查看的结果。fdisk结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Device         Boot  Start       End   Sectors   Size Id Type<br>/dev/mmcblk0p1       62500    500000    437501 213.6M  c W95 FAT32 (LBA)<br>/dev/mmcblk0p2      500001 250347519 249847519 119.1G 83 Linux<br></code></pre></td></tr></table></figure>
+<p>利用 <strong>df -h</strong> 查看，<strong>BOOT_MNJRO</strong> 使用了54MB大小空间，故分配200MB应该够用。（Manjaro ARM分配了214MB）</p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>然后就不会了 XD 求指点</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/R3300-M/" class="print-no-link">#R3300-M</a>
+      
+        <a href="/tags/AARCH64/" class="print-no-link">#AARCH64</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>GXBB S905从EMMC启动Linux研究</div>
+      <div>http://xiaofami.github.io/2021/12/08/s905inemmc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/30/manjaro2112/" title="Manjaro ARM 21.12 测评">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Manjaro ARM 21.12 测评</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/07/finetune-manjaro/" title="Manjaro ARM Minimal装修">
+                        <span class="hidden-mobile">Manjaro ARM Minimal装修</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

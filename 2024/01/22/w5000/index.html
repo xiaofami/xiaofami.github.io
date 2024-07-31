@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="缘起上月在同城收了HP 288 Pro G2 Microtower PC 全套，主机 + 显示器 + 键鼠 + 鼠标垫 + 电源连接线，合计200元整。主机配置不高，i3-6100 + 4G DDR4 + 500G机械硬盘，到手升级了16G内存，额外加了块SSD。主机整体而言拓展性很差，满配置状态下可以安装两张SATA硬盘，一个SATA光驱，另外还提供了PCIE_X16（3.0），PCIE_X1，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FirePro W5000显卡测评">
+<meta property="og:url" content="http://xiaofami.github.io/2024/01/22/w5000/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="缘起上月在同城收了HP 288 Pro G2 Microtower PC 全套，主机 + 显示器 + 键鼠 + 鼠标垫 + 电源连接线，合计200元整。主机配置不高，i3-6100 + 4G DDR4 + 500G机械硬盘，到手升级了16G内存，额外加了块SSD。主机整体而言拓展性很差，满配置状态下可以安装两张SATA硬盘，一个SATA光驱，另外还提供了PCIE_X16（3.0），PCIE_X1，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaofami.github.io/img/firepro_w5000.jpg">
+<meta property="article:published_time" content="2024-01-22T00:50:54.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:03.000Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="显卡">
+<meta property="article:tag" content="FirePro">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/firepro_w5000.jpg">
+  
+  
+  
+  <title>FirePro W5000显卡测评 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FirePro W5000显卡测评"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-22 08:50" pubdate>
+          2024年1月22日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">FirePro W5000显卡测评</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p>上月在同城收了HP 288 Pro G2 Microtower PC 全套，主机 + 显示器 + 键鼠 + 鼠标垫 + 电源连接线，合计200元整。主机配置不高，i3-6100 + 4G DDR4 + 500G机械硬盘，到手升级了16G内存，额外加了块SSD。主机整体而言拓展性很差，满配置状态下可以安装两张SATA硬盘，一个SATA光驱，另外还提供了PCIE_X16（3.0），PCIE_X1，PCI插槽各一。电源额定功率只有180W且无6P&#x2F;8P接口。为了增强主机性能，我想给它配一张便宜的亮机卡，满足1080P分辨率下轻度游戏需求。</p>
+<h1 id="显卡需求"><a href="#显卡需求" class="headerlink" title="显卡需求"></a>显卡需求</h1><p>无需独立供电，全高挡板，而且最好是单槽，接口尽量具备DP或HDMI，性能方面能够搭配i3-6100畅玩L4D2、Borderland 2、Torchlight 2等老游戏即可，价格不超过100元。</p>
+<h1 id="显卡选择"><a href="#显卡选择" class="headerlink" title="显卡选择"></a>显卡选择</h1><p>低功耗显卡选择范围有限，百元以内类似RX6400、GTX1650、GTX1050Ti之类就别想了，甚至GT1030、GTX750Ti也买不到，只能从二手A卡里碰碰运气。机缘巧合下刷到一个对比FirePro W5000与初代XBOX ONE GPU的视频，二者规格几乎完全一致，而且实机测试FirePro W5000的表现显著优于XBOX ONE，这吸引了我的兴趣，遂99元从闲鱼贩子手中下单了一张拆机卡。</p>
+<h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><img src="/2024/01/22/w5000/gpuz.PNG" srcset="/img/loading.gif" lazyload class="" title="gpu-z 截图">
+<p>GPU-Z信息如图所示。我买的这张卡是DELL工作站拆机卡，与<a target="_blank" rel="noopener" href="https://www.techpowerup.com/gpu-specs/firepro-w5000.c588">techpowerup网站介绍信息</a>一致，具备2个DP1.2接口和一个DVI接口。实测DP口在2560X1080分辨率下支持144Hz刷新率（测试所用显示器在该分辨率下最高支持200Hz刷新率）。结合VBE7来看，该显卡基本特征如下：</p>
+<img src="/2024/01/22/w5000/VBE7-1.PNG" srcset="/img/loading.gif" lazyload class="" title="VBE7 截图1">
+<img src="/2024/01/22/w5000/VBE7-2.PNG" srcset="/img/loading.gif" lazyload class="" title="VBE7 截图2">
+<img src="/2024/01/22/w5000/VBE7-3.PNG" srcset="/img/loading.gif" lazyload class="" title="VBE7 截图3">
+<img src="/2024/01/22/w5000/VBE7-4.PNG" srcset="/img/loading.gif" lazyload class="" title="VBE7 截图4">
+
+<ol>
+<li>GCN 1.0 架构；</li>
+<li>支持UEFI启动；</li>
+<li>支持DX12；</li>
+<li>2G GDDR5显存；</li>
+<li>256BIT高位宽；</li>
+<li>默认63W功率，可在MSI Afterburner等软件中手动上调20%达到75W上限。</li>
+</ol>
+<h1 id="超频"><a href="#超频" class="headerlink" title="超频"></a>超频</h1><p>使用MSI Afterburner将核心及显存频率均设置为900MHz，功率上调18%，测试游戏表现正常，未出现掉驱动等异常情况，后续游戏测试在此条件下进行。900MHz以上应该还有一些空间，有网友超频到了1000MHz左右，不过我满足于900MHz，没有向上继续测试。</p>
+<h1 id="视频补帧"><a href="#视频补帧" class="headerlink" title="视频补帧"></a>视频补帧</h1><p>实测配合 <strong>BlueskyFRC</strong> 和 <strong>Potplayer</strong> 能够顺利进行视频补帧。AMD驱动软件中无需进行任何设置，直接在 <strong>BlueskyFRC</strong> 中打开 <strong>AMD Fluid Motion Video</strong> 即可。具体设置可参照 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/443737935">5分钟提升视频帧率——AMD</a> 。</p>
+<img src="/2024/01/22/w5000/DXVACHECKER.PNG" srcset="/img/loading.gif" lazyload class="" title="解码器">
+<img src="/2024/01/22/w5000/BlueskyFRC.PNG" srcset="/img/loading.gif" lazyload class="" title="补帧设置">
+<h1 id="游戏测试"><a href="#游戏测试" class="headerlink" title="游戏测试"></a>游戏测试</h1><h2 id="求生之路2"><a href="#求生之路2" class="headerlink" title="求生之路2"></a>求生之路2</h2><p>1080P下完美运行，全高画质FPS稳定在120以上。相同配置在2560X1080分辨率下也有100左右，显卡占用率也不高。</p>
+<h2 id="无主之地2"><a href="#无主之地2" class="headerlink" title="无主之地2"></a>无主之地2</h2><p>1080P分辨率，除渲染距离（远）、各向异性（4X）外其余均最高设置。跑图FPS在60-70之间，战斗时有时会掉到50多，可以满意。这个表现和我当年用i5-4590 + GTX750Ti测试的结果极其接近。此时显卡占用率达到99%。</p>
+<h2 id="火炬之光2"><a href="#火炬之光2" class="headerlink" title="火炬之光2"></a>火炬之光2</h2><p>1080P分辨率，画质全最高，跑图FPS在130左右，战斗时会掉到80左右。这游戏极度依赖CPU单核性能，对显卡需求很低，显卡占用率全程都很低。</p>
+<h1 id="关于黑苹果支持"><a href="#关于黑苹果支持" class="headerlink" title="关于黑苹果支持"></a>关于黑苹果支持</h1><p>黑果小兵在其博文<a target="_blank" rel="noopener" href="https://blog.daliansky.net/Mojave-Hardware-Support-List.html">Catalina&#x2F;Mojave硬件支持列表（持续更新中）</a>中宣称FirePro W5000在 <strong>Catalina&#x2F;Mojave</strong> 中免驱使用，不过结合 <a target="_blank" rel="noopener" href="https://github.com/daliansky/daliansky.github.io/issues/129">https://github.com/daliansky/daliansky.github.io/issues/129</a> 等网友反馈，<strong>FirePro W5000</strong> 在Mojave下并非免驱，需要仿冒ID，至于Catalina连仿冒ID也行不通了，请网友注意甄别。我没有黑苹果环境，无法验证上述说法。</p>
+<h1 id="官方驱动兼容性"><a href="#官方驱动兼容性" class="headerlink" title="官方驱动兼容性"></a>官方驱动兼容性</h1><p>GCN架构显卡驱动平台兼容性优秀，W5000作为专业卡还提供了对Windows Server的额外支持：</p>
+<ul>
+<li>Windows 10 - 32-Bit Edition</li>
+<li>Windows 10 - 64-Bit Edition</li>
+<li>Windows 8.1 - 32-Bit Edition</li>
+<li>Windows 8.1 - 64-Bit Edition</li>
+<li>Windows 8 - 32-Bit Edition</li>
+<li>Windows 8 - 64-Bit Edition</li>
+<li>Windows 7 - 32-Bit Edition</li>
+<li>Windows 7 - 64-Bit Edition</li>
+<li>Windows Vista - 32-Bit Edition</li>
+<li>Windows Vista - 64-Bit Edition</li>
+<li>Windows Server 2019 - 64-Bit Edition</li>
+<li>Windows Server 2016 - 64-Bit Edition</li>
+<li>Windows Server 2012 R2 - 64-Bit Edition</li>
+<li>Windows Server 2012 - 64-Bit Edition</li>
+<li>Windows Server 2008 R2 - 64-Bit Edition</li>
+<li>Windows XP - Professional&#x2F;Home</li>
+<li>Windows XP - 64-Bit Edition</li>
+<li>Linux x86</li>
+<li>Linux x86 64-Bit</li>
+</ul>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>合格的亮机卡，不过若非电源受限P106-100之类矿渣性价比更高。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%98%BE%E5%8D%A1/" class="print-no-link">#显卡</a>
+      
+        <a href="/tags/FirePro/" class="print-no-link">#FirePro</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FirePro W5000显卡测评</div>
+      <div>http://xiaofami.github.io/2024/01/22/w5000/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/19/wireguard/" title="manjaro arm运行wireguard作为跳板机">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">manjaro arm运行wireguard作为跳板机</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/29/littlepc/" title="两台实达小主机折腾记录">
+                        <span class="hidden-mobile">两台实达小主机折腾记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

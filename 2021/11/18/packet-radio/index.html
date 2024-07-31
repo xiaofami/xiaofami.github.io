@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="从零开始手里有台八重州FT-8900R，是当年对业余无线电近乎一无所知时购买的第一步电台。官方手册上说其背部的Data Port可以搭配TNC实现Packet Radio功能。由此，很自然产生了几个疑问：  何为封包无线电可以参考业余无线分包通信DIY、Packet-Radio-Modulation、Introduction to Packet Radio、Packet Radio以及Packet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Packet Radio学习">
+<meta property="og:url" content="http://xiaofami.github.io/2021/11/18/packet-radio/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="从零开始手里有台八重州FT-8900R，是当年对业余无线电近乎一无所知时购买的第一步电台。官方手册上说其背部的Data Port可以搭配TNC实现Packet Radio功能。由此，很自然产生了几个疑问：  何为封包无线电可以参考业余无线分包通信DIY、Packet-Radio-Modulation、Introduction to Packet Radio、Packet Radio以及Packet">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-18T06:37:29.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.989Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="ham">
+<meta property="article:tag" content="FM">
+<meta property="article:tag" content="TNC">
+<meta property="article:tag" content="Packet Radio">
+<meta property="article:tag" content="Yaesu">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Packet Radio学习 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Packet Radio学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-11-18 14:37" pubdate>
+          2021年11月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Packet Radio学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="从零开始"><a href="#从零开始" class="headerlink" title="从零开始"></a>从零开始</h1><p>手里有台八重州FT-8900R，是当年对业余无线电近乎一无所知时购买的第一步电台。官方手册上说其背部的Data Port可以搭配TNC实现Packet Radio功能。由此，很自然产生了几个疑问：</p>
+<ol>
+<li><p>何为封包无线电<br>可以参考<a target="_blank" rel="noopener" href="https://www.qsl.net/bd6cr/prdiy.pdf">业余无线分包通信DIY</a>、<a target="_blank" rel="noopener" href="http://www.symek.com/g/pacmod.html">Packet-Radio-Modulation</a>、<a target="_blank" rel="noopener" href="https://www.bugoutbagbuilder.com/blog/introduction-packet-radio">Introduction to Packet Radio</a>、<a target="_blank" rel="noopener" href="http://www.wattystuff.net/amateur/packet/whatispacket.htm">Packet Radio</a>以及<a target="_blank" rel="noopener" href="https://www.dxzone.com/catalog/Software/Packet/">Packet Radio</a>几篇文章。封包无线电的概念无需赘述，这里只需要明确一点：普通的FM收发机即可使用NFM模式，在UHF&#x2F;VHF频段以1200或2400bps速率进行封包无线电操作。</p>
+</li>
+<li><p>FM收发机支持哪些玩法<br>身边的ham圈里大家不是在玩短波就是数字+MMDVM，FM少有人涉足。刚刚通读了《业余无线电通信（第四版）》的小白可能会对语音以外的诸多通信模式跃跃欲试，不过在购买设备前最好先弄明白模式与频段对于一台收发机的意义。频段很直观，一部仅支持U&#x2F;V两端的手台，当然不支持收发5MHz的短波。另一方面，电台即便支持某一频段，也未必支持特定模式。FM收发机价格便宜，不过只支持频率调制，即<strong>Frequency Modulation</strong>的字面含义，没有办法进行CW、PSK31等操作。具体可以参考<a target="_blank" rel="noopener" href="https://ham.stackexchange.com/questions/464/2m-or-70cm-fm-mobile-radio-for-digital-mode-operation">2m or 70cm FM mobile radio for digital mode operation</a>和<a target="_blank" rel="noopener" href="https://jontio.zapto.org/hda1/psk-and-fsk-over-fm.html">PSK and FSK over NBFM</a>。举个例子，FM收发机连接电脑可以用类似cw player软件在439.500MHz“发电报”，在其他电台里守听可以听到滴滴哒哒的摩斯码声音，不过这和真正的全模式电台在439.500MHz进行CW操作存在本质区别，其核心就是电台调制解调方式。CW最大带宽不超过150Hz，NFM则要占用3KHz，是CW的20倍，遑论能效比的差距。</p>
+</li>
+</ol>
+<p>所以总结下来，FM收发机除了语音通联&#x2F;中继，貌似只有封包无线电一路可走。</p>
+<ol start="3">
+<li>TNC是什么<br>TNC，Terminal Node Controller，中文翻译终端节点控制器。淘宝搜索零条匹配 …… 请教了群里大佬，大佬在指出封包无线电与TNC是上世纪遗产之余，推荐了名为<strong>专用电台连接器</strong>的东西。到手后主体就是个小盒子，盒子反面具备<strong>CAT</strong>、<strong>DATA</strong>、<strong>CW</strong>接口（对于FT-8900R只能用上DATA），正面具备<strong>SP</strong>、<strong>MIC</strong>和<strong>USB</strong>口，显然这3个都需要连接电脑。简单测试下来，可以实现用电脑控制收发信息，自动录音等操作。</li>
+</ol>
+<p>至于这个所谓的<strong>专用电台连接器</strong>，卖家没有提供原理图，不过国外ham显然也折腾过类似东西：<a target="_blank" rel="noopener" href="https://pdf4pro.com/cdn/ud04ya-radioarena-5b0ccd.pdf">UD04YA USB Data Mode Cable - PDF4PRO</a>。结合八重州电台DATA针脚定义来看，电台输入输出音频信号直连电脑，PTT通过虚拟COM口和电脑连接实现控制。所以<strong>专用电台连接器</strong>并不是TNC，是字面意义上的连接器。过去硬件TNC的大部分功能，如今已经在电脑上软件实现了。</p>
+<h1 id="软件包选择"><a href="#软件包选择" class="headerlink" title="软件包选择"></a>软件包选择</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>参考<a target="_blank" rel="noopener" href="http://www.wattystuff.net/amateur/packet/whatwindowsprograms.htm">Packet Radio</a>，作者介绍了<a target="_blank" rel="noopener" href="http://www.mixw.net/">MixW</a>，<strong>Flexnet32</strong>和<a target="_blank" rel="noopener" href="https://www.sv2agw.com/">AWGPE</a>。对于前两者作者给予了积极评价。至于<strong>AWGPE</strong>，作者评价其“不稳定”“不值得花钱”，不过<strong>AWGPE</strong>在国内较前两者知名度更高一些，可以自行评估判断。</p>
+<p>除了上面3个Windows专有软件，跨平台的<strong>soundmodem</strong>值得一提。在Debian衍生系统中，可以用apt命令直接安装，最新版为0.2，更新于2000年8月1日……如果发行版软件仓库里没有，那就只能自行编译。经过一番考古找到了0.2版本的源码：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/yu4zed/soundmodem-backup">https://github.com/yu4zed/soundmodem-backup</a></p>
+<p>备用下载地址：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://archive.org/details/soundmodem-0.20">https://archive.org/details/soundmodem-0.20</a></li>
+<li><a target="_blank" rel="noopener" href="https://archive.org/download/soundmodem-0.20/soundmodem-0.20.tar.gz">https://archive.org/download/soundmodem-0.20/soundmodem-0.20.tar.gz</a></li>
+<li><a target="_blank" rel="noopener" href="http://archive.ubuntu.com/ubuntu/pool/universe/s/soundmodem/soundmodem_0.20.orig.tar.gz">http://archive.ubuntu.com/ubuntu/pool/universe/s/soundmodem/soundmodem_0.20.orig.tar.gz</a></li>
+</ol>
+<p>源码包下载下来解压缩，进入目录执行<code>./configure</code>，根据提示查缺补漏。我的Deepin编译环境比较全，所以只额外安装了<strong>libgtk2.0-0</strong>和<strong>libaudiofile-dev</strong>。configure没问题执行<code>make CXXFLAGS+=&quot; -fpermissive&quot;</code>，然后<code>sudo make install</code>即可。</p>
+<p>除了man页面，对<strong>soundmodem</strong>的介绍还可以参考<a target="_blank" rel="noopener" href="https://www.qsl.net/g0wfv/soundmodem/">Multiplatform Soundcard Packet Radio Modem</a>，页面上同时给出了Windows安装包。不过都是老古董，即便不能正常运行也不要过于失望。</p>
+<h2 id="AGWPE"><a href="#AGWPE" class="headerlink" title="AGWPE"></a>AGWPE</h2><p>本部分主要参考自<a target="_blank" rel="noopener" href="https://www.soundcardpacket.org/2agwget.aspx">Download and Install AGWPE</a>。</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>下载页面： <a target="_blank" rel="noopener" href="https://www.sv2agw.com/downloads/default.htm">https://www.sv2agw.com/downloads/default.htm</a></p>
+<p>作者的许可比较宽松，Pro版于2020年1月6日更新，以Shareware许可分发，试用期30天。按页面上对Shareware的定义，应该是试用期后也可继续使用，售价约合人民币320元。不想掏钱又不愿意试用的可以下载2013年4月15日发布的旧版，这个作者宣布ham可以永久免费使用。而且旧版支持从Win95到Win10的Windows系统，捡一台瘦主机或者上网本搭建平台也很合适。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载下来的压缩包绿色免安装直接运行。注意不要把程序文件夹放到<strong>C:\Program Files</strong>即可，否则权限问题会导致配置文件写入失败。</p>
+<p>程序入口为<strong>AGW Packet Engine.exe</strong>，建议在桌面新建快捷方式。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>以一个声卡，一部电台为例配置。</p>
+<p>注意声卡的选择。一般而言，连接主板音频插口，然后软件里选择主板声卡即可。类似无线耳机、显示器等都不要选。</p>
+<p>2021-12-02 16:17:49 更新：</p>
+<p>后来使用了MixW，没有用AGWPE。</p>
+<h2 id="MixW"><a href="#MixW" class="headerlink" title="MixW"></a>MixW</h2><p>MixW还算好用，SSTV等没问题，不过受限于FT-8900R本身，可用模式不多。没有CAT功能，瀑布图不知道有什么用。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>FT-8900R作为车载FM收发机还算好用，临时架设中继也行，数字通信没有折腾价值，Packet Radio没人玩。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ham/" class="print-no-link">#ham</a>
+      
+        <a href="/tags/FM/" class="print-no-link">#FM</a>
+      
+        <a href="/tags/TNC/" class="print-no-link">#TNC</a>
+      
+        <a href="/tags/Packet-Radio/" class="print-no-link">#Packet Radio</a>
+      
+        <a href="/tags/Yaesu/" class="print-no-link">#Yaesu</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Packet Radio学习</div>
+      <div>http://xiaofami.github.io/2021/11/18/packet-radio/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年11月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/02/linux-odroid/" title="Manjaro ARM更换linux-odroid内核">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Manjaro ARM更换linux-odroid内核</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/12/tone/" title="业余无线电亚音探究">
+                        <span class="hidden-mobile">业余无线电亚音探究</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

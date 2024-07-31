@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介LAMP和LNMP许多人不会陌生。L代表Linux，P代表PHP，M以前指代MySQL，如今换成了MariaDB，用法大体相同。至于server本身也有很多选择。Apache和Nginx之外，Caddy现在也很流行，具备反代和自动获取证书等许多实用功能。本文介绍搭建LCMP以及安装WordPress过程，希望对潜在的读者有所帮助。 硬件平台还是 R3300-M 盒子哈哈，4核2GHz加上1G内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCMP搭建WordPress">
+<meta property="og:url" content="http://xiaofami.github.io/2021/11/09/lcmp/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="简介LAMP和LNMP许多人不会陌生。L代表Linux，P代表PHP，M以前指代MySQL，如今换成了MariaDB，用法大体相同。至于server本身也有很多选择。Apache和Nginx之外，Caddy现在也很流行，具备反代和自动获取证书等许多实用功能。本文介绍搭建LCMP以及安装WordPress过程，希望对潜在的读者有所帮助。 硬件平台还是 R3300-M 盒子哈哈，4核2GHz加上1G内">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-09T03:02:11.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.979Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="aarch64">
+<meta property="article:tag" content="arm64">
+<meta property="article:tag" content="Caddy">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="wordpress">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>LCMP搭建WordPress - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LCMP搭建WordPress"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-11-09 11:02" pubdate>
+          2021年11月9日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LCMP搭建WordPress</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>LAMP</strong>和<strong>LNMP</strong>许多人不会陌生。L代表Linux，P代表PHP，M以前指代MySQL，如今换成了MariaDB，用法大体相同。至于server本身也有很多选择。Apache和Nginx之外，Caddy现在也很流行，具备反代和自动获取证书等许多实用功能。本文介绍搭建<strong>LCMP</strong>以及安装<strong>WordPress</strong>过程，希望对潜在的读者有所帮助。</p>
+<h1 id="硬件平台"><a href="#硬件平台" class="headerlink" title="硬件平台"></a>硬件平台</h1><p>还是 <strong>R3300-M</strong> 盒子哈哈，4核2GHz加上1G内存配置足够了，TF卡选择三星128G，IO性能不是瓶颈。</p>
+<h1 id="网络环境"><a href="#网络环境" class="headerlink" title="网络环境"></a>网络环境</h1><p>我有公网IPv6地址，使用 <strong>cloudflare</strong> 做AAAA记录，本地运行<a target="_blank" rel="noopener" href="https://github.com/NewFuture/DDNS">NewFuture DDNS</a>自动更新IP地址。为了隐藏真实IP + 提供IPv4接入，cloudflare那边请打开Proxy。</p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><p>使用 <strong>Manjaro ARM 21.10 minimal vim2</strong> 镜像。为了关机重启正常请使用vim内核。emmc安卓底包为ATV，可提升CPU频率至2016MHz，约提升19%性能。刷机、换国内软件源、换内核等可参考本人之前的文章。</p>
+<h2 id="清理无用软件包"><a href="#清理无用软件包" class="headerlink" title="清理无用软件包"></a>清理无用软件包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -Rsu ap6398s-firmware kvim1-firmware kvim2-firmware<br></code></pre></td></tr></table></figure>
+<p>R3300-M不具备相应硬件，故其驱动可以卸载。</p>
+<h2 id="禁用SWAP"><a href="#禁用SWAP" class="headerlink" title="禁用SWAP"></a>禁用SWAP</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl stop zswap-arm.service<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">disable</span> zswap-arm.service<br></code></pre></td></tr></table></figure>
+<p>1G内存专门用来搭建环境运行WordPress足够了。Manjaro ARM中SWAP服务由 <strong>zswap-arm</strong> 这个包提供，如有洁癖也可以直接卸载。</p>
+<h2 id="安装配置networkmanager"><a href="#安装配置networkmanager" class="headerlink" title="安装配置networkmanager"></a>安装配置networkmanager</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S networkmanager<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now NetworkManager<br><span class="hljs-built_in">sudo</span> systemctl stop dhcpcd.service<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">disable</span> dhcpcd.service<br><span class="hljs-built_in">sudo</span> systemctl restart NetworkManager<br></code></pre></td></tr></table></figure>
+<p>注意一定要禁用掉 <strong>dhcpcd</strong> 服务，否则 <strong>NetworkManager</strong> 无法获取到IP地址。</p>
+<p>为什么要安装<strong>networkmanager</strong>呢？因为盒子的有线网卡mac地址每次开机都变化，所以DHCP获取到的IP地址也变来变去。我知悉的唯一有效解决办法是使用<strong>nmtui</strong>提供的mac-address-clone功能固定mac地址，而 <strong>nmtui</strong> 由 <strong>networkmanager</strong> 提供。</p>
+<p>更新：建议用dhcpcd实现静态IP，参见<a target="_blank" rel="noopener" href="https://tccmu.com/2023/02/16/manjaro-staticip/">Manjaro设置静态IP</a></p>
+<h1 id="mariadb"><a href="#mariadb" class="headerlink" title="mariadb"></a>mariadb</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S mariadb<br><span class="hljs-built_in">sudo</span> mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now mysql.service<br></code></pre></td></tr></table></figure>
+<p>然后执行设置密码等步骤。网上的许多教程在执行这一步前没有打开 <strong>mysql.service</strong> ，所以此步骤会失败。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> mysql_secure_installation<br></code></pre></td></tr></table></figure>
+<p>至此mariadb安装完成，稍后将进行新建数据库、新建用户操作。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>首先登录到数据库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> mysql -u root -p<br></code></pre></td></tr></table></figure>
+<p>然后新建一个名为 <strong>wordpress</strong> 的数据库，字符集为 <strong>utf8mb4</strong> ；新建一个名为 <strong>wp</strong> 的用户，密码为”password”（你需要自行替换密码），赋予这个用户全部权限：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> DATABASE wordpress <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> wordpress.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;wp&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;password&#x27;</span>;<br>FLUSH PRIVILEGES;<br>EXIT;<br></code></pre></td></tr></table></figure>
+<p>至此数据库配置完成。</p>
+<h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S php php-fpm php-gd<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now php-fpm<br></code></pre></td></tr></table></figure>
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p>编辑 <strong>&#x2F;etc&#x2F;php&#x2F;php.ini</strong> ，启用以下扩展（删掉行首的注释即可）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">extension</span>=bz2<br><span class="hljs-attr">extension</span>=curl<br><span class="hljs-attr">extension</span>=gd<br><span class="hljs-attr">extension</span>=mysqli<br><span class="hljs-attr">extension</span>=pdo_mysql<br><span class="hljs-attr">extension</span>=zip<br></code></pre></td></tr></table></figure>
+<p>为了方便使用，对部分参数进行修改：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">memory_limit</span>=<span class="hljs-number">256</span>M<br><span class="hljs-attr">post_max_size</span>=<span class="hljs-number">100</span>M<br><span class="hljs-attr">upload_max_filesize</span>=<span class="hljs-number">100</span>M<br></code></pre></td></tr></table></figure>
+
+<p>编辑 <strong>&#x2F;etc&#x2F;php&#x2F;php-fpm.d&#x2F;<a target="_blank" rel="noopener" href="http://www.conf/">www.conf</a></strong> 文件，使其以caddy身份运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs conf">user = http<br>group = http<br><br>listen.owner = http<br>listen.group = http<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs conf">user = caddy<br>group = caddy<br><br>listen.owner = caddy<br>listen.group = caddy<br></code></pre></td></tr></table></figure>
+<p>如果不改成caddy，过一会儿试图安装WordPress时caddy会报502错误。</p>
+<h2 id="重新加载"><a href="#重新加载" class="headerlink" title="重新加载"></a>重新加载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl restart php-fpm<br></code></pre></td></tr></table></figure>
+<h1 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>将WordPress下载到当前用户家目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/<br>curl -O https://wordpress.org/latest.tar.gz<br></code></pre></td></tr></table></figure>
+<p>移动到 <strong>&#x2F;srv&#x2F;http</strong> 目录下并解压缩：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mv</span> ~/latest.tar.gz /srv/http<br><span class="hljs-built_in">cd</span> /srv/http<br><span class="hljs-built_in">sudo</span> tar -zxvf latest.tar.gz<br></code></pre></td></tr></table></figure>
+<p>然后在 <strong>&#x2F;srv&#x2F;http</strong> 会出现 <strong>wordpress</strong> 文件夹。</p>
+<p>早年用过 <strong>centos</strong> 等Linux发行版的人可能对 <strong>&#x2F;srv&#x2F;http</strong> 不是很熟悉，在Manjaro（或者称其为Archlinux更贴切）中网站目录一般放在这里。当然放在哪里都行，只要在Caddy配置文件中定义明白即可，放在这里只是遵循了Archlinux关于文件目录的设计理念。</p>
+<p>完成后，开始调配Caddy。</p>
+<h1 id="Caddy"><a href="#Caddy" class="headerlink" title="Caddy"></a>Caddy</h1><h2 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S caddy<br></code></pre></td></tr></table></figure>
+<h2 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs conf">domain.com &#123;<br>    # 指向wordpress位置<br>    root * /srv/http/wordpress<br>    encode zstd gzip<br>    file_server<br><br>    @cache &#123;<br>        not header_regexp Cookie &quot;comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in&quot;<br>        not path_regexp &quot;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(index)?.xml|[a-z0-9-]+-sitemap([0-9]+)?.xml)&quot;<br>        not method POST<br>        not expression &#123;query&#125; != &#x27;&#x27;<br>    &#125;<br><br>    route @cache &#123;<br>        try_files /wp-content/cache/cache-enabler/&#123;host&#125;&#123;uri&#125;/https-index.html /wp-content/cache/cache-enabler/&#123;host&#125;&#123;uri&#125;/index.html &#123;path&#125; &#123;path&#125;/index.php?&#123;query&#125;<br>    &#125;<br>       <br>    # Change the path here according to your server<br>    php_fastcgi unix//run/php-fpm/php-fpm.sock<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个配置是从<a target="_blank" rel="noopener" href="https://caddy.community/t/example-configure-wordpress-with-a-static-cache/8215">Example: configure WordPress with a static cache</a>略微修改来的，你如果同样使用Manjaro ARM，那么只需要用自己的域名替换就行了。</p>
+<p>在 <strong>&#x2F;etc&#x2F;caddy</strong> 目录中，将默认的<code>Caddyfile</code>复制一份并改名为<code>Caddyfile.ori</code>，然后清空<code>Caddyfile</code>，把自己的配置粘贴进去保存即可。</p>
+<h2 id="修改wp-content权限"><a href="#修改wp-content权限" class="headerlink" title="修改wp-content权限"></a>修改wp-content权限</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> -R caddy:caddy /srv/http/wordpress/wp-content/<br></code></pre></td></tr></table></figure>
+<p>这步的操作目的是将 <strong>wp-content</strong> 目录用户和组修改为caddy。刚才解压后得到的wordpress目录中，所有文件用户和组均为 <strong>nobody</strong> ，权限大部分为644，故caddy只有可读权限，无法写入，在后续安装使用（比如安装插件）中会产生许多麻烦。网上流传的所谓<code>sudo chmod -R 755</code>甚至<code>sudo chmod -R 777</code>方法不要用，因其对linux权限系统的破坏是不可逆的。用户与组至少随时可以改回来。严格来说 <strong>wp-content</strong> 用户与组修改为 <strong>caddy</strong> 也不安全，不过在只运行一个网站的情况下，安全性应该还行？</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now caddy<br><span class="hljs-built_in">sudo</span> systemctl restart caddy<br></code></pre></td></tr></table></figure>
+<p>不出意外，此时访问自己的域名会看到wordpress初始化向导。</p>
+<h1 id="性能表现"><a href="#性能表现" class="headerlink" title="性能表现"></a>性能表现</h1><p>全套搭建完毕网站上线运行的情况下，系统负载约0.03，约使用277MB内存，非常轻松。</p>
+<h1 id="风险提示"><a href="#风险提示" class="headerlink" title="风险提示"></a>风险提示</h1><p>家庭宽带对外提供网络服务属于违规行为，就算可以通过iptables等手段屏蔽cloudflare以外的流量，<a target="_blank" rel="noopener" href="https://gist.github.com/Manouchehri/cdd4e56db6596e7c3c5a">比如这个：</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Source:</span><br><span class="hljs-comment"># https://www.cloudflare.com/ips</span><br><span class="hljs-comment"># https://support.cloudflare.com/hc/en-us/articles/200169166-How-do-I-whitelist-CloudFlare-s-IP-addresses-in-iptables-</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> `curl https://www.cloudflare.com/ips-v4`; <span class="hljs-keyword">do</span> iptables -I INPUT -p tcp -m multiport --dports http,https -s <span class="hljs-variable">$i</span> -j ACCEPT; <span class="hljs-keyword">done</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> `curl https://www.cloudflare.com/ips-v6`; <span class="hljs-keyword">do</span> ip6tables -I INPUT -p tcp -m multiport --dports http,https -s <span class="hljs-variable">$i</span> -j ACCEPT; <span class="hljs-keyword">done</span><br><br><span class="hljs-comment"># Avoid racking up billing/attacks</span><br><span class="hljs-comment"># WARNING: If you get attacked and CloudFlare drops you, your site(s) will be unreachable. </span><br>iptables -A INPUT -p tcp -m multiport --dports http,https -j DROP<br>ip6tables -A INPUT -p tcp -m multiport --dports http,https -j DROP<br></code></pre></td></tr></table></figure>
+<p>也只不过是略微提升了安全性，在ISP面前还是掩耳盗铃。另外目前<a target="_blank" rel="noopener" href="https://github.com/NewFuture/DDNS">NewFuture DDNS</a>更新IP后，cloudflare的代理会被关闭，需要手动重新开启，期间原始IP暴露无遗。所以如果长期使用，还是买个正经VPS吧。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>排名不分前后：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://caddy.community/t/example-configure-wordpress-with-a-static-cache/8215">Example: configure WordPress with a static cache</a></li>
+<li><a target="_blank" rel="noopener" href="https://rocka.me/article/wordpress-on-archlinux">在 Arch Linux 中安装 WordPress</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.zhullyb.top/2021/10/21/picuploader-on-archlinux-with-caddy/">PicUploader使用系列（一）——在Archlinux上使用Caddy部署PicUploader</a></li>
+<li><a target="_blank" rel="noopener" href="https://m0nkey.cn/2020/02/use-caddy-php-fpm-mariadb-to-quickly-build-a-wordpress-blog-under-archlinux/">在 ArchLinux 下利用Caddy PHP-FPM MariaDB 迅速搭建 WordPress 博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NewFuture/DDNS">NewFuture DDNS</a></li>
+<li><a target="_blank" rel="noopener" href="https://wordpress.stackexchange.com/questions/217880/cant-change-language-only-english-united-states/274639">Can’t change language (only “English (United States)”)</a></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/aarch64/" class="print-no-link">#aarch64</a>
+      
+        <a href="/tags/arm64/" class="print-no-link">#arm64</a>
+      
+        <a href="/tags/Caddy/" class="print-no-link">#Caddy</a>
+      
+        <a href="/tags/PHP/" class="print-no-link">#PHP</a>
+      
+        <a href="/tags/MariaDB/" class="print-no-link">#MariaDB</a>
+      
+        <a href="/tags/wordpress/" class="print-no-link">#wordpress</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LCMP搭建WordPress</div>
+      <div>http://xiaofami.github.io/2021/11/09/lcmp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年11月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/12/tone/" title="业余无线电亚音探究">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">业余无线电亚音探究</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/04/systemd/" title="Systemd">
+                        <span class="hidden-mobile">Systemd</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="运行环境某S905机顶盒 + TF卡 + Manjaro ARM 21.10 示例说明假设我们有一个marly.com的域名，且已经使用cloudflare进行解析。在家里的电视盒子上运行了一个http服务:http:&#x2F;&#x2F;localhost:3000，登录linux系统的用户为marly，我们想在外网通过https:&#x2F;&#x2F;world.marly.com访问这个服务，还要有正规证书。通过Cloudfl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cloudflare Tunnel 探索">
+<meta property="og:url" content="http://xiaofami.github.io/2021/10/29/cloudflare_tunnel/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="运行环境某S905机顶盒 + TF卡 + Manjaro ARM 21.10 示例说明假设我们有一个marly.com的域名，且已经使用cloudflare进行解析。在家里的电视盒子上运行了一个http服务:http:&#x2F;&#x2F;localhost:3000，登录linux系统的用户为marly，我们想在外网通过https:&#x2F;&#x2F;world.marly.com访问这个服务，还要有正规证书。通过Cloudfl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-29T07:12:56.000Z">
+<meta property="article:modified_time" content="2024-07-31T08:02:02.969Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Manjaro">
+<meta property="article:tag" content="ARM">
+<meta property="article:tag" content="aarch64">
+<meta property="article:tag" content="Cloudflare">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Cloudflare Tunnel 探索 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Cloudflare Tunnel 探索"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-29 15:12" pubdate>
+          2021年10月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          847 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Cloudflare Tunnel 探索</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><p>某S905机顶盒 + TF卡 + Manjaro ARM 21.10</p>
+<h1 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h1><p>假设我们有一个<code>marly.com</code>的域名，且已经使用<code>cloudflare</code>进行解析。在家里的电视盒子上运行了一个http服务:<code>http://localhost:3000</code>，登录linux系统的用户为marly，我们想在外网通过<code>https://world.marly.com</code>访问这个服务，还要有正规证书。通过<code>Cloudflare Tunnel</code>可以方便实现。</p>
+<p>如果有公网IP，上通过端口转发 + 调用API自动更新A记录 + <code>Let&#39;s Encrypt</code>也可以实现。</p>
+<ol>
+<li>端口转发。本地路由器配置。</li>
+<li>调用API自动更新A记录。GitHub上找到一个看起来不错的项目：<a target="_blank" rel="noopener" href="https://github.com/NewFuture/DDNS">NewFuture DDNS</a>。支持DNSPOD，阿里 DNS，DNS.COM，DNSPOD 国际版，CloudFlare，HE.net(不支持自动创建记录)，华为云。</li>
+<li>签发<code>Let&#39;s Encrypt</code>证书 + 续期。使用<a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh">ACME</a>即可。</li>
+</ol>
+<p>此外还发现<a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps">ehang-io&#x2F;nps</a>，不过没完整折腾过。</p>
+<h1 id="安装cloudflared"><a href="#安装cloudflared" class="headerlink" title="安装cloudflared"></a>安装cloudflared</h1><p>可以直接下载官方预编译的二进制执行文件或者安装包，地址 <a target="_blank" rel="noopener" href="https://github.com/cloudflare/cloudflared/releases/">https://github.com/cloudflare/cloudflared/releases/</a> ，或者使用<code>yay</code>根据当前最新源码编译安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ yay -s <br></code></pre></td></tr></table></figure>
+<p>如果半天没进度，请检查网络状况。</p>
+<p>使用yay安装的cloudflared包含三部分：</p>
+<blockquote>
+<p>&#x2F;usr&#x2F;bin&#x2F;cloudflared &#x2F;etc&#x2F;cloudflared &#x2F;usr&#x2F;share&#x2F;man&#x2F;man1&#x2F;cloudflared.1.gz</p>
+</blockquote>
+<p>日志文件为<code>/var/log/cloudflared.log</code>，默认文件权限640。cloudflared以普通用户权限运行所以没法读写这个日志文件，可以手动把它改成666：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chmod</span> 666 /var/log/cloudflared.log<br></code></pre></td></tr></table></figure>
+<h1 id="登录授权"><a href="#登录授权" class="headerlink" title="登录授权"></a>登录授权</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel login<br></code></pre></td></tr></table></figure>
+<p>复制终端上的网址，在浏览器中打开，选择<code>marly.com</code>。认证完成后，cloudflared会生成<code>~/.cloudflared/cert.pem</code>。</p>
+<h1 id="tunnel创建"><a href="#tunnel创建" class="headerlink" title="tunnel创建"></a>tunnel创建</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel create hello<br></code></pre></td></tr></table></figure>
+<p>上述命令产生如下后果：</p>
+<ul>
+<li>根据提供的name，cloudflared会生成一个UUID，与name唯一对应；</li>
+<li>在<code>~/.cloudflared/</code>中，cloudflared会生成<UUID>.json文件；</li>
+</ul>
+<p>最后使用<code>$ cloudflared tunnel list</code>查看tunnel是否创建成功。</p>
+<h1 id="DNS记录生成"><a href="#DNS记录生成" class="headerlink" title="DNS记录生成"></a>DNS记录生成</h1><h2 id="连接到应用"><a href="#连接到应用" class="headerlink" title="连接到应用"></a>连接到应用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel route dns hello world.marly.com<br></code></pre></td></tr></table></figure>
+<p>此步骤在cloudflare后台创建了<code>world.marly.com</code>的CNAME。</p>
+<h2 id="连接到网络"><a href="#连接到网络" class="headerlink" title="连接到网络"></a>连接到网络</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel route ip add &lt;IP/CIDR&gt; &lt;UUID or NAME&gt;<br></code></pre></td></tr></table></figure>
+<p>可以使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel route ip show<br></code></pre></td></tr></table></figure>
+<p>查看是否路由成功。</p>
+<h1 id="配置文件创建"><a href="#配置文件创建" class="headerlink" title="配置文件创建"></a>配置文件创建</h1><p><code>cloudflared</code>的配置文件为<code>config.yml</code>，遵循Linux传统，全局文件路径<code>/etc/cloudflared/config.yml</code>，用户文件路径<code>~/.cloudflared/config.yml</code>。</p>
+<p>全局文件默认内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">logfile:</span> <span class="hljs-string">/var/log/cloudflared.log</span><br><span class="hljs-attr">proxy-dns:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">proxy-dns-address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><br><span class="hljs-attr">proxy-dns-port:</span> <span class="hljs-number">5300</span><br><span class="hljs-attr">proxy-dns-upstream:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">https://1.1.1.1/dns-query</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">https://1.0.0.1/dns-query</span><br></code></pre></td></tr></table></figure>
+
+<p>在<code>~/.cloudflared/</code>中，创建<code>config.yml</code>文件：</p>
+<h2 id="连接到应用-1"><a href="#连接到应用-1" class="headerlink" title="连接到应用"></a>连接到应用</h2><blockquote>
+<p>url: <a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000</a><br>tunnel: <Tunnel-UUID><br>credentials-file: &#x2F;root&#x2F;.cloudflared&#x2F;<Tunnel-UUID>.json</p>
+</blockquote>
+<p>根据自身情况修改，比如应用端口，UUID，以及credentials-file位置。</p>
+<h2 id="连接到网络-1"><a href="#连接到网络-1" class="headerlink" title="连接到网络"></a>连接到网络</h2><p>tunnel: <Tunnel-UUID><br>credentials-file: &#x2F;root&#x2F;.cloudflared&#x2F;<Tunnel-UUID>.json</p>
+<h1 id="tunnel运行"><a href="#tunnel运行" class="headerlink" title="tunnel运行"></a>tunnel运行</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel run &lt;UUID or NAME&gt;<br></code></pre></td></tr></table></figure>
+<p>如果存在多个配置文件（比如同时运行了多条tunnel），建议通过<code>--config</code>指定路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel --config path/config.yaml run<br></code></pre></td></tr></table></figure>
+<p>最好使用绝对路径。</p>
+<h1 id="检查tunnel状况"><a href="#检查tunnel状况" class="headerlink" title="检查tunnel状况"></a>检查tunnel状况</h1><h2 id="列出所有"><a href="#列出所有" class="headerlink" title="列出所有"></a>列出所有</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel list<br></code></pre></td></tr></table></figure>
+<h2 id="检查单个"><a href="#检查单个" class="headerlink" title="检查单个"></a>检查单个</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ cloudflared tunnel info &lt;UUID or NAME&gt;<br></code></pre></td></tr></table></figure>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cloudflared tunnel run --url http://localhost:3000 hello<br></code></pre></td></tr></table></figure>
+<h2 id="作为服务运行"><a href="#作为服务运行" class="headerlink" title="作为服务运行"></a>作为服务运行</h2><p>首先准备好config.yml文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">tunnel:</span> <span class="hljs-string">hello</span><br><span class="hljs-attr">credentials-file:</span> <span class="hljs-string">/home/marly/.cloudflared/fe63bc80-7123-65a4-e516-e125b06f0a12.json</span><br><br><span class="hljs-attr">ingress:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hostname:</span> <span class="hljs-string">world.marly.com</span><br>    <span class="hljs-attr">service:</span> <span class="hljs-string">http://localhost:3000</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">service:</span> <span class="hljs-string">http_status:404</span><br></code></pre></td></tr></table></figure>
+
+<p>然后将该文件移动到<code>/etc/cloudflare</code>目录下，原有的文件提前改名或删除。</p>
+<p>安装服务：<code>sudo cloudflared service install</code> 。cloudflare文档说明此步骤会自动将<code>~/.cloudflared/config.yml</code>复制到<code>/etc/cloudflared</code>中，但实际测试找不到配置文件，故手动复制。</p>
+<p>启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> cloudflared<br><span class="hljs-built_in">sudo</span> systemctl start cloudflared<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Manjaro/" class="print-no-link">#Manjaro</a>
+      
+        <a href="/tags/ARM/" class="print-no-link">#ARM</a>
+      
+        <a href="/tags/aarch64/" class="print-no-link">#aarch64</a>
+      
+        <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Cloudflare Tunnel 探索</div>
+      <div>http://xiaofami.github.io/2021/10/29/cloudflare_tunnel/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/04/systemd/" title="Systemd">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Systemd</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/27/rocketchat/" title="使用Rocket.Chat搭建聊天服务器">
+                        <span class="hidden-mobile">使用Rocket.Chat搭建聊天服务器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
