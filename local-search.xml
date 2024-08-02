@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>使用dnsapi签发证书</title>
+    <link href="/2024/08/02/dnsapi/"/>
+    <url>/2024/08/02/dnsapi/</url>
+    
+    <content type="html"><![CDATA[<p>acme支持多种签发证书方式，之前使用的是手动创建TXT记录这种方式，过程稍显繁琐，可以使用dnsapi进行简化：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> CF_Token=<span class="hljs-string">&quot;*******************************&quot;</span><br>./acme.sh --issue --dns dns_cf --server letsencrypt -d domain.com<br></code></pre></td></tr></table></figure><p>注意 <strong>CF_Token</strong> 会被acme.sh自动保存于 <strong>~&#x2F;.acme.sh&#x2F;account.conf</strong>，请妥善保管谨防泄漏。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>acme</tag>
+      
+      <tag>letsencrypt</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>openwrt旁路由防火墙配置</title>
     <link href="/2024/08/02/openwrtfw/"/>
     <url>/2024/08/02/openwrtfw/</url>
