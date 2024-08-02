@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>openwrt旁路由防火墙配置</title>
+    <link href="/2024/08/02/openwrtfw/"/>
+    <url>/2024/08/02/openwrtfw/</url>
+    
+    <content type="html"><![CDATA[<p>我的主路由是一台运行Mikrotik Routeros 7.15 的工控小主机，i3-5010U + 4G 内存 + 8G MSATA SSD+ 32G SATA SSD配置。原本打算通过container运行 <strong>mosdns</strong>和<strong>Adguard home</strong>，但是routeros的container实在难用，所以后来这部分功能转移到了openwrt旁路由中。</p><p>运行openwrt的设备为一台J800小主机，单螃蟹网卡。在 <code>cgi-bin/luci/admin/network/firewall</code> 页面中，需要进行如下设置：</p><p><strong>常规设置</strong>部分：</p><ul><li>启用 SYN-flood 防御：关闭</li><li>丢弃无效数据包：关闭</li><li>启用FullCone-NAT：停用</li><li>入站数据：接受</li><li>出站数据：接受</li><li>转发：接受</li></ul><p><strong>区域</strong>设置里面同样把入站数据、出站数据和转发全部设置成接受，IP 动态伪装和MSS 钳制都关掉。如果不这样设置，在外面通过wireguard连接到主路由routeros后，会发现无法访问旁路由LUCI页面，也无法使用openwrt旁路由提供的DNS功能。</p><p>上述设置不难理解。旁路由不发生NAT，所以 <strong>IP 动态伪装</strong>（masquerade）和<strong>FullCone-NAT</strong>关掉。 <strong>MSS 钳制</strong>已由主路由routeros实现，不需要openwrt画蛇添足，所以关掉。至于 <strong>SYN-flood 防御</strong>、<strong>丢弃无效数据包</strong>同样是主路由（边界路由）才需要考虑，这里统统关掉。入站、出站、转发没有理由设置门槛，自然全部接受，至此旁路由防火墙就配置完毕了。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>openwrt</tag>
+      
+      <tag>firewall</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用uci配置openwrt旁路由</title>
     <link href="/2024/08/01/uci/"/>
     <url>/2024/08/01/uci/</url>
