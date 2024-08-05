@@ -84,7 +84,7 @@ reset halt
 ```bash
 sudo apt-get install scdaemon pcscd
 ```
-按照必要工具后参照教程使用。
+安装必要工具后参照教程使用。
 
 # Gnuk重新写入
 按照相同方式连线，并短接MCU 7 (NRST) 和 8  (VSSA) 针脚，然后进入openocd执行以下命令：
