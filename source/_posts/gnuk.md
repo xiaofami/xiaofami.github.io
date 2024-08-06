@@ -37,6 +37,7 @@ ST-LINK V2外部接口基本一致，重点在于内部。内部主板必须引�
 # 固件编译
 以下操作在 **Ubuntu 24.04** 中进行。
 
+如果不需要确认按钮就不要打补丁。
 ```bash
 sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi
 git clone --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk
