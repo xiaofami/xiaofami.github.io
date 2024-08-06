@@ -15,6 +15,7 @@ index_img: /img/pair.jpg
 5. [ST-Link v2 刷写 GNUK，年轻人的第一个 OpenPGP 智能卡！](https://www.cnblogs.com/tibrella/p/17816505.html)
 6. [Homemade GnuK with ST-Dongle](https://techie-s.work/posts/2021/05/homemade-gnuk-with-stdongle/)
 7. [DIY 一个 Gnuk Token](https://blog.indexyz.me/diy-gnuk-token/)
+8. [ST-LINK V2 刷 Gnuk](https://kgame.tw/gnupg/stm32-gnuk/)
 
 以下内容均梳理自上述资料。
 # 硬件
