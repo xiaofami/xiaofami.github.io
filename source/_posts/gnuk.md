@@ -16,11 +16,12 @@ index_img: /img/pair.jpg
 6. [Homemade GnuK with ST-Dongle](https://techie-s.work/posts/2021/05/homemade-gnuk-with-stdongle/)
 7. [DIY 一个 Gnuk Token](https://blog.indexyz.me/diy-gnuk-token/)
 8. [ST-LINK V2 刷 Gnuk](https://kgame.tw/gnupg/stm32-gnuk/)
+9. [Gnuk on the ST-LINK v2](https://nx3d.org/gnuk-st-link-v2/)
 
 以下内容均梳理自上述资料。
 # 硬件
 ## ST-LINK V2 MCU类型
-MCU须为 **STM32F103C8T6** ，其具备128kb Flash。其他型号不能保障FLASH大小为128kb，如果不幸买到64kb版本就**不能刷**最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。
+MCU须为 **STM32F103C8T6** ，其具备128kb Flash。其他型号不能保障FLASH大小为128KB，如果不幸买到64kb版本就**不能刷**最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。
 ## 接口
 ST-LINK V2外部接口基本一致，重点在于内部。内部主板必须引出**DIO**和**CLK**否则**不能刷**。
 ## 接线
@@ -46,7 +47,7 @@ patch ../chopstx/contrib/ackbtn-stm32f103.c < ./0001-add-pa5-as-switch-pin-for-s
 make build/gnuk-vidpid.bin
 ```
 
-执行结束后，在build目录下得到 **gnuk-vidpid.bin** 文件，它便是待烧录的固件文件。 
+执行结束后，在build目录下得到 **gnuk-vidpid.bin** 文件，它便是待烧录的固件文件。 我编译得到的固件大小为89KB。
 
     ./configure --vidpid=234b:0000 --target=ST_DONGLE 输出内容：
     Header file is: board-st-dongle.h
@@ -69,7 +70,7 @@ openocd.cfg内容如下：
 telnet_port 4444
 source [find interface/stlink-v2.cfg]
 source [find target/stm32f1x.cfg]
-set WORKAREASIZE 0x10000
+set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB
 ```
 
 执行openocd，然后执行如下命令：
@@ -98,3 +99,6 @@ flash write_bank 0 ./src/build/gnuk-vidpid.bin 0
 stm32f1x lock 0
 reset halt
 ```
+
+# 小结
+总体而言全流程最大难度在于买对硬件，我从淘宝下单的2只ST-LINK V2还在路上，客服承诺MCU为STM32F103C8T6而且内部主板具备CLK和DIO接口，有一点小小期待。编译和烧录在Windows平台即可完成，无需用到Linux物理机。
