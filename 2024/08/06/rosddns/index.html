@@ -21,25 +21,26 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近看到几篇用ST-LINK V2 刷 Gnuk的文章很感兴趣。在实际动手之前，先搜罗整理一些资料： 参考文献 超省资安强化方案 - 比鸡排便宜的自制 USB 实体密钥 按钮版 Gnuk 实体密钥刻录笔记 ST-LINK V2 刷 Gnuk 拾遗 用 ST-Link 自制 GnuK ST-Link v2 刷写 GNUK，年轻人的第一个 OpenPGP 智能卡！ Homemade GnuK with">
+    <meta name="description" content="Miktotik Routeros利用脚本能够方便实现DDNS功能。如果你的域名托管在cloudflare平台，可以直接使用下述脚本，适用于最新版的Mikrotik Routeros 7.15，将脚本执行与PPPoE UP事件关联即可。 IPv4版本具备IPv4公网地址的网友推荐此脚本。 1234567891011121314151617181920212223242526272829303132">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ST-LINK V2 刷 Gnuk 资料整理（施工中）">
-<meta property="og:url" content="http://xiaofami.github.io/2024/08/05/gnuk/index.html">
+<meta property="og:title" content="Mikrotik Routeros 7.15 CF DDNS 脚本">
+<meta property="og:url" content="http://xiaofami.github.io/2024/08/06/rosddns/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="最近看到几篇用ST-LINK V2 刷 Gnuk的文章很感兴趣。在实际动手之前，先搜罗整理一些资料： 参考文献 超省资安强化方案 - 比鸡排便宜的自制 USB 实体密钥 按钮版 Gnuk 实体密钥刻录笔记 ST-LINK V2 刷 Gnuk 拾遗 用 ST-Link 自制 GnuK ST-Link v2 刷写 GNUK，年轻人的第一个 OpenPGP 智能卡！ Homemade GnuK with">
+<meta property="og:description" content="Miktotik Routeros利用脚本能够方便实现DDNS功能。如果你的域名托管在cloudflare平台，可以直接使用下述脚本，适用于最新版的Mikrotik Routeros 7.15，将脚本执行与PPPoE UP事件关联即可。 IPv4版本具备IPv4公网地址的网友推荐此脚本。 1234567891011121314151617181920212223242526272829303132">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xiaofami.github.io/img/pair.jpg">
-<meta property="article:published_time" content="2024-08-05T02:12:03.000Z">
-<meta property="article:modified_time" content="2024-08-06T01:28:00.732Z">
+<meta property="og:image" content="http://xiaofami.github.io/img/mikrotik.png">
+<meta property="article:published_time" content="2024-08-06T01:30:49.000Z">
+<meta property="article:modified_time" content="2024-08-06T01:59:35.887Z">
 <meta property="article:author" content="tccmu">
-<meta property="article:tag" content="Gnuk">
-<meta property="article:tag" content="ST-LINK V2">
+<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="cloudflare">
+<meta property="article:tag" content="DDNS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xiaofami.github.io/img/pair.jpg">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/mikrotik.png">
   
   
   
-  <title>ST-LINK V2 刷 Gnuk 资料整理（施工中） - 小荷</title>
+  <title>Mikrotik Routeros 7.15 CF DDNS 脚本 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ST-LINK V2 刷 Gnuk 资料整理（施工中）"></span>
+            <span id="subtitle" data-typed-text="Mikrotik Routeros 7.15 CF DDNS 脚本"></span>
           
         </div>
 
@@ -216,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-05 10:12" pubdate>
-          2024年8月5日 上午
+        <time datetime="2024-08-06 09:30" pubdate>
+          2024年8月6日 上午
         </time>
       </span>
     
@@ -228,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          518 字
+          677 字
         
       </span>
     
@@ -239,7 +240,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -276,56 +277,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">ST-LINK V2 刷 Gnuk 资料整理（施工中）</h1>
+            <h1 id="seo-header">Mikrotik Routeros 7.15 CF DDNS 脚本</h1>
             
             
               <div class="markdown-body">
                 
-                <p>最近看到几篇用ST-LINK V2 刷 Gnuk的文章很感兴趣。在实际动手之前，先搜罗整理一些资料：</p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.darkthread.net/blog/low-cost-diy-usb-security-key/">超省资安强化方案 - 比鸡排便宜的自制 USB 实体密钥</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.darkthread.net/blog/flash-gnuk-notes/">按钮版 Gnuk 实体密钥刻录笔记</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.dylanwu.space/2020/01/24/stm32-gnuk.html">ST-LINK V2 刷 Gnuk 拾遗</a></li>
-<li><a target="_blank" rel="noopener" href="https://techie-s.work/posts/2021/04/homemade-gnuk/">用 ST-Link 自制 GnuK</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tibrella/p/17816505.html">ST-Link v2 刷写 GNUK，年轻人的第一个 OpenPGP 智能卡！</a></li>
-<li><a target="_blank" rel="noopener" href="https://techie-s.work/posts/2021/05/homemade-gnuk-with-stdongle/">Homemade GnuK with ST-Dongle</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.indexyz.me/diy-gnuk-token/">DIY 一个 Gnuk Token</a></li>
-<li><a target="_blank" rel="noopener" href="https://kgame.tw/gnupg/stm32-gnuk/">ST-LINK V2 刷 Gnuk</a></li>
-</ol>
-<p>以下内容均梳理自上述资料。</p>
-<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><h2 id="ST-LINK-V2-MCU类型"><a href="#ST-LINK-V2-MCU类型" class="headerlink" title="ST-LINK V2 MCU类型"></a>ST-LINK V2 MCU类型</h2><p>MCU须为 <strong>STM32F103C8T6</strong> ，其具备128kb Flash。其他型号不能保障FLASH大小为128kb，如果不幸买到64kb版本就<strong>不能刷</strong>最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。</p>
-<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>ST-LINK V2外部接口基本一致，重点在于内部。内部主板必须引出<strong>DIO</strong>和<strong>CLK</strong>否则<strong>不能刷</strong>。</p>
-<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p>电脑连接作为编程器的ST-LINK V2无需赘言，USB直连即可。两只ST-LINK V2需要连接四条线：</p>
+                <p>Miktotik Routeros利用脚本能够方便实现DDNS功能。如果你的域名托管在cloudflare平台，可以直接使用下述脚本，适用于最新版的Mikrotik Routeros 7.15，将脚本执行与PPPoE UP事件关联即可。</p>
+<h1 id="IPv4版本"><a href="#IPv4版本" class="headerlink" title="IPv4版本"></a>IPv4版本</h1><p>具备IPv4公网地址的网友推荐此脚本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Cloudflare Dynamic DNS update script</span><br><span class="hljs-comment"># Required policy: read, write, test, policy</span><br><span class="hljs-comment"># Add this script to scheduler</span><br><span class="hljs-comment"># Install DigiCert root CA or disable check-certificate</span><br><span class="hljs-comment"># Configuration ---------------------------------------------------------------------</span><br><br>:<span class="hljs-built_in">local</span> TOKEN <span class="hljs-string">&quot;*********************************&quot;</span><br>:<span class="hljs-built_in">local</span> ZONEID <span class="hljs-string">&quot;********************************&quot;</span><br>:<span class="hljs-built_in">local</span> RECORDID <span class="hljs-string">&quot;******************************&quot;</span><br>:<span class="hljs-built_in">local</span> RECORDNAME <span class="hljs-string">&quot;****************************&quot;</span><br>:<span class="hljs-built_in">local</span> WANIF <span class="hljs-string">&quot;*********************************&quot;</span><br><br><span class="hljs-comment">#------------------------------------------------------------------------------------</span><br><br>:global IP4NEW<br>:global IP4CUR<br><br>:<span class="hljs-built_in">local</span> url <span class="hljs-string">&quot;https://api.cloudflare.com/client/v4/zones/<span class="hljs-variable">$ZONEID</span>/dns_records/<span class="hljs-variable">$RECORDID</span>/&quot;</span><br><br>:<span class="hljs-keyword">if</span> ([/interface get <span class="hljs-variable">$WANIF</span> value-name=running]) <span class="hljs-keyword">do</span>=&#123;<br><span class="hljs-comment"># Get the current public IP</span><br>    :<span class="hljs-built_in">local</span> currentIP [/ip address get [/ip address find interface=<span class="hljs-variable">$WANIF</span> ] address];<br>    :<span class="hljs-built_in">set</span> IP4NEW [:pick <span class="hljs-variable">$currentIP</span> 0 [:find <span class="hljs-variable">$currentIP</span> <span class="hljs-string">&quot;/&quot;</span>]];<br><span class="hljs-comment"># Check if IP has changed</span><br>    :<span class="hljs-keyword">if</span> (<span class="hljs-variable">$IP4NEW</span> != <span class="hljs-variable">$IP4CUR</span>) <span class="hljs-keyword">do</span>=&#123;<br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Public IP changed to <span class="hljs-variable">$IP4NEW</span>, updating&quot;</span><br>        :<span class="hljs-built_in">local</span> cfapi [/tool fetch http-method=put mode=https url=<span class="hljs-variable">$url</span> check-certificate=no output=user as-value \<br>            http-header-field=<span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>,Content-Type: application/json&quot;</span> \<br>            http-data=<span class="hljs-string">&quot;&#123;&quot;</span><span class="hljs-built_in">type</span><span class="hljs-string">&quot;:&quot;</span>A<span class="hljs-string">&quot;,&quot;</span>name<span class="hljs-string">&quot;:&quot;</span><span class="hljs-variable">$RECORDNAME</span><span class="hljs-string">&quot;,&quot;</span>content<span class="hljs-string">&quot;:&quot;</span><span class="hljs-variable">$IP4NEW</span><span class="hljs-string">&quot;,&quot;</span>ttl<span class="hljs-string">&quot;:120,&quot;</span>proxied<span class="hljs-string">&quot;:false&#125;&quot;</span>]<br>        :<span class="hljs-built_in">set</span> IP4CUR <span class="hljs-variable">$IP4NEW</span><br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Host <span class="hljs-variable">$RECORDNAME</span> updated with IP <span class="hljs-variable">$IP4CUR</span>&quot;</span><br>    &#125;  <span class="hljs-keyword">else</span>=&#123;<br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Previous IP <span class="hljs-variable">$IP4NEW</span> not changed, quitting&quot;</span><br>    &#125;<br>&#125; <span class="hljs-keyword">else</span>=&#123;<br>    :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: <span class="hljs-variable">$WANIF</span> is not currently running, quitting&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>简单介绍下变量含义，星号内容自行替换：</p>
 <ul>
-<li>SWDIO : 尾插连接主板对应触点</li>
-<li>SWCLK : 尾插连接主板对应触点</li>
-<li>GND : 尾插直连即可</li>
-<li>3.3v : 尾插直连即可</li>
+<li>TOKEN：Cloudflare管理后台中自行创建的API Token，安全起见不要用Global API KEY。</li>
+<li>ZONEID：对应Cloudflare域名管理“overview”页面右下能直接看到的 Zone ID值。</li>
+<li>RECORDID：动态域名解析的ID值。注意，对于同一个域名，不同解析类型的ID值也不同，例如A记录和AAAA记录的ID值就不一样。可以在Cloudflare控制面板中手动创建一条解析记录，然后到Cloudfalre的Audit LOG中查看对应ID值。</li>
+<li>RECORDNAME：具体动态域名。</li>
+<li>WANIF：对应WAN的网口名称。routeros中一般默认为 <strong>pppoe-out1</strong>。</li>
 </ul>
-<h2 id="确认开关"><a href="#确认开关" class="headerlink" title="确认开关"></a>确认开关</h2><p>将鼠标微动开关焊接在尾插CLK与3.3V之间即可。</p>
-<h1 id="固件编译"><a href="#固件编译" class="headerlink" title="固件编译"></a>固件编译</h1><p>以下操作在 <strong>Ubuntu 24.04</strong> 中进行。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi<br>git <span class="hljs-built_in">clone</span> --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk<br><span class="hljs-built_in">cd</span> gnuk/src<br>curl -O https://techie-s.work/shares/gnuk/0001-add-pa5-as-switch-pin-for-st-dongle.patch<br>patch ../chopstx/contrib/ackbtn-stm32f103.c &lt; ./0001-add-pa5-as-switch-pin-for-st-dongle.patch<br>./configure --vidpid=234b:0000 --target=ST_DONGLE<br>make build/gnuk-vidpid.bin<br></code></pre></td></tr></table></figure>
+<h1 id="IPv6版本"><a href="#IPv6版本" class="headerlink" title="IPv6版本"></a>IPv6版本</h1><p>没有公网IPv4地址，但是有公网IPv6地址的网友可以使用这个脚本。一般而言，国内家宽可以从ISP获取到60长度前缀，记得在IPv6 Addreess List中给WAN接口分配地址，默认 <strong>::&#x2F;64</strong> 即可，Mikrotik Routeros会结合前缀自动计算并分配地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Cloudflare Dynamic DNS update script</span><br><span class="hljs-comment"># Required policy: read, write, test, policy</span><br><span class="hljs-comment"># Add this script to scheduler</span><br><span class="hljs-comment"># Install DigiCert root CA or disable check-certificate</span><br><span class="hljs-comment"># Configuration ---------------------------------------------------------------------</span><br><br>:<span class="hljs-built_in">local</span> TOKEN <span class="hljs-string">&quot;*********************************&quot;</span><br>:<span class="hljs-built_in">local</span> ZONEID <span class="hljs-string">&quot;********************************&quot;</span><br>:<span class="hljs-built_in">local</span> RECORD6ID <span class="hljs-string">&quot;*****************************&quot;</span><br>:<span class="hljs-built_in">local</span> RECORDNAME <span class="hljs-string">&quot;****************************&quot;</span><br>:<span class="hljs-built_in">local</span> WANIF <span class="hljs-string">&quot;*********************************&quot;</span><br><br><span class="hljs-comment">#------------------------------------------------------------------------------------</span><br><br>:global IP6NEW<br>:global IP6CUR<br><br>:<span class="hljs-built_in">local</span> url6 <span class="hljs-string">&quot;https://api.cloudflare.com/client/v4/zones/<span class="hljs-variable">$ZONEID</span>/dns_records/<span class="hljs-variable">$RECORD6ID</span>/&quot;</span><br><br>:<span class="hljs-keyword">if</span> ([/interface get <span class="hljs-variable">$WANIF</span> value-name=running]) <span class="hljs-keyword">do</span>=&#123;<br><span class="hljs-comment"># Get the current public IP</span><br>    :<span class="hljs-built_in">local</span> currentIP [/ipv6/address/get [:pick [find global interface=<span class="hljs-variable">$WANIF</span>] 0 ] address ]<br>    :<span class="hljs-built_in">set</span> IP6NEW [:pick <span class="hljs-variable">$currentIP</span> 0 [:find <span class="hljs-variable">$currentIP</span> <span class="hljs-string">&quot;/&quot;</span>]];<br><span class="hljs-comment"># Check if IP has changed</span><br>    :<span class="hljs-keyword">if</span> (<span class="hljs-variable">$IP6NEW</span> != <span class="hljs-variable">$IP6CUR</span>) <span class="hljs-keyword">do</span>=&#123;<br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Public IPv6 address changed to <span class="hljs-variable">$IP6NEW</span>, updating&quot;</span><br>        :<span class="hljs-built_in">local</span> cfapi [/tool fetch http-method=put mode=https url=<span class="hljs-variable">$url6</span> check-certificate=no output=user as-value \<br>            http-header-field=<span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>,Content-Type: application/json&quot;</span> \<br>            http-data=<span class="hljs-string">&quot;&#123;\&quot;type\&quot;:\&quot;AAAA\&quot;,\&quot;name\&quot;:\&quot;<span class="hljs-variable">$RECORDNAME</span>\&quot;,\&quot;content\&quot;:\&quot;<span class="hljs-variable">$IP6NEW</span>\&quot;,\&quot;ttl\&quot;:120,\&quot;proxied\&quot;:false&#125;&quot;</span>]<br>        :<span class="hljs-built_in">set</span> IP6CUR <span class="hljs-variable">$IP6NEW</span><br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Host <span class="hljs-variable">$RECORDNAME</span> updated with IP <span class="hljs-variable">$IP6CUR</span>&quot;</span><br>    &#125;  <span class="hljs-keyword">else</span>=&#123;<br>        :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: Previous IPv6 <span class="hljs-variable">$IP6NEW</span> not changed, quitting&quot;</span><br>    &#125;<br>&#125; <span class="hljs-keyword">else</span>=&#123;<br>    :<span class="hljs-built_in">log</span> info <span class="hljs-string">&quot;CF-DDNS: <span class="hljs-variable">$WANIF</span> is not currently running, quitting&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>执行结束后，在build目录下得到 <strong>gnuk-vidpid.bin</strong> 文件，它便是待烧录的固件文件。 </p>
-<pre><code class="hljs">./configure --vidpid=234b:0000 --target=ST_DONGLE 输出内容：
-Header file is: board-st-dongle.h
-Configured for bare system (no-DFU)
-CERT.3 Data Object is NOT supported
-Life cycle management is NOT supported
-Acknowledge button is supported
-KDF DO is required before key import/generation
-</code></pre>
-<h1 id="固件烧录"><a href="#固件烧录" class="headerlink" title="固件烧录"></a>固件烧录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install openocd<br><span class="hljs-built_in">cd</span> ~/gnuk<br>vi openocd.cfg<br></code></pre></td></tr></table></figure>
-<p>openocd.cfg内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cfg">telnet_port 4444<br>source [find interface/stlink-v2.cfg]<br>source [find target/stm32f1x.cfg]<br>set WORKAREASIZE 0x10000<br></code></pre></td></tr></table></figure>
+<p>上述脚本直接从本地获取公网地址，不像许多脚本那样<strong>fetch</strong>外部API查询，故可靠性、安全性更优越。</p>
 
-<p>执行openocd，然后执行如下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs telnet">stm32f1x unlock 0<br>reset halt<br>flash write_bank 0 ./src/build/gnuk-vidpid.bin 0<br>stm32f1x lock 0<br>reset halt<br></code></pre></td></tr></table></figure>
-
-<h1 id="Gnuk卡使用"><a href="#Gnuk卡使用" class="headerlink" title="Gnuk卡使用"></a>Gnuk卡使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install scdaemon pcscd<br></code></pre></td></tr></table></figure>
-<p>安装必要工具后参照教程使用。</p>
-<h1 id="Gnuk重新写入"><a href="#Gnuk重新写入" class="headerlink" title="Gnuk重新写入"></a>Gnuk重新写入</h1><p>按照相同方式连线，并短接MCU 7 (NRST) 和 8  (VSSA) 针脚，然后进入openocd执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs telnet">reset halt<br>stm32f1x unlock 0<br>reset halt<br>stm32f1x mass_erase 0<br>flash write_bank 0 ./src/build/gnuk-vidpid.bin 0<br>stm32f1x lock 0<br>reset halt<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -337,9 +310,11 @@ KDF DO is required before key import/generation
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Gnuk/" class="print-no-link">#Gnuk</a>
+        <a href="/tags/ROS/" class="print-no-link">#ROS</a>
       
-        <a href="/tags/ST-LINK-V2/" class="print-no-link">#ST-LINK V2</a>
+        <a href="/tags/cloudflare/" class="print-no-link">#cloudflare</a>
+      
+        <a href="/tags/DDNS/" class="print-no-link">#DDNS</a>
       
     </div>
   
@@ -351,8 +326,8 @@ KDF DO is required before key import/generation
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ST-LINK V2 刷 Gnuk 资料整理（施工中）</div>
-      <div>http://xiaofami.github.io/2024/08/05/gnuk/</div>
+      <div>Mikrotik Routeros 7.15 CF DDNS 脚本</div>
+      <div>http://xiaofami.github.io/2024/08/06/rosddns/</div>
     </div>
     <div class="license-meta">
       
@@ -364,7 +339,7 @@ KDF DO is required before key import/generation
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年8月5日</div>
+          <div>2024年8月6日</div>
         </div>
       
       
@@ -396,18 +371,12 @@ KDF DO is required before key import/generation
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/06/rosddns/" title="Mikrotik Routeros 7.15 CF DDNS 脚本">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Mikrotik Routeros 7.15 CF DDNS 脚本</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/02/dnsapi/" title="使用dnsapi签发证书">
-                        <span class="hidden-mobile">使用dnsapi签发证书</span>
+                      <a href="/2024/08/05/gnuk/" title="ST-LINK V2 刷 Gnuk 资料整理（施工中）">
+                        <span class="hidden-mobile">ST-LINK V2 刷 Gnuk 资料整理（施工中）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
