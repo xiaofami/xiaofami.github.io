@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/img/pair.jpg">
 <meta property="article:published_time" content="2024-08-05T02:12:03.000Z">
-<meta property="article:modified_time" content="2024-08-06T01:28:00.732Z">
+<meta property="article:modified_time" content="2024-08-06T02:59:08.950Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="Gnuk">
 <meta property="article:tag" content="ST-LINK V2">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          518 字
+          617 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -291,9 +291,10 @@
 <li><a target="_blank" rel="noopener" href="https://techie-s.work/posts/2021/05/homemade-gnuk-with-stdongle/">Homemade GnuK with ST-Dongle</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.indexyz.me/diy-gnuk-token/">DIY 一个 Gnuk Token</a></li>
 <li><a target="_blank" rel="noopener" href="https://kgame.tw/gnupg/stm32-gnuk/">ST-LINK V2 刷 Gnuk</a></li>
+<li><a target="_blank" rel="noopener" href="https://nx3d.org/gnuk-st-link-v2/">Gnuk on the ST-LINK v2</a></li>
 </ol>
 <p>以下内容均梳理自上述资料。</p>
-<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><h2 id="ST-LINK-V2-MCU类型"><a href="#ST-LINK-V2-MCU类型" class="headerlink" title="ST-LINK V2 MCU类型"></a>ST-LINK V2 MCU类型</h2><p>MCU须为 <strong>STM32F103C8T6</strong> ，其具备128kb Flash。其他型号不能保障FLASH大小为128kb，如果不幸买到64kb版本就<strong>不能刷</strong>最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。</p>
+<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><h2 id="ST-LINK-V2-MCU类型"><a href="#ST-LINK-V2-MCU类型" class="headerlink" title="ST-LINK V2 MCU类型"></a>ST-LINK V2 MCU类型</h2><p>MCU须为 <strong>STM32F103C8T6</strong> ，其具备128kb Flash。其他型号不能保障FLASH大小为128KB，如果不幸买到64kb版本就<strong>不能刷</strong>最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。</p>
 <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>ST-LINK V2外部接口基本一致，重点在于内部。内部主板必须引出<strong>DIO</strong>和<strong>CLK</strong>否则<strong>不能刷</strong>。</p>
 <h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p>电脑连接作为编程器的ST-LINK V2无需赘言，USB直连即可。两只ST-LINK V2需要连接四条线：</p>
 <ul>
@@ -306,7 +307,7 @@
 <h1 id="固件编译"><a href="#固件编译" class="headerlink" title="固件编译"></a>固件编译</h1><p>以下操作在 <strong>Ubuntu 24.04</strong> 中进行。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi<br>git <span class="hljs-built_in">clone</span> --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk<br><span class="hljs-built_in">cd</span> gnuk/src<br>curl -O https://techie-s.work/shares/gnuk/0001-add-pa5-as-switch-pin-for-st-dongle.patch<br>patch ../chopstx/contrib/ackbtn-stm32f103.c &lt; ./0001-add-pa5-as-switch-pin-for-st-dongle.patch<br>./configure --vidpid=234b:0000 --target=ST_DONGLE<br>make build/gnuk-vidpid.bin<br></code></pre></td></tr></table></figure>
 
-<p>执行结束后，在build目录下得到 <strong>gnuk-vidpid.bin</strong> 文件，它便是待烧录的固件文件。 </p>
+<p>执行结束后，在build目录下得到 <strong>gnuk-vidpid.bin</strong> 文件，它便是待烧录的固件文件。 我编译得到的固件大小为89KB。</p>
 <pre><code class="hljs">./configure --vidpid=234b:0000 --target=ST_DONGLE 输出内容：
 Header file is: board-st-dongle.h
 Configured for bare system (no-DFU)
@@ -317,7 +318,7 @@ KDF DO is required before key import/generation
 </code></pre>
 <h1 id="固件烧录"><a href="#固件烧录" class="headerlink" title="固件烧录"></a>固件烧录</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install openocd<br><span class="hljs-built_in">cd</span> ~/gnuk<br>vi openocd.cfg<br></code></pre></td></tr></table></figure>
 <p>openocd.cfg内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cfg">telnet_port 4444<br>source [find interface/stlink-v2.cfg]<br>source [find target/stm32f1x.cfg]<br>set WORKAREASIZE 0x10000<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cfg">telnet_port 4444<br>source [find interface/stlink-v2.cfg]<br>source [find target/stm32f1x.cfg]<br>set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB<br></code></pre></td></tr></table></figure>
 
 <p>执行openocd，然后执行如下命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs telnet">stm32f1x unlock 0<br>reset halt<br>flash write_bank 0 ./src/build/gnuk-vidpid.bin 0<br>stm32f1x lock 0<br>reset halt<br></code></pre></td></tr></table></figure>
@@ -326,6 +327,9 @@ KDF DO is required before key import/generation
 <p>安装必要工具后参照教程使用。</p>
 <h1 id="Gnuk重新写入"><a href="#Gnuk重新写入" class="headerlink" title="Gnuk重新写入"></a>Gnuk重新写入</h1><p>按照相同方式连线，并短接MCU 7 (NRST) 和 8  (VSSA) 针脚，然后进入openocd执行以下命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs telnet">reset halt<br>stm32f1x unlock 0<br>reset halt<br>stm32f1x mass_erase 0<br>flash write_bank 0 ./src/build/gnuk-vidpid.bin 0<br>stm32f1x lock 0<br>reset halt<br></code></pre></td></tr></table></figure>
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>总体而言全流程最大难度在于买对硬件，我从淘宝下单的2只ST-LINK V2还在路上，客服承诺MCU为STM32F103C8T6而且内部主板具备CLK和DIO接口，有一点小小期待。编译和烧录在Windows平台即可完成，无需用到Linux物理机。</p>
+
                 
               </div>
             
