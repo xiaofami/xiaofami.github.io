@@ -58,7 +58,7 @@ Miktotik Routeros利用脚本能够方便实现DDNS功能。如果你的域名�
 * ZONEID：对应Cloudflare域名管理“overview”页面右下能直接看到的 Zone ID值。
 * RECORDID：动态域名解析的ID值。注意，对于同一个域名，不同解析类型的ID值也不同，例如A记录和AAAA记录的ID值就不一样。可以在Cloudflare控制面板中手动创建一条解析记录，然后到Cloudfalre的Audit LOG中查看对应ID值。
 * RECORDNAME：具体动态域名。
-* WANIF：对应WAN的网口名称。routeros中一般默认为 **pppoe-out1**。
+* WANIF：对应PPPoE拨号的接口名称。routeros中一般默认为 **pppoe-out1**。
 
 # IPv6版本
 没有公网IPv4地址，但是有公网IPv6地址的网友可以使用这个脚本。一般而言，国内家宽可以从ISP获取到60长度前缀，记得在IPv6 Addreess List中给WAN接口分配地址，默认 **::/64** 即可，Mikrotik Routeros会结合前缀自动计算并分配地址。
