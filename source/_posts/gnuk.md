@@ -103,3 +103,75 @@ reset halt
 
 # 小结
 总体而言全流程最大难度在于买对硬件，我从淘宝下单的2只ST-LINK V2还在路上，客服承诺MCU为STM32F103C8T6而且内部主板具备CLK和DIO接口，有一点小小期待。编译和烧录在Windows平台即可完成，无需用到Linux物理机。
+
+# 8月9日更新
+2只ST-LINK V2到货。各家外观基本一致，金属外壳靠静摩擦力固定，稍用力就可以取下，内部主板各有差别。我的这个MCU型号为**STM32F103C8T6**，具备GND、CLK、DIO、3.3V四个触点。有条件建议买开洞的，方便用钩子固定，免去焊接的麻烦。
+
+
+实验步骤记录如下：
+
+## 固件编译
+在Windows 11 WSL2，Ubuntu 24.04中进行：
+
+```bash
+sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi
+git clone --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk
+cd gnuk/src
+
+./configure --vidpid=234b:0000 --target=ST_DONGLE
+make build/gnuk-vidpid.bin
+```
+**gnuk-vidpid.bin** 即为准备烧录的固件。
+## 烧录环境搭建
+在Windows 11中进行，需要安装ST-Link V2驱动、openocd和telnet客户端。其中ST-Link V2驱动可以到ST官网免费下载（需注册），telnet客户端我用的是Mobaxterm。此二者无需赘言，重点在于openocd的安装配置。
+
+访问 https://gnutoolchains.com/arm-eabi/openocd/ ， 下载压缩包后解压缩。将编译得到的 **gnuk-vidpid.bin** 文件放在 **OpenOCD-20231002-0.12.0\bin** 目录下，并在该目录下创建 **openocd.cfg** 文件，内容如下：
+
+```openocd.cfg*
+telnet_port 4444
+source [find interface/stlink-v2.cfg]
+source [find target/stm32f1x.cfg]
+set WORKAREASIZE 0x20000
+```
+
+配置文件不难理解。硬件连接好后运行openocd，openocd会监听4444端口，可通过telnet访问，用户名与密码均为空，通过telnet对MCU进行固件烧录。 **set WORKAREASIZE 0x20000** 将MCU可用FLASH大小设置为128KB。**STM32F103C8T6**虽然官方标定FLASH大小为64KB，不过实际有128KB可用，这样设置可以确保我们89KB大小的固件顺利写入。
+
+## 硬件连接
+
+两只ST-LINK V2分别以A和B称谓，A为烧录器，B为拟写入Gnuk固件。连接方式如下：
+
+A-尾插GND————杜邦线母头————杜邦线母头——B-尾插GND
+A-尾插3.3V————杜邦线母头————杜邦线母头——B-尾插3.3V
+A-尾插DIO————杜邦线母头————针头————B-主板DIO触点
+A-尾插CLK————杜邦线木头————针头————B-主板CLK触点
+
+这里没必要焊接，用手指按住就可顺利完成固件烧录。
+
+## 烧录固件
+
+打开cmd，cd进入到 **OpenOCD-20231002-0.12.0\bin** 中，运行 **openocd**，然后打开telnet客户端，通过127.0.0.1地址和4444端口访问，执行如下操作：
+
+```telnet
+> stm32f1x unlock 0
+stm32x unlocked.
+INFO: a reset or power cycle is required for the new settings to take effect.
+> reset halt
+[stm32f1x.cpu] halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0xfffffffe msp: 0xfffffffc
+> flash write_bank 0 ./gnuk-vidpid.bin 0
+wrote 91136 bytes from file ./gnuk-vidpid.bin to flash bank 0 at offset 0x00000000 in 2.801311s (31.771 KiB/s)
+> stm32f1x lock 0
+stm32x locked
+> reset halt
+```
+
+这样一个烧录了Gnuk的智能卡就做好了。
+
+## 优化调整
+新人上路难免把卡片玩坏，比如说输错三次pin码导致卡片锁死。。。重刷在原理上很简单，但是对于不想焊接的懒人又要按着DIO和CLK针脚，又要腾出手来短接 MCU 7 (NRST) 和 8 (VSSA) 针脚 属实折磨人。所以为了在玩坏情况下有后悔药可吃，在编译时应当加入factory reset功能：
+
+```bash
+export kdf_do=optional  # recommended(?) for v1.2.19
+./configure --enable-factory-reset --target=ST_DONGLE --vidpid=234b:0000 --enable-certdo
+```
+
