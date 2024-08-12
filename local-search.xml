@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>ffmpeg剪辑音视频命令</title>
+    <link href="/2024/08/12/ffmpeg/"/>
+    <url>/2024/08/12/ffmpeg/</url>
+    
+    <content type="html"><![CDATA[<p>Sublime Text缓存里发现的一些东西，留存备用。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -i 1.wav -vn -ar 44100 -ac 2 -b:a 192k output.mp3<br>ffmpeg -i filename.mp4 filename.mp3<br>ffmpeg -i 国际歌.mp3 -ss 00:00:00 -to 00:00:98 -c copy 国际歌2.mp3<br>ffmpeg -ss 0 -t 30 -i file.mp3 file.wav<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ffmpeg</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Mikrotik Routeros 7.15 CF DDNS 脚本</title>
     <link href="/2024/08/06/rosddns/"/>
     <url>/2024/08/06/rosddns/</url>
