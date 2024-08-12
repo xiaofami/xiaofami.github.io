@@ -1,205 +1,136 @@
 ---
-title: ST-LINK V2 刷 Gnuk 资料整理
-date: 2024-8-5 10:12:03
+title: openpgp智能卡使用
+date: 2024-8-12 09:14:29
 tags:
 - Gnuk
 - ST-LINK V2
-index_img: /img/pair.jpg
+- openpgp
+index_img: /img/yubico.jpg
 ---
-最近看到几篇用ST-LINK V2 刷 Gnuk的文章很感兴趣。在实际动手之前，先搜罗整理一些资料：
-# 参考文献
-1. [超省资安强化方案 - 比鸡排便宜的自制 USB 实体密钥](https://blog.darkthread.net/blog/low-cost-diy-usb-security-key/)
-2. [按钮版 Gnuk 实体密钥刻录笔记](https://blog.darkthread.net/blog/flash-gnuk-notes/)
-3. [ST-LINK V2 刷 Gnuk 拾遗](https://blog.dylanwu.space/2020/01/24/stm32-gnuk.html)
-4. [用 ST-Link 自制 GnuK](https://techie-s.work/posts/2021/04/homemade-gnuk/)
-5. [ST-Link v2 刷写 GNUK，年轻人的第一个 OpenPGP 智能卡！](https://www.cnblogs.com/tibrella/p/17816505.html)
-6. [Homemade GnuK with ST-Dongle](https://techie-s.work/posts/2021/05/homemade-gnuk-with-stdongle/)
-7. [DIY 一个 Gnuk Token](https://blog.indexyz.me/diy-gnuk-token/)
-8. [ST-LINK V2 刷 Gnuk](https://kgame.tw/gnupg/stm32-gnuk/)
-9. [Gnuk on the ST-LINK v2](https://nx3d.org/gnuk-st-link-v2/)
 
-以下内容均梳理自上述资料。
-# 硬件
-## ST-LINK V2 MCU类型
-MCU须为 **STM32F103C8T6** ，其具备128kb Flash。其他型号不能保障FLASH大小为128KB，如果不幸买到64kb版本就**不能刷**最新版Gnuk。至少需要购买两只ST-LINK V2，一只作为编程器，另一只作为刷Gnuk的对象。
-## 接口
-ST-LINK V2外部接口基本一致，重点在于内部。内部主板必须引出**DIO**和**CLK**否则**不能刷**。
-## 接线
-电脑连接作为编程器的ST-LINK V2无需赘言，USB直连即可。两只ST-LINK V2需要连接四条线：
+参考教程配置好了自己的第一张 **openpgp** 智能卡。整个流程不复杂，主要包含如下流程：
 
-* SWDIO : 尾插连接主板对应触点
-* SWCLK : 尾插连接主板对应触点
-* GND : 尾插直连即可
-* 3.3v : 尾插直连即可
+1. 在电脑上生成主密钥，建议设置密码；
+2. 在电脑上为主密钥添加3个子密钥，分别为 **Signature key**，**Encryption key** 和 **Authentication key** ；
+3. 备份主密钥和子密钥到冷存储；
+4. 将3个子密钥转移到 **openpgp** 智能卡；
+5. 删除电脑上的私钥。
 
-## 确认开关
-将鼠标微动开关焊接在尾插CLK与3.3V之间即可。
-# 固件编译
-以下操作在 **Ubuntu 24.04** 中进行。
-
-如果不需要确认按钮就不要打补丁。
+# 生成主密钥
 ```bash
-sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi
-git clone --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk
-cd gnuk/src
-curl -O https://techie-s.work/shares/gnuk/0001-add-pa5-as-switch-pin-for-st-dongle.patch
-patch ../chopstx/contrib/ackbtn-stm32f103.c < ./0001-add-pa5-as-switch-pin-for-st-dongle.patch
-./configure --vidpid=234b:0000 --target=ST_DONGLE
-make build/gnuk-vidpid.bin
+$ gpg --quick-generate-key   'pico <pico@tccmu.com>'  ed25519 cert never
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: /home/pico/.gnupg/trustdb.gpg: trustdb created
+gpg: directory '/home/pico/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/home/pico/.gnupg/openpgp-revocs.d/AF56371B281E0063A9310FC32D946EC9EEAD7B06.rev'
+public and secret key created and signed.
+
+pub   ed25519 2024-08-12 [C]
+      AF56371B281E0063A9310FC32D946EC9EEAD7B06
+uid                      pico <pico@tccmu.com>
 ```
 
-执行结束后，在build目录下得到 **gnuk-vidpid.bin** 文件，它便是待烧录的固件文件。 我编译得到的固件大小为89KB。
-
-    ./configure --vidpid=234b:0000 --target=ST_DONGLE 输出内容：
-    Header file is: board-st-dongle.h
-    Configured for bare system (no-DFU)
-    CERT.3 Data Object is NOT supported
-    Life cycle management is NOT supported
-    Acknowledge button is supported
-    KDF DO is required before key import/generation
-
-
-# 固件烧录
+记住 **AF56371B281E0063A9310FC32D946EC9EEAD7B06** 这个长度40的字符串，它的后16位是 **2D946EC9EEAD7B06** ，一会儿都要用到。
+# 生成子密钥
 ```bash
-sudo apt-get install openocd
-cd ~/gnuk
-vi openocd.cfg
-```
-openocd.cfg内容如下：
-
-```cfg
-telnet_port 4444
-source [find interface/stlink-v2.cfg]
-source [find target/stm32f1x.cfg]
-set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB
+gpg --quick-add-key AF56371B281E0063A9310FC32D946EC9EEAD7B06 ed25519 sign never
+gpg --quick-add-key AF56371B281E0063A9310FC32D946EC9EEAD7B06 cv25519 encr never
+gpg --quick-add-key AF56371B281E0063A9310FC32D946EC9EEAD7B06 ed25519 auth never
 ```
 
-执行openocd，然后执行如下命令：
-```telnet
-stm32f1x unlock 0
-reset halt
-flash write_bank 0 ./src/build/gnuk-vidpid.bin 0
-stm32f1x lock 0
-reset halt
-```
+需要根据提示输入主密钥密码。有效期可以自由设置，比如 **1y** 就是1年，**never** 为永不过期。
 
-# Gnuk卡使用
-```bash
-sudo apt-get install scdaemon pcscd
-```
-安装必要工具后参照教程使用。
-
-# Gnuk重新写入
-按照相同方式连线，并短接MCU 7 (NRST) 和 8  (VSSA) 针脚，然后进入openocd执行以下命令：
-```telnet
-reset halt
-stm32f1x unlock 0
-reset halt
-stm32f1x mass_erase 0
-flash write_bank 0 ./src/build/gnuk-vidpid.bin 0
-stm32f1x lock 0
-reset halt
-```
-
-# 小结
-总体而言全流程最大难度在于买对硬件，我从淘宝下单的2只ST-LINK V2还在路上，客服承诺MCU为STM32F103C8T6而且内部主板具备CLK和DIO接口，有一点小小期待。编译和烧录在Windows平台即可完成，无需用到Linux物理机。
-
-# 8月9日更新
-2只ST-LINK V2到货。各家外观基本一致，金属外壳靠静摩擦力固定，稍用力就可以取下，内部主板各有差别。我的这个MCU型号为**STM32F103C8T6**，具备GND、CLK、DIO、3.3V四个触点。有条件建议买开洞的，方便用钩子固定，免去焊接的麻烦。
-
-
-实验步骤记录如下：
-
-## 固件编译
-在Windows 11 WSL2，Ubuntu 24.04中进行：
+现在查看一下密钥概况：
 
 ```bash
-sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi
-git clone --recursive https://salsa.debian.org/gnuk-team/gnuk/gnuk.git gnuk
-cd gnuk/src
-
-./configure --vidpid=234b:0000 --target=ST_DONGLE
-make build/gnuk-vidpid.bin
+$ gpg -K
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+/home/pico/.gnupg/pubring.kbx
+-----------------------------
+sec   ed25519 2024-08-12 [C]
+      AF56371B281E0063A9310FC32D946EC9EEAD7B06
+uid           [ultimate] pico <pico@tccmu.com>
+ssb   ed25519 2024-08-12 [S]
+ssb   cv25519 2024-08-12 [E]
+ssb   ed25519 2024-08-12 [A]
 ```
-**gnuk-vidpid.bin** 即为准备烧录的固件。
-## 烧录环境搭建
-在Windows 11中进行，需要安装ST-Link V2驱动、openocd和telnet客户端。其中ST-Link V2驱动可以到ST官网免费下载（需注册），telnet客户端我用的是Mobaxterm。此二者无需赘言，重点在于openocd的安装配置。
+主密钥与子密钥均已成功创建。
 
-访问 https://gnutoolchains.com/arm-eabi/openocd/ ， 下载压缩包后解压缩。将编译得到的 **gnuk-vidpid.bin** 文件放在 **OpenOCD-20231002-0.12.0\bin** 目录下，并在该目录下创建 **openocd.cfg** 文件，内容如下：
-
-```openocd.cfg*
-telnet_port 4444
-source [find interface/stlink-v2.cfg]
-source [find target/stm32f1x.cfg]
-set WORKAREASIZE 0x20000
-```
-
-配置文件不难理解。硬件连接好后运行openocd，openocd会监听4444端口，可通过telnet访问，用户名与密码均为空，通过telnet对MCU进行固件烧录。 **set WORKAREASIZE 0x20000** 将MCU可用FLASH大小设置为128KB。**STM32F103C8T6**虽然官方标定FLASH大小为64KB，不过实际有128KB可用，这样设置可以确保我们89KB大小的固件顺利写入。
-
-## 硬件连接
-
-两只ST-LINK V2分别以A和B称谓，A为烧录器，B为拟写入Gnuk固件。连接方式如下：
-
-A-尾插GND————杜邦线母头————杜邦线母头——B-尾插GND
-A-尾插3.3V————杜邦线母头————杜邦线母头——B-尾插3.3V
-A-尾插DIO————杜邦线母头————针头————B-主板DIO触点
-A-尾插CLK————杜邦线木头————针头————B-主板CLK触点
-
-这里没必要焊接，用手指按住就可顺利完成固件烧录。
-
-## 烧录固件
-
-打开cmd，cd进入到 **OpenOCD-20231002-0.12.0\bin** 中，运行 **openocd**，然后打开telnet客户端，通过127.0.0.1地址和4444端口访问，执行如下操作：
-
-```telnet
-> stm32f1x unlock 0
-stm32x unlocked.
-INFO: a reset or power cycle is required for the new settings to take effect.
-> reset halt
-[stm32f1x.cpu] halted due to debug-request, current mode: Thread
-xPSR: 0x01000000 pc: 0xfffffffe msp: 0xfffffffc
-> flash write_bank 0 ./gnuk-vidpid.bin 0
-wrote 91136 bytes from file ./gnuk-vidpid.bin to flash bank 0 at offset 0x00000000 in 2.801311s (31.771 KiB/s)
-> stm32f1x lock 0
-stm32x locked
-> reset halt
-```
-
-这样一个烧录了Gnuk的智能卡就做好了。
-
-## 优化调整
-新人上路难免把卡片玩坏，比如说输错三次pin码导致卡片锁死。。。重刷在原理上很简单，但是对于不想焊接的懒人又要按着DIO和CLK针脚，又要腾出手来短接 MCU 7 (NRST) 和 8 (VSSA) 针脚 属实折磨人。所以为了在玩坏情况下有后悔药可吃，在编译时应当加入factory reset功能：
+# 备份密钥
+在将密钥转移到 **openpgp** 智能卡前，先备份密钥：
 
 ```bash
-export kdf_do=optional  # recommended(?) for v1.2.19
-./configure --enable-factory-reset --target=ST_DONGLE --vidpid=234b:0000 --enable-certdo
+gpg -o pico.pri.gpg --export-secret-keys 2D946EC9EEAD7B06 #备份主密钥
+gpg -o pico.sub.gpg --export-secret-subkeys 2D946EC9EEAD7B06 # 备份子密钥
+```
+同样需要输入主密钥密码。一些教程采用了 **-a --export-secret-key** 一次导出全部密钥，也是没有问题的。
+
+# 生成撤销证书
+```bash
+$ gpg -o pico.rev.asc --gen-revoke 2D946EC9EEAD7B06
+
+sec  ed25519/2D946EC9EEAD7B06 2024-08-12 pico <pico@tccmu.com>
+
+Create a revocation certificate for this key? (y/N) y
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here)
+Your decision? 0
+Enter an optional description; end it with an empty line:
+>
+Reason for revocation: No reason specified
+(No description given)
+Is this okay? (y/N) y
+ASCII armored output forced.
+Revocation certificate created.
 ```
 
-# 2024年8月12日更新
-优化后完整的编译与烧录命令梳理于此：
+将 **pico.pri.gpg**、**pico.sub.gpg**、**pico.rev.asc** 三个文件复制到冷存储中保存好，以防天灾人祸导致物理密钥损毁。
 
-```compile.bash
-sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi make
-git clone git://git.gniibe.org/gnuk/gnuk.git
-cd gnuk/
-git submodule update --init
-cd src/
-export kdf_do=optional  # recommended(?) for v1.2.19
-./configure --enable-factory-reset --target=ST_DONGLE --vidpid=234b:0000 --enable-certdo
-make build/gnuk-vidpid.bin
+# 转移密钥到 openpgp 智能卡
+通过 `gpg --card-status` 命令正确获取到 **openpgp** 智能卡信息后，便可以进行密钥转移操作
+```bash
+$ gpg --edit-key 2D946EC9EEAD7B06
+gpg (GnuPG) 2.4.4; Copyright (C) 2024 g10 Code GmbH
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Secret key is available.
+
+sec  ed25519/2D946EC9EEAD7B06
+     created: 2024-08-12  expires: never       usage: C
+     trust: ultimate      validity: ultimate
+ssb  ed25519/CF5A73D0BA2FC74D
+     created: 2024-08-12  expires: never       usage: S
+ssb  cv25519/28C26521533835B5
+     created: 2024-08-12  expires: never       usage: E
+ssb  ed25519/11C45E2A6DCE1712
+     created: 2024-08-12  expires: never       usage: A
+[ultimate] (1). pico <pico@tccmu.com>
 ```
 
-```openocd.cfg
-telnet_port 4444
-source [find interface/stlink-v2.cfg]
-source [find target/stm32f1x.cfg]
-set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB
+分别用 **key** 选中 1,2,3 号密钥，然后执行 **kettocard** 转移到**openpgp**智能卡，最后save保存。
+
+# 删除密钥
+```bash
+gpg --delete-secret-keys 2D946EC9EEAD7B06
 ```
 
-```burn.telnet
-stm32f1x unlock 0
-reset halt
-flash write_bank 0 ./gnuk-vidpid.bin 0
-stm32f1x lock 0
-reset halt
-```
+执行完毕后 `gpg -K` 命令便无法查询到该密钥。**pico.pri.gpg**、**pico.sub.gpg**、**pico.rev.asc** 三个文件也要从电脑上彻底删除。
+
+# 智能卡其他设置
+执行 `gpg --edit-card` 进入卡片编辑，进行修改pin、添加公钥url等操作。
+
+# 参考材料
+1. [An abridged guide to using ed25519 PGP keys with GnuPG and SSH](https://musigma.blog/2021/05/09/gpg-ssh-ed25519.html) 本文生成密钥部分借鉴于此，特点是没有用引导程序而是手动创建；
+2. [GPG 物理密钥从安装到日常使用](https://blog.lamgc.moe/2021/02/26/gpg-smart-card-from-installation-to-use-tutorial/) 本文中密钥导出备份以及转移到卡片部分借鉴于此；
+3. [GnuPG 使用指南](https://blog.moe233.net/posts/18974f8b/) 深度好文，读了这篇文章我的这篇就没必要看了 ... 不过写都写了，还是发出来把。
