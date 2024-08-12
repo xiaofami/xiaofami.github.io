@@ -8,7 +8,7 @@ tags:
 index_img: /img/yubico.jpg
 ---
 
-参考教程配置好了自己的第一张 **openpgp** 智能卡。整个流程不复杂，主要包含如下流程：
+参考教程配置好了自己的第一张 **openpgp** 智能卡。整个流程不复杂，主要包含如下步骤：
 
 1. 在电脑上生成主密钥，建议设置密码；
 2. 在电脑上为主密钥添加3个子密钥，分别为 **Signature key**，**Encryption key** 和 **Authentication key** ；
