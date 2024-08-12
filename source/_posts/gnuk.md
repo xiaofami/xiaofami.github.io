@@ -1,5 +1,5 @@
 ---
-title: ST-LINK V2 刷 Gnuk 资料整理（施工中）
+title: ST-LINK V2 刷 Gnuk 资料整理
 date: 2024-8-5 10:12:03
 tags:
 - Gnuk
@@ -175,3 +175,31 @@ export kdf_do=optional  # recommended(?) for v1.2.19
 ./configure --enable-factory-reset --target=ST_DONGLE --vidpid=234b:0000 --enable-certdo
 ```
 
+# 2024年8月12日更新
+优化后完整的编译与烧录命令梳理于此：
+
+```compile.bash
+sudo apt-get install gcc-arm-none-eabi picolibc-arm-none-eabi make
+git clone git://git.gniibe.org/gnuk/gnuk.git
+cd gnuk/
+git submodule update --init
+cd src/
+export kdf_do=optional  # recommended(?) for v1.2.19
+./configure --enable-factory-reset --target=ST_DONGLE --vidpid=234b:0000 --enable-certdo
+make build/gnuk-vidpid.bin
+```
+
+```openocd.cfg
+telnet_port 4444
+source [find interface/stlink-v2.cfg]
+source [find target/stm32f1x.cfg]
+set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB
+```
+
+```burn.telnet
+stm32f1x unlock 0
+reset halt
+flash write_bank 0 ./src/build/gnuk-vidpid.bin 0
+stm32f1x lock 0
+reset halt
+```
