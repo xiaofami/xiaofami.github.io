@@ -199,7 +199,7 @@ set WORKAREASIZE 0x20000 #设置Flash可用大小为128KB
 ```burn.telnet
 stm32f1x unlock 0
 reset halt
-flash write_bank 0 ./src/build/gnuk-vidpid.bin 0
+flash write_bank 0 ./gnuk-vidpid.bin 0
 stm32f1x lock 0
 reset halt
 ```
