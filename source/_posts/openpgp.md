@@ -133,4 +133,4 @@ gpg --delete-secret-keys 2D946EC9EEAD7B06
 # 参考材料
 1. [An abridged guide to using ed25519 PGP keys with GnuPG and SSH](https://musigma.blog/2021/05/09/gpg-ssh-ed25519.html) 本文生成密钥部分借鉴于此，特点是没有用引导程序而是手动创建；
 2. [GPG 物理密钥从安装到日常使用](https://blog.lamgc.moe/2021/02/26/gpg-smart-card-from-installation-to-use-tutorial/) 本文中密钥导出备份以及转移到卡片部分借鉴于此；
-3. [GnuPG 使用指南](https://blog.moe233.net/posts/18974f8b/) 深度好文，读了这篇文章我的这篇就没必要看了 ... 不过写都写了，还是发出来把。
+3. [GnuPG 使用指南](https://blog.moe233.net/posts/18974f8b/) 深度好文，读了这篇文章我的这篇就没必要看了 ... 不过写都写了，还是发出来吧。
