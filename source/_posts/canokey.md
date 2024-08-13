@@ -97,7 +97,7 @@ build目录中，需要关注 **canokey.hex** （大小439K）与 **canokey_flas
 
 > 下载 nRF Connect for Desktop，打开 Programmer 选中设备（正确的会正常显示 Device memory layout，没记错的话叫 DFU Bootloader），把之前的 canokey.hex 文件扔进去点击 Write 按钮。搞定！
 
-**canokey.hex**比**canokey_flash.uf2**固件体积整整大出**40%**，尚不清楚差在哪里，项目对此未作说明。
+**canokey.hex**比**canokey_flash.uf2**固件体积整整大出 **40\%**，尚不清楚差在哪里，项目对此未作说明。
 
 > canokey.hex is a raw firmware file in text format, so it's bigger than binary formats. Flash tools such as J-Link and DAP-Link recognize this format. —by z4yx 
 
