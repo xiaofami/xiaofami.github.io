@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="先前给STM32F103C8T6成功刷入了Gnuk固件，测试各项功能正常。不过受限于自身配置，STM32F103C8T6能实现的功能比较有限，Gnuk项目也已停滞多年，偶然间发现了给 nRF52840 刷 CanoKey 的一个项目，准备动手试一试。 项目地址：https:&#x2F;&#x2F;github.com&#x2F;canokeys&#x2F;canokey-nrf52 硬件参照项目说明，淘宝62元下单两只 EBYTE E1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nRF52840刷CanoKey">
+<meta property="og:url" content="http://xiaofami.github.io/2024/08/13/canokey/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="先前给STM32F103C8T6成功刷入了Gnuk固件，测试各项功能正常。不过受限于自身配置，STM32F103C8T6能实现的功能比较有限，Gnuk项目也已停滞多年，偶然间发现了给 nRF52840 刷 CanoKey 的一个项目，准备动手试一试。 项目地址：https:&#x2F;&#x2F;github.com&#x2F;canokeys&#x2F;canokey-nrf52 硬件参照项目说明，淘宝62元下单两只 EBYTE E1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaofami.github.io/img/E104BT5040U.jpg">
+<meta property="article:published_time" content="2024-08-13T08:09:49.000Z">
+<meta property="article:modified_time" content="2024-08-13T08:10:16.571Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="CanoKey">
+<meta property="article:tag" content="nRF52840">
+<meta property="article:tag" content="E104BT5040U">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/E104BT5040U.jpg">
+  
+  
+  
+  <title>nRF52840刷CanoKey - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="nRF52840刷CanoKey"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-13 16:09" pubdate>
+          2024年8月13日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">nRF52840刷CanoKey</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>先前给<strong>STM32F103C8T6</strong>成功刷入了<strong>Gnuk</strong>固件，测试各项功能正常。不过受限于自身配置，<strong>STM32F103C8T6</strong>能实现的功能比较有限，<strong>Gnuk</strong>项目也已停滞多年，偶然间发现了给 <strong>nRF52840</strong> 刷 <strong>CanoKey</strong> 的一个项目，准备动手试一试。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/canokeys/canokey-nrf52">https://github.com/canokeys/canokey-nrf52</a></p>
+<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><p>参照项目说明，淘宝62元下单两只 <strong>EBYTE E104BT5040U</strong> 。具体规格参见<a target="_blank" rel="noopener" href="https://www.ebyte.com/product-view-news.html?id=1030">于此</a>。</p>
+<h1 id="固件编译"><a href="#固件编译" class="headerlink" title="固件编译"></a>固件编译</h1><p>编译环境为Windows 11 WSL2，Ubuntu 24.04。</p>
+<p>之前编译Gnuk时编译环境已搭建完毕，不需要安装其他依赖。不过注意需要手动为<strong>python</strong>创建符号链接，否则编译程序调用<strong>python</strong>命令时会报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">ln</span> -s /usr/bin/python3 /usr/bin/python<br></code></pre></td></tr></table></figure>
+
+<p>常规拉取源码并配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> https://github.com/canokeys/canokey-nrf52<br>$ <span class="hljs-built_in">cd</span> canokey-nrf52/<br>$ git submodule update --init --recursive<br>$ <span class="hljs-built_in">mkdir</span> build<br>$ <span class="hljs-built_in">cd</span> build<br>$ cmake -DCROSS_COMPILE=/usr/bin/arm-none-eabi- -DCMAKE_TOOLCHAIN_FILE=../toolchain.cmake -DCMAKE_BUILD_TYPE=Release ..<br><br>-- The C compiler identification is GNU 13.2.1<br>-- The ASM compiler identification is GNU<br>-- Found assembler: /usr/bin/arm-none-eabi-gcc<br>-- Detecting C compiler ABI info<br>-- Detecting C compiler ABI info - <span class="hljs-keyword">done</span><br>-- Check <span class="hljs-keyword">for</span> working C compiler: /usr/bin/arm-none-eabi-gcc - skipped<br>-- Detecting C compile features<br>-- Detecting C compile features - <span class="hljs-keyword">done</span><br>-- NRF5_SDK_DIR: /home/pico/canokey-nrf52//nrf_sdk/nRF5_SDK_17.1.0_ddde560<br>Please download the 17.1.0 version SDK from https://www.nordicsemi.com/Products/Development-software/nRF5-SDK/Download#infotabs<br>  and extract it to /home/pico/canokey-nrf52//nrf_sdk/nRF5_SDK_17.1.0_ddde560<br>CMake Error at nrf_sdk/nRF5_SDK.cmake:9 (message):<br>  NRF5 SDK not found<br>Call Stack (most recent call first):<br>  CMakeLists.txt:47 (include)<br></code></pre></td></tr></table></figure>
+
+<p>按照提示下载对应版本 <strong>SDK</strong> 压缩包，我这里需要下载 <strong>nRF5_SDK_17.1.0_ddde560.zip</strong> ，然后丢到 <code>canokey-nrf52\nrf_sdk/</code> 目录中，<strong>unzip</strong> 即可。完毕后会得到 <code>canokey-nrf52\nrf_sdk\nRF5_SDK_17.1.0_ddde560</code> ，然后重新执行<strong>cmake</strong>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash">~/canokey-nrf52/build$ cmake -DCROSS_COMPILE=/usr/bin/arm-none-eabi- -DCMAKE_TOOLCHAIN_FILE=../toolchain.cmake -DCMAKE_BUILD_TYPE=Release ..<br>-- NRF5_SDK_DIR: /home/pico/canokey-nrf52//nrf_sdk/nRF5_SDK_17.1.0_ddde560<br>-- Found PkgConfig: /usr/bin/pkg-config (found version <span class="hljs-string">&quot;1.8.1&quot;</span>)<br>patching file include/mbedtls/config.h<br>patching file include/mbedtls/ecp.h<br>patching file library/ecp_curves.c<br>patching file library/version_features.c<br>patching file programs/test/query_config.c<br>patching file include/mbedtls/config.h<br>patching file include/mbedtls/ecp.h<br>patching file library/ecp_curves.c<br>patching file library/version_features.c<br>patching file programs/test/query_config.c<br>patching file include/mbedtls/ecp.h<br>patching file library/ecp.c<br>patching file include/mbedtls/ecp.h<br>patching file library/ecp.c<br>patching file tests/suites/test_suite_ecp.data<br>patching file library/ecp.c<br>CMake Deprecation Warning at canokey-core/canokey-crypto/patched/mbedtls/CMakeLists.txt:23 (cmake_minimum_required):<br>  Compatibility with CMake &lt; 3.5 will be removed from a future version of<br>  CMake.<br><br>  Update the VERSION argument &lt;min&gt; value or use a ...&lt;max&gt; suffix to tell<br>  CMake that the project does not need compatibility with older versions.<br><br><br>-- Found Python3: /usr/bin/python3 (found version <span class="hljs-string">&quot;3.12.3&quot;</span>) found components: Interpreter<br>-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS<br>-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success<br>-- Configuring <span class="hljs-keyword">done</span> (1.3s)<br>-- Generating <span class="hljs-keyword">done</span> (0.1s)<br>-- Build files have been written to: /home/pico/canokey-nrf52/build<br></code></pre></td></tr></table></figure>
+
+<p>最后编译固件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make canokey_flash.uf2<br></code></pre></td></tr></table></figure>
+
+<p>build目录中，需要关注 <strong>canokey.hex</strong> （大小439K）与 <strong>canokey_flash.uf2</strong> （大小312K）两个文件。按照项目说明，还应当自行编译并刷入<a target="_blank" rel="noopener" href="https://github.com/canokeys/canokey-nrf52">Adafruit_nRF52_Bootloader</a>这个bootloader。这个bootloader支持U盘拖曳形式刷<strong>UF2</strong>格式固件，非常便利。不过参照 <a target="_blank" rel="noopener" href="https://kwaa.dev/canokey-nrf52">为 nRF52840 Dongle 刷入 CanoKey 固件</a>一文，如果不想刷bootloader，也可以用<a target="_blank" rel="noopener" href="https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-desktop">nRF Connect for Desktop</a>写入<strong>canokey.hex</strong>。该网友相关描述如下：</p>
+<blockquote>
+<p>下载 nRF Connect for Desktop，打开 Programmer 选中设备（正确的会正常显示 Device memory layout，没记错的话叫 DFU Bootloader），把之前的 canokey.hex 文件扔进去点击 Write 按钮。搞定！</p>
+</blockquote>
+<p><strong>canokey.hex</strong>比<strong>canokey_flash.uf2</strong>固件体积整整大出**40%**，尚不清楚差在哪里，项目对此未作说明。</p>
+<blockquote>
+<p>canokey.hex is a raw firmware file in text format, so it’s bigger than binary formats. Flash tools such as J-Link and DAP-Link recognize this format. —by z4yx </p>
+</blockquote>
+<h1 id="bootloader编译"><a href="#bootloader编译" class="headerlink" title="bootloader编译"></a>bootloader编译</h1><h2 id="搭建编译环境"><a href="#搭建编译环境" class="headerlink" title="搭建编译环境"></a>搭建编译环境</h2><p>首先配置编译环境，需要额外安装一些依赖：</p>
+<p>按照README安装<a target="_blank" rel="noopener" href="https://www.nordicsemi.com/Software-and-Tools/Development-Tools/nRF-Command-Line-Tools">Nordic’s nRF5x Command Line Tools</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ wget https://nsscprodmedia.blob.core.windows.net/prod/software-and-other-downloads/desktop-software/nrf-command-line-tools/sw/versions-10-x-x/10-24-2/nrf-command-line-tools_10.24.2_amd64.deb<br>$ <span class="hljs-built_in">sudo</span> dpkg -i ./nrf-command-line-tools_10.24.2_amd64.deb<br>Selecting previously unselected package nrf-command-line-tools.<br>(Reading database ... 153542 files and directories currently installed.)<br>Preparing to unpack .../nrf-command-line-tools_10.24.2_amd64.deb ...<br>Unpacking nrf-command-line-tools (10.24.2) ...<br>Setting up nrf-command-line-tools (10.24.2) ...<br><br>=============================================================<br>The J-Link SW and documentation package is required <span class="hljs-keyword">for</span> nrf <span class="hljs-built_in">command</span> line tools to work.<br>To install the version of J-Link that was tested and verified with nrf <span class="hljs-built_in">command</span> line tools execute one of the following:<br><span class="hljs-built_in">sudo</span> apt install /opt/nrf-command-line-tools/share/JLink_Linux_V794e_x86_64.deb --fix-broken<br><br>$ <span class="hljs-built_in">sudo</span> apt install /opt/nrf-command-line-tools/share/JLink_Linux_V794e_x86_64.deb --fix-broken<br></code></pre></td></tr></table></figure>
+<p>再安装其他依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install python3-intelhex pipx<br>pipx install adafruit-nrfutil<br></code></pre></td></tr></table></figure>
+
+<p>装好后重启一次terminal使环境变量生效，编译环境至此就搭建好了。</p>
+<h2 id="拉取源码"><a href="#拉取源码" class="headerlink" title="拉取源码"></a>拉取源码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install python3-intelhex<br>git <span class="hljs-built_in">clone</span> https://github.com/adafruit/Adafruit_nRF52_Bootloader<br><span class="hljs-built_in">cd</span> Adafruit_nRF52_Bootloader<br>git submodule update --init<br></code></pre></td></tr></table></figure>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>先测试编译环境是否正常：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ make BOARD=feather_nrf52840_express all<br><br>*****************省略***********************<br><br>linker garbage collection into account<br>Memory region         Used Size  Region Size  %age Used<br>           FLASH:       32592 B        38 KB     83.76%<br>BOOTLOADER_CONFIG:          88 B         2 KB      4.30%<br> MBR_PARAMS_PAGE:           0 B         4 KB      0.00%<br>BOOTLOADER_SETTINGS:          4 KB         4 KB    100.00%<br>             RAM:       19824 B       224 KB      8.64%<br>       DBL_RESET:           0 B          4 B      0.00%<br>          NOINIT:          62 B        128 B     48.44%<br> UICR_BOOTLOADER:           4 B          4 B    100.00%<br>UICR_MBR_PARAM_PAGE:           4 B          4 B    100.00%<br>   text    data     bss     dec     hex filename<br>  32680     680   23310   56670    dd5e _build/build-feather_nrf52840_express/feather_nrf52840_express_bootloader-0.9.2.out<br>Create feather_nrf52840_express_bootloader-0.9.2.hex<br>Create feather_nrf52840_express_bootloader-0.9.2_nosd.hex<br>Create update-feather_nrf52840_express_bootloader-0.9.2_nosd.uf2<br>/home/pico/Adafruit_nRF52_Bootloader/lib/uf2/utils/uf2conv.py:182: SyntaxWarning: invalid escape sequence <span class="hljs-string">&#x27;\s&#x27;</span><br>  words = re.split(<span class="hljs-string">&#x27;\s+&#x27;</span>, line)<br>Converting to uf2, output size: 73216, start address: 0x0<br>Wrote 73216 bytes to _build/build-feather_nrf52840_express/update-feather_nrf52840_express_bootloader-0.9.2_nosd.uf2<br>Create feather_nrf52840_express_bootloader-0.9.2_s140_6.1.1.hex<br>Zip created at _build/build-feather_nrf52840_express/feather_nrf52840_express_bootloader-0.9.2_s140_6.1.1.zip<br></code></pre></td></tr></table></figure>
+
+<p>正常生成了UF2固件。不过现在还不能为 <strong>E104-BT5040U</strong> 编译bootloader，因为这个项目当下根本就不支持<strong>E104-BT5040U</strong>。翻了翻历史ISSUE，有人尝试过为 <strong>Nordic NRF52840 dongle (PCA10059)</strong> 折腾过，不过有一些问题没能解决，开发者最终没有为其添加支持：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/adafruit/Adafruit_nRF52_Arduino/issues/200">https://github.com/adafruit/Adafruit_nRF52_Arduino/issues/200</a></p>
+<blockquote>
+<p>we understand, it is just too difficult for us to become the support manager for a board we dont own, didn’t design. it will disappoint people who have support questions and we don’t want to do that. please continue to use your fork :)</p>
+</blockquote>
+<p><strong>E104-BT5040U</strong>大体上就是<a target="_blank" rel="noopener" href="https://infocenter.nordicsemi.com/pdf/nRF52840_Dongle_User_Guide_v2.1.1.pdf">Nordic NRF52840 dongle (PCA10059)</a>的克隆，从针脚定义到模块功能保持一致。官方放弃对<strong>Nordic NRF52840 dongle (PCA10059)<strong>的开发移植相当于给</strong>E104-BT5040U</strong>宣判了死刑。。。还是直接用 <strong>nRF Connect for Desktop</strong> 刷hex格式固件吧，既方便又安全。<strong>E104-BT5040U</strong>自带的bootloader直接编译自 <strong>Nordic SDK 16.0</strong>，利用<strong>nRF Connect for Desktop</strong>刷固件时它会校验外部bootloader（如果有）签名，如果不是<strong>Nordic</strong>签名就不会修改内部bootloader。</p>
+<h1 id="烧录canokey固件"><a href="#烧录canokey固件" class="headerlink" title="烧录canokey固件"></a>烧录canokey固件</h1><p>将 <strong>E104-BT5040U</strong> 插到电脑USB口，然后运行<strong>nRF Connect for Desktop</strong>烧录，相比ST-Link V2简单很多，等硬件到货后回来更新烧录结果。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CanoKey/" class="print-no-link">#CanoKey</a>
+      
+        <a href="/tags/nRF52840/" class="print-no-link">#nRF52840</a>
+      
+        <a href="/tags/E104BT5040U/" class="print-no-link">#E104BT5040U</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>nRF52840刷CanoKey</div>
+      <div>http://xiaofami.github.io/2024/08/13/canokey/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/12/openpgp/" title="openpgp智能卡使用">
+                        <span class="hidden-mobile">openpgp智能卡使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
