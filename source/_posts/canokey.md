@@ -176,3 +176,8 @@ https://github.com/adafruit/Adafruit_nRF52_Arduino/issues/200
 **E104-BT5040U**大体上就是[Nordic NRF52840 dongle (PCA10059)](https://infocenter.nordicsemi.com/pdf/nRF52840_Dongle_User_Guide_v2.1.1.pdf)的克隆，从针脚定义到模块功能保持一致。官方放弃对**Nordic NRF52840 dongle (PCA10059)**的开发移植相当于给**E104-BT5040U**宣判了死刑。。。还是直接用 **nRF Connect for Desktop** 刷hex格式固件吧，既方便又安全。**E104-BT5040U**自带的bootloader直接编译自 **Nordic SDK 16.0**，利用**nRF Connect for Desktop**刷固件时它会校验外部bootloader（如果有）签名，如果不是**Nordic**签名就不会修改内部bootloader。
 # 烧录canokey固件
 将 **E104-BT5040U** 插到电脑USB口，然后运行**nRF Connect for Desktop**烧录，相比ST-Link V2简单很多，等硬件到货后回来更新烧录结果。
+
+更新：今天 **E104-BT5040U** 到货后第一时间运行**nRF Connect for Desktop**烧录了**canokey.hex**固件。手上的这两只自带**Nordic**官方bootloader，进入bootloader模式（DFU模式）只需要按RST按钮就可以了，然后在**nRF Connect for Desktop**中便可以被正常识别然后进行烧录固件等操作。
+
+# 初始化
+刷好了固件后还不能直接使用，插在电脑USB接口上毫无动静，因为还需要进行初始化设置。参照README，这个操作需要在Linux系统中使用 **pcsc_scan** 程序和项目提供的初始化脚本，看来没办法在Windows下操作。试过[WSL直通USB](https://learn.microsoft.com/zh-cn/windows/wsl/connect-usb)的办法，但是 `usbipd list` 看不到这个设备所以行不通。打算物理机安装Linux进行后续操作。
