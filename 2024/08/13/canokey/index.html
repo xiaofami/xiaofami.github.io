@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/img/E104BT5040U.jpg">
 <meta property="article:published_time" content="2024-08-13T08:09:49.000Z">
-<meta property="article:modified_time" content="2024-08-16T02:34:02.090Z">
+<meta property="article:modified_time" content="2024-08-16T02:36:25.584Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="CanoKey">
 <meta property="article:tag" content="nRF52840">
@@ -336,7 +336,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./device-config-init.sh <span class="hljs-string">&#x27;Canokeys Canokey [OpenPGP PIV OATH] (00000000) 00 00&#x27;</span><br><br>以下信息省略，请参见README<br></code></pre></td></tr></table></figure>
 
 <p>这里需要关注的是 <strong>[OpenPGP PIV OATH] (00000000)</strong> 。刚刷好的Canokey是没有序列号的，该脚本运行后会写入序列号，而且我试过重刷固件后似乎序列号没有变化。这时再次运行 <strong>device-config-init.sh</strong> 脚本就需要将括号里的一堆0替换成实际序列号，否则无法初始化。这步顺利结束后，<strong>OpenPGP</strong>就能用了，可以通过 <code>gpg --card-status</code> 查看信息。Linux上执行 <code>gpg --card-status</code> 有可能会提示读取失败，但在Windows中一切正常，这应该是Linux设置导致的，无需恐慌。</p>
-<h1 id="使用体验"><a href="#使用体验" class="headerlink" title="使用体验"></a>使用体验</h1><p><strong>OpenPGP</strong>自不必说，之前折腾<strong>Gnuk</strong>时很熟悉了。<strong>U2F</strong>测试也正常，<strong>EBYTE E104-BT5040U</strong> 主板上的<strong>sw</strong>按键已被默认配置为确认键，进行<strong>U2F</strong>认证时只需要输入 <strong>FIDO2 PIN</strong> 然后按<strong>sw</strong>即可。<strong>FIDO2 PIN</strong>可以在Windows 11的 <strong>账户 &gt; 登录选项 &gt; 安全密钥 &gt; 使用物理安全密钥登录到应用</strong> 设置中进行首次设定或者修改。Canokeys的pin码很多，注意不要混淆。唯一遗憾之处是<strong>EBYTE E104-BT5040U</strong>外壳没有引出按钮，又不可能用一次拆一次，所以实用性打了折扣。鉴于它就是<strong>Nordic NRF52840 dongle</strong>的克隆，有空时找找看有无合适的第三方外壳。</p>
+<h1 id="使用体验"><a href="#使用体验" class="headerlink" title="使用体验"></a>使用体验</h1><p><strong>OpenPGP</strong>自不必说，之前折腾<strong>Gnuk</strong>时很熟悉了。<strong>U2F</strong>测试也正常，<strong>EBYTE E104-BT5040U</strong> 主板上的<strong>sw</strong>按键已被默认配置为确认键，进行<strong>U2F</strong>认证时只需要输入 <strong>FIDO2 PIN</strong> 然后按<strong>sw</strong>即可。等待按<strong>sw</strong>键时，<strong>sw</strong>这边的LED会闪烁，所以你不太可能搞错按键去按RST键。<strong>FIDO2 PIN</strong>可以在Windows 11的 <strong>账户 &gt; 登录选项 &gt; 安全密钥 &gt; 使用物理安全密钥登录到应用</strong> 设置中进行首次设定或者修改。Canokeys的pin码很多，注意不要混淆。唯一遗憾之处是<strong>EBYTE E104-BT5040U</strong>外壳没有引出按钮，又不可能用一次拆一次，所以实用性打了折扣。鉴于它就是<strong>Nordic NRF52840 dongle</strong>的克隆，有空时找找看有无合适的第三方外壳。</p>
 
                 
               </div>
