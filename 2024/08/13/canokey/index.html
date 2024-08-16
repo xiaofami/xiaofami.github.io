@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xiaofami.github.io/img/E104BT5040U.jpg">
 <meta property="article:published_time" content="2024-08-13T08:09:49.000Z">
-<meta property="article:modified_time" content="2024-08-15T07:58:38.045Z">
+<meta property="article:modified_time" content="2024-08-16T02:27:09.636Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="CanoKey">
 <meta property="article:tag" content="nRF52840">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.8k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          12 分钟
+          15 分钟
         
       </span>
     
@@ -326,6 +326,17 @@
 <h1 id="烧录canokey固件"><a href="#烧录canokey固件" class="headerlink" title="烧录canokey固件"></a>烧录canokey固件</h1><p>将 <strong>E104-BT5040U</strong> 插到电脑USB口，然后运行<strong>nRF Connect for Desktop</strong>烧录，相比ST-Link V2简单很多，等硬件到货后回来更新烧录结果。</p>
 <p>更新：今天 <strong>E104-BT5040U</strong> 到货后第一时间运行<strong>nRF Connect for Desktop</strong>烧录了<strong>canokey.hex</strong>固件。手上的这两只自带<strong>Nordic</strong>官方bootloader，进入bootloader模式（DFU模式）只需要按RST按钮就可以了，然后在<strong>nRF Connect for Desktop</strong>中便可以被正常识别然后进行烧录固件等操作。</p>
 <h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>刷好了固件后还不能直接使用，插在电脑USB接口上毫无动静，因为还需要进行初始化设置。参照README，这个操作需要在Linux系统中使用 <strong>pcsc_scan</strong> 程序和项目提供的初始化脚本，看来没办法在Windows下操作。试过<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/connect-usb">WSL直通USB</a>的办法，但是 <code>usbipd list</code> 看不到这个设备所以行不通。打算物理机安装Linux进行后续操作。</p>
+<p>更新：之前刷了几次固件，在Windows和Linux下都无法识别到USB设备。后来尝试用一根USB公转母延长线刷就OK了。我用来刷固件的电脑只有USB3接口，感觉是接口问题。刷好后Window右下角会弹出 <strong>检测到Canokey Go to console.canokeys.org to connect</strong> 的提示，此时再进入Linux系统进行后续初始化操作。</p>
+<p>Linux发行版选用了<strong>Archlinux</strong>。依赖已由软件源提供，可直接用pacman安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S pcsc-tools ccid<br></code></pre></td></tr></table></figure>
+
+<p><strong>pcsc-tools</strong> 一站式提供了 <strong>pcscd</strong>、<strong>pcsc_scan</strong>和<strong>scriptor</strong>，格外便利。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now pcscd<br><span class="hljs-built_in">sudo</span> pcsc_scan<br></code></pre></td></tr></table></figure>
+<p>如无意外会出现如README所示的一堆信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./device-config-init.sh <span class="hljs-string">&#x27;Canokeys Canokey [OpenPGP PIV OATH] (00000000) 00 00&#x27;</span><br><br>以下信息省略，请参见README<br></code></pre></td></tr></table></figure>
+
+<p>这里需要关注的是 <strong>[OpenPGP PIV OATH] (00000000)</strong> 。刚刷好的Canokey是没有序列号的，该脚本运行后会写入序列号，而且我试过重刷固件后似乎序列号没有变化。这时再次运行 <strong>device-config-init.sh</strong> 脚本就需要将括号里的一堆0替换成实际序列号，否则无法初始化。这步顺利结束后，<strong>OpenPGP</strong>就能用了，可以通过 <code>gpg --card-status</code> 查看信息。Linux上执行 <code>gpg --card-status</code> 有可能会提示读取失败，但在Windows中一切正常，这应该是Linux设置导致的，无需恐慌。</p>
+<h1 id="使用体验"><a href="#使用体验" class="headerlink" title="使用体验"></a>使用体验</h1><p><strong>OpenPGP</strong>自不必说，之前折腾<strong>Gnuk</strong>时很熟悉了。<strong>U2F</strong>测试也正常，<strong>EBYTE E104-BT5040U</strong> 主板上的<strong>sw</strong>按键已被默认配置为确认键，进行<strong>U2F</strong>认证时只需要输入 <strong>FIDO2 PIN</strong> 然后按<strong>sw</strong>即可。可惜<strong>EBYTE E104-BT5040U</strong>外壳没有引出按钮，又不可能用一次拆一次，所以实用性打了折扣。</p>
 
                 
               </div>
