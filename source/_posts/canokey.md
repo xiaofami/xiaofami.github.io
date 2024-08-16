@@ -181,3 +181,28 @@ https://github.com/adafruit/Adafruit_nRF52_Arduino/issues/200
 
 # 初始化
 刷好了固件后还不能直接使用，插在电脑USB接口上毫无动静，因为还需要进行初始化设置。参照README，这个操作需要在Linux系统中使用 **pcsc_scan** 程序和项目提供的初始化脚本，看来没办法在Windows下操作。试过[WSL直通USB](https://learn.microsoft.com/zh-cn/windows/wsl/connect-usb)的办法，但是 `usbipd list` 看不到这个设备所以行不通。打算物理机安装Linux进行后续操作。
+
+更新：之前刷了几次固件，在Windows和Linux下都无法识别到USB设备。后来尝试用一根USB公转母延长线刷就OK了。我用来刷固件的电脑只有USB3接口，感觉是接口问题。刷好后Window右下角会弹出 **检测到Canokey Go to console.canokeys.org to connect** 的提示，此时再进入Linux系统进行后续初始化操作。
+
+Linux发行版选用了**Archlinux**。依赖已由软件源提供，可直接用pacman安装：
+```bash
+sudo pacman -S pcsc-tools ccid
+```
+
+**pcsc-tools** 一站式提供了 **pcscd**、**pcsc_scan**和**scriptor**，格外便利。
+
+```bash
+sudo systemctl enable --now pcscd
+sudo pcsc_scan
+```
+如无意外会出现如README所示的一堆信息。
+
+```bash
+$ ./device-config-init.sh 'Canokeys Canokey [OpenPGP PIV OATH] (00000000) 00 00'
+
+以下信息省略，请参见README
+```
+
+这里需要关注的是 **[OpenPGP PIV OATH] (00000000)** 。刚刷好的Canokey是没有序列号的，该脚本运行后会写入序列号，而且我试过重刷固件后似乎序列号没有变化。这时再次运行 **device-config-init.sh** 脚本就需要将括号里的一堆0替换成实际序列号，否则无法初始化。这步顺利结束后，**OpenPGP**就能用了，可以通过 `gpg --card-status` 查看信息。Linux上执行 `gpg --card-status` 有可能会提示读取失败，但在Windows中一切正常，这应该是Linux设置导致的，无需恐慌。
+# 使用体验
+**OpenPGP**自不必说，之前折腾**Gnuk**时很熟悉了。**U2F**测试也正常，**EBYTE E104-BT5040U** 主板上的**sw**按键已被默认配置为确认键，进行**U2F**认证时只需要输入 **FIDO2 PIN** 然后按**sw**即可。可惜**EBYTE E104-BT5040U**外壳没有引出按钮，又不可能用一次拆一次，所以实用性打了折扣。
