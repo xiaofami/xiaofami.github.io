@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2016年9月时从京东买了张盈通RX480游戏显卡，出厂频率1340MHz，在techpowerup上的代号为 Yeston RX 480 GAMEACE TOP（RX-480-8G-D5-Game-ACE-TOP）。当时搭配 映泰Z170W 主板和i5-6500用着并不省心，死机是家常便饭。而且这卡的原厂BIOS不支持UEFI，所以主板的CSM功能一直开着。8年后的某天，我从某篇帖子中看到电脑死">
+<meta property="og:type" content="article">
+<meta property="og:title" content="盈通RX480显卡刷BIOS">
+<meta property="og:url" content="http://xiaofami.github.io/2024/08/26/amdvbflash/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="2016年9月时从京东买了张盈通RX480游戏显卡，出厂频率1340MHz，在techpowerup上的代号为 Yeston RX 480 GAMEACE TOP（RX-480-8G-D5-Game-ACE-TOP）。当时搭配 映泰Z170W 主板和i5-6500用着并不省心，死机是家常便饭。而且这卡的原厂BIOS不支持UEFI，所以主板的CSM功能一直开着。8年后的某天，我从某篇帖子中看到电脑死">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tpucdn.com/gpu-specs/images/b/4285-front.jpg">
+<meta property="article:published_time" content="2024-08-26T01:36:29.000Z">
+<meta property="article:modified_time" content="2024-08-26T02:28:09.150Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="RX480">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tpucdn.com/gpu-specs/images/b/4285-front.jpg">
+  
+  
+  
+  <title>盈通RX480显卡刷BIOS - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="盈通RX480显卡刷BIOS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-26 09:36" pubdate>
+          2024年8月26日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          743 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">盈通RX480显卡刷BIOS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>2016年9月时从京东买了张盈通RX480游戏显卡，出厂频率1340MHz，在<a target="_blank" rel="noopener" href="https://www.techpowerup.com/gpu-specs/yeston-rx-480-gameace-top.b4285">techpowerup</a>上的代号为 <em>Yeston RX 480 GAMEACE TOP（RX-480-8G-D5-Game-ACE-TOP）</em>。当时搭配 <strong>映泰Z170W</strong> 主板和i5-6500用着并不省心，死机是家常便饭。而且这卡的原厂BIOS不支持UEFI，所以主板的<strong>CSM</strong>功能一直开着。8年后的某天，我从某篇帖子中看到电脑死机很可能与显卡有关，加之我对这个显卡不支持UEFI启动一直心存芥蒂，于是打算给它刷BIOS玩一玩。<br><img src="https://tpucdn.com/gpu-specs/images/b/4285-front.jpg" srcset="/img/loading.gif" lazyload alt="RX-480-8G-D5-Game-ACE-TOP" title="RX-480-8G-D5-Game-ACE-TOP"></p>
+<h1 id="获取amdvbflash工具"><a href="#获取amdvbflash工具" class="headerlink" title="获取amdvbflash工具"></a>获取amdvbflash工具</h1><p>刷BIOS首先得有合适工具，我用的是这个版本： <a target="_blank" rel="noopener" href="https://github.com/stylesuxx/amdvbflash">https://github.com/stylesuxx/amdvbflash</a></p>
+<p>这是一个二进制文件，版本4.71，需要在linux x86中以root权限运行，应该是AMD内部流出的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">~/amdvbflash$ <span class="hljs-built_in">sudo</span> ./amdvbflash -v<br>[<span class="hljs-built_in">sudo</span>] password <span class="hljs-keyword">for</span> pico:<br>AMDVBFLASH version 4.71, Copyright (c) 2020 Advanced Micro Devices, Inc.<br><br>Format: amdvbflash -v &lt;adapter num&gt; &lt;filename&gt;<br></code></pre></td></tr></table></figure>
+
+<p>常用命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> ./amdvbflash -ai <span class="hljs-comment">#查看显卡接口信息</span><br><span class="hljs-built_in">sudo</span> ./amdvbflash -s 0 &lt;file&gt; <span class="hljs-comment"># 备份显卡BIOS到文件。该命令备份了整个存储芯片，没有去除末尾占位的0，所以会比GPU-Z备份的文件大。</span><br><span class="hljs-built_in">sudo</span> ./amdvbflash -f -p 0 &lt;file&gt; <span class="hljs-comment"># 给接口编号为0的显卡强行刷入指定的BIOS文件</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.techpowerup.com/forums/threads/amdvbflash-4-104e-for-64-bit-linux-with-updated-support-for-vbios-flash-on-big-navi2x-gpus.313927/">techpowerup论坛</a>上有两个版本更新的linux平台<strong>amdvbflash</strong>工具，为 <em>AMDVBFLASH version 4.104 EXTERNAL, Copyright (c) 2022 Advanced Micro Devices, Inc.</em> 和 <em>AMD IFWI Flasher Tool Version 5.0.0.638-External. Copyright© 2020-2023 Advanced Micro Devices, Inc. All rights reserved.</em> 。经过测试，<strong>amdvbflash4-104E</strong> 不支持 <strong>-f</strong> 选项没法无脑强刷，至于 <strong>amdvbflash5.0.638</strong> 直接不支持 <strong>GCN</strong> 架构显卡，毕竟它太新了。不过 <strong>amdvbflash5.0.638</strong> 可以用来读取分析BIOS文件，无论新旧，这一点很便利。</p>
+<p><strong>amdvbflash</strong>也有Windows版本，但是我在Windows 11平台测试，不是报警无法加载驱动就是在已经赋予管理员权限的情况下还是提示“请以管理员权限执行”，尝试各个版本后均告失败。</p>
+<h1 id="获取合适的BIOS文件"><a href="#获取合适的BIOS文件" class="headerlink" title="获取合适的BIOS文件"></a>获取合适的BIOS文件</h1><p>盈通这个显卡BIOS版本号为<strong>015.050.000.000.000000</strong>，接口如下：</p>
+<ul>
+<li>1x DVI</li>
+<li>1x HDMI 2.0b</li>
+<li>3x DisplayPort 1.4a</li>
+</ul>
+<p>经过测试，<a target="_blank" rel="noopener" href="https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749">GV-RX480G1 GAMING-8GD</a>这款技嘉显卡的BIOS能够完美适配，刷好后显卡所有接口都能正常输出，GPU-Z信息也正常。techpowerup上的这个BIOS是F4步进，技嘉官网上提供了F8步进下载（<a target="_blank" rel="noopener" href="https://www.gigabyte.cn/Graphics-Card/GV-RX480G1-GAMING-8GD/support#support-dl-bios%EF%BC%89%EF%BC%8C%E4%BD%86%E6%88%91%E6%B5%8B%E8%AF%95%E5%B9%B6%E4%B8%8D%E5%A6%82F4%E7%A8%B3%E5%AE%9A%E3%80%82">https://www.gigabyte.cn/Graphics-Card/GV-RX480G1-GAMING-8GD/support#support-dl-bios），但我测试并不如F4稳定。</a><br><img src="https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749" srcset="/img/loading.gif" lazyload alt="GV-RX480G1 GAMING-8GD" title="GV-RX480G1 GAMING-8GD"></p>
+<h1 id="稳定性测试"><a href="#稳定性测试" class="headerlink" title="稳定性测试"></a>稳定性测试</h1><p>主板关闭CSM选项，开机画面正常，所有接口正常，电脑睡眠后能够正常唤醒，再没有遇到之前频繁出现的”一睡不醒”问题。唯一的小毛病是显示器开启FREESYNC情况下，DP接口开机一段时间后屏幕颜色会发紫，换个DP接口能好一会儿，但是最终都会变色，刷BIOS之前未遇到过此种现象。关闭显示器FREESYNC后显示立即恢复正常。目前尚不能排除显示器嫌疑，它最近出现了一条黑色横线。。。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RX480/" class="print-no-link">#RX480</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>盈通RX480显卡刷BIOS</div>
+      <div>http://xiaofami.github.io/2024/08/26/amdvbflash/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/13/canokey/" title="nRF52840刷CanoKey">
+                        <span class="hidden-mobile">nRF52840刷CanoKey</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
