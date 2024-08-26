@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tpucdn.com/gpu-specs/images/b/4285-front.jpg">
 <meta property="article:published_time" content="2024-08-26T01:36:29.000Z">
-<meta property="article:modified_time" content="2024-08-26T02:31:57.858Z">
+<meta property="article:modified_time" content="2024-08-26T06:36:14.377Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="RX480">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          742 字
+          745 字
         
       </span>
     
@@ -288,7 +288,7 @@
 <p>常用命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> ./amdvbflash -ai <span class="hljs-comment">#查看显卡接口信息</span><br><span class="hljs-built_in">sudo</span> ./amdvbflash -s 0 &lt;file&gt; <span class="hljs-comment"># 备份显卡BIOS到文件。该命令备份了整个存储芯片，没有去除末尾占位的0，所以会比GPU-Z备份的文件大。</span><br><span class="hljs-built_in">sudo</span> ./amdvbflash -f -p 0 &lt;file&gt; <span class="hljs-comment"># 给接口编号为0的显卡强行刷入指定的BIOS文件</span><br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://www.techpowerup.com/forums/threads/amdvbflash-4-104e-for-64-bit-linux-with-updated-support-for-vbios-flash-on-big-navi2x-gpus.313927/">techpowerup论坛</a>上有两个版本更新的linux平台<strong>amdvbflash</strong>工具，为 <em>AMDVBFLASH version 4.104 EXTERNAL, Copyright (c) 2022 Advanced Micro Devices, Inc.</em> 和 <em>AMD IFWI Flasher Tool Version 5.0.0.638-External. Copyright© 2020-2023 Advanced Micro Devices, Inc. All rights reserved.</em> 。经过测试，<strong>amdvbflash4-104E</strong> 不支持 <strong>-f</strong> 选项没法无脑强刷，至于 <strong>amdvbflash5.0.638</strong> 直接不支持 <strong>GCN</strong> 架构显卡，毕竟它太新了。不过 <strong>amdvbflash5.0.638</strong> 可以用来读取分析BIOS文件，无论新旧，这一点很便利。</p>
+<p><a target="_blank" rel="noopener" href="https://www.techpowerup.com/forums/threads/amdvbflash-4-104e-for-64-bit-linux-with-updated-support-for-vbios-flash-on-big-navi2x-gpus.313927/">techpowerup论坛</a>上有两个版本更新的linux平台<strong>amdvbflash</strong>工具，为 <em>AMDVBFLASH version 4.104 EXTERNAL, Copyright (c) 2022 Advanced Micro Devices, Inc.</em> 和 <em>AMD IFWI Flasher Tool Version 5.0.0.638-External. Copyright© 2020-2023 Advanced Micro Devices, Inc. All rights reserved.</em> 。经过测试，<strong>amdvbflash4-104E</strong> 不支持 <strong>-f</strong> 选项没法无脑强刷，至于 <strong>amdvbflash5.0.638</strong> 直接不支持 <strong>GCN</strong> 架构显卡，毕竟它太新了。不过 <strong>amdvbflash5.0.638</strong> 可以用来读取分析已有的BIOS文件，无论新旧，这一点很便利。</p>
 <p><strong>amdvbflash</strong>也有Windows版本，但是我在Windows 11平台测试，不是报警无法加载驱动就是在已经赋予管理员权限的情况下还是提示“请以管理员权限执行”，尝试各个版本后均告失败。</p>
 <h1 id="获取合适的BIOS文件"><a href="#获取合适的BIOS文件" class="headerlink" title="获取合适的BIOS文件"></a>获取合适的BIOS文件</h1><p>盈通这个显卡BIOS版本号为<strong>015.050.000.000.000000</strong>，接口如下：</p>
 <ul>
