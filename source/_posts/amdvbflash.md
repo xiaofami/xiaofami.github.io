@@ -36,7 +36,9 @@ sudo ./amdvbflash -f -p 0 <file> # 给接口编号为0的显卡强行刷入指�
 * 1x HDMI 2.0b
 * 3x DisplayPort 1.4a
 
-经过测试，[GV-RX480G1 GAMING-8GD](https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749)这款技嘉显卡的BIOS能够完美适配，刷好后显卡所有接口都能正常输出，GPU-Z信息也正常。techpowerup上的这个BIOS是F4步进，技嘉官网上提供了F8步进下载（https://www.gigabyte.cn/Graphics-Card/GV-RX480G1-GAMING-8GD/support#support-dl-bios），但我测试并不如F4稳定。
-![GV-RX480G1 GAMING-8GD](https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749 "GV-RX480G1 GAMING-8GD")
+经过测试，[GV-RX480G1 GAMING-8GD](https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749)这款技嘉显卡的BIOS能够完美适配，刷好后显卡所有接口都能正常输出，GPU-Z信息也正常。techpowerup上的这个BIOS是F4步进，技嘉官网上提供了F8步进下载，但我测试并不如F4稳定：
+https://www.gigabyte.cn/Graphics-Card/GV-RX480G1-GAMING-8GD/support#support-dl-bios
+
+![GV-RX480G1 GAMING-8GD](https://tpucdn.com/gpu-specs/images/b/3749-front.jpg "GV-RX480G1 GAMING-8GD")
 # 稳定性测试
 主板关闭CSM选项，开机画面正常，所有接口正常，电脑睡眠后能够正常唤醒，再没有遇到之前频繁出现的"一睡不醒"问题。唯一的小毛病是显示器开启FREESYNC情况下，DP接口开机一段时间后屏幕颜色会发紫，换个DP接口能好一会儿，但是最终都会变色，刷BIOS之前未遇到过此种现象。关闭显示器FREESYNC后显示立即恢复正常。目前尚不能排除显示器嫌疑，它最近出现了一条黑色横线。。。
