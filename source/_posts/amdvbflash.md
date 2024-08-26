@@ -36,7 +36,7 @@ sudo ./amdvbflash -f -p 0 <file> # 给接口编号为0的显卡强行刷入指�
 * 1x HDMI 2.0b
 * 3x DisplayPort 1.4a
 
-经过测试，[GV-RX480G1 GAMING-8GD](https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749)这款技嘉显卡的BIOS能够完美适配，刷好后显卡所有接口都能正常输出，GPU-Z信息也正常。techpowerup上的这个BIOS是F4步进，技嘉官网上提供了F8步进下载，但我测试并不如F4稳定：
+经过测试，[GV-RX480G1 GAMING-8GD](https://www.techpowerup.com/gpu-specs/gigabyte-rx-480-g1-gaming-8-gb.b3749)这款技嘉显卡的BIOS能够完美适配，刷好后显卡所有接口都能正常输出，GPU-Z信息也正常（Subvendor显示为Gigabyte，但是Name被识别成了ASUS，小问题~）。techpowerup上的这个BIOS是F4步进，技嘉官网上提供了F8步进下载，但我测试并不如F4稳定：
 https://www.gigabyte.cn/Graphics-Card/GV-RX480G1-GAMING-8GD/support#support-dl-bios
 
 ![GV-RX480G1 GAMING-8GD](https://tpucdn.com/gpu-specs/images/b/3749-front.jpg "GV-RX480G1 GAMING-8GD")
