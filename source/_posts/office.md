@@ -10,7 +10,7 @@ index_img: /img/libreoffice.jpg
 # 前言
 最近翻出了一台早年DIY台式机，配置Z170主板 + i5-6500 + 32G内存 + 500G NVME，运行Windows 11性能已经力不从心，所以试着给它安装Linux系统看看能否当作办公机发挥余热。
 
-Linux发行版选择了**EndeavourOS**，它可以看作是提供了图形化安装界面以及预装了桌面环境的**Archlinux**，所以当作Archlinux毫无问题。嗯，我是是一名自豪的Arch用户了~
+Linux发行版选择了**EndeavourOS**，它可以看作是提供了图形化安装界面以及预装了桌面环境的**Archlinux**，所以当作Archlinux毫无问题。嗯，我是一名自豪的Arch用户了~
 
 # 换国内源
 直接使用清华大学的Archlinux软件仓库即可：
