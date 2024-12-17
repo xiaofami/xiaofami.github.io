@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tccmu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言最近翻出了一台早年DIY台式机，配置Z170主板 + i5-6500 + 32G内存 + 500G NVME，运行Windows 11性能已经力不从心，所以试着给它安装Linux系统看看能否当作办公机发挥余热。 Linux发行版选择了EndeavourOS，它可以看作是提供了图形化安装界面以及预装了桌面环境的Archlinux，所以当作Archlinux毫无问题。嗯，我是是一名自豪的Arch用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Archlinux下桌面办公环境配置">
+<meta property="og:url" content="http://xiaofami.github.io/2024/12/17/office/index.html">
+<meta property="og:site_name" content="小荷">
+<meta property="og:description" content="前言最近翻出了一台早年DIY台式机，配置Z170主板 + i5-6500 + 32G内存 + 500G NVME，运行Windows 11性能已经力不从心，所以试着给它安装Linux系统看看能否当作办公机发挥余热。 Linux发行版选择了EndeavourOS，它可以看作是提供了图形化安装界面以及预装了桌面环境的Archlinux，所以当作Archlinux毫无问题。嗯，我是是一名自豪的Arch用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xiaofami.github.io/img/libreoffice.jpg">
+<meta property="article:published_time" content="2024-12-17T13:30:18.000Z">
+<meta property="article:modified_time" content="2024-12-17T15:26:17.051Z">
+<meta property="article:author" content="tccmu">
+<meta property="article:tag" content="Archlinux">
+<meta property="article:tag" content="EndeavourOS">
+<meta property="article:tag" content="WPS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xiaofami.github.io/img/libreoffice.jpg">
+  
+  
+  
+  <title>Archlinux下桌面办公环境配置 - 小荷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xiaofami.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TCCMU</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/l4d2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Archlinux下桌面办公环境配置"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-17 21:30" pubdate>
+          2024年12月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Archlinux下桌面办公环境配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近翻出了一台早年DIY台式机，配置Z170主板 + i5-6500 + 32G内存 + 500G NVME，运行Windows 11性能已经力不从心，所以试着给它安装Linux系统看看能否当作办公机发挥余热。</p>
+<p>Linux发行版选择了<strong>EndeavourOS</strong>，它可以看作是提供了图形化安装界面以及预装了桌面环境的<strong>Archlinux</strong>，所以当作Archlinux毫无问题。嗯，我是是一名自豪的Arch用户了~</p>
+<h1 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h1><p>直接使用清华大学的Archlinux软件仓库即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /etc/pacman.d/mirrorlist<br><br><span class="hljs-comment">################################################################################</span><br><span class="hljs-comment">################# Arch Linux mirrorlist generated by Reflector #################</span><br><span class="hljs-comment">################################################################################</span><br><span class="hljs-comment"># With:       reflector --verbose -c CN --protocol https --sort age --latest 20 --download-timeout 5</span><br><span class="hljs-comment"># When:       2024-12-15 02:07:30 UTC</span><br><span class="hljs-comment"># From:       https://archlinux.org/mirrors/status/json/</span><br><span class="hljs-comment"># Retrieved:  2024-12-15 02:07:10 UTC</span><br><span class="hljs-comment"># Last Check: 2024-12-15 01:46:50 UTC</span><br><br><span class="hljs-comment">## China</span><br>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="hljs-variable">$repo</span>/os/<span class="hljs-variable">$arch</span><br><span class="hljs-comment">#Server = https://mirrors.shanghaitech.edu.cn/archlinux/$repo/os/$arch</span><br><br><span class="hljs-built_in">sudo</span> pacman -Syu<br></code></pre></td></tr></table></figure>
+<h1 id="安装配置雾凇拼音"><a href="#安装配置雾凇拼音" class="headerlink" title="安装配置雾凇拼音"></a>安装配置雾凇拼音</h1><p>全拼用户没有特殊需求雾凇拼音已经很好用，至于五笔等形码输入法Linux下也有完整实现，比如<a target="_blank" rel="noopener" href="http://98wb.ysepan.com/">98五笔</a>。想要全拼、双拼、五笔等方案共存的可以尝试<a target="_blank" rel="noopener" href="https://github.com/Mintimate/oh-my-rime">薄荷输入法</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S paru fcitx5-rime fcitx5-configtool<br><span class="hljs-built_in">cd</span> ~/.local/share/fcitx5<br><span class="hljs-built_in">rm</span> -rf ./rime<br>git <span class="hljs-built_in">clone</span> https://github.com/iDvel/rime-ice.git rime --depth 1<br></code></pre></td></tr></table></figure>
+<p>这里记得重启一次系统。</p>
+<h1 id="安装配置字体"><a href="#安装配置字体" class="headerlink" title="安装配置字体"></a>安装配置字体</h1><h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S noto-fonts inter-font noto-fonts-cjk noto-fonts-emoji ttf-sarasa-gothic<br>paru -S ttf-wps-fonts freetype2-wps wps-office-fonts<br></code></pre></td></tr></table></figure>
+<p>其他字体可以通过KDE自带的<code>Font Management</code>方便导入。</p>
+<h2 id="配置字体"><a href="#配置字体" class="headerlink" title="配置字体"></a>配置字体</h2><p>抄袭自<a target="_blank" rel="noopener" href="https://szclsya.me/zh-cn/posts/fonts/linux-config-guide/">Linux 下的字体调校指南</a>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> ~/.config/fontconfig<br><br>&lt;?xml version=<span class="hljs-string">&#x27;1.0&#x27;</span>?&gt;<br>&lt;!DOCTYPE fontconfig SYSTEM <span class="hljs-string">&#x27;fonts.dtd&#x27;</span>&gt;<br>&lt;fontconfig&gt;<br><br>  &lt;match target=<span class="hljs-string">&quot;font&quot;</span>&gt;<br>    &lt;edit mode=<span class="hljs-string">&quot;assign&quot;</span> name=<span class="hljs-string">&quot;rgba&quot;</span>&gt;<br>      &lt;const&gt;rgb&lt;/const&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;match target=<span class="hljs-string">&quot;font&quot;</span>&gt;<br>    &lt;edit mode=<span class="hljs-string">&quot;assign&quot;</span> name=<span class="hljs-string">&quot;hintstyle&quot;</span>&gt;<br>      &lt;const&gt;hintslight&lt;/const&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;match target=<span class="hljs-string">&quot;font&quot;</span>&gt;<br>    &lt;edit mode=<span class="hljs-string">&quot;assign&quot;</span> name=<span class="hljs-string">&quot;antialias&quot;</span>&gt;<br>      &lt;bool&gt;<span class="hljs-literal">true</span>&lt;/bool&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Map fonts that are commonly used by web pages to our preferred fonts --&gt;<br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;&lt;string&gt;Arial&lt;/string&gt;&lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;assign&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;&lt;string&gt;sans-serif&lt;/string&gt;&lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;&lt;string&gt;Liberation Sans&lt;/string&gt;&lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;assign&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;&lt;string&gt;sans-serif&lt;/string&gt;&lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;&lt;string&gt;Liberation Mono&lt;/string&gt;&lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;assign&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;&lt;string&gt;monospace&lt;/string&gt;&lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Default font <span class="hljs-keyword">for</span> the zh_CN locale (no fc-match pattern) --&gt;<br>  &lt;match&gt;<br>    &lt;<span class="hljs-built_in">test</span> compare=<span class="hljs-string">&quot;contains&quot;</span> name=<span class="hljs-string">&quot;lang&quot;</span>&gt;<br>      &lt;string&gt;zh_CN&lt;/string&gt;<br>    &lt;/test&gt;<br>    &lt;edit mode=<span class="hljs-string">&quot;prepend&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;<br>      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Default sans-serif font --&gt;<br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;<br>      &lt;string&gt;sans-serif&lt;/string&gt;&lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;prepend&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;<br>      &lt;string&gt;Inter&lt;/string&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Default serif fonts --&gt;<br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;<br>      &lt;string&gt;serif&lt;/string&gt;<br>    &lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;prepend&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;<br>      &lt;string&gt;Noto Serif&lt;/string&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Default monospace fonts --&gt;<br>  &lt;match target=<span class="hljs-string">&quot;pattern&quot;</span>&gt;<br>    &lt;<span class="hljs-built_in">test</span> qual=<span class="hljs-string">&quot;any&quot;</span> name=<span class="hljs-string">&quot;family&quot;</span>&gt;<br>      &lt;string&gt;monospace&lt;/string&gt;<br>    &lt;/test&gt;<br>    &lt;edit name=<span class="hljs-string">&quot;family&quot;</span> mode=<span class="hljs-string">&quot;prepend&quot;</span> binding=<span class="hljs-string">&quot;same&quot;</span>&gt;<br>      &lt;string&gt;Sarasa Term SC&lt;/string&gt;<br>    &lt;/edit&gt;<br>  &lt;/match&gt;<br><br>  &lt;!-- Fallback fonts preference order --&gt;<br>  &lt;<span class="hljs-built_in">alias</span>&gt;<br>    &lt;family&gt;sans-serif&lt;/family&gt;<br>    &lt;prefer&gt;<br>      &lt;family&gt;Inter&lt;/family&gt;<br>      &lt;family&gt;Noto Sans CJK SC&lt;/family&gt;<br>      &lt;family&gt;Noto Sans CJK TC&lt;/family&gt;<br>      &lt;family&gt;Noto Sans CJK JP&lt;/family&gt;<br>      &lt;family&gt;Noto Sans CJK KR&lt;/family&gt;<br>      &lt;family&gt;Noto Color Emoji&lt;/family&gt;<br>      &lt;family&gt;Noto Emoji&lt;/family&gt;<br>    &lt;/prefer&gt;<br>  &lt;/alias&gt;<br>  &lt;<span class="hljs-built_in">alias</span>&gt;<br>    &lt;family&gt;serif&lt;/family&gt;<br>    &lt;prefer&gt;<br>      &lt;family&gt;Noto Serif&lt;/family&gt;<br>      &lt;family&gt;Noto Serif CJK SC&lt;/family&gt;<br>      &lt;family&gt;Noto Serif CJK TC&lt;/family&gt;<br>      &lt;family&gt;Noto Serif CJK JP&lt;/family&gt;<br>      &lt;family&gt;Noto Serif CJK KR&lt;/family&gt;<br>      &lt;family&gt;Noto Color Emoji&lt;/family&gt;<br>      &lt;family&gt;Noto Emoji&lt;/family&gt;<br>    &lt;/prefer&gt;<br>  &lt;/alias&gt;<br>  &lt;<span class="hljs-built_in">alias</span>&gt;<br>    &lt;family&gt;monospace&lt;/family&gt;<br>    &lt;prefer&gt;<br>      &lt;family&gt;Sarasa Term SC&lt;/family&gt;<br>      &lt;family&gt;Sarasa Term TC&lt;/family&gt;<br>      &lt;family&gt;Sarasa Term J&lt;/family&gt;<br>      &lt;family&gt;Noto Color Emoji&lt;/family&gt;<br>      &lt;family&gt;Noto Emoji&lt;/family&gt;<br>    &lt;/prefer&gt;<br>  &lt;/alias&gt;<br><br>  &lt;selectfont&gt;<br>    &lt;rejectfont&gt;<br>      &lt;pattern&gt;<br>        &lt;patelt name=<span class="hljs-string">&quot;family&quot;</span> &gt;<br>          &lt;!-- This font is causing problem with GitHub --&gt;<br>          &lt;string&gt;Nimbus Sans&lt;/string&gt;<br>        &lt;/patelt&gt;<br>      &lt;/pattern&gt;<br>    &lt;/rejectfont&gt;<br>  &lt;/selectfont&gt;<br><br>&lt;/fontconfig&gt;<br></code></pre></td></tr></table></figure>
+<p>记得重启系统使配置生效。</p>
+<h1 id="安装配置WPS"><a href="#安装配置WPS" class="headerlink" title="安装配置WPS"></a>安装配置WPS</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S wps-office-cn wps-office-mui-zh-cn<br></code></pre></td></tr></table></figure>
+<p>系统语言为英文情况下，刚装好的WPS无法输入中文，无法识别中文字体名称，也无法显示中文界面，需要手动调整启动配置。</p>
+<p>从<code>/usr/share/applications</code>找到这几个文件，使用kate修改。kate不需要以root权限执行，保存修改时，会提示输入root密码提权，十分便利：</p>
+<ul>
+<li>&#x2F;usr&#x2F;share&#x2F;applications&#x2F;wps-office-wps.desktop</li>
+<li>&#x2F;usr&#x2F;share&#x2F;applications&#x2F;wps-office-et.desktop</li>
+<li>&#x2F;usr&#x2F;share&#x2F;applications&#x2F;wps-office-wpp.desktop</li>
+<li>&#x2F;usr&#x2F;share&#x2F;applications&#x2F;wps-office-pdf.desktop</li>
+<li>&#x2F;usr&#x2F;share&#x2F;applications&#x2F;wps-office-prometheus.desktop</li>
+</ul>
+<p>以<em>wps-office-wps.desktop</em>为例，使用kate打开后，将</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Exec=/usr/bin/wps %U<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Exec=<span class="hljs-built_in">env</span> LANGUAGE=zh_CN LC_ALL=zh_CN.UTF-8 QT_SCREEN_SCALE_FACTORS=1 XMODIFIERS=<span class="hljs-string">&quot;@im=fcitx&quot;</span> GTK_IM_MODULE=<span class="hljs-string">&quot;fcitx&quot;</span> QT_IM_MODULE=<span class="hljs-string">&quot;fcitx&quot;</span> SDL_IM_MODULE=fcitx GLFW_IM_MODULE=ibus /usr/bin/wps %U<br></code></pre></td></tr></table></figure>
+<p>其他几个修改方式相同，都是在调用程序之前添加了一堆环境变量，简单解释一下：</p>
+<ul>
+<li>LANGUAGE&#x3D;zh_CN ：将WPS界面语言变成中文。如果不声明，WPS还是英文界面。参考自某博客。</li>
+<li>LC_ALL&#x3D;zh_CN.UTF-8 ：使WPS能够正确识别中文字体名称。例如，在字体栏中输入宋体，文字就会被正确设置为宋体，而不是必须输入 <em>simsun</em>，参考自某博客。</li>
+<li>env QT_SCREEN_SCALE_FACTORS&#x3D;1 ： 解决KDE下dpi不对称导致的字体模糊问题，参考自archwiki。</li>
+<li>XMODIFIERS&#x3D;”@im&#x3D;fcitx” GTK_IM_MODULE&#x3D;”fcitx” QT_IM_MODULE&#x3D;”fcitx” SDL_IM_MODULE&#x3D;fcitx GLFW_IM_MODULE&#x3D;ibus ：设置输入法环境变量，如果没有设置，在WPS中无法输入中文。参考自某博客。</li>
+</ul>
+<p>另外<code>~/.config/Kingsoft/</code>中存在一些WPS的配置文件，有兴趣的可以研究下。总体而言WPS在Linux下并不能做到开箱即用，虽然通过自行配置能够解决一些问题，但诸如系统黑暗模式下，WPS一些界面显示不正常的问题目前尚无解决办法，期待WPS日后能修复吧。</p>
+<h1 id="安装其他应用"><a href="#安装其他应用" class="headerlink" title="安装其他应用"></a>安装其他应用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S wechat-bin masterpdfeditor-free<br></code></pre></td></tr></table></figure>
+<p>安装微信和一款免费的pdf编辑器。</p>
+<h1 id="安装配置打印机"><a href="#安装配置打印机" class="headerlink" title="安装配置打印机"></a>安装配置打印机</h1><p><a target="_blank" rel="noopener" href="https://sspai.com/post/90194">终于可以在 Linux 下愉快打印了：Linux 发行版配置打印机攻略</a>这篇教程写得非常好，此处只稍作补充整理。</p>
+<p>前排提示：HP打印机不要使用<strong>hplip</strong>配置！！！</p>
+<p>实测<strong>hplip</strong>无法发现局域网中的<strong>HP Color LaserJet MFP M281fdw</strong>。虽说能够通过手动输入IP地址方式添加，但是自动双面打印功能失效。请安装并使用<strong>system-config-printer</strong>添加打印机，它不仅不存在<strong>hplip</strong>的这些问题，而且还支持查看墨粉余量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S cups cups-browsed system-config-printer nss-mdns<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now cups.service<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now cups-browsed<br></code></pre></td></tr></table></figure>
+<p>最后打开 <strong>Print settings</strong> 添加网络打印机，选择IPP协议。总而言之HP打印机对Linux支持还不错，而且摆脱了Windows平台下又卡又难用的<strong>HP Smart</strong>令人心情愉悦。至于扫描文件可以安装使用KDE项目提供的<strong>Skanlite</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S skanlite<br></code></pre></td></tr></table></figure>
+<h1 id="配置Canokey"><a href="#配置Canokey" class="headerlink" title="配置Canokey"></a>配置Canokey</h1><p>OpenPGP操作参见前几篇文章，这里解决的是Linux下 <code>gpg --card-status</code> 命令提示找不到设备问题，几经搜索终于搞定。</p>
+<p>创建 <strong>~&#x2F;.gnupg&#x2F;scdaemon.conf</strong> 这个文件，加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs conf">disable-ccid<br></code></pre></td></tr></table></figure>
+<p>保存后重启系统，<code>gpg --card-status</code> 就能正确读取到卡片信息了，深入了解可以参考<a target="_blank" rel="noopener" href="https://blog.apdu.fr/posts/2024/04/gnupg-and-pcsc-conflicts-episode-2/">GnuPG and PC&#x2F;SC conflicts, episode 2</a>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Archlinux/" class="print-no-link">#Archlinux</a>
+      
+        <a href="/tags/EndeavourOS/" class="print-no-link">#EndeavourOS</a>
+      
+        <a href="/tags/WPS/" class="print-no-link">#WPS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Archlinux下桌面办公环境配置</div>
+      <div>http://xiaofami.github.io/2024/12/17/office/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tccmu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/26/amdvbflash/" title="盈通RX480显卡刷BIOS">
+                        <span class="hidden-mobile">盈通RX480显卡刷BIOS</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
