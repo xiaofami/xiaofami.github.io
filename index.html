@@ -229,6 +229,56 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/19/nrfonlinux/" target="_self">
+          <img src="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp" srcset="/img/loading.gif" lazyload alt="Archlinux搭建Canokey固件编译及烧录环境">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/19/nrfonlinux/" target="_self">
+          Archlinux搭建Canokey固件编译及烧录环境
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/19/nrfonlinux/" target="_self">
+        <div>
+          前言鉴于已经将主力系统迁移到了Archlinux(EndeavourOS)，本文补充一下在Archlinux编译Canokey固件及配置的过程。 配置编译环境1sudo pacman -S cmake arm-none-eabi-gcc arm-none-eabi-newlib 我的EndeavourOS需要安装上述软件包完成编译环境搭建。在首次搭建编译环境时，常常会遇到缺少头文件的情况，怎样知道
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-19 21:19" pubdate>
+              2024-12-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/nRF52840/">#nRF52840</a>
+            
+              <a href="/tags/Archlinux/">#Archlinux</a>
+            
+              <a href="/tags/EndeavourOS/">#EndeavourOS</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/12/17/office/" target="_self">
           <img src="/img/libreoffice.jpg" srcset="/img/loading.gif" lazyload alt="Archlinux下桌面办公环境配置">
         </a>
@@ -654,54 +704,6 @@
               <a href="/tags/openwrt/">#openwrt</a>
             
               <a href="/tags/firewall/">#firewall</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/08/01/uci/" target="_self">
-          <img src="/img/wrt.png" srcset="/img/loading.gif" lazyload alt="使用uci配置openwrt旁路由">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/08/01/uci/" target="_self">
-          使用uci配置openwrt旁路由
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2024/08/01/uci/" target="_self">
-        <div>
-          默认配置下，openwrt的LAN接口IP地址为192.168.1.1，并对外提供DHCP服务，显然该配置不适用于旁路由。这种情况下想连接到LUCI配置很不方便，还好可以使用uci轻松搞定： 12345uci set dhcp.lan.ignore=&quot;1&quot;uci commit dhcpuci set network.lan.proto=&quot;dhcp&quot;uci c
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-08-01 16:33" pubdate>
-              2024-08-01
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/openwrt/">#openwrt</a>
-            
-              <a href="/tags/uci/">#uci</a>
             
           </div>
         
