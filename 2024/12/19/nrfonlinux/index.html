@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp">
 <meta property="article:published_time" content="2024-12-19T13:19:20.000Z">
-<meta property="article:modified_time" content="2024-12-19T14:06:34.801Z">
+<meta property="article:modified_time" content="2024-12-19T14:09:02.893Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="nRF52840">
 <meta property="article:tag" content="Archlinux">
@@ -292,7 +292,7 @@
 <h1 id="搭建烧录环境"><a href="#搭建烧录环境" class="headerlink" title="搭建烧录环境"></a>搭建烧录环境</h1><p>在Windows系统中，使用<strong>nRF Connect for Desktop</strong>烧录固件极为便利。幸运的是，Nordic公司也为它开发了Linux版本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S nrfconnect-appimage nrf-udev<br></code></pre></td></tr></table></figure>
 <p>软件界面及使用方式与Windows版本完全一致。</p>
-<h1 id="安装Google-Chrome"><a href="#安装Google-Chrome" class="headerlink" title="安装Google Chrome"></a>安装Google Chrome</h1><p>安装一个浏览器似乎与Canokey没什么联系，其实不然。Canokey的fido2模块无法通过Canokey自己的console配置，必须借助第三方程序。在Windows 11中，可以借助 ** Windows Hello** 配置：（参考：<a target="_blank" rel="noopener" href="https://support.yubico.com/hc/en-us/articles/360016648899-Resetting-the-FIDO2-Application-on-Your-YubiKey-or-Security-Key">Resetting the FIDO2 Application on Your YubiKey or Security Key</a>）</p>
+<h1 id="安装Google-Chrome"><a href="#安装Google-Chrome" class="headerlink" title="安装Google Chrome"></a>安装Google Chrome</h1><p>安装一个浏览器似乎与Canokey没什么联系，其实不然。Canokey的fido2模块无法通过Canokey自己的console配置，必须借助第三方程序。在Windows 11中，可以借助 <strong>Windows Hello</strong> 配置：（参考：<a target="_blank" rel="noopener" href="https://support.yubico.com/hc/en-us/articles/360016648899-Resetting-the-FIDO2-Application-on-Your-YubiKey-or-Security-Key">Resetting the FIDO2 Application on Your YubiKey or Security Key</a>）</p>
 <p>打开<strong>系统设置</strong>，选择 <strong>账户 - 登录选项 - 安全密钥 - 使用物理安全密钥登录到应用 - 管理  安全密钥PIN（创建&#x2F;更改），重置安全密钥</strong>，即可实现修改fido2 pin码，或者重置fido2模块操作。Linux下可以利用<strong>Google Chrome</strong>实现同等功能：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S google-chrome-wayland-vulkan<br></code></pre></td></tr></table></figure>
 <p>使用kate打开 <code>/usr/share/applications/google-chrome.desktop</code>，将</p>
