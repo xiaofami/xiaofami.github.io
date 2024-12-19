@@ -49,8 +49,8 @@ Exec=env LANGUAGE=zh_CN LC_ALL=zh_CN.UTF-8 QT_SCREEN_SCALE_FACTORS=1 XMODIFIERS=
 # 第三方外壳
 热心网友为**EBYTE E104BT5040U**制作了带按钮的外壳，手里有3D打印机的可以打印出来试试效果如何：[EByte nRF52840 Dongle Case with Buttons
 ](https://makerworld.com/en/models/785032#profileId-722680)
-[!img](https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_5636ec5c156af8.jpg?x-oss-process=image/resize,w_1000/format,webp)
-[!img](https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp)
+[图1](https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_5636ec5c156af8.jpg?x-oss-process=image/resize,w_1000/format,webp "图1")
+[图2](https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp "图2")
 # 其他
 自从上次使用fido2功能已经过去了很久，以至于我完全忘记了对应pin码，几次错误后被Google以及GitHub拉黑了设备，提示要重置设备，这个重置指的是重置fido2模块。注意，重新刷固件不能实现fido2重置，必须通过上面的**Windows Hello**或者**Google Chrome**方式才行，我来回刷了几次固件才发现这一问题。
 
