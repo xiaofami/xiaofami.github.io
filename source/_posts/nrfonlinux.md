@@ -29,7 +29,7 @@ paru -S nrfconnect-appimage nrf-udev
 ```
 软件界面及使用方式与Windows版本完全一致。
 # 安装Google Chrome
-安装一个浏览器似乎与Canokey没什么联系，其实不然。Canokey的fido2模块无法通过Canokey自己的console配置，必须借助第三方程序。在Windows 11中，可以借助 ** Windows Hello** 配置：（参考：[Resetting the FIDO2 Application on Your YubiKey or Security Key](https://support.yubico.com/hc/en-us/articles/360016648899-Resetting-the-FIDO2-Application-on-Your-YubiKey-or-Security-Key)）
+安装一个浏览器似乎与Canokey没什么联系，其实不然。Canokey的fido2模块无法通过Canokey自己的console配置，必须借助第三方程序。在Windows 11中，可以借助 **Windows Hello** 配置：（参考：[Resetting the FIDO2 Application on Your YubiKey or Security Key](https://support.yubico.com/hc/en-us/articles/360016648899-Resetting-the-FIDO2-Application-on-Your-YubiKey-or-Security-Key)）
 
 打开**系统设置**，选择 **账户 - 登录选项 - 安全密钥 - 使用物理安全密钥登录到应用 - 管理  安全密钥PIN（创建/更改），重置安全密钥**，即可实现修改fido2 pin码，或者重置fido2模块操作。Linux下可以利用**Google Chrome**实现同等功能：
 ```bash
