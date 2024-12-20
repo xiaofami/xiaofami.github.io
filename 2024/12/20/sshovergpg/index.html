@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQKhu4nmsbK_PpR5Q7JcpLj-KOvqdWmjXLMsJa5ed0UHavCc2vd-s_0E7dI7BtYCvj_w&usqp=CAU">
 <meta property="article:published_time" content="2024-12-20T14:33:55.000Z">
-<meta property="article:modified_time" content="2024-12-20T16:44:36.959Z">
+<meta property="article:modified_time" content="2024-12-20T16:55:51.565Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="SSH">
 <meta property="article:tag" content="nRF52840">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          973 字
+          1k 字
         
       </span>
     
@@ -316,6 +316,9 @@
 <pre><code class="hljs">The email in this signature doesn’t match the committer email.
 </code></pre>
 <p>解决方法是找出主密钥，添加UID，删除GitHub中存储的PGP公钥，将重新导出的公钥添加回GitHub即可。</p>
+<p>一切完成后，开始收尾工作：（参考：<a target="_blank" rel="noopener" href="https://blog.moe233.net/posts/18974f8b/%EF%BC%89">https://blog.moe233.net/posts/18974f8b/）</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 删除电脑上主密钥：</span><br>gpg --delete-secret-keys <span class="hljs-variable">$KEYID</span><br><span class="hljs-comment"># 将私钥指向智能卡</span><br>gpg --edit-card<br>fetch<br></code></pre></td></tr></table></figure>
+<p>Github commit 签名至此就搞定了。</p>
 
                 
               </div>
