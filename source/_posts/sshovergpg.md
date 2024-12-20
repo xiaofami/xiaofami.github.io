@@ -97,3 +97,14 @@ git config --global gpg.program gpg2
     The email in this signature doesn’t match the committer email.
     
 解决方法是找出主密钥，添加UID，删除GitHub中存储的PGP公钥，将重新导出的公钥添加回GitHub即可。
+
+一切完成后，开始收尾工作：（参考：https://blog.moe233.net/posts/18974f8b/）
+
+```bash
+# 删除电脑上主密钥：
+gpg --delete-secret-keys $KEYID
+# 将私钥指向智能卡
+gpg --edit-card
+fetch
+```
+Github commit 签名至此就搞定了。
