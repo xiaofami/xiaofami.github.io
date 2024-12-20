@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQKhu4nmsbK_PpR5Q7JcpLj-KOvqdWmjXLMsJa5ed0UHavCc2vd-s_0E7dI7BtYCvj_w&usqp=CAU">
 <meta property="article:published_time" content="2024-12-20T14:33:55.000Z">
-<meta property="article:modified_time" content="2024-12-20T15:51:20.394Z">
+<meta property="article:modified_time" content="2024-12-20T15:58:56.521Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="SSH">
 <meta property="article:tag" content="nRF52840">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          834 字
+          836 字
         
       </span>
     
@@ -310,7 +310,7 @@
 <h1 id="Github-commit-签名"><a href="#Github-commit-签名" class="headerlink" title="Github commit 签名"></a>Github commit 签名</h1><p>参考自<a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key">Telling Git about your signing key</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gpg --list-secret-keys --keyid-format=long<br>/Users/hubot/.gnupg/secring.gpg<br>------------------------------------<br>sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]<br>uid                          Hubot &lt;hubot@example.com&gt;<br>ssb   4096R/4BB6D45482678BE3 2016-03-10<br></code></pre></td></tr></table></figure>
 <p>记住 <em>3AA5C34371567BD2</em> 这个 <strong>GPG key ID</strong>，然后执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.signingkey 4BB6D45482678BE3<br>git config --global commit.gpgsign <span class="hljs-literal">true</span><br>git config --global tag.gpgSign <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.signingkey 3AA5C34371567BD2<br>git config --global commit.gpgsign <span class="hljs-literal">true</span><br>git config --global tag.gpgSign <span class="hljs-literal">true</span><br>git config --global gpg.program gpg2<br></code></pre></td></tr></table></figure>
 
                 
               </div>
