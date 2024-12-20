@@ -21,26 +21,28 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言鉴于已经将主力系统迁移到了Archlinux(EndeavourOS)，本文补充一下在Archlinux编译Canokey固件及配置的过程。 配置编译环境1sudo pacman -S cmake arm-none-eabi-gcc arm-none-eabi-newlib 我的EndeavourOS需要安装上述软件包完成编译环境搭建。在首次搭建编译环境时，常常会遇到缺少头文件的情况，怎样知道">
+    <meta name="description" content="远程服务器配置远程服务器的设置比较简单，在本地将负责Authentication子密钥的公钥导出，添加到服务器 ** ~&#x2F;.ssh&#x2F;authorized_keys** 文件即可，记得重启SSH服务，或者直接重启系统。在实验成功之前，不要禁用掉之前的登录方式，避免把自己锁在外面。 这个公钥可以在已经插入智能卡的情况下，通过ssh-add -L查看，喜欢GUI界面的也可以在kleo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Archlinux搭建Canokey固件编译及烧录环境">
-<meta property="og:url" content="http://xiaofami.github.io/2024/12/19/nrfonlinux/index.html">
+<meta property="og:title" content="使用opengpg智能卡认证SSH登录">
+<meta property="og:url" content="http://xiaofami.github.io/2024/12/20/sshovergpg/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="前言鉴于已经将主力系统迁移到了Archlinux(EndeavourOS)，本文补充一下在Archlinux编译Canokey固件及配置的过程。 配置编译环境1sudo pacman -S cmake arm-none-eabi-gcc arm-none-eabi-newlib 我的EndeavourOS需要安装上述软件包完成编译环境搭建。在首次搭建编译环境时，常常会遇到缺少头文件的情况，怎样知道">
+<meta property="og:description" content="远程服务器配置远程服务器的设置比较简单，在本地将负责Authentication子密钥的公钥导出，添加到服务器 ** ~&#x2F;.ssh&#x2F;authorized_keys** 文件即可，记得重启SSH服务，或者直接重启系统。在实验成功之前，不要禁用掉之前的登录方式，避免把自己锁在外面。 这个公钥可以在已经插入智能卡的情况下，通过ssh-add -L查看，喜欢GUI界面的也可以在kleo">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp">
-<meta property="article:published_time" content="2024-12-19T13:19:20.000Z">
-<meta property="article:modified_time" content="2024-12-19T14:11:29.823Z">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQKhu4nmsbK_PpR5Q7JcpLj-KOvqdWmjXLMsJa5ed0UHavCc2vd-s_0E7dI7BtYCvj_w&usqp=CAU">
+<meta property="article:published_time" content="2024-12-20T14:33:55.000Z">
+<meta property="article:modified_time" content="2024-12-20T15:51:20.394Z">
 <meta property="article:author" content="tccmu">
+<meta property="article:tag" content="SSH">
 <meta property="article:tag" content="nRF52840">
 <meta property="article:tag" content="Archlinux">
 <meta property="article:tag" content="EndeavourOS">
+<meta property="article:tag" content="Canokey">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp">
+<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQKhu4nmsbK_PpR5Q7JcpLj-KOvqdWmjXLMsJa5ed0UHavCc2vd-s_0E7dI7BtYCvj_w&usqp=CAU">
   
   
   
-  <title>Archlinux搭建Canokey固件编译及烧录环境 - 小荷</title>
+  <title>使用opengpg智能卡认证SSH登录 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Archlinux搭建Canokey固件编译及烧录环境"></span>
+            <span id="subtitle" data-typed-text="使用opengpg智能卡认证SSH登录"></span>
           
         </div>
 
@@ -217,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-19 21:19" pubdate>
-          2024年12月19日 晚上
+        <time datetime="2024-12-20 22:33" pubdate>
+          2024年12月20日 晚上
         </time>
       </span>
     
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          689 字
+          834 字
         
       </span>
     
@@ -240,7 +242,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -277,34 +279,38 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Archlinux搭建Canokey固件编译及烧录环境</h1>
+            <h1 id="seo-header">使用opengpg智能卡认证SSH登录</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鉴于已经将主力系统迁移到了Archlinux(EndeavourOS)，本文补充一下在Archlinux编译Canokey固件及配置的过程。</p>
-<h1 id="配置编译环境"><a href="#配置编译环境" class="headerlink" title="配置编译环境"></a>配置编译环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S cmake arm-none-eabi-gcc arm-none-eabi-newlib<br></code></pre></td></tr></table></figure>
-<p>我的EndeavourOS需要安装上述软件包完成编译环境搭建。在首次搭建编译环境时，常常会遇到缺少头文件的情况，怎样知道应该安装哪些软件包呢？pacman提供了对应查询功能：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -Fy limits.h<br></code></pre></td></tr></table></figure>
+                <h1 id="远程服务器配置"><a href="#远程服务器配置" class="headerlink" title="远程服务器配置"></a>远程服务器配置</h1><p>远程服务器的设置比较简单，在本地将负责<em>Authentication</em>子密钥的公钥导出，添加到服务器 ** ~&#x2F;.ssh&#x2F;authorized_keys** 文件即可，记得重启SSH服务，或者直接重启系统。在实验成功之前，不要禁用掉之前的登录方式，避免把自己锁在外面。</p>
+<p>这个公钥可以在已经插入智能卡的情况下，通过<code>ssh-add -L</code>查看，喜欢GUI界面的也可以在<strong>kleopatra</strong>中右键导出。</p>
+<p>至此服务器端配置结束，下面来配置客户端。</p>
+<h1 id="Archlinux系统配置方法"><a href="#Archlinux系统配置方法" class="headerlink" title="Archlinux系统配置方法"></a>Archlinux系统配置方法</h1><p>参考自<a target="_blank" rel="noopener" href="https://www.kxxt.dev/blog/yubikey-oobe/">Yubikey 开箱上手</a>：</p>
+<p>编辑 <strong>~&#x2F;.bashrc</strong>，加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> GPG_TTY=<span class="hljs-string">&quot;<span class="hljs-subst">$(tty)</span>&quot;</span><br><span class="hljs-built_in">export</span> SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)<br>gpgconf --launch gpg-agent<br></code></pre></td></tr></table></figure>
+<p>Log out后再回来，提前插好智能卡然后执行ssh命令登录服务器，会自动弹出输入PIN码窗口，这个PIN码是Canokey中opengpg模块的PIN码，默认为123456，输入并确认即可登录成功。</p>
+<h1 id="Windows-11系统配置方法"><a href="#Windows-11系统配置方法" class="headerlink" title="Windows 11系统配置方法"></a>Windows 11系统配置方法</h1><p>参考自<a target="_blank" rel="noopener" href="https://lab.jinkan.org/2021/08/01/using-gpg-for-ssh-authentication-on-windows-10/">在 Windows 10 上用 GPG 完成 SSH 认证</a>，大体步骤如下：</p>
+<h2 id="安装配置Gpg4win"><a href="#安装配置Gpg4win" class="headerlink" title="安装配置Gpg4win"></a>安装配置<a target="_blank" rel="noopener" href="https://www.gpg4win.org/download.html">Gpg4win</a></h2><p>假设你采用了默认安装路径，那么在<code>C:\Program Files (x86)\Gpg4win\bin\</code>目录中，存在一个名为<strong>gpgolconfig.exe</strong>的二进制程序，将它打开，逐次打开<strong>GnuPG System（Technical）</strong> - <strong>Private Keys</strong>页面，找到<strong>Options controlling the configuration</strong>区域，选中 <strong>Enable ssh support</strong>和<strong>Enable putty support</strong>并保存。</p>
+<p>打开<code>%APPDATA%\gnupg\gpg-agent.conf</code>，加入这样一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">enable-putty-support<br></code></pre></td></tr></table></figure>
+<p>查看负责<em>Authentication</em>子密钥的KeyGrip，注意是最下面那个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">PS C:\&gt; gpg -K --with-keygrip<br>sec#  rsa4096 2020-03-04 [C]<br>      7046C3E8C8DD73F814FDE289E6ED69D1C9149F9B<br>      Keygrip = &lt;40位10进制表示&gt;<br>uid           [ultimate] yinian &lt;yinian@jinkan.org&gt;<br>ssb   ed25519 2020-03-04 [S] [expires: 2023-03-04]<br>      Keygrip = &lt;40位10进制表示&gt;<br>ssb   cv25519 2020-03-04 [E] [expires: 2023-03-04]<br>      Keygrip = &lt;40位10进制表示&gt;<br>ssb   ed25519 2020-03-04 [A] [expires: 2023-03-04]<br>      Keygrip = &lt;40位10进制表示&gt;<br></code></pre></td></tr></table></figure>
+<p>复制KeyGrip后粘贴到<code>%APPDATA%\gnupg\sshcontrol</code>即可。</p>
+<p>笔者按：上述配置文件方式感觉有些问题。参见Archwiki中<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/GnuPG#Using_a_PGP_key_for_SSH_authentication">Using_a_PGP_key_for_SSH_authentication</a>一文，文中明确指出，在GPG密钥存储于物理卡片情况下没必要将keygrip添加到sshcontrol文件。另外对<code>%APPDATA%\gnupg\gpg-agent.conf</code>的修改也有待推敲。总而言之，我感觉完全没必要修改<code>%APPDATA%\gnupg\gpg-agent.conf</code>和<code>%APPDATA%\gnupg\sshcontrol</code>这两个配置文件，有空时针对性测试一下。</p>
+<h2 id="启动gpg-agent"><a href="#启动gpg-agent" class="headerlink" title="启动gpg-agent"></a>启动gpg-agent</h2><p>打开CMD窗口，执行以下命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmd">PS C:\&gt; gpg-connect-agent killagent /bye<br>OK closing connection<br><br>PS C:\&gt; gpg-connect-agent /bye<br>gpg-connect-agent: no running gpg-agent - starting &#x27;C:\Program Files (x86)\Gpg4win\..\GnuPG\bin\gpg-agent.exe&#x27;<br>gpg-connect-agent: waiting <span class="hljs-keyword">for</span> the agent to come up ... (<span class="hljs-number">5</span>s)<br>gpg-connect-agent: connection to agent established<br></code></pre></td></tr></table></figure>
 
-<p>例如，编译Canokey固件需要<strong>limits.h</strong>这个头文件，可以通过<strong>pacman -Fy</strong>查询。虽然多个软件包均提供了<strong>limits.h</strong>，不过根据常识，头文件应当与Target平台对应，所以安装<strong>arm-none-eabi-newlib</strong>。</p>
-<p>后续编译操作与在WSL2中一致，无须赘言。</p>
-<h1 id="搭建烧录环境"><a href="#搭建烧录环境" class="headerlink" title="搭建烧录环境"></a>搭建烧录环境</h1><p>在Windows系统中，使用<strong>nRF Connect for Desktop</strong>烧录固件极为便利。幸运的是，Nordic公司也为它开发了Linux版本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S nrfconnect-appimage nrf-udev<br></code></pre></td></tr></table></figure>
-<p>软件界面及使用方式与Windows版本完全一致。</p>
-<h1 id="安装Google-Chrome"><a href="#安装Google-Chrome" class="headerlink" title="安装Google Chrome"></a>安装Google Chrome</h1><p>安装一个浏览器似乎与Canokey没什么联系，其实不然。Canokey的fido2模块无法通过Canokey自己的console配置，必须借助第三方程序。在Windows 11中，可以借助 <strong>Windows Hello</strong> 配置：（参考：<a target="_blank" rel="noopener" href="https://support.yubico.com/hc/en-us/articles/360016648899-Resetting-the-FIDO2-Application-on-Your-YubiKey-or-Security-Key">Resetting the FIDO2 Application on Your YubiKey or Security Key</a>）</p>
-<p>打开<strong>系统设置</strong>，选择 <strong>账户 - 登录选项 - 安全密钥 - 使用物理安全密钥登录到应用 - 管理  安全密钥PIN（创建&#x2F;更改），重置安全密钥</strong>，即可实现修改fido2 pin码，或者重置fido2模块操作。Linux下可以利用<strong>Google Chrome</strong>实现同等功能：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S google-chrome-wayland-vulkan<br></code></pre></td></tr></table></figure>
-<p>使用kate打开 <code>/usr/share/applications/google-chrome.desktop</code>，将</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Exec=/usr/bin/google-chrome-stable %U<br></code></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Exec=<span class="hljs-built_in">env</span> LANGUAGE=zh_CN LC_ALL=zh_CN.UTF-8 QT_SCREEN_SCALE_FACTORS=1 XMODIFIERS=<span class="hljs-string">&quot;@im=fcitx&quot;</span> GTK_IM_MODULE=<span class="hljs-string">&quot;fcitx&quot;</span> QT_IM_MODULE=<span class="hljs-string">&quot;fcitx&quot;</span> SDL_IM_MODULE=fcitx GLFW_IM_MODULE=ibus /usr/bin/google-chrome-stable %U<br></code></pre></td></tr></table></figure>
-<p>这一步只是为了解决中文输入以及中文界面问题，与之前配置WPS如出一辙。</p>
-<p>配置结束后，打开Google Chrome，访问 <a href="chrome://settings/securityKeys">chrome:&#x2F;&#x2F;settings&#x2F;securityKeys</a> 便可进入物理密钥配置页面，能够进行fido2相关配置。</p>
-<h1 id="第三方外壳"><a href="#第三方外壳" class="headerlink" title="第三方外壳"></a>第三方外壳</h1><p>热心网友为<strong>EBYTE E104BT5040U</strong>制作了带按钮的外壳，手里有3D打印机的可以打印出来试试效果如何：<a target="_blank" rel="noopener" href="https://makerworld.com/en/models/785032#profileId-722680">EByte nRF52840 Dongle Case with Buttons
-</a><br><img src="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_5636ec5c156af8.jpg?x-oss-process=image/resize,w_1000/format,webp" srcset="/img/loading.gif" lazyload alt="图1" title="图1"><br><img src="https://makerworld.bblmw.com/makerworld/model/US76a0774e941e4c/design/2024-11-13_3f7e2672efdcb8.jpg?x-oss-process=image/resize,w_1000/format,webp" srcset="/img/loading.gif" lazyload alt="图2" title="图2"></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>自从上次使用fido2功能已经过去了很久，以至于我完全忘记了对应pin码，几次错误后被Google以及GitHub拉黑了设备，提示要重置设备，这个重置指的是重置fido2模块。注意，重新刷固件不能实现fido2重置，必须通过上面的<strong>Windows Hello</strong>或者<strong>Google Chrome</strong>方式才行，我来回刷了几次固件才发现这一问题。</p>
-<p>另外今年11月27日<strong>Gpg4win 4.4.0</strong> 正式发布，配合Canokey没什么问题,还在用旧版本的可以更新了。</p>
+<p>笔者按：Windows 11系统中，<strong>gpg-agent</strong>每次开机后需要手动启动，所以参考教程中的“重启gpg-agent”说法似有不妥。另外参考<a target="_blank" rel="noopener" href="https://superuser.com/questions/1075404/how-can-i-restart-gpg-agent">How can I restart gpg-agent?</a>以及<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/GnuPG#Reload_the_agent">Reload the agent</a>，</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">gpg-connect-agent reloadagent /bye<br></code></pre></td></tr></table></figure>
+<p>这一命令似乎更为优雅，这也正是archwiki所推荐的方式。</p>
+<h1 id="安装SSH客户端"><a href="#安装SSH客户端" class="headerlink" title="安装SSH客户端"></a>安装SSH客户端</h1><p><a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm</a>即可。无须特殊配置，提供服务器地址、用户名、端口号即可进行SSH登录。与Archlinux情形相同，登录时会自动弹出PIN输入框，输入并确认即可完成登录。</p>
+<p>所参考的教程中用到的是<a target="_blank" rel="noopener" href="https://github.com/NoMoreFood/putty-cac">putty-cac</a>，经测试同样无须任何额外配置即可完成SSH登录。</p>
+<h1 id="Github-commit-签名"><a href="#Github-commit-签名" class="headerlink" title="Github commit 签名"></a>Github commit 签名</h1><p>参考自<a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key">Telling Git about your signing key</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gpg --list-secret-keys --keyid-format=long<br>/Users/hubot/.gnupg/secring.gpg<br>------------------------------------<br>sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]<br>uid                          Hubot &lt;hubot@example.com&gt;<br>ssb   4096R/4BB6D45482678BE3 2016-03-10<br></code></pre></td></tr></table></figure>
+<p>记住 <em>3AA5C34371567BD2</em> 这个 <strong>GPG key ID</strong>，然后执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.signingkey 4BB6D45482678BE3<br>git config --global commit.gpgsign <span class="hljs-literal">true</span><br>git config --global tag.gpgSign <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -317,11 +323,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/SSH/" class="print-no-link">#SSH</a>
+      
         <a href="/tags/nRF52840/" class="print-no-link">#nRF52840</a>
       
         <a href="/tags/Archlinux/" class="print-no-link">#Archlinux</a>
       
         <a href="/tags/EndeavourOS/" class="print-no-link">#EndeavourOS</a>
+      
+        <a href="/tags/Canokey/" class="print-no-link">#Canokey</a>
       
     </div>
   
@@ -333,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Archlinux搭建Canokey固件编译及烧录环境</div>
-      <div>http://xiaofami.github.io/2024/12/19/nrfonlinux/</div>
+      <div>使用opengpg智能卡认证SSH登录</div>
+      <div>http://xiaofami.github.io/2024/12/20/sshovergpg/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +356,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月19日</div>
+          <div>2024年12月20日</div>
         </div>
       
       
@@ -378,18 +388,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/20/sshovergpg/" title="使用opengpg智能卡认证SSH登录">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用opengpg智能卡认证SSH登录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/17/office/" title="Archlinux下桌面办公环境配置">
-                        <span class="hidden-mobile">Archlinux下桌面办公环境配置</span>
+                      <a href="/2024/12/19/nrfonlinux/" title="Archlinux搭建Canokey固件编译及烧录环境">
+                        <span class="hidden-mobile">Archlinux搭建Canokey固件编译及烧录环境</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
