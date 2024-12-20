@@ -91,3 +91,9 @@ git config --global tag.gpgSign true
 git config --global gpg.program gpg2
 ```
 另外在GitHub设置页面中，不要忘记分别添加SSH Key和GPG Key，这两个是不一样的。SSH Key用于与Github通信，GPG Key负责commit签名。
+
+这里还有一个坑点。如果Github中存储的GPG证书的UID信息中，邮箱地址没有包含第二邮箱（即便这个地址已经在github中进行了验证），那么提交的commit仍然是 **Unverified**状态，提示
+
+    The email in this signature doesn’t match the committer email.
+    
+解决方法是找出主密钥，添加UID，删除GitHub中存储的PGP公钥，将重新导出的公钥添加回GitHub即可。
