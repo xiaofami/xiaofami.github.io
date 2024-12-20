@@ -85,7 +85,8 @@ ssb   4096R/4BB6D45482678BE3 2016-03-10
 ```
 记住 *3AA5C34371567BD2* 这个 **GPG key ID**，然后执行
 ```bash
-git config --global user.signingkey 4BB6D45482678BE3
+git config --global user.signingkey 3AA5C34371567BD2
 git config --global commit.gpgsign true
 git config --global tag.gpgSign true
+git config --global gpg.program gpg2
 ```
