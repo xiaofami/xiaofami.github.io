@@ -90,3 +90,4 @@ git config --global commit.gpgsign true
 git config --global tag.gpgSign true
 git config --global gpg.program gpg2
 ```
+另外在GitHub设置页面中，不要忘记分别添加SSH Key和GPG Key，这两个是不一样的。SSH Key用于与Github通信，GPG Key负责commit签名。
