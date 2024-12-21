@@ -20,9 +20,9 @@ Bus 001 Device 003: ID 3554:f58e VXE VXE Mouse 1K Dongle
 ```bash
 kate /etc/udev/rules.d/99-usb.rules
 ```
-写入以下内容：
+写入以下内容：[^1]
 ```udev
-SUBSYSTEM=="usb", ATTRS{idVendor}=="3554", ATTRS{idProduct}=="f58e", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="3554", ATTRS{idProduct}=="f58e", MODE="0666"
 ```
 # 加载udev规则
 ```bash
@@ -31,3 +31,5 @@ sudo udevadm trigger
 ```
 
 完成后，在Chrome浏览器中访问 https://hub.atk.pro/ 即可连接到鼠标进行各种设置。
+
+[^1]:所参考的教程中创建了名为plugdev的GROUP并写入了udev规则，实测并无必要，反正已经设置了666权限。
