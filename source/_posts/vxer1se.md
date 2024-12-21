@@ -24,6 +24,7 @@ kate /etc/udev/rules.d/99-usb.rules
 ```udev
 SUBSYSTEM=="usb", ATTRS{idVendor}=="3554", ATTRS{idProduct}=="f58e", MODE="0666"
 ```
+记得自行替换VID和PID值。
 # 加载udev规则
 ```bash
 sudo udevadm control --reload-rules
