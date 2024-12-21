@@ -229,6 +229,56 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/21/vxer1se/" target="_self">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2UOl9KBvZCeXw3n2qR770GGUODJRUDpLcwg&amp;s" srcset="/img/loading.gif" lazyload alt="Archlinux平台为VXE R1 SE+ 鼠标配置udev规则">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/21/vxer1se/" target="_self">
+          Archlinux平台为VXE R1 SE+ 鼠标配置udev规则
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/21/vxer1se/" target="_self">
+        <div>
+          参考自Linux 下配置udev来实现chrome对于蜻蜓R1鼠标的访问。 找到鼠标USB无线接收器的PID和VID123$ lsusbBus 001 Device 003: ID 3554:f58e VXE VXE Mouse 1K Dongle 3554为VID，f58e为PID。 创建udev规则文件1kate /etc/udev/rules.d/99-usb.rules 写入以下内容： 1
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-21 19:18" pubdate>
+              2024-12-21
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Archlinux/">#Archlinux</a>
+            
+              <a href="/tags/EndeavourOS/">#EndeavourOS</a>
+            
+              <a href="/tags/VXE-R1-SE/">#VXE R1 SE</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/12/20/sshovergpg/" target="_self">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQKhu4nmsbK_PpR5Q7JcpLj-KOvqdWmjXLMsJa5ed0UHavCc2vd-s_0E7dI7BtYCvj_w&amp;usqp=CAU" srcset="/img/loading.gif" lazyload alt="使用opengpg智能卡认证SSH登录">
         </a>
@@ -662,54 +712,6 @@
               <a href="/tags/Gnuk/">#Gnuk</a>
             
               <a href="/tags/ST-LINK-V2/">#ST-LINK V2</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/08/02/dnsapi/" target="_self">
-          <img src="/img/acme.png" srcset="/img/loading.gif" lazyload alt="使用dnsapi签发证书">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/08/02/dnsapi/" target="_self">
-          使用dnsapi签发证书
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2024/08/02/dnsapi/" target="_self">
-        <div>
-          acme支持多种签发证书方式，之前使用的是手动创建TXT记录这种方式，过程稍显繁琐，可以使用dnsapi进行简化： 12export CF_Token=&quot;*******************************&quot;./acme.sh --issue --dns dns_cf --server letsencrypt -d domain.com 注意 CF_Token 会被a
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-08-02 10:03" pubdate>
-              2024-08-02
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/acme/">#acme</a>
-            
-              <a href="/tags/letsencrypt/">#letsencrypt</a>
             
           </div>
         

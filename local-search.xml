@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>Archlinux平台为VXE R1 SE+ 鼠标配置udev规则</title>
+    <link href="/2024/12/21/vxer1se/"/>
+    <url>/2024/12/21/vxer1se/</url>
+    
+    <content type="html"><![CDATA[<p>参考自<a href="https://www.cnblogs.com/dingnosakura/p/18274600">Linux 下配置udev来实现chrome对于蜻蜓R1鼠标的访问</a>。</p><h1 id="找到鼠标USB无线接收器的PID和VID"><a href="#找到鼠标USB无线接收器的PID和VID" class="headerlink" title="找到鼠标USB无线接收器的PID和VID"></a>找到鼠标USB无线接收器的PID和VID</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ lsusb<br><br>Bus 001 Device 003: ID 3554:f58e VXE VXE Mouse 1K Dongle<br></code></pre></td></tr></table></figure><p>3554为VID，f58e为PID。</p><h1 id="创建udev规则文件"><a href="#创建udev规则文件" class="headerlink" title="创建udev规则文件"></a>创建udev规则文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kate /etc/udev/rules.d/99-usb.rules<br></code></pre></td></tr></table></figure><p>写入以下内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs udev">SUBSYSTEM==&quot;usb&quot;, ATTRS&#123;idVendor&#125;==&quot;3554&quot;, ATTRS&#123;idProduct&#125;==&quot;f58e&quot;, MODE=&quot;0666&quot;, GROUP=&quot;plugdev&quot;<br></code></pre></td></tr></table></figure><h1 id="加载udev规则"><a href="#加载udev规则" class="headerlink" title="加载udev规则"></a>加载udev规则</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> udevadm control --reload-rules<br><span class="hljs-built_in">sudo</span> udevadm trigger<br></code></pre></td></tr></table></figure><p>完成后，在Chrome浏览器中访问 <a href="https://hub.atk.pro/">https://hub.atk.pro/</a> 即可连接到鼠标进行各种设置。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Archlinux</tag>
+      
+      <tag>EndeavourOS</tag>
+      
+      <tag>VXE R1 SE</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用opengpg智能卡认证SSH登录</title>
     <link href="/2024/12/20/sshovergpg/"/>
     <url>/2024/12/20/sshovergpg/</url>

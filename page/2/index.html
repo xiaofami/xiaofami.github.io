@@ -229,6 +229,54 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/08/02/dnsapi/" target="_self">
+          <img src="/img/acme.png" srcset="/img/loading.gif" lazyload alt="使用dnsapi签发证书">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/08/02/dnsapi/" target="_self">
+          使用dnsapi签发证书
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/08/02/dnsapi/" target="_self">
+        <div>
+          acme支持多种签发证书方式，之前使用的是手动创建TXT记录这种方式，过程稍显繁琐，可以使用dnsapi进行简化： 12export CF_Token=&quot;*******************************&quot;./acme.sh --issue --dns dns_cf --server letsencrypt -d domain.com 注意 CF_Token 会被a
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-08-02 10:03" pubdate>
+              2024-08-02
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/acme/">#acme</a>
+            
+              <a href="/tags/letsencrypt/">#letsencrypt</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/08/02/openwrtfw/" target="_self">
           <img src="/img/wrt.png" srcset="/img/loading.gif" lazyload alt="openwrt旁路由防火墙配置">
         </a>
@@ -658,58 +706,6 @@
               <a href="/tags/duplicati/">#duplicati</a>
             
               <a href="/tags/docker/">#docker</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/03/27/alist/" target="_self">
-          <img src="/img/alist.jpg" srcset="/img/loading.gif" lazyload alt="Manjaro ARM安装运行alist并通过webdav挂载到本地目录">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2023/03/27/alist/" target="_self">
-          Manjaro ARM安装运行alist并通过webdav挂载到本地目录
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2023/03/27/alist/" target="_self">
-        <div>
-          最近解决了Manjaro ARM在R3300-M上频繁死机的问题，经查阅系统日志，基本可以推定是8189es内核模块的问题，禁用后再未死机。于是R3300-M又可以拿来跑一些服务了（这个盒子不会用到2030年吧 … ） 安装alist作为网盘聚合工具相当好用，特别是把别人分享的文件挂载到本地实现资源整合。利用官方脚本安装十分简单： 1curl -fsSL &quot;https://alist.n
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-27 15:42" pubdate>
-              2023-03-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/alist/">#alist</a>
-            
-              <a href="/tags/Manjaro-ARM/">#Manjaro ARM</a>
-            
-              <a href="/tags/webdav/">#webdav</a>
-            
-              <a href="/tags/dlna/">#dlna</a>
             
           </div>
         
