@@ -31,6 +31,6 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
-完成后，在Chrome浏览器中访问 https://hub.atk.pro/ 即可连接到鼠标进行各种设置。
+完成后，在Chrome浏览器中访问 https://hub.atk.pro/ 即可连接到鼠标进行各种设置。上述改动重启系统后依然有效。
 
 [^1]:所参考的教程中创建了名为plugdev的GROUP并写入了udev规则，实测并无必要，反正已经设置了666权限。
