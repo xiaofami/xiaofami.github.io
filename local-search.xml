@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>Canokey之OATH踩坑记录</title>
+    <link href="/2024/12/21/canokeyoath/"/>
+    <url>/2024/12/21/canokeyoath/</url>
+    
+    <content type="html"><![CDATA[<p>之前使用Canokey的opengpg模块实现了文件加解密、签名、SSH登录、GitHub commit等功能，于是又折腾了下OATH模块。用起来很简单，但是有坑需要注意。</p><h1 id="获取TOTP链接并添加到Canokey"><a href="#获取TOTP链接并添加到Canokey" class="headerlink" title="获取TOTP链接并添加到Canokey"></a>获取TOTP链接并添加到Canokey</h1><p>支持TOTP的网站一般会提供一个二维码，把这个二维码图片保存到本地，然后使用<code>zbarimg</code>读取即可获得链接:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ zbarimg yourqrcode.png<br><br>QR-Code:otpauth:// ………………secret=……………………<br></code></pre></td></tr></table></figure><p>大致如此，执行后会输出二维码对应的实际链接。Archlinux中，zbarimg由<code>zbar</code>提供，如果没有预装请自行pacman。</p><p>得到链接后，在Canokey管理页面<strong>TOTP&#x2F;HOTP</strong>模块中手动添加对应信息即可。Canokey管理页面也提供了图片识别功能，可以一键识别图片省却手动填写麻烦，两种方式看个人喜好。（别用微信扫码就行 。。。）</p><h1 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h1><p>Canokey管理页面 <a href="https://console.canokeys.org/#/applets/oath">https://console.canokeys.org/#/applets/oath</a> 中，右上角有一个🔒标志，可以为<strong>TOTP&#x2F;HOTP</strong>页面设置访问密码。这个设计逻辑上没问题，但是实现上貌似存在BUG。初次设置密码后，后续对该密码的任何修改或清空操作都无效——没有错误提示，而且Canokey文档中根本没提到过这个密码，这真令人头大。Canokey的新版管理页面中移除了重置模块选项，还得到旧版管理页面中操作。</p><p>旧版管理页面有两个，分别为</p><ul><li><a href="https://console-legacy.canokeys.org/#/">https://console-legacy.canokeys.org/#/</a></li><li><a href="https://console-vue.canokeys.org/">https://console-vue.canokeys.org/</a></li></ul><p>真正有用的是第二个。关闭掉所有的canokey管理页面避免访问冲突，打开 <a href="https://console-vue.canokeys.org/admin">https://console-vue.canokeys.org/admin</a> ，选择<strong>RESET OATH</strong>，重置后恼人的<strong>TOTP&#x2F;HOTP</strong>页面访问密码就没有了，当然先前的<strong>TOTP</strong>记录也没了，需要重新导入。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Archlinux</tag>
+      
+      <tag>EndeavourOS</tag>
+      
+      <tag>Canokey</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Archlinux平台为VXE R1 SE+ 鼠标配置udev规则</title>
     <link href="/2024/12/21/vxer1se/"/>
     <url>/2024/12/21/vxer1se/</url>
