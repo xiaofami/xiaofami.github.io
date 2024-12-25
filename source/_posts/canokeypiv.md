@@ -50,7 +50,7 @@ Try removing and reconnecting the device.
 
 Linux中也存在类似现象。执行`yubico-piv-tool -r canokeys -a status`后，第一次运行`gpg --card-status`会提示`gpg: OpenPGP card not available: General error`，只需再执行一次`gpg --card-status`就正常了。
 # 创建证书
-创建openssl配置文件。名字随意，比如`2.cof`：
+创建openssl配置文件。名字随意，比如`2.cnf`：
 
 ```2.cnf
 [ req ]
