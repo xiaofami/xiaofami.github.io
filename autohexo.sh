@@ -8,7 +8,7 @@ commitComment=""
 echo
 function commit2git {
 	git add .
-	git commit -S -m "$1"
+	git commit -m "$1"
 	git push origin blogSource
 }
 while getopts :i:f:g opt
