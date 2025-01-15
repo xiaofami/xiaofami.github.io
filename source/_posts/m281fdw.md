@@ -11,19 +11,19 @@ index_img: https://tse3-mm.cn.bing.net/th/id/OIP-C.38CYOuFKKM4pq5RCWDxoZAHaHa?w=
 # 下载降级固件
 请直接点击下载：
 
-- {% asset_link HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe %}
+1. {% asset_link "HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe" "HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe" %}
 
 MD5: 3519A1E3EB67D5564B6284F03B1D5C66
 SHA1: 32E30EE529E8DC55BFD4A46A03B8823AF8D1F47D
 
-- {% asset_link HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu %}
+2. {% asset_link "HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu" "HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu" %}
 
 MD5: 3E637DE030C760EEC23DF158D35AE0B6
 SHA1: 5B4911716708626624E031F0D47D4F1A9DF11996
 
-- {% asset_link HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf %}
+3. {% asset_link "HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf" "HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf" %}
 
-- {% asset_link HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu %}
+4. {% asset_link "HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu" "HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu" %}
 
 附件1、2是M281FDW的降级程序/固件，3为打印机设置，4为M282的降级固件，偶然间得到就随手放了上来。
 # 打印机设置
