@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>HP M281FDW降级固件分享</title>
+    <link href="/2025/01/15/m281fdw/"/>
+    <url>/2025/01/15/m281fdw/</url>
+    
+    <content type="html"><![CDATA[<p>家里有台多年前海淘的HP M281FDW激光彩色打印机，几年下来用着还算满意。可是HP为了让用户使用高价原装耗材，在后续固件更新中封杀了第三方硒鼓。虽然我早早就关掉了固件更新功能，不过以防意外，特意搜罗了固件降级方法，有需要的网友不要客气直接拿去用。</p><h1 id="下载降级固件"><a href="#下载降级固件" class="headerlink" title="下载降级固件"></a>下载降级固件</h1><p>请直接点击下载：</p><ol><li><a href="HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe">HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe</a><br>MD5: 3519A1E3EB67D5564B6284F03B1D5C66<br>SHA1: 32E30EE529E8DC55BFD4A46A03B8823AF8D1F47D</li><li><a href="HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu">HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu</a><br>MD5: 3E637DE030C760EEC23DF158D35AE0B6<br>SHA1: 5B4911716708626624E031F0D47D4F1A9DF11996</li><li><a href="HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf">HP-Color-LaserJet-Pro-MFP-M280M281-Firmware-Downgrade.pdf</a></li><li><a href="HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu">HP_Color_LaserJet_Pro_M282_M285_Multifunction_Printer_series_20200603.rfu</a></li></ol><p>附件1、2是M281FDW的降级程序&#x2F;固件，3为打印机设置，4为M282的降级固件，偶然间得到就随手放了上来。</p><h1 id="打印机设置"><a href="#打印机设置" class="headerlink" title="打印机设置"></a>打印机设置</h1><p>在打印机触摸屏中进入对应菜单进行以下操作：</p><p>Setup（设置） &gt; Service（服务） &gt; LaserJet Update（LaserJet更新） &gt; Manage Updates（管理更新）</p><ul><li>Allow Downgrade（允许降级）: Yes（是）</li><li>Check Automatically（自动检查）: Off（关闭）</li><li>Prompt Before Install（安装前提示）: Always Prompt（总是提示）</li><li>Allow Updates（允许更新）: Yes（是，降级完成后记得回来把这个选项关掉）</li></ul><p>附件3中有图文步骤，可供参考。</p><h1 id="开始刷机"><a href="#开始刷机" class="headerlink" title="开始刷机"></a>开始刷机</h1><h2 id="FTP打印法"><a href="#FTP打印法" class="headerlink" title="FTP打印法"></a>FTP打印法</h2><p>参考自<a href="https://rickscully.com/2020/how-to-downgrade-hp-printer-firmware-via-ftp/">How to downgrade HP Printer firmware via FTP</a></p><p>过程如下：</p><ol><li>浏览器中打开打印机管理页面，进入 <strong>网络 &gt; 高级</strong>配置页面，把<strong>FTP打印</strong>选中，然后点击页面最下方<strong>应用</strong>按钮。</li><li>随便打开一个你喜欢的FTP客户端，连接到打印机，用户名与密码均为空。连上去后，上传<strong>HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu</strong>，打印机会自动开始刷机。</li></ol><p>rfu文件本质上就是一个raw格式打印任务，神奇的是利用打印任务，我们也可以进行固件刷写等操作：</p><blockquote><p>The rfu files are simply formatted as raw print jobs that the printer understands as firmware updates (actually quite a clever mechanism for updating, although I wonder how easily it could be abused by a knowledgeable hacker…) The printer accepted the update, rebooted and came up with the older firmware. Printing works again on the third party cartridges, confirming that HP definitely did something in 20201021 that blocks at least some types of third party cartridges.</p></blockquote><p>-From <a href="https://www.reddit.com/r/DataHoarder/comments/joznz6/anyone_have_older_hp_laserjet_firmwares/">Anyone have older HP LaserJet firmwares?</a>。</p><h2 id="LPR打印法"><a href="#LPR打印法" class="headerlink" title="LPR打印法"></a>LPR打印法</h2><p>在Windows功能中打开<strong>打印和文件服务 &gt; LPR端口监视器</strong>功能，Linux应该默认提供了lpr。然后运行以下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lpr -S 10.0.1.250 -P 10.0.1.250 HP_LaserJet_Pro_M280_M281_Printer_series_20200612.rfu <br></code></pre></td></tr></table></figure><p><strong>10.0.1.250</strong> 是局域网中打印机地址，请自行替换。<br>和FTP刷机方式类似，也是将rfu格式固件当作打印任务提交，打印机便会自动开始刷机。</p><h2 id="Windows双击法"><a href="#Windows双击法" class="headerlink" title="Windows双击法"></a>Windows双击法</h2><p>在Windows系统中双击<strong>HP_LaserJet_Pro_M280_M281_Printer_series_20200612.exe</strong>并按照提示进行操作，可以参考<a href="https://post.smzdm.com/p/a0qkwegr/">HP惠普M281打印机升级后不兼容国产硒鼓，系统固件降级步骤</a>，貌似需要用USB线连接电脑操作。</p><p>上述方法均未经本人验证，不过根据reddit上的回帖反馈，不少人用FTP方式刷机成功，将系统固件降级到了<strong>20200612</strong>。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>HP</tag>
+      
+      <tag>M281FDW</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Canokey使用PIV解锁bitlocker</title>
     <link href="/2024/12/25/canokeypiv/"/>
     <url>/2024/12/25/canokeypiv/</url>
