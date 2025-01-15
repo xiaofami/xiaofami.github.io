@@ -59,7 +59,6 @@ prompt = no
 encrypt_key = no
 default_md = sha384
 distinguished_name = dn
-days=3650
 
 [ dn ]
 C=CN
