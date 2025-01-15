@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/ru/d/de/BitLocker_icon.png">
 <meta property="article:published_time" content="2024-12-25T13:42:49.000Z">
-<meta property="article:modified_time" content="2024-12-25T23:55:09.918Z">
+<meta property="article:modified_time" content="2025-01-15T13:06:56.333Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="Archlinux">
 <meta property="article:tag" content="EndeavourOS">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          663 字
+          662 字
         
       </span>
     
@@ -297,7 +297,7 @@
 <p>解决方法很简单，重新插拔Canokey物理密钥，然后再执行即可。猜测执行<code>gpg --card-status</code>后PCSC端口被占用，导致<em>yubico-piv-tool</em>读取智能卡失败。</p>
 <p>Linux中也存在类似现象。执行<code>yubico-piv-tool -r canokeys -a status</code>后，第一次运行<code>gpg --card-status</code>会提示<code>gpg: OpenPGP card not available: General error</code>，只需再执行一次<code>gpg --card-status</code>就正常了。</p>
 <h1 id="创建证书"><a href="#创建证书" class="headerlink" title="创建证书"></a>创建证书</h1><p>创建openssl配置文件。名字随意，比如<code>2.cnf</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs 2.cnf">[ req ]<br>default_bits = 2048<br>prompt = no<br>encrypt_key = no<br>default_md = sha384<br>distinguished_name = dn<br>days=3650<br><br>[ dn ]<br>C=CN<br>ST=按需输入<br>L=按需输入<br>O=按需输入<br>OU=按需输入<br>CN=按需输入<br>emailAddress = 按需输入<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs 2.cnf">[ req ]<br>default_bits = 2048<br>prompt = no<br>encrypt_key = no<br>default_md = sha384<br>distinguished_name = dn<br><br>[ dn ]<br>C=CN<br>ST=按需输入<br>L=按需输入<br>O=按需输入<br>OU=按需输入<br>CN=按需输入<br>emailAddress = 按需输入<br></code></pre></td></tr></table></figure>
 
 <p>解释（参考：<a target="_blank" rel="noopener" href="https://support.huawei.com/enterprise/zh/doc/EDOC1100296985/5ae80acf">使用OpenSSL工具生成CSR文件</a>）：</p>
 <ul>
