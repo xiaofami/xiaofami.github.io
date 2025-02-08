@@ -29,7 +29,7 @@
 <meta property="og:description" content="家里的HP Color LaserJet Pro MFP M281fdw哪里都好，就是耗材成本居高不下，用多了总有些肉疼。几经调研以300元价格从闲鱼贩子手中购入一台EPSON M1128打印机，配置过程及使用体验记录如下。 WIFI连接M1128仅支持通过WPS方式配置WIFI连接，鉴于目前WPS由于安全性问题已被主流路由器弃用，你可以翻出吃灰十几年的上古路由器（比如极路由1S，我把它刷了华硕R">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-08T20:14:56.000Z">
-<meta property="article:modified_time" content="2025-02-08T21:51:53.032Z">
+<meta property="article:modified_time" content="2025-02-08T22:07:34.604Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="EPSON M1128">
 <meta name="twitter:card" content="summary_large_image">
@@ -282,8 +282,8 @@
 <h1 id="WIFI连接"><a href="#WIFI连接" class="headerlink" title="WIFI连接"></a>WIFI连接</h1><p>M1128仅支持通过WPS方式配置WIFI连接，鉴于目前WPS由于安全性问题已被主流路由器弃用，你可以翻出吃灰十几年的上古路由器（比如极路由1S，我把它刷了华硕RT-N14U固件），设置SSID、密码、加密方式与目标WIFI相同，成功连接后再拿回来使用。M1128支持<strong>WPA2-PSK(AES)</strong> 加密，主流路由器一般都有支持。</p>
 <h1 id="驱动安装"><a href="#驱动安装" class="headerlink" title="驱动安装"></a>驱动安装</h1><p>Windows与MacOS不提，只说Archlinux。EPSON提供了通用驱动，一键即可安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S epson-inkjet-printer-escpr<br></code></pre></td></tr></table></figure>
-<p>然后使用<strong>system-config-printer</strong>无脑下一步添加即可。Linux中的这个驱动很简陋，打印速度和可选项都不及Windows版本，也无法进行喷头清洗、校对等操作。不过体感上Linux中标准打印质量比Windows好一些（速度减半），用着还算凑合吧。</p>
-<h1 id="远程打印"><a href="#远程打印" class="headerlink" title="远程打印"></a>远程打印</h1><h2 id="EPSON云打印"><a href="#EPSON云打印" class="headerlink" title="EPSON云打印"></a>EPSON云打印</h2><p>我购买的M1128是二手的，之前已经注册过EPSON云打印功能。可以在手机上下载安装<strong>Epson Printer Finder</strong>，按提示解绑并重新注册云打印功能，完成后打印机会将云打印邮箱地址、账户密码、微信小程序二维码等关键信息打印到一张纸上，扫码后就能通过微信小程序远程打印了，这台打印机也支持<strong>Google Cloud Print</strong>,对于有需求的人是个好消息。</p>
+<p>然后使用<strong>system-config-printer</strong>无脑下一步添加即可。Linux中的这个驱动很简陋，打印速度和可选项都不及Windows版本，也无法进行喷头清洗、校对等操作。不过观感上Linux中标准打印质量比Windows好一些（颜色更深），用着还可以。</p>
+<h1 id="远程打印"><a href="#远程打印" class="headerlink" title="远程打印"></a>远程打印</h1><h2 id="EPSON云打印"><a href="#EPSON云打印" class="headerlink" title="EPSON云打印"></a>EPSON云打印</h2><p>我购买的M1128是二手的，之前已经注册过EPSON云打印。可以在手机上下载安装<strong>Epson Printer Finder</strong>，按提示解绑并重新注册云打印，完成后打印机会将云打印邮箱地址、账户密码、微信小程序二维码等关键信息打印到一张纸上，扫码后就能通过微信小程序远程打印了，这台打印机也支持<strong>Google Cloud Print</strong>,对于有需求的人是个好消息。</p>
 <h2 id="IPv6远程打印"><a href="#IPv6远程打印" class="headerlink" title="IPv6远程打印"></a>IPv6远程打印</h2><p>如果你的ISP和路由器支持 <strong>Prefix-hint</strong> 功能，那么可以在固定前缀后配置通过IPv6连接使用打印机，M1128原生支持IPv6，相较EPSON云打印功能更加丰富。在M1128配置页面中可以直接查询到打印机的IPv6地址，将其记录下来备用，这里以 <strong>2409:0001:0002:0003:259d:83ff:fer8:7534</strong>进行示范。</p>
 <p>对于Windows系统，选择添加打印机 - TCP&#x2F;IP 打印机，然后把 <strong>[2409:0001:0002:0003:259d:83ff:fer8:7534]</strong> 粘贴进去即可,注意不要省略括号。之前M1128和这台电脑曾在一个局域网中使用过，也安装了EPSON官方驱动，所以Windows通过<strong>WSD</strong>方式轻松添加了打印机，使用EPSON提供的卸载工具将之前局域网设置的M1128删除即可完美收工。这样一来EPSON监视面板、打印机维护等一切功能都正常，仿佛M1128还位于局域网中一样。</p>
 <p>Archlinux就更简单了。进入<strong>system-config-printer</strong>选择添加打印机，选择 <strong>AppSocket&#x2F;HP JetDirect</strong>，Host填写**[2409:0001:0002:0003:259d:83ff:fer8:7534]**，同样注意不要省略括号，端口默认的9100即可不要改动，然后点下一步选择厂商（Epson）和设备型号（M1120）即可添加成功。</p>
