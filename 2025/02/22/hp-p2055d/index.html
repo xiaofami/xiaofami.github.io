@@ -21,24 +21,23 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="安装texlive下载安装texlive iso镜像即可，如果之前使用pacman安装了类似 texlive-basic 等相关包，记得先删掉。然后如果安装程序没有自动添加环境变量，就需要手动设置，在 ~&#x2F;.bashrc 中加入这样一句就行了： 1export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;texlive&#x2F;2024&#x2F;bin&#x2F;x86_64-linux 字体安装12paru -S ttf">
+    <meta name="description" content="缘起家里已经有HP Color LaserJet Pro MFP M281fdw和EPSON M1128两台打印机了，不过M281fdw打印成本高，M1128打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪）。几经调研看中了HP LaserJet Pro 400 M401dn，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自动双面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Archlinx中使用texlive排版中文">
-<meta property="og:url" content="http://xiaofami.github.io/2025/02/16/xelatex/index.html">
+<meta property="og:title" content="HP LaserJet P2055d 打印机使用记录">
+<meta property="og:url" content="http://xiaofami.github.io/2025/02/22/hp-p2055d/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="安装texlive下载安装texlive iso镜像即可，如果之前使用pacman安装了类似 texlive-basic 等相关包，记得先删掉。然后如果安装程序没有自动添加环境变量，就需要手动设置，在 ~&#x2F;.bashrc 中加入这样一句就行了： 1export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;texlive&#x2F;2024&#x2F;bin&#x2F;x86_64-linux 字体安装12paru -S ttf">
+<meta property="og:description" content="缘起家里已经有HP Color LaserJet Pro MFP M281fdw和EPSON M1128两台打印机了，不过M281fdw打印成本高，M1128打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪）。几经调研看中了HP LaserJet Pro 400 M401dn，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自动双面">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-16T02:26:22.000Z">
-<meta property="article:modified_time" content="2025-02-16T03:12:24.497Z">
+<meta property="article:published_time" content="2025-02-22T14:13:07.000Z">
+<meta property="article:modified_time" content="2025-02-22T15:33:38.566Z">
 <meta property="article:author" content="tccmu">
-<meta property="article:tag" content="Archlinux">
-<meta property="article:tag" content="texlive">
-<meta property="article:tag" content="xelatex">
+<meta property="article:tag" content="P2055d">
+<meta property="article:tag" content="打印机">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Archlinx中使用texlive排版中文 - 小荷</title>
+  <title>HP LaserJet P2055d 打印机使用记录 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Archlinx中使用texlive排版中文"></span>
+            <span id="subtitle" data-typed-text="HP LaserJet P2055d 打印机使用记录"></span>
           
         </div>
 
@@ -215,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-16 10:26" pubdate>
-          2025年2月16日 上午
+        <time datetime="2025-02-22 22:13" pubdate>
+          2025年2月22日 晚上
         </time>
       </span>
     
@@ -227,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          721 字
+          912 字
         
       </span>
     
@@ -238,7 +237,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -275,20 +274,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Archlinx中使用texlive排版中文</h1>
+            <h1 id="seo-header">HP LaserJet P2055d 打印机使用记录</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="安装texlive"><a href="#安装texlive" class="headerlink" title="安装texlive"></a>安装texlive</h1><p>下载安装texlive iso镜像即可，如果之前使用pacman安装了类似 <strong>texlive-basic</strong> 等相关包，记得先删掉。然后如果安装程序没有自动添加环境变量，就需要手动设置，在 <code>~/.bashrc</code> 中加入这样一句就行了：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/usr/local/texlive/2024/bin/x86_64-linux<br></code></pre></td></tr></table></figure>
-<h1 id="字体安装"><a href="#字体安装" class="headerlink" title="字体安装"></a>字体安装</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">paru -S ttf-wps-fonts wps-office-fonts<br><span class="hljs-built_in">sudo</span> fc-cache -fv<br></code></pre></td></tr></table></figure>
-<p><strong>tf-wps-fonts</strong> 提供了Windows自带的大量字体， 可以参见项目地址：<a target="_blank" rel="noopener" href="https://github.com/ferion11/ttf-wps-fonts%EF%BC%9B">https://github.com/ferion11/ttf-wps-fonts；</a> <strong>wps-office-fonts</strong> 提供了常用的方正GBK字体。如果你想使用Windows系统自带的类似宋体、仿宋等中文字体，可以安装 <strong>ttf-ms-win10-auto-zh_cn</strong> 或 <strong>ttf-ms-win11-zh_cn</strong> 获取，无须手动复制安装。</p>
-<h1 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h1><p>首推刘海洋老师的<a target="_blank" rel="noopener" href="https://yun.weicheng.men/Book/LaTeX%E5%85%A5%E9%97%A8.pdf">《LaTeX 入门》</a>，再结合 <strong>texdoc</strong> 翻翻 <strong>CTEX</strong> 等常用宏包文档就差不多了。LaTeX中文写作现在还是 xelatex + ctex 老一套，十几年来没发生什么变化。</p>
-<h1 id="使用示范"><a href="#使用示范" class="headerlink" title="使用示范"></a>使用示范</h1><p>一个很简单的个人总结模板：</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs tex"><span class="hljs-meta">%!TEX program = xelatex</span><br><span class="hljs-comment">%-*- coding: UTF-8 -*-</span><br><span class="hljs-keyword">\documentclass</span>[UTF8,a4paper,fontset=none]&#123;ctexart&#125;<br><span class="hljs-keyword">\usepackage</span>&#123;titling&#125;<br><span class="hljs-keyword">\setlength</span>&#123;<span class="hljs-keyword">\droptitle</span>&#125;&#123;-4em&#125;     <span class="hljs-comment">% Eliminate the default vertical space</span><br><br><span class="hljs-keyword">\usepackage</span>[top=2.54cm, bottom=2.54cm, left=2.8cm, right=2.8cm]&#123;geometry&#125;<br><br><span class="hljs-comment">%fancyhdr设置要在geometry之后，使宏包获取正确的页面信息</span><br><span class="hljs-keyword">\usepackage</span>&#123;fancyhdr&#125;<br><span class="hljs-keyword">\pagestyle</span>&#123;fancy&#125;<br><span class="hljs-keyword">\fancyhf</span>&#123;&#125;<br><span class="hljs-keyword">\cfoot</span>&#123;<span class="hljs-keyword">\thepage</span>&#125;<br><span class="hljs-keyword">\renewcommand</span><span class="hljs-keyword">\headrulewidth</span>&#123;0pt&#125;<br><span class="hljs-keyword">\linespread</span>&#123;1.5&#125;<br><br><span class="hljs-keyword">\setmainfont</span>&#123;Times New Roman&#125;<span class="hljs-comment">%设置正文罗马字体族</span><br><span class="hljs-keyword">\setsansfont</span>&#123;Verdana&#125;<span class="hljs-comment">%设置无衬线字体族</span><br><span class="hljs-keyword">\setmonofont</span>&#123;Courier New&#125;<span class="hljs-comment">%设置打字机字体族</span><br><span class="hljs-keyword">\setCJKmainfont</span>[BoldFont=FZHei-B01,ItalicFont=FZKai-Z03,BoldItalicFont=FZLiShu-S01]&#123;FZFangSong-Z02&#125;<span class="hljs-comment">%设置正文罗马字体族</span><br><span class="hljs-keyword">\setCJKfamilyfont</span>&#123;fzxbs&#125;&#123;FZXiaoBiaoSong-B05&#125;<br><span class="hljs-keyword">\setCJKfamilyfont</span>&#123;fzKai&#125;&#123;FZKai-Z03&#125;<br><span class="hljs-comment">% 配置ctex标题格式</span><br><span class="hljs-keyword">\ctexset</span>&#123;<br>    section = &#123;<br>        format = <span class="hljs-keyword">\zihao</span>&#123;3&#125;<span class="hljs-keyword">\bfseries</span>,<br>        indent = 2<span class="hljs-keyword">\ccwd</span>,<br>        beforeskip = 0ex,<br>        afterskip = 0ex,<br>        name = &#123;,、&#125;,<br>        number = <span class="hljs-keyword">\chinese</span>&#123;section&#125;,<br>        aftername = <span class="hljs-keyword">\hspace</span>&#123;0.5em&#125;,<br>    &#125;,<br>    subsection = &#123;<br>        format = <span class="hljs-keyword">\zihao</span>&#123;3&#125;<span class="hljs-keyword">\itshape</span>,<br>        indent = 2<span class="hljs-keyword">\ccwd</span>,<br>        beforeskip = 0ex,<br>        afterskip = 0ex,<br>        name = &#123;（,）&#125;,<br>        number = <span class="hljs-keyword">\chinese</span>&#123;subsection&#125;,<br>        aftername = <span class="hljs-keyword">\hspace</span>&#123;0.5em&#125;,<br>    &#125;,<br>    subsubsection = &#123;<br>        format = <span class="hljs-keyword">\zihao</span>&#123;3&#125;<span class="hljs-keyword">\normalfont</span><span class="hljs-keyword">\bfseries</span>,<br>        indent = 2<span class="hljs-keyword">\ccwd</span>,<br>        beforeskip = 0ex,<br>        afterskip = 0ex,<br>        name = &#123;,.&#125;,<br>        number = <span class="hljs-keyword">\arabic</span>&#123;subsubsection&#125;.,<br>        aftername = <span class="hljs-keyword">\hspace</span>&#123;0.5em&#125;,<br>        runin = true,<br>    &#125;<br>&#125;<br><span class="hljs-comment">% 设置全局段落格式</span><br><br><span class="hljs-keyword">\setlength</span>&#123;<span class="hljs-keyword">\parskip</span>&#125;&#123;0pt&#125;<br><span class="hljs-comment">%\setlength&#123;\parindent&#125;&#123;2em&#125; % 首行缩进2字符</span><br><span class="hljs-comment">%\pagestyle&#123;empty&#125; % 去除页眉页脚</span><br><span class="hljs-comment">% 标题和作者信息</span><br><span class="hljs-keyword">\title</span>&#123;<span class="hljs-keyword">\zihao</span>&#123;2&#125;<span class="hljs-keyword">\CJKfamily</span>&#123;fzxbs&#125; 工作总结&#125;<br><span class="hljs-keyword">\author</span>&#123;<span class="hljs-keyword">\zihao</span>&#123;3&#125;<span class="hljs-keyword">\CJKfamily</span>&#123;fzKai&#125; 职务+姓名&#125;<br><span class="hljs-keyword">\date</span>&#123;&#125; <span class="hljs-comment">% 去掉日期</span><br><span class="hljs-comment">%\usepackage&#123;newunicodechar&#125;</span><br><span class="hljs-comment">%\newunicodechar&#123;🌖&#125;&#123;\bigmoon&#125;</span><br><span class="hljs-keyword">\begin</span>&#123;document&#125;<br><span class="hljs-keyword">\maketitle</span><br><span class="hljs-comment">% 正文内容</span><br><span class="hljs-keyword">\zihao</span>&#123;3&#125; <span class="hljs-comment">% 设置正文字体字号</span><br><span class="hljs-keyword">\vspace</span>&#123;-3<span class="hljs-keyword">\ccwd</span>&#125;<br>一个个人总结……<br><span class="hljs-keyword">\end</span>&#123;document&#125;<br></code></pre></td></tr></table></figure>
-
-<p>很简单的模板。行间距可以这么计算：正文字号为三号，即16bp，约等于16pt。LaTeX中，基本行距为文字大小的1.2倍，上面将<strong>linespread</strong>设置为1.5，所以最后的行间距即为 <code>16*1.2*1.5 = 28.8pt</code>，对应WORD中的28.8磅行间距。</p>
+                <h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p>家里已经有<strong>HP Color LaserJet Pro MFP M281fdw</strong>和<strong>EPSON M1128</strong>两台打印机了，不过<strong>M281fdw</strong>打印成本高，<strong>M1128</strong>打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪<del>）。几经调研看中了<strong>HP LaserJet Pro 400 M401dn</strong>，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自动双面、有线网络连接实用功能，甚至还配备了彩色触摸屏。正好同城二手打印机店400块钱挂了一台，于是兴冲冲去线下试机，发现打印出的页面有瑕疵，输出页面下方边缘总有条浅色印记。老板尝试更换硒鼓、更换定影膜都没解决，只能遗憾放弃了。这机器闲鱼均价大致在350</del>400元间，可惜11KG的重量异地购买并不划算，<strong>M401dn</strong>至此就与我无缘了。</p>
+<h1 id="购得P2055d"><a href="#购得P2055d" class="headerlink" title="购得P2055d"></a>购得<strong>P2055d</strong></h1><p><strong>M401dn</strong>事件告一段落几日后，我又开始研究<strong>M401dn</strong>的替代品，发现它的前代产品，<strong>HP LaserJet P2055dn</strong>各方面规格极其相似，耗材均使用<strong>CF280A</strong>硒鼓，价格也更便宜，难得的是同城闲鱼有人挂出了图片极为相似的二手打印机。和卖家约好见面后才发现是<strong>P2055d</strong>，不支持网络连接，不过130块钱的价格让我无法拒绝，贪得无厌是罪过~</p>
+<h1 id="P2055d整备"><a href="#P2055d整备" class="headerlink" title="P2055d整备"></a><strong>P2055d</strong>整备</h1><p><strong>P2055d</strong>初见时看起来很糟糕，被简单用塑料袋包裹后丢在了户外搭建的棚子中，外壳泛黄有很多污渍，测试打印墨粉状态差，卡纸且夹带白纸，本着大不了当电子乐高拆了的原则拎回家，擦了擦便换上之前测试<strong>M401dn</strong>购买的图盛<strong>CF280A</strong>硒鼓，再测试打印发现神奇般地不卡纸了，而且报告页显示机器总共才打印了700多页。。。这可是2008年12月生产出厂的机器，里面的原装HP硒鼓生产日期是2008年10月，应该是原机自带硒鼓。不难推测它必然出自于某神仙单位——打印机背后的固定资产标签显示它曾是<strong>中国人民银行XX支行</strong>的资产。我想起了自己办公室里那台快烂了的<strong>Canon MF4700</strong>，它的苦力生涯似乎要到彻底报废才能终结。打印机如此，它们的使用者不也处在类似状态吗。。。</p>
+<h1 id="打印机驱动"><a href="#打印机驱动" class="headerlink" title="打印机驱动"></a>打印机驱动</h1><p>Windows与Linux均可使用<strong>HP PCL 6</strong>驱动，安装配置没有任何难度。</p>
+<h1 id="打印分辨率"><a href="#打印分辨率" class="headerlink" title="打印分辨率"></a>打印分辨率</h1><p>支持<strong>ProRes 1200</strong>、<strong>FastRes 1200</strong>、<strong>600 dpi</strong>分辨率，实测文字清晰锐利，令人满意。</p>
+<h1 id="耗材成本"><a href="#耗材成本" class="headerlink" title="耗材成本"></a>耗材成本</h1><p><strong>CF280A</strong>国产硒鼓大概25元，能打印2500页，支持自行灌注墨粉。单独售卖的墨粉1瓶大概5元，可以打印2000页，使用成本媲美喷墨机型。使用<strong>CF280A</strong>硒鼓的打印机众多，所以能做到廉价易得。以下为部分使用<strong>CF280A</strong>硒鼓（CF280A、CE505A、CGR319貌似通用）的打印机，来源于某款硒鼓宣传页面：</p>
+<p>惠普：</p>
+<ul>
+<li>HP LaserJet P2035&#x2F;2035n&#x2F;P2055d&#x2F;P2055dn</li>
+<li>HP LaserJet Pro 400 M401d&#x2F;M401dn&#x2F;M401dne&#x2F;M401dw&#x2F;M401n&#x2F;M425dn&#x2F;M425dw</li>
+</ul>
+<p>佳能：</p>
+<ul>
+<li>Canon LBP6300n&#x2F;LBP6650n&#x2F;LBP6300dn&#x2F;LBP6650dn&#x2F;LBP6670dn&#x2F;LBP253dw&#x2F;LBP252dw&#x2F;LBP251dw&#x2F;iC MF5950dw&#x2F;Canon iC MF5870dn&#x2F;MF5930dn&#x2F;MF6160dw&#x2F;MF6140dn&#x2F;MF415dw&#x2F;MF412dn</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p><strong>P2055d</strong>支持自行安装一条256MB的内存条，将总内存扩大至64+256&#x3D;320MB，对于打印大型PDF文档而言很有用。可惜只能用打印机专用条，256MB一条要70块，相较PC内存条实在太夸张了。</p>
+<h1 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h1><p><a target="_blank" rel="noopener" href="http://h10032.www1.hp.com/ctg/Manual/c01461970.pdf">HP LaserJet P2050 系列打印机用户指南</a></p>
 
                 
               </div>
@@ -301,11 +308,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Archlinux/" class="print-no-link">#Archlinux</a>
+        <a href="/tags/P2055d/" class="print-no-link">#P2055d</a>
       
-        <a href="/tags/texlive/" class="print-no-link">#texlive</a>
-      
-        <a href="/tags/xelatex/" class="print-no-link">#xelatex</a>
+        <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/" class="print-no-link">#打印机</a>
       
     </div>
   
@@ -317,8 +322,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Archlinx中使用texlive排版中文</div>
-      <div>http://xiaofami.github.io/2025/02/16/xelatex/</div>
+      <div>HP LaserJet P2055d 打印机使用记录</div>
+      <div>http://xiaofami.github.io/2025/02/22/hp-p2055d/</div>
     </div>
     <div class="license-meta">
       
@@ -330,7 +335,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年2月16日</div>
+          <div>2025年2月22日</div>
         </div>
       
       
@@ -362,18 +367,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/02/22/hp-p2055d/" title="HP LaserJet P2055d 打印机使用记录">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HP LaserJet P2055d 打印机使用记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/09/epson-m1128/" title="爱普生M1128使用记录">
-                        <span class="hidden-mobile">爱普生M1128使用记录</span>
+                      <a href="/2025/02/16/xelatex/" title="Archlinx中使用texlive排版中文">
+                        <span class="hidden-mobile">Archlinx中使用texlive排版中文</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
