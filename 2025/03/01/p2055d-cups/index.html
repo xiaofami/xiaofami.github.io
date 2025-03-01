@@ -21,23 +21,24 @@
   <meta name="author" content="tccmu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="缘起家里已经有HP Color LaserJet Pro MFP M281fdw和EPSON M1128两台打印机了，不过M281fdw打印成本高，M1128打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪。。。）。几经调研看中了HP LaserJet Pro 400 M401dn，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自">
+    <meta name="description" content="序今天翻出了一台吃灰的斐讯N1，准备把它当作打印服务器给HP LaserJet P2055d插上翅膀。 N1刷机镜像来自于 https:&#x2F;&#x2F;github.com&#x2F;ophub&#x2F;amlogic-s9xxx-armbian 。刷机过程中遇到了盒子无法从U盘启动问题，经网友建议，用一根USB公对公数据线连接N1和五福一安充电头辅助供电，N1就顺利从U盘启动了，其余过程不再赘述。 Armbian配置Armb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HP LaserJet P2055d 打印机使用记录">
-<meta property="og:url" content="http://xiaofami.github.io/2025/02/22/hp-p2055d/index.html">
+<meta property="og:title" content="为 HP LaserJet P2055d 打印机 配置CUPS服务器">
+<meta property="og:url" content="http://xiaofami.github.io/2025/03/01/p2055d-cups/index.html">
 <meta property="og:site_name" content="小荷">
-<meta property="og:description" content="缘起家里已经有HP Color LaserJet Pro MFP M281fdw和EPSON M1128两台打印机了，不过M281fdw打印成本高，M1128打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪。。。）。几经调研看中了HP LaserJet Pro 400 M401dn，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自">
+<meta property="og:description" content="序今天翻出了一台吃灰的斐讯N1，准备把它当作打印服务器给HP LaserJet P2055d插上翅膀。 N1刷机镜像来自于 https:&#x2F;&#x2F;github.com&#x2F;ophub&#x2F;amlogic-s9xxx-armbian 。刷机过程中遇到了盒子无法从U盘启动问题，经网友建议，用一根USB公对公数据线连接N1和五福一安充电头辅助供电，N1就顺利从U盘启动了，其余过程不再赘述。 Armbian配置Armb">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-22T14:13:07.000Z">
-<meta property="article:modified_time" content="2025-02-22T15:39:06.692Z">
+<meta property="article:published_time" content="2025-03-01T14:13:07.000Z">
+<meta property="article:modified_time" content="2025-03-01T14:58:45.728Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="P2055d">
 <meta property="article:tag" content="打印机">
+<meta property="article:tag" content="CUPS">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>HP LaserJet P2055d 打印机使用记录 - 小荷</title>
+  <title>为 HP LaserJet P2055d 打印机 配置CUPS服务器 - 小荷</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="HP LaserJet P2055d 打印机使用记录"></span>
+            <span id="subtitle" data-typed-text="为 HP LaserJet P2055d 打印机 配置CUPS服务器"></span>
           
         </div>
 
@@ -214,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-22 22:13" pubdate>
-          2025年2月22日 晚上
+        <time datetime="2025-03-01 22:13" pubdate>
+          2025年3月1日 晚上
         </time>
       </span>
     
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          913 字
+          641 字
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          8 分钟
+          6 分钟
         
       </span>
     
@@ -274,28 +275,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">HP LaserJet P2055d 打印机使用记录</h1>
+            <h1 id="seo-header">为 HP LaserJet P2055d 打印机 配置CUPS服务器</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p>家里已经有<strong>HP Color LaserJet Pro MFP M281fdw</strong>和<strong>EPSON M1128</strong>两台打印机了，不过<strong>M281fdw</strong>打印成本高，<strong>M1128</strong>打印速度慢，还是想添置一台廉价的激光打印机作为补充（好吧，我就是想折腾了……人到中年兴趣点愈发奇怪。。。）。几经调研看中了<strong>HP LaserJet Pro 400 M401dn</strong>，这款基于佳能平台的机器以皮实耐用、耗材便宜赢得不少好评，而且支持自动双面、有线网络连接实用功能，甚至还配备了彩色触摸屏。正好同城二手打印机店400块钱挂了一台，于是兴冲冲去线下试机，发现打印出的页面有瑕疵，输出页面下方边缘总有条浅色印记。老板尝试更换硒鼓、更换定影膜都没解决，只能遗憾放弃了。这机器闲鱼均价大致在350-400元间，可惜11KG的重量异地购买并不划算，<strong>M401dn</strong>至此就与我无缘了。</p>
-<h1 id="购得P2055d"><a href="#购得P2055d" class="headerlink" title="购得P2055d"></a>购得<strong>P2055d</strong></h1><p><strong>M401dn</strong>事件告一段落几日后，我又开始研究<strong>M401dn</strong>的替代品，发现它的前代产品，<strong>HP LaserJet P2055dn</strong>各方面规格极其相似，耗材均使用<strong>CF280A</strong>硒鼓，价格也更便宜，难得的是同城闲鱼有人挂出了图片极为相似的二手打印机。和卖家约好见面后才发现是<strong>P2055d</strong>，不支持网络连接，不过130块钱的价格让我无法拒绝，贪得无厌是罪过~</p>
-<h1 id="P2055d整备"><a href="#P2055d整备" class="headerlink" title="P2055d整备"></a><strong>P2055d</strong>整备</h1><p><strong>P2055d</strong>初见时看起来很糟糕，被简单用塑料袋包裹后丢在了户外搭建的棚子中，外壳泛黄有很多污渍，测试打印墨粉状态差，卡纸且夹带白纸，本着大不了当电子乐高拆了的原则拎回家，擦了擦便换上之前测试<strong>M401dn</strong>购买的图盛<strong>CF280A</strong>硒鼓，再测试打印发现神奇般地不卡纸了，而且报告页显示机器总共才打印了700多页。。。这可是2008年12月生产出厂的机器，里面的原装HP硒鼓生产日期是2008年10月，应该是原机自带硒鼓。不难推测它必然出自于某神仙单位——打印机背后的固定资产标签显示它曾是<strong>中国人民银行XX支行</strong>的资产。我想起了自己办公室里那台快烂了的<strong>Canon MF4700</strong>，它的苦力生涯似乎要到彻底报废才能终结。打印机如此，它们的使用者不也处在类似状态吗。。。</p>
-<h1 id="打印机驱动"><a href="#打印机驱动" class="headerlink" title="打印机驱动"></a>打印机驱动</h1><p>Windows与Linux均可使用<strong>HP PCL 6</strong>驱动，安装配置没有任何难度。</p>
-<h1 id="打印分辨率"><a href="#打印分辨率" class="headerlink" title="打印分辨率"></a>打印分辨率</h1><p>支持<strong>ProRes 1200</strong>、<strong>FastRes 1200</strong>、<strong>600 dpi</strong>分辨率，实测文字清晰锐利，令人满意。</p>
-<h1 id="耗材成本"><a href="#耗材成本" class="headerlink" title="耗材成本"></a>耗材成本</h1><p><strong>CF280A</strong>国产硒鼓大概25元，能打印2500页，支持自行灌注墨粉。单独售卖的墨粉1瓶大概5元，可以打印2000页，使用成本媲美喷墨机型。使用<strong>CF280A</strong>硒鼓的打印机众多，所以能做到廉价易得。以下为部分使用<strong>CF280A</strong>硒鼓（CF280A、CE505A、CGR319貌似通用）的打印机，来源于某款硒鼓宣传页面：</p>
-<p>惠普：</p>
-<ul>
-<li>HP LaserJet P2035&#x2F;2035n&#x2F;P2055d&#x2F;P2055dn</li>
-<li>HP LaserJet Pro 400 M401d&#x2F;M401dn&#x2F;M401dne&#x2F;M401dw&#x2F;M401n&#x2F;M425dn&#x2F;M425dw</li>
-</ul>
-<p>佳能：</p>
-<ul>
-<li>Canon LBP6300n&#x2F;LBP6650n&#x2F;LBP6300dn&#x2F;LBP6650dn&#x2F;LBP6670dn&#x2F;LBP253dw&#x2F;LBP252dw&#x2F;LBP251dw&#x2F;iC MF5950dw&#x2F;Canon iC MF5870dn&#x2F;MF5930dn&#x2F;MF6160dw&#x2F;MF6140dn&#x2F;MF415dw&#x2F;MF412dn</li>
-</ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p><strong>P2055d</strong>支持自行安装一条256MB的内存条，将总内存扩大至64+256&#x3D;320MB，对于打印大型PDF文档而言很有用。可惜只能用打印机专用条，256MB一条要70块，相较PC内存条实在太夸张了。</p>
-<h1 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h1><p><a target="_blank" rel="noopener" href="http://h10032.www1.hp.com/ctg/Manual/c01461970.pdf">HP LaserJet P2050 系列打印机用户指南</a></p>
+                <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>今天翻出了一台吃灰的斐讯N1，准备把它当作打印服务器给<strong>HP LaserJet P2055d</strong>插上翅膀。</p>
+<h1 id="N1刷机"><a href="#N1刷机" class="headerlink" title="N1刷机"></a>N1刷机</h1><p>镜像来自于 <a target="_blank" rel="noopener" href="https://github.com/ophub/amlogic-s9xxx-armbian">https://github.com/ophub/amlogic-s9xxx-armbian</a> 。刷机过程中遇到了盒子无法从U盘启动问题，经网友建议，用一根USB公对公数据线连接N1和五福一安充电头辅助供电，N1就顺利从U盘启动了，其余过程不再赘述。</p>
+<h1 id="Armbian配置"><a href="#Armbian配置" class="headerlink" title="Armbian配置"></a>Armbian配置</h1><h2 id="Armbian系统版本"><a href="#Armbian系统版本" class="headerlink" title="Armbian系统版本"></a>Armbian系统版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">pico@armbian:~$ <span class="hljs-built_in">cat</span> /etc/os-release <br>PRETTY_NAME=<span class="hljs-string">&quot;Armbian 25.2.2 bullseye&quot;</span><br>NAME=<span class="hljs-string">&quot;Debian GNU/Linux&quot;</span><br>VERSION_ID=<span class="hljs-string">&quot;11&quot;</span><br>VERSION=<span class="hljs-string">&quot;11 (bullseye)&quot;</span><br>VERSION_CODENAME=bullseye<br>ID=debian<br>HOME_URL=<span class="hljs-string">&quot;https://www.armbian.com/&quot;</span><br>SUPPORT_URL=<span class="hljs-string">&quot;https://forum.armbian.com&quot;</span><br>BUG_REPORT_URL=<span class="hljs-string">&quot;https://www.armbian.com/bugs&quot;</span><br>ARMBIAN_PRETTY_NAME=<span class="hljs-string">&quot;Armbian 25.2.2 bullseye&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="安装必要软件包和服务"><a href="#安装必要软件包和服务" class="headerlink" title="安装必要软件包和服务"></a>安装必要软件包和服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install cups avahi-daemon avahi-discover libnss-mdns hplip foomatic-db foomatic-db-engine printer-driver-all<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now cups<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now avahi-daemon<br><span class="hljs-built_in">sudo</span> usermod -aG lpadmin <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="禁用IPv6临时地址"><a href="#禁用IPv6临时地址" class="headerlink" title="禁用IPv6临时地址"></a>禁用IPv6临时地址</h2><p>打开 <code>/etc/sysctl.conf</code>，在最后面加上一行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">net.ipv6.conf.all.use_tempaddr=0<br></code></pre></td></tr></table></figure>
+<p>然后运行<code>sudo sysctl -p</code>使修改生效。我想在外面也能通过IPv6进行打印，所以不希望地址变来变去。</p>
+<h2 id="折腾CUPS配置文件"><a href="#折腾CUPS配置文件" class="headerlink" title="折腾CUPS配置文件"></a>折腾CUPS配置文件</h2><p>这一步可以直接编辑 <code>/etc/cups/cupsd.conf</code>，也可以在网页进行。CUPS配置页面地址为 <strong><a target="_blank" rel="noopener" href="https://n1的ip地址:631/">https://N1的IP地址:631</a></strong> 。下面仅列出了修改之处：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Only listen for connections from the local machine.</span><br>Listen 0.0.0.0:631<br>Listen [::]:631<br>Listen /run/cups/cups.sock<br><br><span class="hljs-comment"># Restrict access to the server...</span><br>&lt;Location /&gt;<br>  Allow all<br>  Order allow,deny<br>&lt;/Location&gt;<br><br><span class="hljs-comment"># Restrict access to the admin pages...</span><br>&lt;Location /admin&gt;<br>  Allow all<br>  Order allow,deny<br>&lt;/Location&gt;<br></code></pre></td></tr></table></figure>
+<p>这样设置后，从世界任意地方都能通过IPv6访问我的CUPS服务器，也能发起远程打印。所以不要泄露CUPS服务器的IPv6地址，更不要图省事为它绑定域名。有空时再配置下RouterOS的防火墙，只放行本省内IPv6地址应该就没什么安全问题了。</p>
+<h1 id="添加配置打印机"><a href="#添加配置打印机" class="headerlink" title="添加配置打印机"></a>添加配置打印机</h1><p>在CUPS页面中操作，按照设置向导一步步来就行。在CUPS服务器中，一台打印机可以对应多个打印队列，一个好处便是可以在不同的队列中使用不同的驱动。例如，我为<strong>HP LaserJet P2055d</strong>创建了两个打印队列：</p>
+<ol>
+<li>P2055d-RAW。驱动为Local Raw Printer，即CUPS服务器直接转发打印数据给打印机，不做任何处理。这个打印队列适合Windows等设备，手动添加打印机并手动安装官方驱动后就可以愉快打印了。</li>
+<li>P2055d-PCL6。CUPS中使用的驱动为 <strong>HP LaserJet Series PCL 6 CUPS</strong> 。其实P2055d有自己的专属驱动，名为<strong>HP LaserJet p2055d pcl3, hpcups 3.21.2</strong>。只是这个驱动基于PCL3语言过于老旧，所以没有采用。这个打印队列适合给安卓手机等设备使用。</li>
+</ol>
 
                 
               </div>
@@ -312,6 +313,8 @@
       
         <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/" class="print-no-link">#打印机</a>
       
+        <a href="/tags/CUPS/" class="print-no-link">#CUPS</a>
+      
     </div>
   
 </div>
@@ -322,8 +325,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>HP LaserJet P2055d 打印机使用记录</div>
-      <div>http://xiaofami.github.io/2025/02/22/hp-p2055d/</div>
+      <div>为 HP LaserJet P2055d 打印机 配置CUPS服务器</div>
+      <div>http://xiaofami.github.io/2025/03/01/p2055d-cups/</div>
     </div>
     <div class="license-meta">
       
@@ -335,7 +338,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年2月22日</div>
+          <div>2025年3月1日</div>
         </div>
       
       
@@ -367,18 +370,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/01/p2055d-cups/" title="为 HP LaserJet P2055d 打印机 配置CUPS服务器">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">为 HP LaserJet P2055d 打印机 配置CUPS服务器</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/16/xelatex/" title="Archlinx中使用texlive排版中文">
-                        <span class="hidden-mobile">Archlinx中使用texlive排版中文</span>
+                      <a href="/2025/02/22/hp-p2055d/" title="HP LaserJet P2055d 打印机使用记录">
+                        <span class="hidden-mobile">HP LaserJet P2055d 打印机使用记录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
