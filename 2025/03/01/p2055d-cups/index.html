@@ -29,7 +29,7 @@
 <meta property="og:description" content="序今天翻出了一台吃灰的斐讯N1，准备把它当作打印服务器给HP LaserJet P2055d插上翅膀。 N1刷机镜像来自于 https:&#x2F;&#x2F;github.com&#x2F;ophub&#x2F;amlogic-s9xxx-armbian 。刷机过程中遇到了盒子无法从U盘启动问题，经网友建议，用一根USB公对公数据线连接N1和五福一安充电头辅助供电，N1就顺利从U盘启动了，其余过程不再赘述。 Armbian配置Armb">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-01T14:13:07.000Z">
-<meta property="article:modified_time" content="2025-03-01T14:58:45.728Z">
+<meta property="article:modified_time" content="2025-03-01T15:53:33.736Z">
 <meta property="article:author" content="tccmu">
 <meta property="article:tag" content="P2055d">
 <meta property="article:tag" content="打印机">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          641 字
+          647 字
         
       </span>
     
@@ -284,7 +284,7 @@
 <h1 id="N1刷机"><a href="#N1刷机" class="headerlink" title="N1刷机"></a>N1刷机</h1><p>镜像来自于 <a target="_blank" rel="noopener" href="https://github.com/ophub/amlogic-s9xxx-armbian">https://github.com/ophub/amlogic-s9xxx-armbian</a> 。刷机过程中遇到了盒子无法从U盘启动问题，经网友建议，用一根USB公对公数据线连接N1和五福一安充电头辅助供电，N1就顺利从U盘启动了，其余过程不再赘述。</p>
 <h1 id="Armbian配置"><a href="#Armbian配置" class="headerlink" title="Armbian配置"></a>Armbian配置</h1><h2 id="Armbian系统版本"><a href="#Armbian系统版本" class="headerlink" title="Armbian系统版本"></a>Armbian系统版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">pico@armbian:~$ <span class="hljs-built_in">cat</span> /etc/os-release <br>PRETTY_NAME=<span class="hljs-string">&quot;Armbian 25.2.2 bullseye&quot;</span><br>NAME=<span class="hljs-string">&quot;Debian GNU/Linux&quot;</span><br>VERSION_ID=<span class="hljs-string">&quot;11&quot;</span><br>VERSION=<span class="hljs-string">&quot;11 (bullseye)&quot;</span><br>VERSION_CODENAME=bullseye<br>ID=debian<br>HOME_URL=<span class="hljs-string">&quot;https://www.armbian.com/&quot;</span><br>SUPPORT_URL=<span class="hljs-string">&quot;https://forum.armbian.com&quot;</span><br>BUG_REPORT_URL=<span class="hljs-string">&quot;https://www.armbian.com/bugs&quot;</span><br>ARMBIAN_PRETTY_NAME=<span class="hljs-string">&quot;Armbian 25.2.2 bullseye&quot;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="安装必要软件包和服务"><a href="#安装必要软件包和服务" class="headerlink" title="安装必要软件包和服务"></a>安装必要软件包和服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install cups avahi-daemon avahi-discover libnss-mdns hplip foomatic-db foomatic-db-engine printer-driver-all<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now cups<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now avahi-daemon<br><span class="hljs-built_in">sudo</span> usermod -aG lpadmin <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure>
+<h2 id="安装必要软件包和服务"><a href="#安装必要软件包和服务" class="headerlink" title="安装必要软件包和服务"></a>安装必要软件包和服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install cups avahi-daemon avahi-discover libnss-mdns hplip foomatic-db foomatic-db-engine printer-driver-all printer-driver-gutenprint printer-driver-brlaser printer-driver-escpr<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now cups<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now avahi-daemon<br><span class="hljs-built_in">sudo</span> usermod -aG lpadmin <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="禁用IPv6临时地址"><a href="#禁用IPv6临时地址" class="headerlink" title="禁用IPv6临时地址"></a>禁用IPv6临时地址</h2><p>打开 <code>/etc/sysctl.conf</code>，在最后面加上一行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">net.ipv6.conf.all.use_tempaddr=0<br></code></pre></td></tr></table></figure>
