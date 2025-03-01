@@ -30,7 +30,7 @@ ARMBIAN_PRETTY_NAME="Armbian 25.2.2 bullseye"
 ## 安装必要软件包和服务
 
 ```bash
-sudo apt install cups avahi-daemon avahi-discover libnss-mdns hplip foomatic-db foomatic-db-engine printer-driver-all
+sudo apt install cups avahi-daemon avahi-discover libnss-mdns hplip foomatic-db foomatic-db-engine printer-driver-all printer-driver-gutenprint printer-driver-brlaser printer-driver-escpr
 sudo systemctl enable --now cups
 sudo systemctl enable --now avahi-daemon
 sudo usermod -aG lpadmin $USER
